@@ -1,0 +1,11 @@
+# mount point   fstype    device    [device2]
+
+/dev/block/platform/soc/11230000.mmc/by-name/boot     /boot       emmc      defaults        defaults
+/dev/block/platform/soc/11230000.mmc/by-name/UBOOT    /UBOOT      emmc      defaults        defaults
+/dev/block/platform/soc/11230000.mmc/by-name/TEE1     /TEE1       emmc      defaults        defaults
+/dev/block/platform/soc/11230000.mmc/by-name/cache    /cache      ext4      defaults        defaults
+/dev/block/platform/soc/11230000.mmc/by-name/userdata /data       ext4      defaults        defaults,length=-16385
+/dev/block/platform/soc/11230000.mmc/by-name/MISC     /misc       emmc      defaults        defaults
+/dev/block/platform/soc/11230000.mmc/by-name/recovery /recovery   emmc      defaults        defaults
+/dev/block/platform/soc/11230000.mmc/by-name/system   /system     ext4      defaults        defaults
+/dev/block/mmcblk0boot0                               /boot0      emmc      defaults        defaults

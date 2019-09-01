@@ -1,0 +1,5 @@
+PQ  u:object_r:pq_service:s0
+GuiExtService u:object_r:guiext-server_service:s0
+NvRAMAgent u:object_r:nvram_agent_service:s0
+egistec.ets.service.daemon u:object_r:etsd_service:s0
+

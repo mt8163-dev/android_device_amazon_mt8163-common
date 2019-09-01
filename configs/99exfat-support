@@ -1,0 +1,3 @@
+#!/system/bin/sh
+/system/bin/mkdir /mnt/media_rw/sdcard1
+/system/bin/mount.exfat /dev/block/mmcblk1p1 /mnt/media_rw/sdcard1/ && /system/bin/sdcard -u 1023 -g 1023 -w 1023 -d /mnt/media_rw/sdcard1 /storage/sdcard1&

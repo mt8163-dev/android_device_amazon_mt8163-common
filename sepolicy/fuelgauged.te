@@ -1,0 +1,7 @@
+type fuelgauged_exec, exec_type, file_type;
+type fuelgauged, domain, domain_deprecated;
+
+init_daemon_domain(fuelgauged)
+
+allow fuelgauged self:netlink_socket create_socket_perms;
+allow fuelgauged kmsg_device:chr_file w_file_perms;

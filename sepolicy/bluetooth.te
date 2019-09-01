@@ -1,0 +1,11 @@
+# Allow access to the hardware node
+allow bluetooth stpbt_device:chr_file rw_file_perms;
+
+# Allow nvram access
+allow bluetooth nvdata_file:dir search;
+allow bluetooth nvdata_file:file rw_file_perms;
+allow bluetooth nvdata_file:lnk_file r_file_perms;
+
+allow bluetooth block_device:dir search;
+
+allow bluetooth sysfs_boot_mode:file { read open };

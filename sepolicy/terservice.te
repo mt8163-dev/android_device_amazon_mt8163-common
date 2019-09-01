@@ -1,0 +1,4 @@
+type terservice_exec, exec_type, file_type;
+type terservice, domain, domain_deprecated;
+
+init_daemon_domain(terservice)

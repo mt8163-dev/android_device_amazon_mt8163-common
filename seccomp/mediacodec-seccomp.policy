@@ -1,0 +1,4 @@
+# device specific syscalls
+# extension of services/mediacodec/minijail/seccomp_policy/mediacodec-seccomp-arm.policy
+mlock: 1
+munlock: 1

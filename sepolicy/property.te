@@ -1,0 +1,18 @@
+type wmt_prop, property_type, mtk_property_type;
+type mtk_md_prop, property_type, mtk_property_type;
+type mnld_prop, property_type, mtk_property_type;
+type ctl_qmc6983d_prop, property_type;
+type ctl_mxg2320d_prop, property_type;
+type ctl_memsicd3416x_prop, property_type;
+type ctl_ccci_fsd_prop, property_type;
+type ctl_gsm0710muxd_prop, property_type;
+type ctl_gsm0710muxdmd2_prop, property_type;
+type ctl_muxreport-daemon_prop, property_type;
+type nvram_prop, property_type, mtk_property_type;
+type pq_conf_prop, property_type, mtk_property_type;
+type audiohal_prop, property_type, mtk_property_type;
+type ril_mux_report_case_prop, property_type, mtk_property_type;
+type ril_msim_power_prop, property_type, mtk_property_type;
+type ril_sim_inserted_status, property_type, mtk_property_type;
+type serial_number_prop, property_type, mtk_property_type;
+type vold_encryption_type_prop, property_type;

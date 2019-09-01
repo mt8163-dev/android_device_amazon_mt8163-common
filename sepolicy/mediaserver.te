@@ -1,0 +1,15 @@
+# nvram
+allow mediaserver nvdata_file:dir rw_dir_perms;
+allow mediaserver nvdata_file:file create_file_perms;
+allow mediaserver ccci_device:chr_file rw_file_perms;
+
+# PQ
+allow mediaserver pq_service:service_manager find;
+
+allow mediaserver sysfs_devinfo:file r_file_perms;
+
+allow mediaserver camera_device:chr_file { read write open ioctl };
+allow mediaserver sysfs_boot_mode:file { read open };
+allow mediaserver sysfs_ddr_type:file { read open };
+allow mediaserver Vcodec_device:chr_file { read write open ioctl };
+allow mediaserver mtk_smi_device:chr_file { read write open ioctl };

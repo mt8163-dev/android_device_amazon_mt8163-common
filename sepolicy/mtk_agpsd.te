@@ -1,0 +1,21 @@
+type mtk_agpsd_exec, exec_type, file_type;
+type mtk_agpsd, domain, domain_deprecated;
+
+init_daemon_domain(mtk_agpsd)
+net_domain(mtk_agpsd)
+
+allow mtk_agpsd agpsd_data_file:dir create_dir_perms;
+allow mtk_agpsd agpsd_data_file:sock_file create_file_perms;
+allow mtk_agpsd gps_device:chr_file rw_file_perms;
+allow mtk_agpsd self:udp_socket create;
+
+allow mtk_agpsd storage_file:dir search;
+allow mtk_agpsd storage_file:lnk_file read;
+
+allow mtk_agpsd mnt_user_file:dir create_dir_perms;
+allow mtk_agpsd mnt_user_file:lnk_file create_file_perms;
+
+allow mtk_agpsd fuse:dir create_dir_perms;
+allow mtk_agpsd fuse:file create_file_perms;
+
+unix_socket_send(mtk_agpsd, mnld, mnld);

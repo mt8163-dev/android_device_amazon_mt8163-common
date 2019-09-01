@@ -1,0 +1,10 @@
+type thermal_exec, exec_type, file_type;
+type thermal, domain, domain_deprecated;
+
+init_daemon_domain(thermal)
+
+allow thermal proc_thermal:dir search;
+allow thermal proc_thermal:file rw_file_perms;
+allow thermal rild_socket:sock_file w_file_perms;
+
+allow thermal ril-daemon-mtk:unix_stream_socket connectto;

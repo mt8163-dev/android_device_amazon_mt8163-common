@@ -1,0 +1,34 @@
+# GPS
+allow system_server mnld:unix_dgram_socket sendto;
+allow system_server mnld_data_file:dir w_dir_perms;
+allow system_server mnld_data_file:sock_file create_file_perms;
+allow system_server mnld_data_file:file create_file_perms;
+
+# Persist
+allow system_server protect_s_data_file:dir r_dir_perms;
+
+# Sensors
+allow system_server hwmsensor_device:chr_file r_file_perms;
+
+# Wifi
+allow system_server wmtWifi_device:chr_file w_file_perms;
+
+# RGB Display Color
+allow system_server display_color_sysfs:file rw_file_perms;
+
+# Fast Charge
+allow system_server fast_charge_sysfs:file rw_file_perms;
+
+# Smart Wake
+allow system_server smartwake_sysfs:file rw_file_perms;
+
+# IR
+allow system_server irtx_device:chr_file rw_file_perms;
+
+# External storage
+allow system_server storage_stub_file:dir { getattr };
+
+# Guiext
+allow system_server guiext-server_service:service_manager find;
+
+allow system_server unlabeled:file { unlink };

@@ -1,0 +1,21 @@
+# nvram
+allow cameraserver nvdata_file:dir rw_dir_perms;
+allow cameraserver nvdata_file:file create_file_perms;
+allow cameraserver ccci_device:chr_file rw_file_perms;
+
+# camera
+allow cameraserver sensorservice_service:service_manager find;
+allow cameraserver system_server:unix_stream_socket { read write };
+allow cameraserver camera_device:chr_file rw_file_perms;
+allow cameraserver mtk_smi_device:chr_file rw_file_perms;
+allow cameraserver proc:file { read ioctl open };
+allow cameraserver devmap_device:chr_file r_file_perms;
+allow cameraserver devmap_device:chr_file { ioctl };
+allow cameraserver sysfs_devinfo:file rw_file_perms;
+allow cameraserver sysfs_membw:file rw_file_perms;
+allow cameraserver proc_meminfo:file { open read getattr };
+allow cameraserver sysfs_boot_mode:file r_file_perms;
+allow cameraserver sysfs_ddr_type:file r_file_perms;
+
+# PQ
+allow cameraserver pq_service:service_manager find;

@@ -1,0 +1,47 @@
+type meta_tst_exec, exec_type, file_type;
+type meta_tst, domain, domain_deprecated;
+
+init_daemon_domain(meta_tst)
+
+allow meta_tst ccci_device:chr_file rw_file_perms;
+allow meta_tst serial_device:chr_file rw_file_perms;
+allow meta_tst mdlog_device:chr_file rw_file_perms;
+
+allow meta_tst nvdata_file:dir create_dir_perms;
+allow meta_tst nvdata_file:file create_file_perms;
+
+allow meta_tst nvdata_device:blk_file rw_file_perms;
+allow meta_tst nvram_device:blk_file rw_file_perms;
+allow meta_tst proinfo_device:blk_file rw_file_perms;
+
+allow meta_tst fm_device:chr_file { read write open ioctl };
+
+allow meta_tst sysfs_gps_file:dir search;
+allow meta_tst sysfs_gps_file:file rw_file_perms;
+
+allow meta_tst gps_device:chr_file { read write open };
+allow meta_tst agpsd_data_file:dir search;
+allow meta_tst agpsd_data_file:sock_file write;
+allow meta_tst gps_data_file:file create_file_perms;
+allow meta_tst gps_data_file:dir rw_dir_perms;
+
+allow meta_tst mnld_exec:file { execute read open };
+allow meta_tst mnld_exec:file execute_no_trans;
+allow meta_tst stpgps_device:chr_file { open read write ioctl };
+allow meta_tst mnld_prop:property_service set;
+allow meta_tst mnld_data_file:file create_file_perms;
+allow meta_tst mnld_data_file:dir rw_dir_perms;
+
+# For GPS
+allow meta_tst port:tcp_socket { name_connect name_bind };
+allow meta_tst self:tcp_socket { create connect setopt bind };
+allow meta_tst self:tcp_socket { bind setopt listen accept read write };
+allow meta_tst node:tcp_socket node_bind;
+
+
+allow meta_tst sysfs:file write;
+
+allow meta_tst powerctl_prop:property_service set;
+unix_socket_connect(meta_tst, property, init)
+
+allow meta_tst self:capability { net_raw chown fsetid sys_nice net_admin fowner dac_override sys_admin };

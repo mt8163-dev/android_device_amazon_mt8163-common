@@ -1,0 +1,4 @@
+unix_socket_connect(radio, rild, ril-daemon-mtk)
+
+allow radio ril_mux_report_case_prop:property_service set;
+allow radio ril_msim_power_prop:property_service set;

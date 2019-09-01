@@ -1,0 +1,18 @@
+allow init ccci_device:chr_file { write ioctl };
+allow init devpts:chr_file ioctl;
+
+# Allow init to format formattable partitions…partitions
+allow init nvdata_device:blk_file write;
+allow init protect1_device:blk_file write;
+allow init protect2_device:blk_file write;
+
+allow init socket_device:sock_file { create setattr unlink };
+
+
+allow init tmpfs:lnk_file { create };
+allow init mnt_media_rw_file:dir { mounton };
+allow init asec_apk_file:dir { mounton };
+allow init perf_control_sysfs:file { getattr };
+allow init servicemanager:binder { call transfer };
+allow init sdcardd_exec:file r_file_perms;
+allow init wmtWifi_device:chr_file { write };
