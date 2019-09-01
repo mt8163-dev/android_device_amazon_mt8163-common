@@ -1,0 +1,12 @@
+WHAT IT DOES?
+=============
+lights.default.so Provide API to access the LEDs and Backlight in HAL layer.
+
+HOW IT WAS BUILT?
+==================
+The following libs from MediaTek:
+liblog.so
+
+HOW TO USE IT?
+==============
+light.default.so Provide API for JNI layer so that the LightsService can access the LEDs and Backlight in HAL layer.

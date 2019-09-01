@@ -1,0 +1,34 @@
+Please use "adb shell dumpsys meminfo" to get memtrack information.
+
+Check GL(or GL mtrack) catagory, and this is GPU memory usage.
+
+Check Graphics(or EGL mtrack) catagory, and this is ION memory usage.
+
+Example Output:
+Total PSS by category:
+201796 kB: Graphics
+78094 kB: Dalvik
+76047 kB: Native
+74808 kB: .so mmap
+42908 kB: code mmap
+32085 kB: image mmap
+28500 kB: .dex mmap
+27640 kB: GL
+18060 kB: Unknown
+15525 kB: Other mmap
+8871 kB: Dalvik Other
+8571 kB: .apk mmap
+7596 kB: Stack
+1238 kB: .ttf mmap
+203 kB: Other dev
+154 kB: Ashmem
+4 kB: Cursor
+4 kB: .jar mmap
+0 kB: Memtrack
+Total RAM: 926716 kB (status normal)
+Free RAM: 404673 kB (50237 cached pss + 196356 cached + 158080 free)
+Used RAM: 621459 kB (571867 used pss + 2824 buffers + 336 shmem + 46432 slab)
+Lost RAM: -99416 kB
+ZRAM: 3304 kB physical used for 10180 kB in swap (491516 kB total swap)
+Tuning: 128 (large 256), oom 184320 kB, restore limit 61440 kB (high-end-gfx)
+

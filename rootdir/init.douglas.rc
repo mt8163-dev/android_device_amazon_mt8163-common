@@ -1,0 +1,22 @@
+on fs
+    write /proc/bootprof "INIT:Mount_START"
+    symlink /dev/block/platform/soc /dev/block/platform/mtk-msdc.0
+    mount ext4 /dev/block/platform/mtk-msdc.0/by-name/system /system noatime wait ro commit=1,nodelalloc,discard,errors=panic
+    exec /sbin/resize_ext4 /dev/block/platform/mtk-msdc.0/by-name/userdata footer
+
+    # Do NOT list system partion in below fstab
+    # Otherwise, it will cause bootup failure due installd/system_server not working
+    mount_all /fstab.mt8163
+
+    mkdir /mnt/sqfs 0771 system system
+    mount squashfs loop@/system/sqfs/container.sqfs /mnt/sqfs wait ro context=u:object_r:squashfs_file:s0
+
+    #change partition permission
+    exec /system/etc/partition_permission.sh
+    write /proc/bootprof "INIT:Mount_END"
+
+on fs
+
+   mount iso9660 loop@/system/etc/iAmCdRom.iso /mnt/cd-rom ro
+
+
