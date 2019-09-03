@@ -1,6 +1,9 @@
 # ADB on recovery
 service.adb.root=1
 
+# SELinux
+ro.boot.selinux=disable
+
 # set default USB configuration
 persist.sys.usb.config=mtp,adb
 
@@ -20,7 +23,7 @@ dalvik.vm.heapsize=256m
 ro.camera.sound.forced=0
 ro.audio.silent=0
 
-ro.sf.lcd_density=160
+ro.sf.lcd_density=213
 
 # wifi rssi->bar thresholds
 persist.wifi.rssi.thresholds=-92,-79,-70,-60
