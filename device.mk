@@ -30,7 +30,6 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.usb.host.xml:system/etc/permissions/android.hardware.usb.host.xml \
     frameworks/native/data/etc/android.hardware.wifi.direct.xml:system/etc/permissions/android.hardware.wifi.direct.xml \
     frameworks/native/data/etc/android.hardware.wifi.xml:system/etc/permissions/android.hardware.wifi.xml \
-    frameworks/native/data/etc/android.software.midi.xml:system/etc/permissions/android.software.midi.xml \
     frameworks/native/data/etc/android.software.sip.voip.xml:system/etc/permissions/android.software.sip.voip.xml \
     frameworks/native/data/etc/android.software.webview.xml:system/etc/permissions/android.software.webview.xml \
     frameworks/native/data/etc/tablet_core_hardware.xml:system/etc/permissions/tablet_core_hardware.xml
@@ -71,13 +70,17 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
 	bluetooth.default
 
+# OMX
+PRODUCT_PACKAGES += \
+    libdashplayer
+
 # Graphics
 PRODUCT_PACKAGES += \
     libion
 	
 # Power
-PRODUCT_PACKAGES += \
-	power.mt8163
+#PRODUCT_PACKAGES += \
+	#power.mt8163
 
 # Network
 PRODUCT_PACKAGES += \
@@ -94,4 +97,4 @@ $(call inherit-product, frameworks/native/build/tablet-7in-hdpi-1024-dalvik-heap
 $(call inherit-product-if-exists, frameworks/native/build/phone-xxhdpi-2048-hwui-memory.mk)
 
 # Get non-open-source specific aspects
-$(call inherit-product-if-exists, $(VENDOR_COMMON)/mustang-vendor.mk)
+$(call inherit-product-if-exists, $(VENDOR_COMMON)/douglas-vendor.mk)

@@ -44,7 +44,9 @@ ifdef CONFIG_DRIVER_WEXT
 endif
 
 # To force sizeof(enum) = 4
-L_CFLAGS += -mabi=aapcs-linux
+ifeq ($(TARGET_ARCH),arm)
+L_CFLAGS += -mabi=ilp32
+endif
 
 ifdef CONFIG_ANDROID_LOG
 L_CFLAGS += -DCONFIG_ANDROID_LOG
