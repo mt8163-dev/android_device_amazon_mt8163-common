@@ -1,0 +1,6 @@
+on fs
+    wait /dev/block/platform
+    symlink /dev/block/platform/soc /dev/block/platform/mtk-msdc.0
+# This is for preloader update
+on fs
+    write /sys/block/mmcblk0boot0/force_ro 0

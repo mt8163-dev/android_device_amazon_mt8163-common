@@ -11,6 +11,12 @@ TARGET_SPECIFIC_HEADER_PATH := $(DEVICE_COMMON)/include
 TARGET_BOARD_PLATFORM := mt8163
 TARGET_BOARD_PLATFORM_GPU := mali-720mp2
 
+# Flags
+TARGET_GLOBAL_CFLAGS += -mfpu=neon -mfloat-abi=softfp
+TARGET_GLOBAL_CPPFLAGS += -DMTK_HARDWARE -mfpu=neon -mfloat-abi=softfp
+COMMON_GLOBAL_CFLAGS += -DMTK_HARDWARE -DREFRESH_RATE=60
+COMMON_GLOBAL_CFLAGS += -DAMAZON_LOG -DADD_LEGACY_ACQUIRE_BUFFER_SYMBOL
+COMMON_GLOBAL_CFLAGS += -DNO_SECURE_DISCARD
 
 # Bootloader
 TARGET_NO_BOOTLOADER := true
@@ -78,9 +84,15 @@ BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := $(DEVICE_COMMON)/bluetooth
 # Graphics
 BOARD_EGL_CFG := $(DEVICE_COMMON)/configs/egl.cfg
 USE_OPENGL_RENDERER := true
-VSYNC_EVENT_PHASE_OFFSET_NS := 0
-TARGET_RUNNING_WITHOUT_SYNC_FRAMEWORK := true
-NUM_FRAMEBUFFER_SURFACE_BUFFERS := 3
+TARGET_USES_C2D_COMPOSITION := true
+TARGET_USES_OVERLAY := true
+TARGET_USES_ION := true
+TARGET_DISPLAY_USE_RETIRE_FENCE := true
+MAX_EGL_CACHE_KEY_SIZE := 12*1024
+MAX_EGL_CACHE_SIZE := 1024*1024
+
+# Surfaceflinger
+TARGET_FORCE_HWC_FOR_VIRTUAL_DISPLAYS := true
 
 # Filesystem
 BOARD_BOOTIMAGE_PARTITION_SIZE := 16777216
@@ -88,7 +100,6 @@ BOARD_RECOVERYIMAGE_PARTITION_SIZE := 20971520
 BOARD_SYSTEMIMAGE_PARTITION_SIZE := 1692925952
 BOARD_USERDATAIMAGE_PARTITION_SIZE := 11633933824
 BOARD_CACHEIMAGE_PARTITION_SIZE := 499261440
-BOARD_VENDORIMAGE_PARTITION_SIZE := 224350208
 BOARD_FLASH_BLOCK_SIZE := 131072
 
 TARGET_USERIMAGES_USE_EXT4 := true
@@ -99,24 +110,24 @@ BLOCK_BASED_OTA := true
 BOARD_SECCOMP_POLICY += $(DEVICE_COMMON)/seccomp
 
 # SELinux
-#BOARD_SEPOLICY_DIRS += $(DEVICE_COMMON)/sepolicy
+BOARD_SEPOLICY_DIRS += $(DEVICE_COMMON)/sepolicy
 
 # Vold
 TARGET_USE_CUSTOM_LUN_FILE_PATH := /sys/devices/platform/mt_usb/musb-hdrc.0.auto/gadget/lun%d/file
 
 # Shims
-LINKER_FORCED_SHIM_LIBS := \
-TARGET_LD_SHIM_LIBS := \
-    /system/lib/libasp.so|libshim_liblog.so \
-    /system/lib64/libasp.so|libshim_liblog.so \
-    /system/lib/liblog.so|libshim_liblog.so \
-    /system/lib64/liblog.so|libshim_liblog.so \
-    /system/lib/libcutils.so|libshim_liblog.so \
-    /system/lib64/libcutils.so|libshim_liblog.so \
-    /system/lib/libtz_uree.so|libshim_tz_uree.so \
-    /system/lib64/litz_uree.so|libshim_tz_uree.so \
-    /system/lib/libgralloc_extra.so|libshim_gralloc_extra.so \
-    /system/lib64/libgralloc_extra.so|libshim_gralloc_extra.so
+# Are we using modified cutils & liblog? Shims are a bit weird on LP.
+#TARGET_LD_SHIM_LIBS := \
+    #/system/lib/libasp.so|libshim_liblog.so \
+    #/system/lib64/libasp.so|libshim_liblog.so \
+    #/system/lib/liblog.so|libshim_liblog.so \
+    #/system/lib64/liblog.so|libshim_liblog.so \
+    #/system/lib/libcutils.so|libshim_liblog.so \
+    #/system/lib64/libcutils.so|libshim_liblog.so \
+    #/system/lib/libtz_uree.so|libshim_tz_uree.so \
+    #/system/lib64/litz_uree.so|libshim_tz_uree.so \
+    #/system/lib/libgralloc_extra.so|libshim_gralloc_extra.so \
+    #/system/lib64/libgralloc_extra.so|libshim_gralloc_extra.so
 
 # TWRP
 ifneq (,$(strip $(wildcard bootable/recovery-twrp/twrp.cpp)))

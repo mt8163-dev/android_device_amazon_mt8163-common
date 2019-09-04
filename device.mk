@@ -44,11 +44,17 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/media/media_codecs.xml:system/etc/media_codecs.xml \
     $(LOCAL_PATH)/configs/media/media_profiles.xml:system/etc/media_profiles.xml
 
+
+# MD32_P & MD32_D
+    $(LOCAL_PATH)/etc/firmware/md32_p.bin:system/etc/firmware/md32_p.bin \
+    $(LOCAL_PATH)/etc/firmware/md32_d.bin:system/etc/firmware/md32_d.bin
+
 # Ramdisk
 PRODUCT_COPY_FILES += \
     $(call find-copy-subdir-files,*,$(DEVICE_COMMON)/rootdir,root)
 
 # Shims
+# Are we using modified cutils & liblog? Shims are a bit weird in LP.
 PRODUCT_PACKAGES += \
 	libshim_liblog \
         libshim_gralloc_extra \
@@ -64,7 +70,8 @@ PRODUCT_PACKAGES += \
     libaudio-resampler \
     libtinyalsa \
     libtinycompress \
-    libtinyxml
+    libtinyxml \
+    libaudioroute
     
 # Bluetooth
 PRODUCT_PACKAGES += \
@@ -79,8 +86,8 @@ PRODUCT_PACKAGES += \
     libion
 	
 # Power
-#PRODUCT_PACKAGES += \
-	#power.mt8163
+PRODUCT_PACKAGES += \
+	power.default
 
 # Network
 PRODUCT_PACKAGES += \
