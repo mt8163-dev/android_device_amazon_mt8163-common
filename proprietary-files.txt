@@ -34,7 +34,6 @@ lib/hw/audio.primary.mt8163.so
 lib/hw/camera.mt8163.so
 lib/hw/hwcomposer.mt8163.so
 lib/hw/gralloc.mt8163.mali.so
-lib/hw/keystore.mt8163.so
 lib/hw/memtrack.mt8163.so
 lib/hw/perfboost.default.so
 lib/hw/perfboost.mt8163.so
