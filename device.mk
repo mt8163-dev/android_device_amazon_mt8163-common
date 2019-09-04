@@ -46,6 +46,7 @@ PRODUCT_COPY_FILES += \
 
 
 # MD32_P & MD32_D
+PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/etc/firmware/md32_p.bin:system/etc/firmware/md32_p.bin \
     $(LOCAL_PATH)/etc/firmware/md32_d.bin:system/etc/firmware/md32_d.bin
 
