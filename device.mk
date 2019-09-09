@@ -47,6 +47,13 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/etc/firmware/md32_p.bin:system/etc/firmware/md32_p.bin \
     $(LOCAL_PATH)/etc/firmware/md32_d.bin:system/etc/firmware/md32_d.bin
 
+# EGL Stuff. This is a shit but there's no other way.
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/lib/egl/libGLES_mali.so:system/vendor/lib/egl/libGLES_mali.so \
+    $(LOCAL_PATH)/lib/egl/libGLES_android.so:system/vendor/lib/egl/libGLES_android.so \
+    $(LOCAL_PATH)/lib64/egl/libGLES_mali.so:system/vendor/lib64/egl/libGLES_mali.so \
+    $(LOCAL_PATH)/lib64/egl/libGLES_android.so:system/vendor/lib64/egl/libGLES_android.so
+
 # Ramdisk
 PRODUCT_COPY_FILES += \
     $(call find-copy-subdir-files,*,$(DEVICE_COMMON)/rootdir,root)
