@@ -102,7 +102,6 @@ lib/libfeatureiodrv.so
 lib/libfile_op.so
 lib/libged.so
 lib/libgpu_aux.so
-lib/libgralloc_extra.so
 lib/libgui_ext.so
 lib/libhal_effects.so
 lib/libhwm.so
@@ -234,7 +233,6 @@ lib64/libfeatureiodrv.so
 lib64/libfile_op.so
 lib64/libged.so
 lib64/libgpu_aux.so
-lib64/libgralloc_extra.so
 lib64/libgui_ext.so
 lib64/libhal_effects.so
 lib64/libhwm.so
