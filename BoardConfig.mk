@@ -51,16 +51,19 @@ BOARD_MKBOOTIMG_ARGS := \
     --tags_offset $(BOARD_KERNEL_TAGS_OFFSET) \
     --second_offset $(BOARD_SECOND_OFFSET)
 
-TARGET_PREBUILT_KERNEL := device/amazon/douglas/kernel
+#TARGET_PREBUILT_KERNEL := device/amazon/douglas/kernel
 TARGET_KERNEL_ARCH := arm64
 
+BOARD_KERNEL_IMAGE_NAME := Image.gz-dtb
+TARGET_KERNEL_SOURCE := kernel/amazon/douglas
+TARGET_KERNEL_CONFIG := douglas_defconfig
 BOARD_KERNEL_CMDLINE := bootopt=64S3,32N2,64N2
 BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
 
 BOARD_HAS_MTK_HARDWARE := true
 
 # Binder API version
-TARGET_USES_64_BIT_BINDER := false
+TARGET_USES_64_BIT_BINDER := true
 
 BOARD_NO_SECURE_DISCARD := true
 
@@ -93,6 +96,7 @@ MAX_EGL_CACHE_SIZE := 1024*1024
 
 # Surfaceflinger
 TARGET_FORCE_HWC_FOR_VIRTUAL_DISPLAYS := true
+NUM_FRAMEBUFFER_SURFACE_BUFFERS := 3
 
 # Filesystem
 BOARD_BOOTIMAGE_PARTITION_SIZE := 16777216
@@ -107,10 +111,10 @@ TARGET_USERIMAGES_USE_EXT4 := true
 BLOCK_BASED_OTA := true
 
 # Seccomp filter
-BOARD_SECCOMP_POLICY += $(DEVICE_COMMON)/seccomp
+#BOARD_SECCOMP_POLICY += $(DEVICE_COMMON)/seccomp
 
 # SELinux
-BOARD_SEPOLICY_DIRS += $(DEVICE_COMMON)/sepolicy
+# BOARD_SEPOLICY_DIRS += $(DEVICE_COMMON)/sepolicy
 
 # Vold
 TARGET_USE_CUSTOM_LUN_FILE_PATH := /sys/devices/platform/mt_usb/musb-hdrc.0.auto/gadget/lun%d/file
@@ -153,5 +157,5 @@ MALLOC_SVELTE := true
 # Disable API check
 WITHOUT_CHECK_API := true
 
-# Little hack for build with prebuilt kernel
-$(shell mkdir -p $(OUT)/obj/KERNEL_OBJ/usr)
+# Little hack for build with prebuilt kernel. Not needed if using kernel source.
+#$(shell mkdir -p $(OUT)/obj/KERNEL_OBJ/usr)

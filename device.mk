@@ -81,7 +81,8 @@ PRODUCT_PACKAGES += \
 
 # Graphics
 PRODUCT_PACKAGES += \
-    libion
+    libion \
+    libgralloc_extra
 	
 # Power
 PRODUCT_PACKAGES += \
