@@ -1,9 +1,0 @@
-type em_svr_exec, exec_type, file_type;
-type em_svr, domain, domain_deprecated;
-
-init_daemon_domain(em_svr)
-
-allow em_svr gsensor_device:chr_file { read ioctl open };
-allow em_svr gyroscope_device:chr_file { read ioctl open };
-allow em_svr nvdata_file:dir { write read open add_name search };
-allow em_svr nvdata_file:file { write getattr setattr read create open };

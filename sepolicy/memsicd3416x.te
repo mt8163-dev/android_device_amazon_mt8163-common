@@ -1,7 +1,0 @@
-type memsicd3416x_exec, exec_type, file_type;
-type memsicd3416x, domain, domain_deprecated;
-
-init_daemon_domain(memsicd3416x)
-
-allow memsicd3416x msensor_device:chr_file rw_file_perms;
-allow memsicd3416x gsensor_device:chr_file rw_file_perms;

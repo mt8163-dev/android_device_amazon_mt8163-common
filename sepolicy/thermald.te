@@ -1,7 +1,0 @@
-type thermald_exec, exec_type, file_type;
-type thermald, domain, domain_deprecated;
-
-init_daemon_domain(thermald)
-
-allow thermald proc_thermal:dir search;
-allow thermald proc_thermal:file rw_file_perms;

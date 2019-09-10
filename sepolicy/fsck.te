@@ -1,3 +1,0 @@
-allow fsck protect1_device:blk_file rw_file_perms;
-allow fsck protect2_device:blk_file rw_file_perms;
-allow fsck nvdata_device:blk_file rw_file_perms;

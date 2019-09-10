@@ -1,6 +1,0 @@
-# PQ
-allow untrusted_app pq_service:service_manager find;
-
-# These are safe for an untrusted_app -- they are the external SD card
-allow untrusted_app fuseblk:dir search;
-allow untrusted_app fuseblk:file { getattr read };

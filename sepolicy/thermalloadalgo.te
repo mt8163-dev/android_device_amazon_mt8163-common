@@ -1,6 +1,0 @@
-type thermalloadalgo_exec, exec_type, file_type;
-type thermalloadalgo, domain, domain_deprecated;
-
-init_daemon_domain(thermalloadalgo)
-
-allow thermalloadalgo thermalloadalgo:netlink_socket { create bind write read };

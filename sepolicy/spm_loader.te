@@ -1,6 +1,0 @@
-type spm_loader_exec, exec_type, file_type;
-type spm_loader, domain, domain_deprecated;
-
-init_daemon_domain(spm_loader)
-
-allow spm_loader spm_device:chr_file r_file_perms;

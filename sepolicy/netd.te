@@ -1,4 +1,0 @@
-# Wifi
-allow netd wmtWifi_device:chr_file w_file_perms;
-
-allow netd self:capability sys_module;
