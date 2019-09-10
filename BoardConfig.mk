@@ -60,19 +60,17 @@ BOARD_MKBOOTIMG_ARGS := \
     --tags_offset $(BOARD_KERNEL_TAGS_OFFSET) \
     --second_offset $(BOARD_SECOND_OFFSET)
 
-#TARGET_PREBUILT_KERNEL := device/amazon/douglas/kernel
+TARGET_PREBUILT_KERNEL := device/amazon/douglas/kernel
 TARGET_KERNEL_ARCH := arm64
-
-BOARD_KERNEL_IMAGE_NAME := Image.gz-dtb
-TARGET_KERNEL_SOURCE := kernel/amazon/douglas
-TARGET_KERNEL_CONFIG := douglas_defconfig
+#BOARD_KERNEL_IMAGE_NAME := Image.gz-dtb
+#TARGET_KERNEL_SOURCE := kernel/amazon/douglas
+#TARGET_KERNEL_CONFIG := douglas_defconfig
 BOARD_KERNEL_CMDLINE := bootopt=64S3,32N2,64N2
 BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
 
 
 # Binder API version
 TARGET_USES_64_BIT_BINDER := true
-
 BOARD_NO_SECURE_DISCARD := true
 
 # WIFI
@@ -103,7 +101,7 @@ TARGET_RUNNING_WITHOUT_SYNC_FRAMEWORK := true
 TARGET_FORCE_HWC_FOR_VIRTUAL_DISPLAYS := true
 MAX_VIRTUAL_DISPLAY_DIMENSION := 1
 MAX_EGL_CACHE_KEY_SIZE := 12*1024
-MAX_EGL_CACHE_SIZE := 1024*1024F
+MAX_EGL_CACHE_SIZE := 1024*1024
 
 # VSYNC
 SF_VSYNC_EVENT_PHASE_OFFSET_NS := -8000000
@@ -165,24 +163,10 @@ endif
 
 
 # TWRP
-ifneq (,$(strip $(wildcard bootable/recovery-twrp/twrp.cpp)))
-RECOVERY_VARIANT := twrp
-endif
-DEVICE_RESOLUTION := 600x1024
-TW_EXCLUDE_MTP := false
-RECOVERY_SDCARD_ON_DATA := true
-TW_BRIGHTNESS_PATH := /sys/devices/platform/leds-mt65xx/leds/lcd-backlight/brightness
-TARGET_RECOVERY_LCD_BACKLIGHT_PATH := /sys/devices/platform/leds-mt65xx/leds/lcd-backlight/brightness
-RECOVERY_GRAPHICS_USE_LINELENGTH := true
-RECOVERY_FSTAB_VERSION := 2
-TW_THEME := landscape_mdpi
-#TWRP_EVENT_LOGGING := true
-RECOVERY_TOUCHSCREEN_SWAP_XY := true
-#RECOVERY_GRAPHICS_USE_LINELENGTH := true
-#RECOVERY_TOUCHSCREEN_FLIP_Y := true 
-RECOVERY_TOUCHSCREEN_FLIP_X := true
-BOARD_HAS_FLIPPED_SCREEN := true
-
+TARGET_RECOVERY_FSTAB := device/amazon/douglas/recovery.fstab
+TARGET_RECOVERY_PIXEL_FORMAT := "RGBX_8888"
+BOARD_HAS_NO_SELECT_BUTTON := true
+BOARD_USE_CUSTOM_RECOVERY_FONT := \"roboto_23x41.h\"
 MALLOC_SVELTE := true
 
 # BACKLIGHT
@@ -192,8 +176,5 @@ TARGET_PROVIDES_LIBLIGHT := true
 WITHOUT_CHECK_API := true
 
 # Little hack for build with prebuilt kernel. Not needed if using kernel source.
-#$(shell mkdir -p $(OUT)/obj/KERNEL_OBJ/usr)
+$(shell mkdir -p $(OUT)/obj/KERNEL_OBJ/usr)
 
-# Applypatch fix
-$(shell mkdir -p out/target/douglas/obj/SHARED_LIBRARIES/libbase_intermediates)
-$(shell touch out/target/douglas/obj/SHARED_LIBRARIES/libbase_intermediates/export_includes)
