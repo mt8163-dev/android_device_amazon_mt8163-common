@@ -10,6 +10,7 @@ TARGET_SPECIFIC_HEADER_PATH := $(DEVICE_COMMON)/include
 # Platform
 TARGET_BOARD_PLATFORM := mt8163
 TARGET_BOARD_PLATFORM_GPU := mali-720mp2
+BOARD_USES_MTK_AUDIO := true
 
 # Flags
 TARGET_GLOBAL_CFLAGS += -mfpu=neon -mfloat-abi=softfp
@@ -20,6 +21,10 @@ COMMON_GLOBAL_CFLAGS += -DNO_SECURE_DISCARD
 
 # Bootloader
 TARGET_NO_BOOTLOADER := true
+
+# Mediatek support
+BOARD_USES_MTK_HARDWARE := true
+MTK_HARDWARE := true
 
 # Architecture
 TARGET_ARCH := arm64
@@ -60,7 +65,6 @@ TARGET_KERNEL_CONFIG := douglas_defconfig
 BOARD_KERNEL_CMDLINE := bootopt=64S3,32N2,64N2
 BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
 
-BOARD_HAS_MTK_HARDWARE := true
 
 # Binder API version
 TARGET_USES_64_BIT_BINDER := true
@@ -89,10 +93,28 @@ BOARD_EGL_CFG := $(DEVICE_COMMON)/configs/egl.cfg
 USE_OPENGL_RENDERER := true
 TARGET_USES_C2D_COMPOSITION := true
 TARGET_USES_OVERLAY := true
-TARGET_USES_ION := true
-TARGET_DISPLAY_USE_RETIRE_FENCE := true
+TARGET_USES_OVERLAY := true
+NUM_FRAMEBUFFER_SURFACE_BUFFERS := 3
+TARGET_RUNNING_WITHOUT_SYNC_FRAMEWORK := true
+TARGET_FORCE_HWC_FOR_VIRTUAL_DISPLAYS := true
+MAX_VIRTUAL_DISPLAY_DIMENSION := 1
 MAX_EGL_CACHE_KEY_SIZE := 12*1024
-MAX_EGL_CACHE_SIZE := 1024*1024
+MAX_EGL_CACHE_SIZE := 1024*1024F
+
+# VSYNC
+SF_VSYNC_EVENT_PHASE_OFFSET_NS := -8000000
+VSYNC_EVENT_PHASE_OFFSET_NS := -8000000
+PRESENT_TIME_OFFSET_FROM_VSYNC_NS := 0
+MTK_HWC_SUPPORT := yes
+MTK_HWC_VERSION := 1.4.1
+
+# Bootanimation
+TARGET_BOOTANIMATION_MULTITHREAD_DECODE := true
+TARGET_BOOTANIMATION_PRELOAD := true
+TARGET_BOOTANIMATION_TEXTURE_CACHE := true
+TARGET_SCREEN_WIDTH := 800
+TARGET_SCREEN_HEIGHT := 1280
+
 
 # Surfaceflinger
 TARGET_FORCE_HWC_FOR_VIRTUAL_DISPLAYS := true
@@ -108,13 +130,14 @@ BOARD_FLASH_BLOCK_SIZE := 131072
 
 TARGET_USERIMAGES_USE_EXT4 := true
 
+
+# OTA Stuff
 BLOCK_BASED_OTA := true
+TARGET_OTA_ASSERT_DEVICE:= douglas
 
-# Seccomp filter
-#BOARD_SECCOMP_POLICY += $(DEVICE_COMMON)/seccomp
-
-# SELinux
-# BOARD_SEPOLICY_DIRS += $(DEVICE_COMMON)/sepolicy
+# SELinux stuff
+BOARD_SECCOMP_POLICY += $(DEVICE_COMMON)/seccomp
+BOARD_SEPOLICY_DIRS += $(DEVICE_COMMON)/sepolicy
 
 # Vold
 TARGET_USE_CUSTOM_LUN_FILE_PATH := /sys/devices/platform/mt_usb/musb-hdrc.0.auto/gadget/lun%d/file
@@ -132,6 +155,14 @@ TARGET_USE_CUSTOM_LUN_FILE_PATH := /sys/devices/platform/mt_usb/musb-hdrc.0.auto
     #/system/lib64/litz_uree.so|libshim_tz_uree.so \
     #/system/lib/libgralloc_extra.so|libshim_gralloc_extra.so \
     #/system/lib64/libgralloc_extra.so|libshim_gralloc_extra.so
+
+# Dexpreopt
+ifeq ($(HOST_OS),linux)
+  ifeq ($(TARGET_BUILD_VARIANT),user)
+		WITH_DEXPREOPT ?= true
+  endif
+endif
+
 
 # TWRP
 ifneq (,$(strip $(wildcard bootable/recovery-twrp/twrp.cpp)))
@@ -153,6 +184,9 @@ RECOVERY_TOUCHSCREEN_FLIP_X := true
 BOARD_HAS_FLIPPED_SCREEN := true
 
 MALLOC_SVELTE := true
+
+# BACKLIGHT
+TARGET_PROVIDES_LIBLIGHT := true
 
 # Disable API check
 WITHOUT_CHECK_API := true

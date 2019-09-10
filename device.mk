@@ -41,11 +41,31 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/media_codecs.xml:system/etc/media_codecs.xml \
     $(LOCAL_PATH)/configs/media_profiles.xml:system/etc/media_profiles.xml
 
+# Symbols for Mediatek
+PRODUCT_PACKAGES += \
+     libshim_asp \
+     libshim_egl \
+     libshim_gui \
+     libshim_camera \
+     libshim_sensor \
+     libshim_protobuf
+
+# Other
+PRODUCT_PACKAGES += \
+    librs_jni \
+    libnl_2 \
+    com.android.future.usb.accessory
 
 # MD32_P & MD32_D
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/etc/firmware/md32_p.bin:system/etc/firmware/md32_p.bin \
     $(LOCAL_PATH)/etc/firmware/md32_d.bin:system/etc/firmware/md32_d.bin
+
+# Thermal
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/thermal.conf:system/etc/.tp/thermal.conf \
+    $(LOCAL_PATH)/configs/thermal.off.conf:system/etc/.tp/thermal.off.conf \
+    $(LOCAL_PATH)/configs/ht120.mtc:system/etc/.tp/.htc120.mtc
 
 # EGL Stuff. This is a shit but there's no other way.
 PRODUCT_COPY_FILES += \
@@ -60,10 +80,10 @@ PRODUCT_COPY_FILES += \
 
 # Shims
 # Are we using modified cutils & liblog? Shims are a bit weird in LP.
-PRODUCT_PACKAGES += \
-	libshim_liblog \
-        libshim_gralloc_extra \
-        libshim_tz_uree
+#PRODUCT_PACKAGES += \
+	#libshim_liblog \
+        #libshim_gralloc_extra \
+        #libshim_tz_uree
 
 # Audio
 PRODUCT_PACKAGES += \
@@ -80,7 +100,9 @@ PRODUCT_PACKAGES += \
     
 # Bluetooth
 PRODUCT_PACKAGES += \
-	bluetooth.default
+	bluetooth.default \
+        libbluetooth_mtk \
+        libbt-vendor
 
 # OMX
 PRODUCT_PACKAGES += \
@@ -89,15 +111,24 @@ PRODUCT_PACKAGES += \
 # Graphics
 PRODUCT_PACKAGES += \
     libion \
-    libgralloc_extra
+    libgralloc_extra \
+    libcap
 	
 # Power
 PRODUCT_PACKAGES += \
 	power.default
+        
+# Lights
+PRODUCT_PACKAGES +=\
+    lights.mt8163
 
 # Network
 PRODUCT_PACKAGES += \
     netd \
+
+# Media Extractors
+BOARD_SECCOMP_POLICY := \
+    $(DEVICE_COMMON)/seccomp-policy
 
 WITH_EXFAT := true
 
