@@ -13,7 +13,7 @@ TARGET_BOARD_PLATFORM_GPU := mali-720mp2
 BOARD_USES_MTK_AUDIO := true
 
 # Project Config
-MTK_PROJECT_CONFIG ?= $(DEVICE_PATH)/ProjectConfig.mk
+MTK_PROJECT_CONFIG ?= $(DEVICE_COMMON)/ProjectConfig.mk
 include $(MTK_PROJECT_CONFIG)
 
 # Flags
@@ -193,3 +193,7 @@ WITHOUT_CHECK_API := true
 
 # Little hack for build with prebuilt kernel. Not needed if using kernel source.
 #$(shell mkdir -p $(OUT)/obj/KERNEL_OBJ/usr)
+
+# Applypatch fix
+$(shell mkdir -p out/target/douglas/obj/SHARED_LIBRARIES/libbase_intermediates)
+$(shell touch out/target/douglas/obj/SHARED_LIBRARIES/libbase_intermediates/export_includes)
