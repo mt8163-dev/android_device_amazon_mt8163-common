@@ -12,6 +12,10 @@ TARGET_BOARD_PLATFORM := mt8163
 TARGET_BOARD_PLATFORM_GPU := mali-720mp2
 BOARD_USES_MTK_AUDIO := true
 
+# Project Config
+MTK_PROJECT_CONFIG ?= $(DEVICE_PATH)/ProjectConfig.mk
+include $(MTK_PROJECT_CONFIG)
+
 # Flags
 TARGET_GLOBAL_CFLAGS += -mfpu=neon -mfloat-abi=softfp
 TARGET_GLOBAL_CPPFLAGS += -DMTK_HARDWARE -mfpu=neon -mfloat-abi=softfp
@@ -134,10 +138,6 @@ TARGET_USERIMAGES_USE_EXT4 := true
 # OTA Stuff
 BLOCK_BASED_OTA := true
 TARGET_OTA_ASSERT_DEVICE:= douglas
-
-# SELinux stuff
-BOARD_SECCOMP_POLICY += $(DEVICE_COMMON)/seccomp
-BOARD_SEPOLICY_DIRS += $(DEVICE_COMMON)/sepolicy
 
 # Vold
 TARGET_USE_CUSTOM_LUN_FILE_PATH := /sys/devices/platform/mt_usb/musb-hdrc.0.auto/gadget/lun%d/file
