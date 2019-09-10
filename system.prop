@@ -16,6 +16,8 @@ wifi.direct.interface=p2p0
 dalvik.vm.heapgrowthlimit=128m
 dalvik.vm.heapsize=256m
 
+ro.hardware.gralloc=mt8163.mali
+
 # audio
 ro.camera.sound.forced=0
 ro.audio.silent=0
