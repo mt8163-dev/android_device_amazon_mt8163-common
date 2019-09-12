@@ -1,0 +1,294 @@
+# MTK project .rc configure
+
+import init.mt8163.usb.rc
+import init.charging.rc
+import init.rc.ufsd
+import init.coredump.rc
+import init.douglas.rc
+
+on init
+    mount tmpfs tmpfs /mnt/media_rw/ mode=0755,uid=1000,gid=1000
+    mkdir /mnt/media_rw/usbotg 0700 media_rw media_rw
+    mkdir /storage/usbotg 0700 root root
+    chown root shell /sys/devices/platform/battery/Custom_RTC_SOC
+
+    ##ACOS_MOD_BEGIN {amazon_logd}
+    mkdir /dev/logd 0770 logd log
+    mount tmpfs tmpfs /dev/logd mode=0770,uid=1036,gid=1036,size=512K,context=u:object_r:logd_tmpfs:s0
+    ##ACOS_MOD_END {amazon_logd}
+
+    # Change dynamic_boost permission
+    chown system system /sys/devices/platform/dynamic_boost/dynamic_boost
+    chmod 0750 /sys/devices/platform/dynamic_boost/dynamic_boost
+
+    # enable armv8_deprecated instruction hooks
+    write /proc/sys/abi/swp 1
+
+# Disable all AAL functions by default
+    setprop persist.sys.aal.function 0
+
+on post-fs-data
+    start amzn_drmprov
+    start amzn_dha_hmac
+#
+# Connectivity related device nodes & configuration (begin)
+#
+
+#/dev/ttyMT2 for Connectivity BT/FM/GPS usage
+    chmod 0660 /dev/ttyMT2
+    chown system system /dev/ttyMT2
+
+
+# STP, WMT, GPS, FM and BT Driver
+#   insmod /system/lib/modules/mtk_hif_sdio.ko
+#   insmod /system/lib/modules/mtk_stp_wmt.ko
+#   insmod /system/lib/modules/mtk_stp_uart.ko
+#   insmod /system/lib/modules/mtk_stp_gps.ko
+#   insmod /system/lib/modules/mtk_stp_bt.ko
+#   insmod /system/lib/modules/mtk_fm_drv.ko
+#   insmod /system/lib/modules/mtk_wmt_wifi.ko
+
+
+# Create char device file for WMT, GPS, BT, FM, WIFI
+#    mknod /dev/stpwmt c 190 0;
+#    mknod /dev/stpgps c 191 0;
+#    mknod /dev/stpbt  c 192 0;
+
+#    chmod 0660 /dev/stpwmt
+#    chown system system /dev/stpwmt
+
+#    chmod 0660 /dev/wmtdetect
+#    chown system system /dev/wmtdetect
+
+    mknod /dev/wmtWifi c 153 0
+    chmod 0660 /dev/wmtWifi
+    chown system system /dev/wmtWifi
+
+#Camera
+    chmod 0660 /dev/GAF001AF
+    chown system camera /dev/GAF001AF
+   
+    chmod 0660 /dev/DW9714AF
+    chown system camera /dev/DW9714AF
+    
+    chmod 0660 /dev/AD5820AF
+    chown system camera /dev/AD5820AF
+    
+    chmod 0660 /dev/BU64745GWZAF
+    chown system camera /dev/BU64745GWZAF
+
+    chmod 0660 /dev/FM50AF
+    chown system camera /dev/FM50AF
+
+#SMB
+    chown system system /proc/smb/ScreenComm
+    chmod 0660 /proc/smb/ScreenComm
+ 
+# BT
+#    chmod 0660 /dev/stpbt
+#    chown bluetooth radio /dev/stpbt
+
+# GPS
+#    chown gps gps /dev/stpgps
+    chown gps gps /sys/class/gpsdrv/gps/pwrctl
+    chown gps gps /sys/class/gpsdrv/gps/suspend
+    chown gps gps /sys/class/gpsdrv/gps/state
+    chown gps gps /sys/class/gpsdrv/gps/pwrsave
+    chown gps gps /sys/class/gpsdrv/gps/status
+#    chmod 0660 /dev/stpgps
+
+# WiFi
+    mkdir /data/misc/wifi 0770 wifi wifi
+    mkdir /data/misc/wifi/sockets 0770 wifi wifi
+    mkdir /data/misc/wpa_supplicant 0770 wifi wifi
+    chown wifi wifi /data/misc/wifi
+
+#Define device for ATCID
+    chmod 660 /dev/ttyGS0 
+    chown system /dev/ttyGS0 
+    chmod 660 /dev/ttyGS1 
+    chown system /dev/ttyGS1
+
+#Disable for one Single loader
+# Load WiFi Driver
+#   insmod /system/lib/modules/wlan_mt.ko
+
+# Char device for BT 3.0 HS
+    mknod /dev/ampc0 c 151 0
+    chown bluetooth bluetooth /dev/ampc0
+    chmod 0660 /dev/ampc0
+
+#
+# Connectivity related device nodes & configuration (end)
+#
+
+# Encrypt phone function
+    setprop vold.post_fs_data_done 1
+
+on init
+    # Refer to http://source.android.com/devices/tech/storage/index.html
+    # It said, "Starting in Android 4.4, multiple external storage devices are surfaced to developers through
+    #           Context.getExternalFilesDirs(), Context.getExternalCacheDirs(), and Context.getObbDirs().
+    #           External storage devices surfaced through these APIs must be a semi-permanent part of the device (such as an SD card slot in a battery compartment).
+    #           Developers expect data stored in these locations to be available over long periods of time."
+    # Therefore, if the target doesn't support sd hot-plugging (Ex: the SD card slot in a battery compartment), we need to export SECONDARY_STORAGE in 'boot' section
+    #
+    export SECONDARY_STORAGE /storage/sdcard1
+    export SECONDARY_STORAGE_USB /storage/usbotg
+
+service fuse_usbotg /system/bin/sdcard -u 1023 -g 1023 -w 1023 -d /mnt/media_rw/usbotg /storage/usbotg
+    class late_start
+    disabled
+
+#
+# Connectivity related services (Begin)
+#
+
+service atci_service /system/bin/atci_service 
+	socket atci-service stream 660 radio system 
+	socket atci-serv-fw stream 660 radio system 
+	user root 
+        disabled
+	group radio system                         
+service atcid-daemon-u /system/bin/atcid
+	user system
+	group radio system media
+	disabled
+	oneshot
+
+service atcid-daemon-e /system/bin/atcid
+	user root
+	group radio system
+	disabled
+	oneshot
+
+on early_property:ro.build.type=eng
+start atci_service
+start atcid-daemon-e
+service audio-daemon /system/bin/audiocmdservice_atci
+    class main
+    socket atci-audio stream 660 media system
+    user media
+    group nvram media system sdcard_rw
+    disabled
+    oneshot
+
+service wmtLoader /system/bin/wmt_loader
+    user root
+    group root
+   class core
+    oneshot
+
+
+service conn_launcher /system/bin/6620_launcher -p /system/etc/firmware/
+    user system
+    group system
+    class core
+
+service thermal_log /system/bin/thermal_log.sh
+        class late_start
+        user system
+        group system
+        oneshot
+        disabled
+
+service thermal_qa /system/bin/ThermalBenchmarkAutomation.sh
+       class late_start
+       user root
+       group root
+       oneshot
+       disabled
+
+service battery_log /system/bin/battery_log.sh
+	class main
+	user root
+	group system
+	oneshot
+	disabled
+
+service temperature_log /system/bin/temperature_log.sh
+	class main
+	user root
+	group system
+	oneshot
+	disabled
+
+service dmesg_log /system/bin/dmesg_log.sh
+	class main
+	user root
+	group system
+	oneshot
+	disabled
+
+service gpu_mem_log /system/bin/gpu_mem_log.sh
+	class main
+	user root
+	group system
+	oneshot
+	disabled
+
+service logcat_log /system/bin/logcat_log.sh
+	class main
+	user root
+	group system
+	oneshot
+	disabled
+
+service amzn_drmprov /system/bin/amzn_drmprov_check
+	class main
+	user root
+	group system
+	oneshot
+	disabled
+
+service amzn_dha_hmac /system/bin/amzn_dha_hmac
+	class main
+	user root
+	group system
+	oneshot
+	disabled
+
+service cabc_on_off /system/bin/cabc_start_stop.sh
+	class main
+	user root
+	group system
+	oneshot
+	disabled
+
+on property:debug.log.thermal_qa.enable=y
+    start thermal_qa
+
+on property:vold.decrypt=trigger_restart_framework
+    start dmesg_log
+
+on property:debug.log.battery.enable=y
+    start battery_log
+
+on property:debug.log.temperature.enable=y
+    start temperature_log
+
+on property:debug.log.dmesg.enable=y
+    start dmesg_log
+
+on property:debug.log.gpu_mem.enable=y
+    start gpu_mem_log
+
+on property:debug.log.logcat.enable=y
+    start logcat_log
+
+on property:sys.hwc.video_mode=1
+    start cabc_on_off
+
+on property:sys.hwc.video_mode=0
+    start cabc_on_off
+
+on property:sys.battery_charging_cv_level=1
+    write /sys/devices/platform/battery/Custom_Charging_Mode 1
+
+on property:sys.battery_charging_cv_level=0
+    write /sys/devices/platform/battery/Custom_Charging_Mode 0
+
+#
+# Connectivity related services (End)
+#
+
