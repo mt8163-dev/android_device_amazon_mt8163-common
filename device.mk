@@ -101,15 +101,12 @@ WITH_EXFAT := true
 
 PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
 
-# OTAS
+# Optional OTAS
 PRODUCT_PROPERTY_OVERRIDES += ro.updater.uri=https://raw.githubusercontent.com/CM12-1-Douglas/OTA_MANIFEST/master/Updater.xml
 PRODUCT_PROPERTY_OVERRIDES += ro.updater.oldrelease.url=https://raw.githubusercontent.com/CM12-1-Douglas/OtaUpdater/master/updater-old-release.json
 PRODUCT_PROPERTY_OVERRIDES += ro.rom.version=$(shell date +%Y%m%d)
 PRODUCT_PROPERTY_OVERRIDES += ro.otaupdate.enable_toast=true
 PRODUCT_PROPERTY_OVERRIDES += ro.otaupdate.enable_log=true
-
-PRODUCT_COPY_FILES += \
-    $(DEVICE_BASE)/ota/OTAS.apk:system/app/OTA_Updates/OTAS.apk
 
 # call dalvik heap config
 $(call inherit-product, frameworks/native/build/tablet-7in-hdpi-1024-dalvik-heap.mk)
