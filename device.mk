@@ -39,10 +39,9 @@ PRODUCT_COPY_FILES += \
     frameworks/av/media/libstagefright/data/media_codecs_google_audio.xml:system/etc/media_codecs_google_audio.xml \
     frameworks/av/media/libstagefright/data/media_codecs_google_telephony.xml:system/etc/media_codecs_google_telephony.xml \
     frameworks/av/media/libstagefright/data/media_codecs_google_video_le.xml:system/etc/media_codecs_google_video_le.xml \
-    frameworks/av/media/libstagefright/data/media_codecs_google_video.xml:system/etc/media_codecs_google_video.xml \
     $(DEVICE_BASE)/configs/media_codecs.xml:system/etc/media_codecs.xml \
-    $(DEVICE_BASE)/configs/media_profiles.xml:system/etc/media_profiles.xml
-    #$(DEVICE_BASE)/configs/mtk_omx_core.cfg:system/etc/mtk_omx_core.cfg
+    $(DEVICE_BASE)/configs/media_profiles.xml:system/etc/media_profiles.xml \
+    $(DEVICE_BASE)/configs/audio_device.xml:system/etc/audio_device.xml
 
 # Audio
 PRODUCT_PACKAGES += \

@@ -41,6 +41,7 @@ lib/libMtkOmxVenc.so
 lib/libSwJpgCodec.so
 lib/lib_uree_mtk_crypto.so
 lib/lib_uree_mtk_modular_drm.so
+lib/lib_uree_mtk_video_secure_al.so
 lib/libacdk.so
 lib/libaed.so
 lib/libamazon_remotes.so
@@ -72,6 +73,7 @@ lib/libbt-vendor.so
 lib/libbwc.so
 lib/libcam.camadapter.so
 lib/libcam.camshot.so
+lib/libcam.campipe.so
 lib/libcam.client.so
 lib/libcam.device1.so
 lib/libcam.device3.so
@@ -109,6 +111,7 @@ lib/libeffects.so
 lib/libfeatureio.so
 lib/libfeatureiodrv.so
 lib/libfile_op.so
+lib/libGdmaScalerPipe.so
 lib/libged.so
 lib/libgpu_aux.so
 lib/libgralloc_extra.so
@@ -173,6 +176,8 @@ lib/hw/memtrack.mt8163.so
 lib/hw/perfboost.mt8163.so
 lib/hw/sensors.mt8163.so
 lib/hw/thermal.mt8163.so
+lib/hw/lights.mt8163.so
+lib/hw/keystore.mt8163.so
 lib/modules/ufsd.ko
 lib/modules/br_netfilter.ko
 lib/modules/xt_physdev.ko
@@ -182,6 +187,7 @@ lib64/libJpgEncPipe.so
 lib64/libMtkOmxCore.so
 lib64/lib_uree_mtk_crypto.so
 lib64/lib_uree_mtk_modular_drm.so
+lib64/lib_uree_mtk_video_secure_al.so
 lib64/libacdk.so
 lib64/libaed.so
 lib64/libamazon_remotes.so
@@ -202,6 +208,7 @@ lib64/libbluetoothem_mtk.so
 lib64/libbwc.so
 lib64/libcam.camadapter.so
 lib64/libcam.camshot.so
+lib64/libcam.campipe.so
 lib64/libcam.client.so
 lib64/libcam.device1.so
 lib64/libcam.device3.so
@@ -297,6 +304,8 @@ lib64/hw/memtrack.mt8163.so
 lib64/hw/perfboost.mt8163.so
 lib64/hw/sensors.mt8163.so
 lib64/hw/thermal.mt8163.so
+lib64/hw/lights.mt8163.so
+lib64/hw/keystore.mt8163.so
 lib64/soundfx/libaudiofx.so
 usr/idc/amazon_touch.idc
 usr/idc/lightning-device.idc
