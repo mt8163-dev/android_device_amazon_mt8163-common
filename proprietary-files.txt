@@ -172,11 +172,9 @@ lib/hw/audio.primary.mt8163.so
 lib/hw/camera.mt8163.so
 lib/hw/hwcomposer.mt8163.so
 lib/hw/gralloc.mt8163.mali.so
-lib/hw/memtrack.mt8163.so
 lib/hw/perfboost.mt8163.so
 lib/hw/sensors.mt8163.so
 lib/hw/thermal.mt8163.so
-lib/hw/lights.mt8163.so
 lib/hw/keystore.mt8163.so
 lib/modules/ufsd.ko
 lib/modules/br_netfilter.ko
@@ -300,11 +298,9 @@ lib64/hw/audio.primary.mt8163.so
 lib64/hw/camera.mt8163.so
 lib64/hw/hwcomposer.mt8163.so
 lib64/hw/gralloc.mt8163.mali.so
-lib64/hw/memtrack.mt8163.so
 lib64/hw/perfboost.mt8163.so
 lib64/hw/sensors.mt8163.so
 lib64/hw/thermal.mt8163.so
-lib64/hw/lights.mt8163.so
 lib64/hw/keystore.mt8163.so
 lib64/soundfx/libaudiofx.so
 usr/idc/amazon_touch.idc

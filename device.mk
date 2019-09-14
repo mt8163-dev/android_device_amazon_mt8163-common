@@ -70,8 +70,12 @@ PRODUCT_PACKAGES += \
     libgralloc_extra \
     libcap
 
+# Memtrack
+PRODUCT_PACKAGES += \
+    memtrack.mt8163
+
 # Lights
-#PRODUCT_PACKAGES += \
+PRODUCT_PACKAGES += \
     lights.mt8163
 
 # Power
