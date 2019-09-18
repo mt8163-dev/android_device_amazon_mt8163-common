@@ -43,6 +43,8 @@ lib/lib_uree_mtk_crypto.so
 lib/lib_uree_mtk_modular_drm.so
 lib/lib_uree_mtk_video_secure_al.so
 lib/libacdk.so
+lib/libaal.so
+lib/libaal_cust.so
 lib/libaed.so
 lib/libamazon_remotes.so
 lib/libamazoninputservice.so
@@ -187,6 +189,8 @@ lib64/lib_uree_mtk_crypto.so
 lib64/lib_uree_mtk_modular_drm.so
 lib64/lib_uree_mtk_video_secure_al.so
 lib64/libacdk.so
+lib/libaal.so
+lib/libaal_cust.so
 lib64/libaed.so
 lib64/libamazon_remotes.so
 lib64/libamazoninputservice.so

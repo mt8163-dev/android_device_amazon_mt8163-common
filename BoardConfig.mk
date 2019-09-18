@@ -1,5 +1,6 @@
 DEVICE_BASE := device/amazon/douglas
-DEVICE_VENDOR := /vendor/amazon/douglas
+DEVICE_VENDOR := vendor/amazon/douglas
+KERNEL_SOURCE := kernel/amazon/douglas
 
 # inherit from the proprietary version
 -include $(DEVICE_VENDOR)/BoardConfigVendor.mk
@@ -27,7 +28,6 @@ TARGET_CPU_SMP := true
 #Kernel
 TARGET_PREBUILT_KERNEL := $(DEVICE_BASE)/prebuilt/kernel
 TARGET_KERNEL_ARCH := arm64
-
 BOARD_MKBOOTIMG_ARGS := --kernel_offset 0x00000000 --ramdisk_offset 0x03400000 --second_offset 0x00e80000 --tags_offset 0x07f80000
 BOARD_KERNEL_CMDLINE := bootopt=64S3,32N2,64N2
 BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
@@ -145,4 +145,4 @@ BOARD_HAS_NO_SELECT_BUTTON := true
 TW_CUSTOM_CPU_TEMP_PATH := /sys/devices/virtual/thermal/thermal_zone2/temp
 DEVICE_RESOLUTION := 800x1280
 
-$(shell mkdir -p $(OUT)/obj/KERNEL_OBJ/usr)
+#$(shell mkdir -p $(OUT)/obj/KERNEL_OBJ/usr)
