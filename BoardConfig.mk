@@ -145,4 +145,4 @@ BOARD_HAS_NO_SELECT_BUTTON := true
 TW_CUSTOM_CPU_TEMP_PATH := /sys/devices/virtual/thermal/thermal_zone2/temp
 DEVICE_RESOLUTION := 800x1280
 
-#$(shell mkdir -p $(OUT)/obj/KERNEL_OBJ/usr)
+$(shell mkdir -p $(OUT)/obj/KERNEL_OBJ/usr)
