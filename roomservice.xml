@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest>
+
+  <project name="CM12-1-Douglas/android_device_amazon_douglas" path="device/amazon/douglas" remote="github" revision="cm-12.1" />
+  <project name="CM12-1-Douglas/android_vendor_amazon_douglas" path="vendor/amazon/douglas" remote="github" revision="cm-12.1" />
+
+  <remove-project name="cm12-amami/android_system_core" />
+  <project name="CM12-1-Douglas/android_system_core" path="system/core" remote="github" revision="cm-12.1" />
+
+  <remove-project name="cm12-amami/android_frameworks_av" />
+  <project name="CM12-1-Douglas/android_frameworks_av" path="frameworks/av" remote="github" revision="cm-12.1" />
+
+</manifest>
