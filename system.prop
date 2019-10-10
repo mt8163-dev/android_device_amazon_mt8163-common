@@ -4,6 +4,12 @@ service.adb.root=1
 # set default USB configuration
 persist.sys.usb.config=mtp,adb
 
+# Volume keys swap
+ro.audio.monitorRotation=true
+
+# Headset MISC
+ro.audio.hw_vol_devices=0x0C
+
 # add support for USB storage type
 persist.sys.isUsbOtgEnabled=1
 
