@@ -1,3 +1,3 @@
-add_lunch_combo cm_douglas-user
-add_lunch_combo cm_douglas-userdebug
-add_lunch_combo cm_douglas-eng
+for var in eng user userdebug; do
+  add_lunch_combo cm_douglas-$var
+done
