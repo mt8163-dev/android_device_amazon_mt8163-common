@@ -1,8 +1,6 @@
 # Amazon Fire HD8 2017
 
-The Amazon Fire HD8 2017 (codenamed "douglas") is a low-range tablet from amazon.
-
-The Amazon Fire HD8 2017 was announced in 2017.
+The Amazon Fire HD8 2017 (codenamed "douglas") is a low-range tablet from amazon announced in 2017.
 
 Basic   | Spec Sheet
 -------:|:--------------------------------------------------
@@ -37,9 +35,10 @@ $ repo sync --no-tags
 # Build
 ```
 $ git clone https://github.com/CM12-1-Douglas/android_device_amazon_douglas.git -b cm-12.1 device/amazon/douglas
+$ rm -rf system/core && git clone https://github.com/CM12-1-Douglas/android_system_core.git -b cm-12.1 system/core
+$ rm -rf frameworks/av && git clone https://github.com/CM12-1-Douglas/android_frameworks_av.git -b cm-12.1 frameworks/av
+$ git clone https://github.com/CM12-1-Douglas/android_vendor_amazon_douglas.git vendor/amazon/douglas
 $ source ./build/envsetup.sh
-$ lunch cm_douglas-userdebug or "-eng" for testing (This will download vendor/kernel/frameworks/system_core repos needed for douglas)
+$ lunch cm_douglas-userdebug (or "-eng" for testing)
 $ mka bacon -j8 (Specify your cores for the build) (If you run out memory, try with export LANG=C)
 ```
-
-
