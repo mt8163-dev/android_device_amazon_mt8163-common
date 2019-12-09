@@ -10,7 +10,7 @@ ro.audio.monitorRotation=true
 # Headset MISC
 ro.audio.hw_vol_devices=0x0C
 
-# add support for USB storage type
+# Add support for USB storage type
 persist.sys.isUsbOtgEnabled=1
 
 # MTK, Infinity, 20090720 {
@@ -64,7 +64,7 @@ persist.mtk.wcn.combo.chipid=-1
 mediatek.wlan.chip=CONSYS_MT8163
 mediatek.wlan.module.postfix=_consys_mt8163
 
-#mtk stuff
+# MTK Properties
 
 ro.mtk_key_manager_kb_path=1
 ro.mtk_sec_video_path_support=1
@@ -134,7 +134,3 @@ ro.mtk_bg_power_saving_ui=1
 ro.mtk_dual_mic_support=0
 ro.mtk_is_tablet=1
 ro.mtk_voice_extension_support=1
-
-#OMX fix?
-media.sf.omx-plugin=libffmpeg_omx.so
-media.sf.extractor-plugin=libffmpeg_extractor.so

@@ -5,6 +5,7 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base.mk)
 # Inherit from hardware-specific part of the product configuration
 $(call inherit-product, device/amazon/douglas/device.mk)
 
+# Product
 PRODUCT_DEVICE := douglas
 PRODUCT_NAME := full_douglas
 PRODUCT_BRAND := google

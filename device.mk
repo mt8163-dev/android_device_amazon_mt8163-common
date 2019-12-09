@@ -1,3 +1,4 @@
+# Local Paths
 DEVICE_BASE := device/amazon/douglas
 DEVICE_VENDOR := /vendor/amazon/douglas
 
@@ -8,6 +9,7 @@ DEVICE_PACKAGE_OVERLAYS += $(DEVICE_BASE)/overlay
 PRODUCT_COPY_FILES += \
     $(DEVICE_BASE)/configs/99exfat-support:system/etc/init.d/99exfat-support
 
+# Languages
 $(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
 
 # Device uses high-density artwork where available
@@ -56,13 +58,13 @@ PRODUCT_PACKAGES += \
     libtinyxml \
     libaudioroute
 
-#OMX    
+# OMX    
 PRODUCT_PACKAGES += \
     libdashplayer
 
 # Bluetooth
 PRODUCT_PACKAGES += \
-	bluetooth.default
+    bluetooth.default
 	
 # Graphics
 PRODUCT_PACKAGES += \
@@ -80,9 +82,9 @@ PRODUCT_PACKAGES += \
 
 # Power
 PRODUCT_PACKAGES += \
-	power.default
+    power.default
 
-# network
+# Network
 PRODUCT_PACKAGES += \
     netd
     
@@ -91,14 +93,14 @@ PRODUCT_PACKAGES += \
     ebtables \
     ethertypes
 
-
 # Zygote
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
-	ro.zygote=zygote64_32
+    ro.zygote=zygote64_32
 
-
+# exFAT support
 WITH_EXFAT := true
 
+# DATE
 PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
 
 # call dalvik heap config
@@ -107,4 +109,5 @@ $(call inherit-product, frameworks/native/build/tablet-7in-hdpi-1024-dalvik-heap
 # call hwui memory config
 $(call inherit-product-if-exists, frameworks/native/build/phone-xxhdpi-2048-hwui-memory.mk)
 
+# call vendor blobs makefile
 $(call inherit-product-if-exists, vendor/amazon/douglas/douglas-vendor.mk)
