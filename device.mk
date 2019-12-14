@@ -100,6 +100,10 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
 # exFAT support
 WITH_EXFAT := true
 
+# Remove packages
+PRODUCT_PACKAGES += \
+    RemovePackages
+
 # DATE
 PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
 
