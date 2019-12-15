@@ -20,6 +20,7 @@ etc/.tp/thermal.policy.conf
 etc/.tp/thermal.conf
 etc/.tp/thermal.off.conf
 etc/audio_policy.conf
+etc/hotknot.cfg
 etc/mtk_omx_core.cfg
 etc/mtklog-config.prop
 etc/firmware/WMT_SOC.cfg
