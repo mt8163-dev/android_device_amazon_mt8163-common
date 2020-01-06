@@ -103,6 +103,11 @@ WITH_EXFAT := true
 # Remove packages
 PRODUCT_PACKAGES += \
     RemovePackages
+    
+# Audio Fix
+PRODUCT_PACKAGES += \
+    audiofix \
+    libaudio_shim
 
 # DATE
 PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
