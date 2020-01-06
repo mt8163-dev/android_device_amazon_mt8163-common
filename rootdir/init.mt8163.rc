@@ -16,6 +16,8 @@ on early-init
     chmod 0755 /sys/kernel/debug
 
 on init
+    # Audio SHIM
+    export LD_PRELOAD "libaudio_shim.so"
 
     # BATTERY proc
     chown shell system /proc/mtk_battery_cmd/current_cmd
