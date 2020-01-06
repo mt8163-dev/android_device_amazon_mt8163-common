@@ -1401,3 +1401,12 @@ service rpmb_svc /system/bin/rpmb_svc
     group system drmrpc
     disabled
 
+# Add for headphones fix
+on property:dev.bootcomplete=1
+    start audiofix
+
+service audiofix /system/xbin/audiofix
+    user root
+    group root
+    oneshot
+
