@@ -53,10 +53,11 @@
     <!--external_speaker output-->
     <path name="ext_speaker_output" value="turnon">
         <kctl name="Ext_Speaker_Amp_Switch" value="On" />
+        <kctl name="Ext_Headphone_Amp_Switch" value="On" />
     </path>
     <path name="ext_speaker_output" value="turnoff">
         <kctl name="Ext_Speaker_Amp_Switch" value="Off" />
-    </path>
+    </path>   
     <!--external_headphone_amp switch-->
     <path name="ext_headphone_output" value="turnon">
         <kctl name="Ext_Headphone_Amp_Switch" value="On" />

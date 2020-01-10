@@ -43,7 +43,8 @@ PRODUCT_COPY_FILES += \
     frameworks/av/media/libstagefright/data/media_codecs_google_video_le.xml:system/etc/media_codecs_google_video_le.xml \
     $(DEVICE_BASE)/configs/media_codecs.xml:system/etc/media_codecs.xml \
     $(DEVICE_BASE)/configs/media_profiles.xml:system/etc/media_profiles.xml \
-    $(DEVICE_BASE)/configs/audio_device.xml:system/etc/audio_device.xml
+    $(DEVICE_BASE)/configs/audio_device.xml:system/etc/audio_device.xml \
+    $(DEVICE_BASE)/configs/audio_policy.conf:system/vendor/etc/audio_policy.conf
 
 # Audio
 PRODUCT_PACKAGES += \
