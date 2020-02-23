@@ -56,6 +56,12 @@ lib/libimageio_FrmB.so
 lib/libimageio_plat_drv_FrmB.so
 lib/libaudiodcrflt.so
 lib/libaudiosetting.so
+lib/libaudio-resampler.so
+lib/libaudiopolicymanager.so
+lib/libaudiopolicymanagerdefault.so
+lib/libaudiopolicyservice.so
+lib/libaudiostream_jni.so
+lib/libaudioutils.so
 lib/libblisrc.so
 lib/libcvsd_mtk.so
 lib/libmsbc_mtk.so
@@ -201,6 +207,12 @@ lib64/libaudiocompensationfilter.so
 lib64/libaudiocomponentengine.so
 lib64/libaudiocustparam.so
 lib64/libaudiostream.so
+lib64/libaudio-resampler.so
+lib64/libaudiopolicymanager.so
+lib64/libaudiopolicymanagerdefault.so
+lib64/libaudiopolicyservice.so
+lib64/libaudiostream_jni.so
+lib64/libaudioutils.so
 lib64/libbessound_hd_mtk.so
 lib64/libblisrc32.so
 lib64/libbluetooth_hw_test.so
