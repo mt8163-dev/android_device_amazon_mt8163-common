@@ -129,4 +129,7 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
     service.adb.root=1 \
     ro.zygote=zygote64_32
 
+# Configure dalvik heap
+$(call inherit-product, frameworks/native/build/phone-xhdpi-2048-dalvik-heap.mk)
+
 $(call inherit-product, build/target/product/full.mk)
