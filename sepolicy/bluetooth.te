@@ -1,0 +1,32 @@
+
+# ==============================================
+# MTK Policy Rule
+# ============
+
+
+# Data : WK14.36
+# Operation : Migration
+# Purpose : IPC communication between bluetooth and mtkbt (BT host), and bluetooth and mediaserver
+allow bluetooth bt_int_adp_socket:sock_file write;
+allow bluetooth mediaserver:unix_dgram_socket sendto;
+allow bluetooth mtkbt:unix_dgram_socket sendto;
+allow bluetooth mtkbt:unix_stream_socket connectto;
+allow bluetooth mtkbt:fd use;
+allow bluetooth init:unix_dgram_socket sendto;
+
+# Data : WK14.36
+# Operation : Migration
+# Purpose : BT host stack cached data access
+allow bluetooth bt_data_file:dir { write add_name remove_name search};
+allow bluetooth bt_data_file:file { open read write create setattr getattr append unlink rename};
+
+# Data : WK14.44
+# Operation : Migration
+# IPC communication between bluetooth and mtkbt
+binder_call(bluetooth, mtkbt)
+#============= mediaserver ==============
+allow mediaserver bt_data_file:file read;
+
+#============= bluetooth ==============
+allow bluetooth platform_app_tmpfs:file write;
+

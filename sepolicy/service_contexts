@@ -1,0 +1,24 @@
+# ==============================================
+# MTK Policy Rule
+# ==============================================
+NvRAMAgent          u:object_r:nvram_agent_service:s0
+phoneEx             u:object_r:radio_service:s0
+DmAgent             u:object_r:dm_agent_binder_service:s0
+hotknot_service 	u:object_r:system_app_service:s0
+vie_command  		u:object_r:system_app_service:s0
+terservice          u:object_r:terservice_service:s0
+GoogleOtaBinder      u:object_r:ota_agent_service:s0
+memory_dumper       u:object_r:mediaserver_service:s0
+AAL                 u:object_r:aal_service:s0
+iphonesubinfotedongle      u:object_r:radio_service:s0
+isubtedongle               u:object_r:radio_service:s0
+simphonebooktedongle       u:object_r:radio_service:s0
+ismstedongle               u:object_r:radio_service:s0
+tedongleservice            u:object_r:radio_service:s0
+GbaService                 u:object_r:radio_service:s0
+GuiExtService       u:object_r:guiext-server_service:s0
+mtk.codecservice	u:object_r:mtk_codec_service_service:s0
+PPLAgent                   u:object_r:ppl_agent_service:s0
+media.mmsdk         u:object_r:mediaserver_service:s0
+multiwindow_service_v1 	u:object_r:system_app_service:s0
+media.VTS           u:object_r:vtservice_service:s0

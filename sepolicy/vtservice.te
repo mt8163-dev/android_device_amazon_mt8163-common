@@ -1,0 +1,32 @@
+# ==============================================
+# Policy File of /system/binvtservice Executable File 
+
+
+# ==============================================
+# Type Declaration
+# ==============================================
+
+type vtservice_exec , exec_type, file_type;
+type vtservice ,domain;
+
+# ==============================================
+# Android Policy Rule
+# ==============================================
+
+# ==============================================
+# NSA Policy Rule
+# ==============================================
+
+# ==============================================
+# MTK Policy Rule
+# ==============================================
+
+init_daemon_domain(vtservice)
+binder_use(vtservice)
+binder_call(vtservice, mediaserver)
+binder_service(vtservice)
+
+allow vtservice vtservice_service:service_manager add;
+#unix_socket_connect(vtservice, volte_imsvt1, volte_imcb)
+allow vtservice fuse:dir search;
+allow vtservice fuse:file { read write open };

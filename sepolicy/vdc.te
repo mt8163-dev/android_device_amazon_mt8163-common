@@ -1,0 +1,14 @@
+# ==============================================
+# MTK Policy Rule
+# ==============================================
+
+
+# Date : WK14.37
+# Operation : Migration 
+# Purpose : property
+allow vdc vold_prop:property_service set;
+
+# Date : WK14.53
+# Purpose : dumpstate
+allow vdc dumpstate:file read;
+

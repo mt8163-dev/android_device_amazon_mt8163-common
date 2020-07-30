@@ -1,0 +1,19 @@
+# ==============================================
+# Policy File of /system/br_app_data_service Executable File 
+
+# ==============================================
+# Type Declaration
+# ==============================================
+type br_app_data_service_exec , exec_type, file_type;
+type br_app_data_service ,domain;
+
+# ==============================================
+# MTK Policy Rule
+# ==============================================
+#permissive br_app_data_service;
+init_daemon_domain(br_app_data_service)
+
+#============= br_app_data_service ==============
+allow br_app_data_service app_data_file:dir create_dir_perms;
+allow br_app_data_service self:capability { chown dac_override };
+allow br_app_data_service app_data_file:file create_file_perms;

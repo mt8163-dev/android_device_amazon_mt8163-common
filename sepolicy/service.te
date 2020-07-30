@@ -1,0 +1,12 @@
+# ==============================================
+# MTK Policy Rule
+# ==============================================
+type nvram_agent_service,     service_manager_type;
+type dm_agent_binder_service, service_manager_type;
+type terservice_service,     service_manager_type;
+type ota_agent_service,      service_manager_type;
+type aal_service,             service_manager_type;
+type guiext-server_service,             service_manager_type;
+type mtk_codec_service_service,  service_manager_type;
+type ppl_agent_service,      service_manager_type;
+type vtservice_service,       service_manager_type;

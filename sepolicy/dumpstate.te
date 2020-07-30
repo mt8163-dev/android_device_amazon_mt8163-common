@@ -1,0 +1,18 @@
+# ==============================================
+# MTK Policy Rule
+# ==============================================
+
+# Date : WK14.33
+# Operation : Bugreport UT
+# Purpose : add dumpstate policy rule
+
+#allow dumpstate init:binder call;
+allow dumpstate mtkbt:binder call;
+allow dumpstate MtkCodecService:binder call;
+allow dumpstate nvram_agent_binder:binder call;
+allow dumpstate ppl_agent:binder call;
+allow dumpstate GoogleOtaBinder:binder call;
+
+allow dumpstate dontpanic_data_file:dir search;
+allow dumpstate guiext-server:binder call;
+

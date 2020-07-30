@@ -1,0 +1,19 @@
+on fs
+    write /proc/bootprof "INIT:Mount_START"
+
+    # Legacy partition path support
+    symlink /dev/block/platform/soc /dev/block/platform/mtk-msdc.0
+
+    # Resize userdata partition
+    exec /sbin/resize_ext4 /dev/block/platform/mtk-msdc.0/by-name/userdata footer
+
+    # Mount all the partitions
+    mount_all /fstab.mt8163
+
+    # Set up SQFS
+    mkdir /mnt/sqfs 0771 system system
+    mount squashfs loop@/system/sqfs/container.sqfs /mnt/sqfs wait ro context=u:object_r:squashfs_file:s0
+
+    # Change the partition permissions
+    exec /system/etc/partition_permission.sh
+    write /proc/bootprof "INIT:Mount_END"

@@ -1,0 +1,38 @@
+# ==============================================
+# Policy File of /system/binthermal_manager Executable File 
+
+
+# ==============================================
+# Type Declaration
+# ==============================================
+
+type thermal_manager_exec , exec_type, file_type;
+type thermal_manager ,domain;
+
+# ==============================================
+# Android Policy Rule
+# ==============================================
+
+# ==============================================
+# NSA Policy Rule
+# ==============================================
+
+# ==============================================
+# MTK Policy Rule
+# ==============================================
+
+init_daemon_domain(thermal_manager)
+
+allow thermal_manager proc_mtkcooler:dir search;
+allow thermal_manager proc_mtktz:dir search;
+allow thermal_manager proc_thermal:dir search;
+allow thermal_manager proc_mtkcooler:file { read getattr open write };
+allow thermal_manager proc_mtktz:file { read getattr open write };
+allow thermal_manager proc_thermal:file { read getattr open write };
+allow thermal_manager system_data_file:dir write;
+allow thermal_manager system_data_file:dir add_name;
+allow thermal_manager self:capability dac_override;
+allow thermal_manager self:capability chown;
+allow thermal_manager self:capability fowner;
+allow thermal_manager self:capability fsetid;
+

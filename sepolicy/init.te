@@ -1,0 +1,15 @@
+# ==============================================
+# MTK Policy Rule
+# ============
+
+# Date : WK14.34
+# Operation : Migration 
+# Purpose : for L early bring up: add for nvram command in init rc files
+allow init nvram_data_file:dir { write search setattr read create open add_name };
+allow init nvdata_file:dir { write search setattr read create open add_name };
+
+#============= init ==============
+# Date : W14.42
+# Operation : Migration
+# Purpose : for L : add for partition
+allow init platformblk_device:blk_file setattr;

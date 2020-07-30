@@ -1,0 +1,49 @@
+# ==============================================
+# Policy File of /system/binboot_logo_updater Executable File 
+
+
+# ==============================================
+# Type Declaration
+# ==============================================
+
+type boot_logo_updater_exec , exec_type, file_type;
+type boot_logo_updater ,domain;
+
+# ==============================================
+# Android Policy Rule
+# ==============================================
+
+# ==============================================
+# NSA Policy Rule
+# ==============================================
+
+# ==============================================
+# MTK Policy Rule
+# ==============================================
+
+init_daemon_domain(boot_logo_updater)
+
+
+# Date : WK14.31
+# Operation : Migration 
+# Purpose : for L early bring up. 
+allow boot_logo_updater mmcblk_device:blk_file { read open };
+allow boot_logo_updater platformblk_device:blk_file { read open };
+
+# Date : WK14.32
+# Operation : Migration
+# Puration : set boot reason
+allow boot_logo_updater system_prop:property_service set;
+
+# Date : WK14.43
+# Operation : Migration
+# Puration : for policy migration
+allow boot_logo_updater graphics_device:chr_file { read write ioctl open };
+allow boot_logo_updater init:unix_stream_socket connectto;
+allow boot_logo_updater logo_device:chr_file { read open };
+allow boot_logo_updater platformblk_device:dir search;
+allow boot_logo_updater property_socket:sock_file write;
+allow boot_logo_updater self:capability dac_override;
+allow boot_logo_updater sysfs:file write;
+allow boot_logo_updater block_device:dir search;
+allow boot_logo_updater graphics_device:dir search;

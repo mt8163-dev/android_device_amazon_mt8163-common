@@ -1,0 +1,24 @@
+# ==============================================
+# MTK Policy Rule
+# ============
+
+# Date : WK14.31
+# Operation : Migration
+# Purpose : transit from kernel to aee_core_forwarder domain when executing aee_core_forwarder
+domain_auto_trans(kernel, aee_core_forwarder_exec, aee_core_forwarder)
+
+# Date : WK14.38
+# Operation : Migration
+# Purpose : run guitar_update for touch F/W upgrade.
+allow kernel fuse:dir search;
+
+# Date : WK14.39
+# Operation : Migration
+# Purpose : ums driver can access blk_file
+allow kernel block_device:blk_file { read write };
+allow kernel loop_device:blk_file { read };
+
+# Date : WK14.43
+# Operation : Migration
+# Purpose :  Access to TC1 partition for reading MAC
+allow kernel platformblk_device:blk_file { open read write };

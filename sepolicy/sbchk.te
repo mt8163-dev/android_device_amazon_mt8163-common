@@ -1,0 +1,25 @@
+# ==============================================
+# Policy File of /system/bin/sbchk Executable File 
+
+# ==============================================
+# Type Declaration
+# ==============================================
+type sbchk, domain;
+type sbchk_exec, exec_type, file_type;
+
+# ==============================================
+# MTK Policy Rule
+# ==============================================
+init_daemon_domain(sbchk)
+
+# Date WK14.46
+# Operation : Migration
+# Purpose : for security driver access
+allow sbchk misc_sd_device:chr_file { read open };
+allow sbchk platformblk_device:blk_file { read write open };
+allow sbchk platformblk_device:dir search;
+allow sbchk preloader_device:chr_file { read open };
+allow sbchk sec_device:chr_file { read ioctl open };
+allow sbchk seccfg_device:chr_file { read write open };
+allow sbchk sec_ro_device:chr_file { open read };
+allow sbchk block_device:dir search;

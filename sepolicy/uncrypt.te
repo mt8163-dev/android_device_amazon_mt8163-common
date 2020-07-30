@@ -1,0 +1,8 @@
+# ==============================================
+# MTK Policy Rule
+# ============
+allow uncrypt misc_device:chr_file *;
+allow uncrypt platformblk_device:dir *;
+allow uncrypt platformblk_device:blk_file *;
+allow uncrypt system_data_file:file { open read };
+
