@@ -109,7 +109,7 @@ MTK_WVDRM_L1_SUPPORT := no
 TARGET_SYSTEM_PROP := $(DEVICE_FOLDER)/system.prop
 
 # Recovery Partition Table
-TARGET_RECOVERY_FSTAB := $(DEVICE_FOLDER)/rootdir/fstab.mt8163
+TARGET_RECOVERY_FSTAB := $(DEVICE_FOLDER)/recovery/etc/recovery.fstab
 
 # Screen/Bootanimation
 DEVICE_RESOLUTION := 800x1280
