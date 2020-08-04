@@ -43,7 +43,12 @@ BOARD_MKBOOTIMG_ARGS := \
 	--second_offset 0x00e88000 \
 	--tags_offset 0x07f88000
 
-TARGET_PREBUILT_KERNEL := $(DEVICE_FOLDER)/prebuilt/kernel
+TARGET_KERNEL_ARCH := arm64
+TARGET_KERNEL_HEADER_ARCH := arm64
+TARGET_KERNEL_CROSS_COMPILE_PREFIX := $(shell pwd)/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-
+BOARD_KERNEL_IMAGE_NAME := Image.gz-dtb
+TARGET_KERNEL_CONFIG := douglas_defconfig
+TARGET_KERNEL_SOURCE := kernel/amazon/douglas
 
 # 64 Bit Binder Userspace
 TARGET_USES_64_BIT_BINDER := true
