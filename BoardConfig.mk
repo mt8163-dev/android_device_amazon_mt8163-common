@@ -147,3 +147,6 @@ BOARD_HAS_LARGE_FILESYSTEM := true
 
 # Assert
 TARGET_OTA_ASSERT_DEVICE := douglas,KFDOWI
+
+# Block Based OTA
+BLOCK_BASED_OTA := false
