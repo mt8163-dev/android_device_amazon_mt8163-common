@@ -41,8 +41,7 @@ BOARD_MKBOOTIMG_ARGS := \
 	--kernel_offset 0x00008000 \
 	--ramdisk_offset 0x03f88000 \
 	--second_offset 0x00e88000 \
-	--tags_offset 0x07f88000 \
-        --header_version 0
+	--tags_offset 0x07f88000
 
 TARGET_PREBUILT_KERNEL := $(DEVICE_FOLDER)/prebuilt/kernel
 
