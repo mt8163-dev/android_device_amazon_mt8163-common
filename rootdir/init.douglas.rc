@@ -1,6 +1,4 @@
 on fs
-    write /proc/bootprof "INIT:Mount_START"
-
     # Legacy partition path support
     symlink /dev/block/platform/soc /dev/block/platform/mtk-msdc.0
 
@@ -16,4 +14,3 @@ on fs
 
     # Change the partition permissions
     exec /system/etc/partition_permission.sh
-    write /proc/bootprof "INIT:Mount_END"
