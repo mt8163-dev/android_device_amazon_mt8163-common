@@ -126,8 +126,7 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
     camera.disable_zsl_mode=1 \
     ro.debuggable=1 \
     persist.service.acm.enable=0 \
-    service.adb.root=1 \
-    ro.zygote=zygote64_32
+    service.adb.root=1
 
 # Configure dalvik heap
 $(call inherit-product, frameworks/native/build/phone-xhdpi-2048-dalvik-heap.mk)
