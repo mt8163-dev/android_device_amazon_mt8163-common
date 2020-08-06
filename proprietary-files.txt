@@ -285,6 +285,10 @@ lib64/hw/thermal.mt8163.so
 # Touchscreen
 etc/firmware/gt9xx_fw.bin
 
+# MD32 Firmware Images
+etc/firmware/md32_d.bin
+etc/firmware/md32_p.bin
+
 # Audio
 lib/libasp.so
 lib64/libasp.so
