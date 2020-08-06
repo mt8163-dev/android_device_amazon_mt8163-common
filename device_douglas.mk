@@ -92,7 +92,8 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/rootdir/init.project.rc:root/init.project.rc \
     $(LOCAL_PATH)/rootdir/init.douglas.rc:root/init.douglas.rc \
     $(LOCAL_PATH)/rootdir/init.wifi.rc:root/init.wifi.rc \
-    $(LOCAL_PATH)/rootdir/ueventd.mt8163.rc:root/ueventd.mt8163.rc
+    $(LOCAL_PATH)/rootdir/ueventd.mt8163.rc:root/ueventd.mt8163.rc \
+    $(LOCAL_PATH)/rootdir/sbin/resize_ext4:root/sbin/resize_ext4
 
 # Permissions
 PRODUCT_COPY_FILES += \
