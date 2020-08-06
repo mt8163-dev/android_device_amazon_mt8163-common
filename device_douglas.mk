@@ -13,12 +13,6 @@ PRODUCT_AAPT_PREF_CONFIG := mdpi
 # Overlay
 DEVICE_PACKAGE_OVERLAYS += device/amazon/douglas/overlay
 
-ifeq ($(TARGET_PREBUILT_KERNEL),)
-	LOCAL_KERNEL := $(LOCAL_PATH)/prebuilt/kernel
-else
-	LOCAL_KERNEL := $(TARGET_PREBUILT_KERNEL)
-endif
-
 # Power HAL
 PRODUCT_PACKAGES += \
     power.default
@@ -98,8 +92,7 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/rootdir/init.project.rc:root/init.project.rc \
     $(LOCAL_PATH)/rootdir/init.douglas.rc:root/init.douglas.rc \
     $(LOCAL_PATH)/rootdir/init.wifi.rc:root/init.wifi.rc \
-    $(LOCAL_PATH)/rootdir/ueventd.mt8163.rc:root/ueventd.mt8163.rc \
-    $(LOCAL_KERNEL):kernel
+    $(LOCAL_PATH)/rootdir/ueventd.mt8163.rc:root/ueventd.mt8163.rc
 
 # Permissions
 PRODUCT_COPY_FILES += \
