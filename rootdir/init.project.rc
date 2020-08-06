@@ -52,7 +52,7 @@ on post-fs-data
 #    chmod 0660 /dev/wmtdetect
 #    chown system system /dev/wmtdetect
 
-    mknod /dev/wmtWifi c 153 0
+    exec /system/bin/mknod /dev/wmtWifi c 153 0
     chmod 0660 /dev/wmtWifi
     chown system system /dev/wmtWifi
 
@@ -106,7 +106,7 @@ on post-fs-data
 #   insmod /system/lib/modules/wlan_mt.ko
 
 # Char device for BT 3.0 HS
-    mknod /dev/ampc0 c 151 0
+    exec /system/bin/mknod /dev/ampc0 c 151 0
     chown bluetooth bluetooth /dev/ampc0
     chmod 0660 /dev/ampc0
 
