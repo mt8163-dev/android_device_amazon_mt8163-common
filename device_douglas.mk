@@ -70,7 +70,11 @@ PRODUCT_COPY_FILES += \
 # Network
 PRODUCT_PACKAGES += \
     netd
-    
+
+# Graphics
+PRODUCT_PACKAGES += \
+    libion
+
 # IPv6 tethering
 PRODUCT_PACKAGES += \
     ebtables \
