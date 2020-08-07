@@ -75,6 +75,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     libion
 
+# Shim Libraries
+PRODUCT_PACKAGES += \
+    libshim_log
+
 # IPv6 tethering
 PRODUCT_PACKAGES += \
     ebtables \

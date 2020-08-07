@@ -136,6 +136,9 @@ TARGET_USE_CUSTOM_LUN_FILE_PATH := "/sys/devices/virtual/android_usb/android0/f_
 BOARD_SEPOLICY_DIRS += \
     $(DEVICE_FOLDER)/sepolicy
 
+# Shim Libraries
+TARGET_LDPRELOAD += libshim_log.so
+
 # Partitions
 BOARD_BOOTIMAGE_PARTITION_SIZE := 16777216
 BOARD_RECOVERYIMAGE_PARTITION_SIZE := 16777216
