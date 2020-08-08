@@ -137,7 +137,7 @@ BOARD_SEPOLICY_DIRS += \
     $(DEVICE_FOLDER)/sepolicy
 
 # Shim Libraries
-TARGET_LDPRELOAD += libshim_log.so:libshim_ui.so
+TARGET_LDPRELOAD += libshim_log.so:libshim_ui.so:libshim_parcel.so
 
 # Partitions
 BOARD_BOOTIMAGE_PARTITION_SIZE := 16777216
