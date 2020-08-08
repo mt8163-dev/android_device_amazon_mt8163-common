@@ -79,6 +79,11 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     libshim_log
 
+# STLPort
+PRODUCT_COPY_FILES += \
+    prebuilts/ndk/current/sources/cxx-stl/stlport/libs/armeabi-v7a/libstlport_shared.so:system/lib/libstlport.so \
+    prebuilts/ndk/current/sources/cxx-stl/stlport/libs/arm64-v8a/libstlport_shared.so:system/lib64/libstlport.so
+
 # IPv6 tethering
 PRODUCT_PACKAGES += \
     ebtables \
