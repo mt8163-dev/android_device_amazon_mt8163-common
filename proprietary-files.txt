@@ -109,6 +109,8 @@ lib/libspeech_enh_lib.so
 lib64/libspeech_enh_lib.so
 lib/libtrapz.so
 lib64/libtrapz.so
+lib/libstlport.so
+lib64/libstlport.so
 vendor/data/amz.rsa
 vendor/data/tl1.rsa
 vendor/data/trapz_scripts.tar.gz
