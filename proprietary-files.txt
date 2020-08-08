@@ -290,6 +290,8 @@ etc/firmware/md32_d.bin
 etc/firmware/md32_p.bin
 
 # Audio
+lib/libcjson.so
+lib/libcjson.so
 lib/libasp.so
 lib64/libasp.so
 lib/libaspclient.so
