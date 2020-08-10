@@ -136,6 +136,10 @@ TARGET_USE_CUSTOM_LUN_FILE_PATH := "/sys/devices/virtual/android_usb/android0/f_
 BOARD_SEPOLICY_DIRS += \
     $(DEVICE_FOLDER)/sepolicy
 
+# Cyanogenmod H/W Hooks
+BOARD_USES_CYANOGEN_HARDWARE := true
+BOARD_HARDWARE_CLASS := $(DEVICE_FOLDER)/cmhw
+
 # Shim Libraries
 TARGET_LDPRELOAD += libshim_log.so:libshim_ui.so:libshim_parcel.so:libshim_drm.so:libshim_audio.so
 

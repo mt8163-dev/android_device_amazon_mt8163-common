@@ -139,6 +139,10 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
     persist.service.acm.enable=0 \
     service.adb.root=1
 
+# Vibrator Force (default for now)
+PRODUCT_PROPERTY_OVERRIDES += \
+    persist.vibe_force=32
+
 # Configure dalvik heap
 $(call inherit-product, frameworks/native/build/phone-xhdpi-2048-dalvik-heap.mk)
 
