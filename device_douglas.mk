@@ -79,7 +79,8 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     libshim_log \
     libshim_ui \
-    libshim_parcel
+    libshim_parcel \
+    libshim_camera
 
 # IPv6 tethering
 PRODUCT_PACKAGES += \
