@@ -612,6 +612,9 @@ on post-fs-data
     chmod 0666 /dev/MTK_SMI
     chown media media /dev/MTK_SMI
 
+    # GED
+    chmod 0666 /proc/ged
+
     #for eng mode
     chmod 0664 /dev/misc-sd
 
