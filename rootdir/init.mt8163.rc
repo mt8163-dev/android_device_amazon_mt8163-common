@@ -615,6 +615,9 @@ on post-fs-data
     # GED
     chmod 0666 /proc/ged
 
+    # ASP
+    chmod 0666 /proc/idme/miccal.0
+
     #for eng mode
     chmod 0664 /dev/misc-sd
 
