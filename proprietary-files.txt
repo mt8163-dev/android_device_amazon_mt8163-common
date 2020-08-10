@@ -234,6 +234,37 @@ lib/libmtkcamera_client.so
 lib64/libmtkcamera_client.so
 lib/libhal_effects.so
 lib64/libhal_effects.so
+lib64/libcam.camadapter.so
+lib64/libcam.camshot.so
+lib64/libcam.campipe.so
+lib64/libcam.client.so
+lib64/libcam.device1.so
+lib64/libcam.device3.so
+lib64/libcam.exif.so
+lib64/libcam.exif.v3.so
+lib64/libcam.hal3a.v3.so
+lib64/libcam.halsensor.so
+lib64/libcam.iopipe.so
+lib64/libcam.metadata.so
+lib64/libcam.metadataprovider.so
+lib64/libcam.paramsmgr.so
+lib64/libcam.utils.sensorlistener.so
+lib64/libcam.utils.so
+lib64/libcam1_utils.so
+lib64/libcam3_app.so
+lib64/libcam3_hwnode.so
+lib64/libcam3_hwpipeline.so
+lib64/libcam3_pipeline.so
+lib64/libcam3_utils.so
+lib64/libcam_hwutils.so
+lib64/libcam_mmp.so
+lib64/libcam_platform.so
+lib64/libcam_utils.so
+lib64/libcamalgo.so
+lib64/libcamdrv.so
+lib64/libcameracustom.so
+lib64/libcam.iopipe_FrmB.so
+lib64/libcamdrv_FrmB.so
 
 # Media
 lib/libMtkOmxAIVPlayer.so
