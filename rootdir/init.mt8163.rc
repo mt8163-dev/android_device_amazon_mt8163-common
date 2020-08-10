@@ -11,21 +11,8 @@ on init
     chown shell system /proc/mtk_battery_cmd/current_cmd
     chown shell system /proc/mtk_battery_cmd/discharging_cmd
 
-    # OTG Export
-    export USBOTG_STORAGE /storage/usbotg
-
-    # Temp Backward compatibility
-    symlink /dev/block/platform/mtk-msdc.0/by-name/boot /dev/bootimg
-    symlink /dev/block/platform/mtk-msdc.0/by-name/recovery /dev/recovery
-    symlink /dev/block/platform/mtk-msdc.0/by-name/secro  /dev/sec_ro
-    symlink /dev/block/platform/mtk-msdc.0/by-name/kb /dev/kb
-    symlink /dev/block/platform/mtk-msdc.0/by-name/dkb /dev/dkb
-    symlink /dev/block/platform/mtk-msdc.0/by-name/seccfg /dev/seccfg
-    symlink /dev/block/platform/mtk-msdc.0/by-name/proinfo /dev/pro_info
-    symlink /dev/block/platform/mtk-msdc.0/by-name/nvram /dev/nvram
-    symlink /dev/block/platform/mtk-msdc.0/by-name/para /dev/misc
-    symlink /dev/block/platform/mtk-msdc.0/by-name/logo /dev/logo
-    symlink /dev/block/platform/mtk-msdc.0/by-name/misc2 /dev/misc2
+    symlink /sdcard /mnt/sdcard
+    symlink /sdcard /storage/sdcard0
 
     # Create mountpoint for persist partition
     mkdir /persist 0771 system system
