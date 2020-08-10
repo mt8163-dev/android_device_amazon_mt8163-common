@@ -521,8 +521,7 @@ on property:sys.usb.config=gs1gs3,dual_acm
     start adbd
     setprop sys.usb.state ${sys.usb.config}
     setprop sys.usb.acm_idx 1,2,4
-    
-###############################################
+
 on property:sys.usb.config=mass_storage,dual_acm
     write /sys/class/android_usb/android0/enable 0
     write /sys/class/android_usb/android0/idVendor ${sys.usb.vid}

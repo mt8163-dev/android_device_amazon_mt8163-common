@@ -1,8 +1,4 @@
-#
-# MTK Wi-Fi related services (Begin)
-#
-
-# monitor property and power on/off wlan
+# Monitor property and power on/off wlan
 on property:wlan.driver.status=ok
     write /dev/wmtWifi "1"
 
@@ -36,13 +32,3 @@ service wpa_supplicant /system/bin/wpa_supplicant \
     socket wpa_wlan0 dgram 660 wifi wifi
     disabled
     oneshot
-
-# For WiFi High Speed calibration
-# service autokd /system/bin/autokd
-#    class core
-#    user system
-#    group system
-#
-# MTK Wi-Fi related services (End)
-#
-

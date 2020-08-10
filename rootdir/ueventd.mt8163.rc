@@ -1,10 +1,11 @@
-# sysfs properties
-/dev/trustzone          0660   root         drmrpc
+# SYSFS
+/dev/trustzone            0660   root         drmrpc
 /dev/kb                   0660   root       system
 /dev/dkb                  0660   root       system
 /dev/block/platform/mtk-msdc.0/by-name/kb  0660   root       system
 /dev/block/platform/mtk-msdc.0/by-name/dkb  0660   root       system
 /dev/block/platform/mtk-msdc.0/by-name/frp  0660   root       system
+
 # Connectivity
 /dev/stpwmt               0660   system     system
 /dev/wmtdetect            0660   system     system
@@ -37,6 +38,7 @@
 # RPMB
 /dev/block/mmcblk0rpmb    0660   root       system
 
+# Thermal
 /sys/devices/virtual/thermal/thermal_zone* mode 0660  system system
 /sys/devices/virtual/thermal/thermal_zone* trips 0660  system system
 /sys/devices/virtual/thermal/thermal_zone* policy 0660  system system
@@ -44,7 +46,6 @@
 /sys/devices/virtual/thermal/thermal_zone* cdevs 0660  system system
 /sys/devices/virtual/thermal/cooling_device* cur_state 0660 system system
 /sys/devices/virtual/thermal/cooling_device* levels 0660 system system
-
 /sys/devices/virtual/thermal/thermal_zone* trip_point_0_temp 0660 system system
 /sys/devices/virtual/thermal/thermal_zone* trip_point_0_hyst 0660 system system
 /sys/devices/virtual/thermal/thermal_zone* trip_point_1_temp 0660 system system
