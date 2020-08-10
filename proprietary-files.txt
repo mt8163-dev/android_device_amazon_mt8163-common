@@ -232,6 +232,8 @@ lib64/libimageio_plat_drv.so
 lib64/libimageio_plat_drv_FrmB.so
 lib/libmtkcamera_client.so
 lib64/libmtkcamera_client.so
+lib/libhal_effects.so
+lib64/libhal_effects.so
 
 # Media
 lib/libMtkOmxAIVPlayer.so
