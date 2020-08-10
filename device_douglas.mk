@@ -81,12 +81,17 @@ PRODUCT_PACKAGES += \
     libshim_ui \
     libshim_parcel \
     libshim_camera \
-    libshim_drm
+    libshim_drm \
+    libshim_audio
 
 # IPv6 tethering
 PRODUCT_PACKAGES += \
     ebtables \
     ethertypes
+
+# Headphones
+PRODUCT_PACKAGES += \
+    audiofix
 
 # Thermal
 PRODUCT_COPY_FILES += \

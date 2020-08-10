@@ -1395,3 +1395,11 @@ service rpmb_svc /system/bin/rpmb_svc
     class main
     group system drmrpc
     disabled
+
+on property:dev.bootcomplete=1
+    start audiofix
+
+service audiofix /system/xbin/audiofix
+    user root
+    group root
+    oneshot
