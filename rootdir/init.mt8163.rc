@@ -28,14 +28,8 @@ on init
     symlink /dev/block/platform/mtk-msdc.0/by-name/logo /dev/logo
     symlink /dev/block/platform/mtk-msdc.0/by-name/misc2 /dev/misc2
 
-    mkdir /protect_f 0771 system system
-    mkdir /protect_s 0771 system system
-
     # Create mountpoint for persist partition
     mkdir /persist 0771 system system
-
-    # Create CIP mount point
-    mkdir /custom
 
     # CD
     mkdir /mnt/cd-rom 0000 system system
@@ -84,12 +78,6 @@ on post-fs
     chown system system /proc/bootprof
     chown root system /proc/mtprof/cputime
     chown root system /proc/mtprof/reboot_pid
-
-    chown system system /protect_f
-    chmod 0770 /protect_f
-
-    chown system system /protect_s
-    chmod 0770 /protect_s
 
 on post-fs-data
     chown system system /persist
