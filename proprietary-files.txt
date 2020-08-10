@@ -315,6 +315,9 @@ lib64/libaudiosetting.so
 lib64/libbessound_hd_mtk.so
 lib/libsmartvolume.so
 lib64/libsmartvolume.so
+lib/soundfx/libaudiofx.so
+lib64/soundfx/libaudiofx.so
+vendor/lib/soundfx/libswdap.so
 lib/hw/audio.primary.mt8163.so
 lib64/hw/audio.primary.mt8163.so
 vendor/etc/audio-algorithms/ds1-0031.xml
