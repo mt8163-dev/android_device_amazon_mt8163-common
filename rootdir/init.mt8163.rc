@@ -1,5 +1,4 @@
 import init.project.rc
-import init.ssd.rc
 import init.wifi.rc
 
 on early-init
