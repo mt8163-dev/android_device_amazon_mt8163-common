@@ -143,6 +143,9 @@ BOARD_HARDWARE_CLASS := $(DEVICE_FOLDER)/cmhw
 # Shim Libraries
 TARGET_LDPRELOAD += libshim_log.so:libshim_ui.so:libshim_parcel.so:libshim_drm.so:libshim_audio.so
 
+# Device-Specific Headers
+TARGET_SPECIFIC_HEADER_PATH := $(DEVICE_FOLDER)/include
+
 # Partitions
 BOARD_BOOTIMAGE_PARTITION_SIZE := 16777216
 BOARD_RECOVERYIMAGE_PARTITION_SIZE := 16777216
