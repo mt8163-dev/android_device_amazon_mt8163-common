@@ -134,7 +134,18 @@ BOARD_USES_CYANOGEN_HARDWARE := true
 BOARD_HARDWARE_CLASS := $(DEVICE_FOLDER)/cmhw
 
 # Shim Libraries
-TARGET_LDPRELOAD += libshim_log.so:libshim_ui.so:libshim_parcel.so:libshim_drm.so:libshim_audio.so
+LINKER_FORCED_SHIM_LIBS := \
+    /system/lib/liblog.so|libshim_log.so \
+    /system/lib64/liblog.so|libshim_log.so \
+    /system/lib/hw/hwcomposer.mt8163.so|libshim_ui.so \
+    /system/lib64/hw/hwcomposer.mt8163.so|libshim_ui.so \
+    /system/lib/libMtkOmxVdecEx.so|libshim_ui.so \
+    /system/lib/libasp.so|libshim_parcel.so \
+    /system/lib64/libasp.so|libshim_parcel.so \
+    /system/lib/libcam.utils.sensorlistener.so|libshim_camera.so \
+    /system/lib64/libcam.utils.sensorlistener.so|libshim_camera.so \
+    /system/lib/libdrmmtkutil.so|libshim_drm.so \
+    /system/lib64/libdrmmtkutil.so|libshim_drm.so
 
 # Device-Specific Headers
 TARGET_SPECIFIC_HEADER_PATH := $(DEVICE_FOLDER)/include
