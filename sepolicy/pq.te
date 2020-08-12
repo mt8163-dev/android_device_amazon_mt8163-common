@@ -1,40 +1,15 @@
-# ==============================================
-# Policy File of /system/binpq Executable File 
+type pq_exec, exec_type, file_type;
+type pq, domain, domain_deprecated;
 
-
-# ==============================================
-# Type Declaration
-# ==============================================
-
-type pq_exec , exec_type, file_type;
-type pq ,domain;
-
-# ==============================================
-# Android Policy Rule
-# ==============================================
-
-# ==============================================
-# NSA Policy Rule
-# ==============================================
-
-# ==============================================
-# MTK Policy Rule
-# ==============================================
-
-#permissive pq;
 init_daemon_domain(pq)
-# unconfined_domain(pq)
 
-# Date : 2014/10/16
-# Operation : Migration
-# Purpose : for enforcing
-allow pq system_prop:property_service set;
-allow pq graphics_device:chr_file { read write open ioctl };
+binder_use(pq)
+binder_call(pq, binderservicedomain)
+binder_service(pq)
 
+allow pq pq_service:service_manager add;
+unix_socket_connect(pq, property, init)
 
-# Date : 2014/10/29
-# Operation : Migration
-# Purpose : for enforcing
-allow pq init:unix_stream_socket connectto;
-allow pq property_socket:sock_file write;
-allow pq tmpfs:lnk_file read;
+allow pq pq_conf_prop:property_service set;
+
+allow pq graphics_device:chr_file { open read ioctl };

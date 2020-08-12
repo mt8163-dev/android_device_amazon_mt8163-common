@@ -1,0 +1,7 @@
+type qmc6983d_exec, exec_type, file_type;
+type qmc6983d, domain, domain_deprecated;
+
+init_daemon_domain(qmc6983d)
+
+allow qmc6983d msensor_device:chr_file rw_file_perms;
+allow qmc6983d gsensor_device:chr_file rw_file_perms;

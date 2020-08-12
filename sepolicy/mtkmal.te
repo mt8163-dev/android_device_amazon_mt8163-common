@@ -1,0 +1,10 @@
+type mtkmal_exec, exec_type, file_type;
+type mtkmal, domain, domain_deprecated;
+
+init_daemon_domain(mtkmal)
+
+allow mtkmal init:unix_stream_socket connectto;
+allow mtkmal property_socket:sock_file write;
+allow mtkmal mal_mfi_socket:sock_file write;
+
+allow mtkmal self:capability { setuid setgid };

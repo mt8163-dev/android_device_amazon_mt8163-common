@@ -1,4 +1,0 @@
-# ==============================================
-# MTK Policy Rule
-# ============
-dontaudit logd unlabeled:dir search;

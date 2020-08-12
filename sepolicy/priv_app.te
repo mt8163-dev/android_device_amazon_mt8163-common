@@ -1,0 +1,7 @@
+# Guiext
+allow priv_app guiext-server_service:service_manager find;
+
+# PQ
+allow priv_app pq_service:service_manager find;
+
+allow priv_app device:dir { read open };

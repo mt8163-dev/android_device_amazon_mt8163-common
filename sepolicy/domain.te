@@ -1,8 +1,1 @@
-# ==============================================
-# MTK Policy Rule
-# ==============================================
-
-# allow domain anr_data_file:file append;
-
-# extmem policy for lca debug15 over external memory
-allow domain exm0_device:chr_file { read write ioctl open };
+get_prop(domain, mtk_property_type)
