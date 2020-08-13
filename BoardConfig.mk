@@ -100,7 +100,7 @@ BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := $(DEVICE_FOLDER)/bluetooth
 
 # Digital Restrictions Management (DRM)
 MTK_WVDRM_SUPPORT := yes
-MTK_WVDRM_L1_SUPPORT := no
+MTK_WVDRM_L1_SUPPORT := yes
 
 # System Properties
 TARGET_SYSTEM_PROP := $(DEVICE_FOLDER)/system.prop
