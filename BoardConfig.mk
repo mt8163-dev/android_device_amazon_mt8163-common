@@ -129,6 +129,10 @@ TARGET_USE_CUSTOM_LUN_FILE_PATH := "/sys/devices/virtual/android_usb/android0/f_
 BOARD_SEPOLICY_DIRS += \
     $(DEVICE_FOLDER)/sepolicy
 
+# Media Extractors
+BOARD_SECCOMP_POLICY := \
+    $(DEVICE_FOLDER)/seccomp-policy
+
 # Cyanogenmod H/W Hooks
 BOARD_USES_CYANOGEN_HARDWARE := true
 BOARD_HARDWARE_CLASS := $(DEVICE_FOLDER)/cmhw
