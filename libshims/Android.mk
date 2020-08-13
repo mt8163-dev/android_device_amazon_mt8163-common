@@ -38,8 +38,8 @@ LOCAL_PROPRIETARY_MODULE := true
 include $(BUILD_SHARED_LIBRARY)
 
 include $(CLEAR_VARS)
-LOCAL_SRC_FILES := drm/icu_shim.cpp
-LOCAL_SHARED_LIBRARIES := libicuuc
+LOCAL_SRC_FILES := drm/icu_shim.cpp drm/crypto_shim.cpp
+LOCAL_SHARED_LIBRARIES := libicuuc libcrypto
 LOCAL_MODULE := libshim_drm
 LOCAL_MODULE_TAGS := optional
 LOCAL_MODULE_CLASS := SHARED_LIBRARIES
