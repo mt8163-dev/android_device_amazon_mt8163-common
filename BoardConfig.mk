@@ -147,7 +147,9 @@ LINKER_FORCED_SHIM_LIBS := \
     /system/lib/libdrmmtkutil.so|libshim_drm.so \
     /system/lib64/libdrmmtkutil.so|libshim_drm.so \
     /system/lib/libui_ext.so|libshim_ui.so \
-    /system/lib64/libui_ext.so|libshim_ui.so
+    /system/lib64/libui_ext.so|libshim_ui.so \
+    /system/lib/libcam_utils.so|libshim_ui.so \
+    /system/lib64/libcam_utils.so|libshim_ui.so
 
 # Device-Specific Headers
 TARGET_SPECIFIC_HEADER_PATH := $(DEVICE_FOLDER)/include
