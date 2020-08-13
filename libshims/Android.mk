@@ -23,6 +23,7 @@ include $(CLEAR_VARS)
 LOCAL_SRC_FILES := parcel/parcel_shim.cpp
 LOCAL_SHARED_LIBRARIES := libbinder
 LOCAL_MODULE := libshim_parcel
+LOCAL_CFLAGS := -Wno-unused-parameter
 LOCAL_MODULE_TAGS := optional
 LOCAL_MODULE_CLASS := SHARED_LIBRARIES
 LOCAL_PROPRIETARY_MODULE := true
