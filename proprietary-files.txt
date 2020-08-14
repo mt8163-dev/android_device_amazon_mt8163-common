@@ -158,14 +158,8 @@ lib/libdpframework.so
 lib64/libdpframework.so
 lib/libged.so
 lib/libgpu_aux.so
-lib/libgralloc_extra.so
-lib/libgui_ext.so
-lib/libui_ext.so
 lib64/libged.so
 lib64/libgpu_aux.so
-lib64/libgralloc_extra.so
-lib64/libgui_ext.so
-lib64/libui_ext.so
 vendor/lib64/libhadeanframework_core.so
 vendor/lib64/libhadeangpu_util.so
 lib/libion_mtk.so

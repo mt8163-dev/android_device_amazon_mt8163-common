@@ -75,6 +75,12 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     libion
 
+# Graphics (MTK)
+PRODUCT_PACKAGES += \
+    libgui_ext \
+    libui_ext \
+    libgralloc_extra
+
 # Shim Libraries
 PRODUCT_PACKAGES += \
     libshim_log \
