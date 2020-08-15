@@ -760,7 +760,7 @@ on property:vold.decrypt=trigger_shutdown_framework
 
 service kisd /system/bin/kisd
 	user root
-	group system
+	group system drmrpc
 
 service stop_modem /system/bin/md_ctrl 0
     class main
