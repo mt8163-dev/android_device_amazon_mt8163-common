@@ -27,7 +27,7 @@ PRODUCT_PACKAGES += \
 
 # Camera
 PRODUCT_PACKAGES += \
-    Camera2
+    Snap
 
 # Audio
 PRODUCT_PACKAGES += \
