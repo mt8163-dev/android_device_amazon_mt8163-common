@@ -142,8 +142,6 @@ TARGET_LDPRELOAD += libshim_audio.so
 LINKER_FORCED_SHIM_LIBS := \
     /system/lib/liblog.so|libshim_log.so \
     /system/lib64/liblog.so|libshim_log.so \
-    /system/lib/hw/hwcomposer.mt8163.so|libshim_ui.so \
-    /system/lib64/hw/hwcomposer.mt8163.so|libshim_ui.so \
     /system/lib/libMtkOmxVdecEx.so|libshim_ui.so \
     /system/lib/libasp.so|libshim_parcel.so \
     /system/lib64/libasp.so|libshim_parcel.so \
