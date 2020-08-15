@@ -1118,7 +1118,7 @@ index 3ca7cc0..ace493d 100644
 -#ifdef USE_LIBYUV
 +#ifdef MTK_HARDWARE
 +            err = convertYUVToRGBHW(src, dst);
-+#elif USE_LIBYUV
++#elif defined(USE_LIBYUV)
              err = convertYUV420PlanarUseLibYUV(src, dst);
  #else
              err = convertYUV420Planar(src, dst);
