@@ -1,0 +1,41 @@
+From 342aeedb4e2621302f2c64b7ac8cabf2d04d46e7 Mon Sep 17 00:00:00 2001
+From: DeckerSU <support@decker.su>
+Date: Sat, 18 Feb 2017 19:15:28 +0300
+Subject: [PATCH] fix access wvm to ReadOptions
+
+Change-Id: Ic9bb323439186c2907e31bc2f30486ae8fa7fda6
+---
+ media/libstagefright/MediaSource.cpp | 21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
+
+diff --git a/media/libstagefright/MediaSource.cpp b/media/libstagefright/MediaSource.cpp
+index a17757a..bc0206f 100644
+--- a/media/libstagefright/MediaSource.cpp
++++ b/media/libstagefright/MediaSource.cpp
+@@ -23,3 +23,24 @@ MediaSource::MediaSource() {}
+ MediaSource::~MediaSource() {}
+ 
+ }  // namespace android
++
++extern "C" {
++
++bool _ZNK7android11MediaSource11ReadOptions14getNonBlockingEv(android::IMediaSource::ReadOptions *readOptions) {
++    bool res = readOptions->getNonBlocking();
++    return res;
++}
++
++bool _ZNK7android11MediaSource11ReadOptions9getSeekToEPxPNS1_8SeekModeE(android::IMediaSource::ReadOptions *readOptions, int64_t *time_us, android::IMediaSource::ReadOptions::SeekMode *mode) {
++    bool res = readOptions->getSeekTo(time_us, mode);
++    return res;
++}
++
++int64_t _ZNK7android11MediaSource11ReadOptions9getLateByEv(android::IMediaSource::ReadOptions *readOptions) {
++    int64_t res = readOptions->getLateBy();
++    return res;
++}
++
++}
++
++
+-- 
+2.7.4

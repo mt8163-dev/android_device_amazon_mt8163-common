@@ -1,0 +1,41 @@
+From 25e37a5bd3572149756410a719e436a40b3f2783 Mon Sep 17 00:00:00 2001
+From: Wang Xuerui <idontknw.wang@gmail.com>
+Date: Fri, 24 Feb 2017 15:25:01 +0300
+Subject: [PATCH] [PATCH] xen0n: some MTK services (e.g. ril-daemon-mtk)
+ require very  large number +// of sockets, which can't be contained in 32
+ entries minus  other variables. +static const char *ENV[64];
+
+Change-Id: Ia1602cdc6d36bead4ce8a49e323a29eda6c53022
+---
+ init/init.cpp | 2 +-
+ init/init.h   | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/init/init.cpp b/init/init.cpp
+index 9992b47..9a24167 100755
+--- a/init/init.cpp
++++ b/init/init.cpp
+@@ -85,7 +85,7 @@ int have_console;
+ std::string console_name = "/dev/console";
+ static time_t process_needs_restart;
+ 
+-const char *ENV[32];
++const char *ENV[64];
+ 
+ bool waiting_for_exec = false;
+ 
+diff --git a/init/init.h b/init/init.h
+index 345d442..f93d0c5 100644
+--- a/init/init.h
++++ b/init/init.h
+@@ -24,7 +24,7 @@ class Service;
+ 
+ #define COMMAND_RETRY_TIMEOUT 5
+ 
+-extern const char *ENV[32];
++extern const char *ENV[64];
+ extern bool waiting_for_exec;
+ extern int have_console;
+ extern std::string console_name;
+-- 
+2.7.4

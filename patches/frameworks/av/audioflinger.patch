@@ -1,0 +1,35 @@
+From e2177f8c4c85f879afbc1d3011dd61b9f8815512 Mon Sep 17 00:00:00 2001
+From: Dmitry Smirnov <divis1969@gmail.com>
+Date: Tue, 10 Jul 2018 17:29:23 +0200
+Subject: [PATCH] audioflinger: Disable get_capture_position
+
+Our blobs doesn't support it
+
+Change-Id: I1dc3c77b50348999d88c211993313534e003085f
+---
+ services/audioflinger/Threads.cpp | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/services/audioflinger/Threads.cpp b/services/audioflinger/Threads.cpp
+index 5c37263..7b81b88 100644
+--- a/services/audioflinger/Threads.cpp
++++ b/services/audioflinger/Threads.cpp
+@@ -6466,6 +6466,7 @@ reacquire_wakelock:
+         mTimestamp.mTimeNs[ExtendedTimestamp::LOCATION_SERVER] = systemTime();
+ 
+         // Update server timestamp with kernel stats
++#ifndef MTK_HARDWARE
+         if (mInput->stream->get_capture_position != nullptr
+                 && mPipeSource.get() == nullptr /* don't obtain for FastCapture, could block */) {
+             int64_t position, time;
+@@ -6480,6 +6481,7 @@ reacquire_wakelock:
+                 // as the read obtains a lock, preventing the timestamp call from executing.
+             }
+         }
++#endif
+         // Use this to track timestamp information
+         // ALOGD("%s", mTimestamp.toString().c_str());
+ 
+-- 
+2.7.4
+

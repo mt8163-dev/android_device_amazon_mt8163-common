@@ -1,0 +1,17 @@
+From: WisniaPL
+Date: Fri, 17 Mar 2017 18:24:10 +0300
+Subject: [PATCH] Fix camera error for LeTV x500
+project bionic/
+diff --git a/libc/Android.mk b/libc/Android.mk
+index 94f7ce6..1d663af 100644
+--- a/libc/Android.mk
++++ b/libc/Android.mk
+@@ -607,7 +607,7 @@ libc_openbsd_src_files_32 += \
+ libc_common_cflags := \
+     -D_LIBC=1 \
+     -Wall -Wextra -Wunused \
+-
++ -fno-stack-protector
+ use_clang := $(USE_CLANG_PLATFORM_BUILD)
+ 
+ # Clang/llvm has incompatible long double (fp128) for x86_64.
