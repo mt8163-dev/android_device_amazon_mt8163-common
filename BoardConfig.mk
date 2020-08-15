@@ -59,6 +59,9 @@ TARGET_KMODULES := true
 # Disable memcpy opt (for audio libraries)
 TARGET_CPU_MEMCPY_OPT_DISABLE := true
 
+# OMX
+TARGET_OMX_LEGACY_RESCALING:= true
+
 # EGL
 BOARD_EGL_CFG := $(DEVICE_FOLDER)/configs/graphics/egl.cfg
 USE_OPENGL_RENDERER := true
