@@ -29,10 +29,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     Camera2
 
-# Use CM Gello browser
-PRODUCT_PACKAGES += \
-    Gello
-
 # Audio
 PRODUCT_PACKAGES += \
     audio.a2dp.default \
