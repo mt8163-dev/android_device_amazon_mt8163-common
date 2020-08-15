@@ -1,4 +1,4 @@
-# Amazon Fire HD8 2017
+# Amazon Fire HD8 2017 Android Device Tree
 
 The Amazon Fire HD8 2017 (codenamed "douglas") is a low-range tablet from amazon announced in 2017.
 
@@ -21,9 +21,9 @@ Rear Camera  | 2 MP
   <img src="https://media.wired.com/photos/5a2b2d4ea850e23a4736f3be/master/w_582,c_limit/amazonfire-TA.jpg" alt="douglas"/>
 </p>
 
-This branch is for building LineageOS 13.0 (CM).
+This branch is for building LineageOS 14.1 (CM).
 
 ## Building from source
-[For Build Instructions Check Here](https://github.com/douglas-development/android_vendor_amazon_douglas/blob/cm-12.1/BUILDING.md)
+[For Build Instructions Check Here](https://github.com/douglas-development/android_vendor_amazon_douglas/blob/cm-14.1/BUILDING.md)
 
 
