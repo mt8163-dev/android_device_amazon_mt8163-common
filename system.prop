@@ -50,10 +50,6 @@ ro.sf.lcd_density=213
 # RSSI
 persist.wifi.rssi.thresholds=-92,-79,-70,-60
 
-# No RIL
-ro.radio.noril=1
-ro.carrier=wifi-only
-
 # WCN Driver
 service.wcn.driver.ready=no
 persist.mtk.wcn.combo.chipid=-1

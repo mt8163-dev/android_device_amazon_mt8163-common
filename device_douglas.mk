@@ -160,6 +160,15 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.vibe_force=32
 
+# No RIL
+PRODUCT_PROPERTY_OVERRIDES += \
+    keyguard.no_require_sim=1 \
+    ro.radio.use-ppp=no \
+    ro.config.nocheckin=yes \
+    ro.radio.noril=1 \
+    ro.carrier=wifi-only \
+    persist.radio.noril=1
+
 # Configure dalvik heap
 $(call inherit-product, frameworks/native/build/phone-xhdpi-2048-dalvik-heap.mk)
 
