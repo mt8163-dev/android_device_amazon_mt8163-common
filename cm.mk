@@ -1,5 +1,3 @@
-## Specify phone tech before including full_phone
-
 # Release name
 PRODUCT_RELEASE_NAME := KFDOWI
 
