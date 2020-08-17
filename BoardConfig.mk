@@ -149,6 +149,7 @@ LINKER_FORCED_SHIM_LIBS := \
     /system/lib/liblog.so|libshim_log.so \
     /system/lib64/liblog.so|libshim_log.so \
     /system/lib/libMtkOmxVdecEx.so|libshim_ui.so \
+    /system/lib/libMtkOmxVenc.so|libshim_ui.so \
     /system/lib/libasp.so|libshim_parcel.so \
     /system/lib64/libasp.so|libshim_parcel.so \
     /system/lib/libcam.utils.sensorlistener.so|libshim_camera.so \
