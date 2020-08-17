@@ -154,8 +154,8 @@ lib/libblisrc.so
 lib/libblisrc32.so
 lib64/libblisrc.so
 lib64/libblisrc32.so
-lib/libdpframework.so
-lib64/libdpframework.so
+-lib/libdpframework.so
+-lib64/libdpframework.so
 lib/libged.so
 lib/libgpu_aux.so
 lib64/libged.so
