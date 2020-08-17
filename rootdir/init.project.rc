@@ -180,14 +180,14 @@ service logcat_log /system/bin/logcat_log.sh
 service amzn_drmprov /system/bin/amzn_drmprov_check
     class main
     user root
-    group system
+    group system drmrpc
     oneshot
     disabled
 
 service amzn_dha_hmac /system/bin/amzn_dha_hmac
     class main
     user root
-    group system
+    group system drmrpc
     oneshot
     disabled
 
