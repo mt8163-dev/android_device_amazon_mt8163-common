@@ -2,8 +2,8 @@
 /dev/trustzone            0660   root         drmrpc
 /dev/kb                   0660   root       system
 /dev/dkb                  0660   root       system
-/dev/block/platform/mtk-msdc.0/by-name/kb  0660   root       system
-/dev/block/platform/mtk-msdc.0/by-name/dkb  0660   root       system
+/dev/block/platform/mtk-msdc.0/by-name/kb  0660   root       drmrpc
+/dev/block/platform/mtk-msdc.0/by-name/dkb  0660   root       drmrpc
 /dev/block/platform/mtk-msdc.0/by-name/frp  0660   root       system
 
 # Connectivity
