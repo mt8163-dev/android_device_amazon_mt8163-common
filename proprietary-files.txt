@@ -150,10 +150,10 @@ lib/hw/gralloc.mt8163.mali.so
 lib/hw/hwcomposer.mt8163.so
 lib64/hw/gralloc.mt8163.mali.so
 lib64/hw/hwcomposer.mt8163.so
-lib/libblisrc.so
-lib/libblisrc32.so
-lib64/libblisrc.so
-lib64/libblisrc32.so
+#lib/libblisrc.so
+#lib/libblisrc32.so
+#lib64/libblisrc.so
+#lib64/libblisrc32.so
 -lib/libdpframework.so
 -lib64/libdpframework.so
 lib/libged.so
