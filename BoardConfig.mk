@@ -59,6 +59,9 @@ TARGET_KMODULES := true
 # Disable memcpy opt (for audio libraries)
 TARGET_CPU_MEMCPY_OPT_DISABLE := true
 
+# Audio
+BOARD_USES_MTK_AUDIO := true
+
 # OMX
 TARGET_OMX_LEGACY_RESCALING:= true
 
