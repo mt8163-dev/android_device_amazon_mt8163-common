@@ -116,4 +116,7 @@
         <item>255</item>
         <item>255</item>
     </integer-array>
+
+    <!-- Flag indicating which package name can access the persistent data partition -->
+    <string name="config_persistentDataPackageName" translatable="false">com.google.android.gms</string>
 </resources>
