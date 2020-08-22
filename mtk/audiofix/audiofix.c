@@ -59,7 +59,7 @@ void setALSAControlValue(char *name, int value)
 
     if (mixer_ctl_set_value(ctl, 0, value) != 0)
     {
-        ALOGE("Filed to set value %s", name);
+        ALOGE("Failed to set value %s", name);
     }
 
     mixer_close(mixer1);
@@ -203,14 +203,14 @@ int main()
     ufd = uevent_open_socket(UEVENT_MSG_LEN, true);
     if (ufd == -1)
     {
-        ALOGE("Filed opening socket, Exiting");
+        ALOGE("Failed opening socket, Exiting");
         exit(1);
     }
 
     h2wStatefd = open(H2W_STATE_FD, O_RDONLY);
     if (h2wStatefd == -1)
     {
-        ALOGE("Filed to open h2w state, Exiting");
+        ALOGE("Failed to open h2w state, Exiting");
         exit(1);
     }
 
