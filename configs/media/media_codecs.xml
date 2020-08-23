@@ -170,24 +170,6 @@ Only the three quirks included above are recognized at this point:
         <MediaCodec name="OMX.google.amrwb.decoder" type="audio/amr-wb" />
         <MediaCodec name="OMX.google.aac.decoder" type="audio/mp4a-latm" />
         <MediaCodec name="OMX.google.vorbis.decoder" type="audio/vorbis" />
-
-        <!-- DOLBY_UDC -->
-        <MediaCodec name="OMX.dolby.ac3.decoder" >
-            <Type name="audio/ac3" />
-            <Quirk name="needs-flush-before-disable" />
-            <Quirk name="requires-flush-complete-emulation" />
-        </MediaCodec>
-        <MediaCodec name="OMX.dolby.eac3.decoder" >
-            <Type name="audio/eac3" />
-            <Quirk name="needs-flush-before-disable" />
-            <Quirk name="requires-flush-complete-emulation" />
-        </MediaCodec>
-        <MediaCodec name="OMX.dolby.eac3_joc.decoder" >
-           <Type name="audio/eac3-joc" />
-             <Quirk name="needs-flush-before-disable" />
-             <Quirk name="requires-flush-complete-emulation" />
-        </MediaCodec>
-        <!-- DOLBY_UDC END -->
     </Decoders>
 
     <Encoders>
