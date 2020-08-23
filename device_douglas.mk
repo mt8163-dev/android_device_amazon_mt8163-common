@@ -71,7 +71,7 @@ PRODUCT_PACKAGES += \
 # Patched Audio Configuration Files
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/audio/audio_device.xml:system/etc/audio_device.xml \
-    $(LOCAL_PATH)/configs/audio/audio_policy.conf:system/etc/audio_policy.conf
+    $(LOCAL_PATH)/configs/audio/audio_policy.conf:system/vendor/etc/audio_policy.conf
 
 # Network
 PRODUCT_PACKAGES += \
