@@ -76,13 +76,46 @@ Only the three quirks included above are recognized at this point:
     2012/07/13 config for MTK OMX Media Codecs, created by Morris Yang (mtk03147)
 -->
 
-<MediaCodecs>
-    <Settings>
-        <Setting name="max-video-encoder-input-buffers" value="10" />
-    </Settings>
-    <Include href="media_codecs_mediatek_audio.xml" />
-    <!-- <Include href="media_codecs_dolby_audio.xml" /> -->
-    <Include href="media_codecs_mediatek_video.xml" />
-    <Include href="media_codecs_google_audio.xml" />
-    <Include href="media_codecs_google_video_le.xml" />
-</MediaCodecs>
+<Included>
+    <Decoders>
+        <MediaCodec name="OMX.MTK.AUDIO.DECODER.MP3" >
+            <Type name="audio/mpeg" />
+            <Type name="audio/mpeg-L2" />
+            <Quirk name="decoder-lies-about-number-of-channels" />
+            <Quirk name="supports-multiple-frames-per-input-buffer" />
+        </MediaCodec>
+        <MediaCodec name="OMX.MTK.AUDIO.DECODER.AMR.NB" type="audio/3gpp" />
+        <MediaCodec name="OMX.MTK.AUDIO.DECODER.AMR.WB" type="audio/amr-wb" />
+        <MediaCodec name="OMX.MTK.AUDIO.DECODER.ADPCM.MS" type="audio/x-adpcm-ms" />
+        <MediaCodec name="OMX.MTK.AUDIO.DECODER.ADPCM.DVI" type="audio/x-adpcm-dvi-ima" />
+        <MediaCodec name="OMX.MTK.AUDIO.DECODER.GSM" type="audio/gsm" />
+        <MediaCodec name="OMX.MTK.AUDIO.DECODER.RAW" type="audio/raw" />
+        <MediaCodec name="OMX.MTK.AUDIO.DECODER.AAC" type="audio/mp4a-latm" />
+        <MediaCodec name="OMX.MTK.AUDIO.DECODER.G711.ALAW" type="audio/g711-alaw" >
+            <Quirk name="decoder-lies-about-number-of-channels" />
+        </MediaCodec>
+        <MediaCodec name="OMX.MTK.AUDIO.DECODER.G711.MLAW" type="audio/g711-mlaw" >
+            <Quirk name="decoder-lies-about-number-of-channels" />
+        </MediaCodec>
+        <MediaCodec name="OMX.MTK.AUDIO.DECODER.VORBIS" type="audio/vorbis" >
+            <Quirk name="decoder-lies-about-number-of-channels" />
+        </MediaCodec>
+        <MediaCodec name="OMX.MTK.AUDIO.DECODER.FLAC" type="audio/flac" />
+        <MediaCodec name="OMX.MTK.AUDIO.DECODER.WMA" type="audio/x-ms-wma" />
+        <MediaCodec name="OMX.MTK.AUDIO.DECODER.WMAPRO" type="audio/x-ms-wmapro" />
+        <MediaCodec name="OMX.MTK.AUDIO.DECODER.APE" type="audio/ape" >
+            <Quirk name="decoder-lies-about-number-of-channels" />
+            <Quirk name="supports-multiple-frames-per-input-buffer" />
+        </MediaCodec>
+        <MediaCodec name="OMX.MTK.AUDIO.DECODER.ALAC" type="audio/alac" />
+    </Decoders>
+
+    <Encoders>
+        <MediaCodec name="OMX.MTK.AUDIO.ENCODER.AMR" type="audio/3gpp" />
+        <MediaCodec name="OMX.MTK.AUDIO.ENCODER.AWB" type="audio/amr-wb" />
+        <MediaCodec name="OMX.MTK.AUDIO.ENCODER.AAC" type="audio/mp4a-latm" />
+        <MediaCodec name="OMX.MTK.AUDIO.ENCODER.VORBIS" type="audio/vorbis" />
+        <MediaCodec name="OMX.MTK.AUDIO.ENCODER.ADPCM.MS" type="audio/x-adpcm-ms" />
+        <MediaCodec name="OMX.MTK.AUDIO.ENCODER.ADPCM.DVI" type="audio/x-adpcm-dvi-ima" />
+    </Encoders>
+</Included>
