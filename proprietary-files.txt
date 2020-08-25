@@ -260,13 +260,13 @@ lib64/libcameracustom.so
 lib64/libcam.iopipe_FrmB.so
 lib64/libcamdrv_FrmB.so
 
-# Media
+# Media (HW Codecs from karnak-user 6.0 NS6314 2315 amz-p,release-keys)
 lib/libMtkOmxAIVPlayer.so
-lib/libMtkOmxCore.so
+lib/libMtkOmxCore.so|29ee5876ed9b03f78a54206028d0fd5c8124d55c
 lib64/libMtkOmxCore.so
-lib/libMtkOmxMp3Dec.so
-lib/libMtkOmxVdecEx.so
-lib/libMtkOmxVenc.so
+lib/libMtkOmxMp3Dec.so|0c9b7d7d25f36d650aed3f071030dff81d27a0cb
+lib/libMtkOmxVdecEx.so|996524b5fcb9ad5fb8c4c423aea7b9389d3efe4e
+lib/libMtkOmxVenc.so|0dd7e5e2088e3ee02571b3ca366a6f9cd30979f1
 lib/libSwJpgCodec.so
 lib/libcvsd_mtk.so
 lib64/libcvsd_mtk.so
