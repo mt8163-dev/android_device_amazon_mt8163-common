@@ -157,8 +157,6 @@ LINKER_FORCED_SHIM_LIBS := \
     /system/lib/libMtkOmxVenc.so|libshim_ui.so \
     /system/lib/libasp.so|libshim_parcel.so \
     /system/lib64/libasp.so|libshim_parcel.so \
-    /system/lib/libcam.utils.sensorlistener.so|libshim_camera.so \
-    /system/lib64/libcam.utils.sensorlistener.so|libshim_camera.so \
     /system/lib/libdrmmtkutil.so|libshim_drm.so \
     /system/lib64/libdrmmtkutil.so|libshim_drm.so \
     /system/lib/libui_ext.so|libshim_ui.so \
