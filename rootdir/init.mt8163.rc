@@ -580,6 +580,7 @@ on post-fs-data
 
     # GED
     chmod 0666 /proc/ged
+    chown root system /proc/ged 
 
     # ASP
     chmod 0666 /proc/idme/miccal.0
