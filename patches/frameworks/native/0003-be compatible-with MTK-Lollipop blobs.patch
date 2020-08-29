@@ -26,12 +26,12 @@ index 6c6230f9e..61728620e 100644
      ssize_t getSensorList(Sensor const* const** list);
      ssize_t getDynamicSensorList(Vector<Sensor>& list);
      Sensor const* getDefaultSensor(int type);
-+#ifdef MTK_HARDWARE
++
 +    sp<SensorEventQueue> createEventQueue(String8 packageName, int mode = 0);
 +    sp<SensorEventQueue> createEventQueue();
-+#else
++
      sp<SensorEventQueue> createEventQueue(String8 packageName = String8(""), int mode = 0);
-+#endif
++
      bool isDataInjectionEnabled();
  
  private:
@@ -40,9 +40,9 @@ index 6c6230f9e..61728620e 100644
      SensorManager(const String16& opPackageName);
      status_t assertStateLocked();
 +
-+#ifdef MTK_HARDWARE
++
 +    SensorManager();
-+#endif
++
  
  private:
      static Mutex sLock;
@@ -51,13 +51,13 @@ index 6c6230f9e..61728620e 100644
      const String16 mOpPackageName;
  };
 +
-+#ifdef MTK_HARDWARE
++
 +    // be compatible with MTK Lollipop blobs
 +    extern "C" {
 +        extern android::Mutex _ZN7android9SingletonINS_13SensorManagerEE5sLockE;
 +        extern SensorManager *_ZN7android9SingletonINS_13SensorManagerEE9sInstanceE;
 +    }
-+#endif  // MTK_HARDWARE
++
  
  // ----------------------------------------------------------------------------
  }; // namespace android
@@ -69,7 +69,7 @@ index 225bfa885..c7f742220 100644
  android::Mutex android::SensorManager::sLock;
  std::map<String16, SensorManager*> android::SensorManager::sPackageInstances;
  
-+#ifdef MTK_HARDWARE
++
 +
 +static const String8 packageName8("");
 +
@@ -93,7 +93,7 @@ index 225bfa885..c7f742220 100644
 +sp<SensorEventQueue> SensorManager::createEventQueue() {
 +	return createEventQueue(packageName8, 0);
 +}
-+#endif  // MTK_HARDWARE
++
 +
  SensorManager& SensorManager::getInstanceForPackage(const String16& packageName) {
      Mutex::Autolock _l(sLock);
