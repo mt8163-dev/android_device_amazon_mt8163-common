@@ -173,6 +173,12 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.vibe_force=32
 
+# DRM
+PRODUCT_PACKAGES += \
+    libdrm \
+    libmockdrmcryptoplugin \
+    libdrmclearkeyplugin
+
 # No RIL
 PRODUCT_PROPERTY_OVERRIDES += \
     keyguard.no_require_sim=1 \
