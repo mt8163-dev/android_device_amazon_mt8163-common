@@ -1,7 +1,7 @@
 LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
-LOCAL_SRC_FILES := log/log_shim.cpp
+LOCAL_SRC_FILES := log/lab126_log_shim.cpp log/xlog_shim.cpp
 LOCAL_SHARED_LIBRARIES := liblog
 LOCAL_MODULE := libshim_log
 LOCAL_MODULE_TAGS := optional
