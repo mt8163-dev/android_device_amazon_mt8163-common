@@ -17,6 +17,9 @@ persist.sys.isUsbOtgEnabled=1
 # MediaTek Wi-Fi Interface
 wifi.interface=wlan0
 
+# DRM
+drm.service.enabled=true
+
 # WSC
 ro.mediatek.wlan.wsc=1
 
