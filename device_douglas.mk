@@ -173,7 +173,8 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
 PRODUCT_PACKAGES += \
     libdrm \
     libmockdrmcryptoplugin \
-    libdrmclearkeyplugin
+    libdrmclearkeyplugin \
+    libfwdlockengine
 
 # No RIL
 PRODUCT_PROPERTY_OVERRIDES += \

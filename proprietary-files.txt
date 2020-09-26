@@ -55,7 +55,6 @@ lib64/hw/keystore.mt8163.so
 lib/drm/libdrmctaplugin.so
 lib/drm/libdrmmtkplugin.so
 lib/drm/libdrmplayreadyplugin.so
-lib/drm/libfwdlockengine.so
 lib/lib_uree_mtk_modular_drm.so
 lib/lib_uree_mtk_crypto.so
 lib/lib_uree_mtk_video_secure_al.so
@@ -65,7 +64,6 @@ lib/libdrmplayreadydecryptor.so
 lib/liburee_meta_drmkeyinstall_v2.so
 lib/libtz_uree.so
 lib64/libtz_uree.so
-lib64/drm/libfwdlockengine.so
 lib64/libdrmmtkutil.so
 lib64/libdrmmtkwhitelist.so
 lib64/lib_uree_mtk_modular_drm.so
