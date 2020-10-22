@@ -21,10 +21,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     lights.mt8163
 
-# Bluetooth Library
-PRODUCT_PACKAGES += \
-    libbt-vendor
-
 # Camera
 PRODUCT_PACKAGES += \
     Snap \
