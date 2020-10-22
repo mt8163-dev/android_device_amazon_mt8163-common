@@ -159,7 +159,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # Override Default Properties
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
-    persist.sys.usb.config=mtp,adb \
     ro.secure=0 \
     ro.adb.secure=0 \
     ro.allow.mock.location=0 \
