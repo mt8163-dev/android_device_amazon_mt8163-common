@@ -164,6 +164,9 @@ ro.mtk_antibricking_level=2
 # MIC
 ro.mtk_dual_mic_support=0
 
+# OTAs
+cm.updater.uri=https://raw.githubusercontent.com/R0rt1z2/OTA/master/lineageos_douglas.json
+
 # MISC
 ro.mtk_wappush_support=1
 ro.mtk_voice_ui_support=1
