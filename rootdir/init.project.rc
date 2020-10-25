@@ -79,10 +79,6 @@ on init
     export SECONDARY_STORAGE /storage/sdcard1
     export SECONDARY_STORAGE_USB /storage/usbotg
 
-service fuse_usbotg /system/bin/sdcard -u 1023 -g 1023 -w 1023 -d /mnt/media_rw/usbotg /storage/usbotg
-    class late_start
-    disabled
-
 on boot
     insmod /system/lib/modules/ufsd.ko
 
