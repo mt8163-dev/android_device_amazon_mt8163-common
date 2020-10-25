@@ -13,8 +13,8 @@ etc/firmware/WIFI_RAM_CODE_8163
 etc/firmware/WMT_SOC.cfg
 lib/libccci_util.so
 lib64/libccci_util.so
-lib/libwpa_client.so
-lib64/libwpa_client.so
+#lib/libwpa_client.so
+#lib64/libwpa_client.so
 
 # Nvram
 bin/nvram_daemon
