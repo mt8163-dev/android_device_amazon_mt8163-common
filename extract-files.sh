@@ -24,6 +24,7 @@ MY_DIR="${BASH_SOURCE%/*}"
 if [[ ! -d "$MY_DIR" ]]; then MY_DIR="$PWD"; fi
 
 LINEAGE_ROOT="$MY_DIR"/../../..
+VENDOR_OUT="${LINEAGE_ROOT}/vendor/${VENDOR}/${DEVICE_COMMON}/proprietary"
 
 HELPER="$LINEAGE_ROOT"/vendor/cm/build/tools/extract_utils.sh
 if [ ! -f "$HELPER" ]; then
@@ -48,9 +49,39 @@ else
   fi
 fi
 
+function patch_sym() {
+    if [ $# -eq 0 ]
+      then
+        echo "- No arguments supplied!"
+    fi
+
+    if [ $(expr length $1) != $(expr length $2) ]
+      then
+        echo "- Symbols length doesn't match: $(expr length $1) vs $(expr length $2)!"
+        return
+    fi
+
+    MATCH=$(strings ${3} | grep ${1})
+    if [ $? != 0 ]
+      then
+        echo "- Couldn't find ${1}..."
+        return
+    fi
+
+    echo "- Patching ${3}: ${1} --> ${2}"
+    sed -i s/$1/${2}/g ${3}
+}
+
 # Initialize the helper
 setup_vendor "$DEVICE_COMMON" "$VENDOR" "$LINEAGE_ROOT" true
 
 extract "$MY_DIR"/proprietary-files.txt "$SRC"
 
 "$MY_DIR"/setup-makefiles.sh
+
+# Force SW Decoding
+patch_sym _ZN12DpBlitStream10invalidateEv _ZN12DpBlitStream10ievalidateEv ${VENDOR_OUT}/lib/libMtkOmxVdecEx.so
+
+# Handle Missing GraphicBuffer Symbols
+patch_sym _ZN7android19GraphicBufferMapper4lockEPK13native_handleiRKNS_4RectEPPv _ZN7android19GraphicBufferMapper4lockEPK13native_handlejRKNS_4RectEPPv ${VENDOR_OUT}/lib/hw/hwcomposer.mt8163.so
+patch_sym _ZN7android19GraphicBufferMapper4lockEPK13native_handleiRKNS_4RectEPPv _ZN7android19GraphicBufferMapper4lockEPK13native_handlejRKNS_4RectEPPv ${VENDOR_OUT}/lib64/hw/hwcomposer.mt8163.so
