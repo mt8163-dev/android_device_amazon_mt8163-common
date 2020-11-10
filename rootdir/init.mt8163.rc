@@ -20,6 +20,9 @@ on init
     symlink /sdcard /mnt/sdcard
     symlink /sdcard /storage/sdcard0
 
+    # Compatibility with old nvram blobs
+    symlink /dev/block/platform/soc/11230000.mmc/by-name/proinfo /dev/pro_info
+
     # Create mountpoint for persist partition
     mkdir /persist 0771 system system
 
