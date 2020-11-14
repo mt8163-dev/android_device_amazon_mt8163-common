@@ -192,7 +192,7 @@ lib/libcam.device1.so
 lib/libcam.device3.so
 lib/libcamdrv_FrmB.so
 lib/libcamdrv.so
-lib/libcameracustom.so
+-lib/libcameracustom.so
 lib/libcam.exif.so
 lib/libcam.exif.v3.so
 lib/libcam.hal3a.v3.so
@@ -254,7 +254,7 @@ lib64/libcam_platform.so
 lib64/libcam_utils.so
 lib64/libcamalgo.so
 lib64/libcamdrv.so
-lib64/libcameracustom.so
+-lib64/libcameracustom.so
 lib64/libcam.iopipe_FrmB.so
 lib64/libcamdrv_FrmB.so
 

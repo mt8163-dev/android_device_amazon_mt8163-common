@@ -85,3 +85,9 @@ patch_sym _ZN12DpBlitStream10invalidateEv _ZN12DpBlitStream10ievalidateEv ${VEND
 # Handle Missing GraphicBuffer Symbols
 patch_sym _ZN7android19GraphicBufferMapper4lockEPK13native_handleiRKNS_4RectEPPv _ZN7android19GraphicBufferMapper4lockEPK13native_handlejRKNS_4RectEPPv ${VENDOR_OUT}/lib/hw/hwcomposer.mt8163.so
 patch_sym _ZN7android19GraphicBufferMapper4lockEPK13native_handleiRKNS_4RectEPPv _ZN7android19GraphicBufferMapper4lockEPK13native_handlejRKNS_4RectEPPv ${VENDOR_OUT}/lib64/hw/hwcomposer.mt8163.so
+
+# Prepare the camera wrapper
+patch_sym libcam.halsensor.so libcam2halsensor.so ${VENDOR_OUT}/lib/libcam.halsensor.so
+patch_sym libcam.halsensor.so libcam2halsensor.so ${VENDOR_OUT}/lib64/libcam.halsensor.so
+mv ${VENDOR_OUT}/lib/libcam.halsensor.so ${VENDOR_OUT}/lib/libcam2halsensor.so
+mv ${VENDOR_OUT}/lib64/libcam.halsensor.so ${VENDOR_OUT}/lib64/libcam2halsensor.so

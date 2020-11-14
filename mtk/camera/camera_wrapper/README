@@ -1,0 +1,17 @@
+camera wrapper
+==============
+What is this?
+
+Nougat use Clang 3.8 by default. Blobs built with gcc 4.9 clang 3.6 might
+have address alignment issue. The first victim is libcam.halsenor from
+Vibeui 3.5 dev. 1631. It crashed when calling the function getResolution()
+This function's argument is a pointer to a sturct. That struct is an array
+of pointers to another stuct. Mediatek's source use to assign a pointer to
+the address of a local struct variable directly.
+The only way is to avoid accessing that argument. That local struct is
+inside the class ImgSensorDrv. We can't access the struct outside the class.
+Fortunately ImgSensorDrv is self contained. This wrapper will create our own
+ImgSensorDrv class. It will take over the ImgSensorDrv class inside the blob
+libcam.halsensor.
+
+The source was derived from the camera hal source for mt6735 and mt6595.

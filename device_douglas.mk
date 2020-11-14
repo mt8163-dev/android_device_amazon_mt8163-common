@@ -24,7 +24,8 @@ PRODUCT_PACKAGES += \
 # Camera
 PRODUCT_PACKAGES += \
     Snap \
-    libcamera_parameters_mtk
+    libcamera_parameters_mtk \
+    libcam.halsensor
 
 # Audio
 PRODUCT_PACKAGES += \
