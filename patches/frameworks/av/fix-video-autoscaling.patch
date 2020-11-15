@@ -1,0 +1,64 @@
+From fa92f0ca3629718962e9cff65868696ccdda154e Mon Sep 17 00:00:00 2001
+From: darklord4822 <darklord4722@gmail.com>
+Date: Tue, 25 Jul 2017 19:55:52 +0500
+Subject: [PATCH] 0013-fix-video-autoscaling
+
+---
+ media/libstagefright/ACodec.cpp                           | 10 ++++++++++
+ media/libstagefright/omx/SoftVideoDecoderOMXComponent.cpp | 13 +++++++++++++
+ 2 files changed, 23 insertions(+)
+
+diff --git a/media/libstagefright/ACodec.cpp b/media/libstagefright/ACodec.cpp
+index 92e2847..57e6bf5 100644
+--- a/media/libstagefright/ACodec.cpp
++++ b/media/libstagefright/ACodec.cpp
+@@ -5142,6 +5142,16 @@ status_t ACodec::getPortFormat(OMX_U32 portIndex, sp<AMessage> &notify) {
+                             rect.nWidth = videoDef->nFrameWidth;
+                             rect.nHeight = videoDef->nFrameHeight;
+                         }
++#ifdef MTK_HARDWARE
++                    if (!strncmp(mComponentName.c_str(), "OMX.MTK.", 8) && mOMX->getConfig(
++                            mNode, (OMX_INDEXTYPE) 0x7f00001c /* OMX_IndexVendorMtkOmxVdecGetCropInfo */,
++                            &rect, sizeof(rect)) != OK) {
++                        rect.nLeft = 0;
++                        rect.nTop = 0;
++                        rect.nWidth = videoDef->nFrameWidth;
++                        rect.nHeight = videoDef->nFrameHeight;
++                    }
++#endif
+ 
+                         if (rect.nLeft < 0 ||
+                             rect.nTop < 0 ||
+diff --git a/media/libstagefright/omx/SoftVideoDecoderOMXComponent.cpp b/media/libstagefright/omx/SoftVideoDecoderOMXComponent.cpp
+index 409cef7..3591eee 100644
+--- a/media/libstagefright/omx/SoftVideoDecoderOMXComponent.cpp
++++ b/media/libstagefright/omx/SoftVideoDecoderOMXComponent.cpp
+@@ -488,6 +488,18 @@ OMX_ERRORTYPE SoftVideoDecoderOMXComponent::internalSetParameter(
+             uint32_t oldHeight = def->format.video.nFrameHeight;
+             uint32_t newWidth = video_def->nFrameWidth;
+             uint32_t newHeight = video_def->nFrameHeight;
++#ifdef MTK_HARDWARE
++            // 20150126 Marcus Huang: Fix ALPS01919422; limits the max width/height
++            //@Vdec_drv_if_public.c
++            //  DEC_MAX_WIDTH = 1920;
++            //  DEC_MAX_HEIGHT = 1088;
++#define MAX_SUPPORT_WIDTH 1920
++#define MAX_SUPPORT_HEIGHT 1088
++            if ((newWidth * newHeight) > (MAX_SUPPORT_WIDTH * MAX_SUPPORT_HEIGHT)) {
++                ALOGE("frame size is not supported (%d x %d)", newWidth, newHeight);
++                return OMX_ErrorUnsupportedSetting;
++            }
++#else
+             // We need width, height, stride and slice-height to be non-zero and sensible.
+             // These values were chosen to prevent integer overflows further down the line, and do
+             // not indicate support for 32kx32k video.
+@@ -496,6 +508,7 @@ OMX_ERRORTYPE SoftVideoDecoderOMXComponent::internalSetParameter(
+                 ALOGE("b/22885421");
+                 return OMX_ErrorBadParameter;
+             }
++#endif
+             if (newWidth != oldWidth || newHeight != oldHeight) {
+                 bool outputPort = (newParams->nPortIndex == kOutputPortIndex);
+                 if (outputPort) {
+-- 
+1.9.1
