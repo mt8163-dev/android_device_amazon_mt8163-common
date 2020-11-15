@@ -1,0 +1,108 @@
+From 13168a96f7d3d65108492a3a866ae75a2d2eaf02 Mon Sep 17 00:00:00 2001
+From: DeckerSU <support@decker.su>
+Date: Sat, 18 Feb 2017 15:18:12 +0300
+Subject: [PATCH] Apply LIBC version to __pthread_gettid
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Source:
+
+    Автор: Dimitry Ivanov <dimitry@google.com>  2016-01-22 00:25:32
+    Коммитер: Dimitry Ivanov <dimitry@google.com>  2016-01-22 03:43:04
+    Предок: 05c2f6b3d39ee92eae248e902a5a54fdcc6c696f (Merge "libc: hide __signalfd4 symbol")
+    Потомок:  a42483baad9a37297e6bbbe02d433ecbde890386 (Merge "Revert "Temporary apply LIBC version to __pthread_gettid"")
+    Ветка: remotes/github/cm-14.1, remotes/m/cm-14.1
+    Следует за: android-sdk-adt_r12
+    Предшествует:
+
+    Revert "Temporary apply LIBC version to __pthread_gettid"
+
+    This reverts commit 0ef1d121b5e4845f4ef3b59ae9a1f99ceb531186.
+
+    Bug: http://b/26392296
+    Bug: http://b/26391427
+    Change-Id: I7bbb555de3a43813e7623ff6ad4e17874d283eca
+
+Change-Id: If9486a35382d856692a80a144472ffe9feeb6a0b
+---
+ libc/bionic/ndk_cruft.cpp | 9 ++++++++-
+ libc/libc.arm.map         | 1 +
+ libc/libc.map.txt         | 1 +
+ libc/libc.mips.map        | 1 +
+ libc/libc.x86.map         | 1 +
+ 5 files changed, 12 insertions(+), 1 deletion(-)
+
+diff --git a/libc/bionic/ndk_cruft.cpp b/libc/bionic/ndk_cruft.cpp
+index 3ac88f8..602adb4 100644
+--- a/libc/bionic/ndk_cruft.cpp
++++ b/libc/bionic/ndk_cruft.cpp
+@@ -340,10 +340,17 @@ size_t dlmalloc_usable_size(void* ptr) {
+ }
+ 
+ // In L we added a public pthread_gettid_np, but some apps were using the private API.
+-pid_t __pthread_gettid(pthread_t t) {
++pid_t __pthread_gettid_libc(pthread_t t) {
+   return pthread_gettid_np(t);
+ }
+ 
++pid_t __pthread_gettid_libc_private(pthread_t t) {
++  return pthread_gettid_np(t);
++}
++
++__asm__(".symver __pthread_gettid_libc,__pthread_gettid@LIBC");
++__asm__(".symver __pthread_gettid_libc_private,__pthread_gettid@@LIBC_PRIVATE");
++
+ // Older versions of apportable used dlmalloc directly instead of malloc,
+ // so export this compatibility shim that simply calls malloc.
+ void* dlmalloc(size_t size) {
+diff --git a/libc/libc.arm.map b/libc/libc.arm.map
+index 38f8437..fc7d37a 100644
+--- a/libc/libc.arm.map
++++ b/libc/libc.arm.map
+@@ -122,6 +122,7 @@ LIBC {
+     __pselect6; # arm x86 mips
+     __pthread_cleanup_pop;
+     __pthread_cleanup_push;
++    __pthread_gettid; # arm x86 mips nobrillo
+     __ptrace; # arm x86 mips
+     __putlong;
+     __putshort;
+diff --git a/libc/libc.map.txt b/libc/libc.map.txt
+index 0e41f6c..3e87dad 100644
+--- a/libc/libc.map.txt
++++ b/libc/libc.map.txt
+@@ -122,6 +122,7 @@ LIBC {
+     __pselect6; # arm x86 mips
+     __pthread_cleanup_pop;
+     __pthread_cleanup_push;
++    __pthread_gettid; # arm x86 mips nobrillo
+     __ptrace; # arm x86 mips
+     __putlong;
+     __putshort;
+diff --git a/libc/libc.mips.map b/libc/libc.mips.map
+index 46c835b..3a2557f 100644
+--- a/libc/libc.mips.map
++++ b/libc/libc.mips.map
+@@ -119,6 +119,7 @@ LIBC {
+     __pselect6; # arm x86 mips
+     __pthread_cleanup_pop;
+     __pthread_cleanup_push;
++    __pthread_gettid; # arm x86 mips nobrillo
+     __ptrace; # arm x86 mips
+     __putlong;
+     __putshort;
+diff --git a/libc/libc.x86.map b/libc/libc.x86.map
+index 9417d56..a2e8586 100644
+--- a/libc/libc.x86.map
++++ b/libc/libc.x86.map
+@@ -119,6 +119,7 @@ LIBC {
+     __pselect6; # arm x86 mips
+     __pthread_cleanup_pop;
+     __pthread_cleanup_push;
++    __pthread_gettid; # arm x86 mips nobrillo
+     __ptrace; # arm x86 mips
+     __putlong;
+     __putshort;
+-- 
+2.7.4

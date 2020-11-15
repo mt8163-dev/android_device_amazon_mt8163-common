@@ -1,7 +1,7 @@
 #!/bin/sh
 
 rootdirectory="$PWD"
-dirs="frameworks/av frameworks/base frameworks/native system/core"
+dirs="bionic frameworks/av frameworks/base frameworks/native system/core"
 
 RED='\033[0;31m'
 NC='\033[0m'
