@@ -171,8 +171,6 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
 # DRM
 PRODUCT_PACKAGES += \
     libdrm \
-    libmockdrmcryptoplugin \
-    libdrmclearkeyplugin \
     libfwdlockengine
 
 # No RIL
