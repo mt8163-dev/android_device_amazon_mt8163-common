@@ -1,0 +1,48 @@
+# Copyright (C) 2010 The Android Open Source Project
+# Copyright (C) 2015 Amazon.com, Inc. or its affiliates. All Rights Reserved. // ACOS_MOD_ONELINE {amazon_controllers}
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+#
+# Amazon/Lab126 Thunder Game Controller
+#
+
+# Buttons
+key 164   MEDIA_PLAY_PAUSE
+key 168   MEDIA_REWIND
+key 172   HOME
+key 208   MEDIA_FAST_FORWARD
+key 304   BUTTON_A
+key 305   BUTTON_B
+key 307   BUTTON_X
+key 308   BUTTON_Y
+key 310   BUTTON_L1
+key 311   BUTTON_R1
+key 314   BACK
+key 315   MENU
+key 316   BUTTON_MODE
+key 317   BUTTON_THUMBL
+key 318   BUTTON_THUMBR
+
+# Joystick and game controller axes.
+# ACOS_MOD_BEGIN {amazon_controllers}
+axis 0x00 X flat 0
+axis 0x01 Y flat 0
+axis 0x02 Z flat 0
+axis 0x05 RZ flat 0
+# ACOS_MOD_END {amazon_controllers}
+axis 0x09 GAS
+axis 0x0a BRAKE
+axis 0x10 HAT_X
+axis 0x11 HAT_Y
+

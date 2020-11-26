@@ -1,0 +1,22 @@
+# Copyright (C) 2016 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+
+# Flirc
+
+# Navigation buttons
+key  96 DPAD_CENTER
+key 103 DPAD_UP
+key 105 DPAD_LEFT
+key 106 DPAD_RIGHT
+key 108 DPAD_DOWN
+
+# Control buttons
+key  88 HOME # KEY_F12 - backwards compatability
+key 127 MENU # KEY_COMPOSE - backwards compatability
+key 139 MENU
+key 158 BACK
+key 172 HOME
+
+# Media buttons
+key 164 MEDIA_PLAY_PAUSE
+key 168 MEDIA_REWIND
+key 208 MEDIA_FAST_FORWARD

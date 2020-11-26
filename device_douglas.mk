@@ -58,7 +58,22 @@ PRODUCT_COPY_FILES += \
 
 # Prebuilt Keylayouts
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/keylayouts/mtk-kpd.kl:system/usr/keylayout/mtk-kpd.kl
+    $(LOCAL_PATH)/configs/keylayouts/lightning-device.kl:system/usr/keylayout/lightning-device.kl \
+    $(LOCAL_PATH)/configs/keylayouts/mtk-kpd.kl:system/usr/keylayout/mtk-kpd.kl \
+    $(LOCAL_PATH)/configs/keylayouts/Vendor_0171_Product_040b.kl:system/usr/keylayout/Vendor_0171_Product_040b.kl \
+    $(LOCAL_PATH)/configs/keylayouts/Vendor_0171_Product_040c.kl:system/usr/keylayout/Vendor_0171_Product_040c.kl \
+    $(LOCAL_PATH)/configs/keylayouts/Vendor_0171_Product_0413.kl:system/usr/keylayout/Vendor_0171_Product_0413.kl \
+    $(LOCAL_PATH)/configs/keylayouts/Vendor_045e_Product_0291.kl:system/usr/keylayout/Vendor_045e_Product_0291.kl \
+    $(LOCAL_PATH)/configs/keylayouts/Vendor_1949_Product_0402.kl:system/usr/keylayout/Vendor_1949_Product_0402.kl \
+    $(LOCAL_PATH)/configs/keylayouts/Vendor_1949_Product_0404.kl:system/usr/keylayout/Vendor_1949_Product_0404.kl \
+    $(LOCAL_PATH)/configs/keylayouts/Vendor_1949_Product_0406.kl:system/usr/keylayout/Vendor_1949_Product_0406.kl \
+    $(LOCAL_PATH)/configs/keylayouts/Vendor_1949_Product_0407.kl:system/usr/keylayout/Vendor_1949_Product_0407.kl \
+    $(LOCAL_PATH)/configs/keylayouts/Vendor_1949_Product_0415.kl:system/usr/keylayout/Vendor_1949_Product_0415.kl \
+    $(LOCAL_PATH)/configs/keylayouts/Vendor_20a0_Product_0004.kl:system/usr/keylayout/Vendor_20a0_Product_0004.kl
+
+# Input
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/idc/amazon_touch.idc:system/usr/keylayout/amazon_touch.idc
 
 # Wifi
 PRODUCT_PACKAGES += \

@@ -1,0 +1,13 @@
+#
+# Copyright (c) 2018 Amazon.com, Inc. or its affiliates.  All rights reserved.
+#
+# PROPRIETARY/CONFIDENTIAL.  USE IS SUBJECT TO LICENSE TERMS.
+#
+
+#
+# Amazon Echo Button
+#
+
+# The one and only button
+key  28 ENTER
+
