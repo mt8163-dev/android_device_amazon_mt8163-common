@@ -11,4 +11,4 @@
 /dev/block/platform/mtk-msdc.0/by-name/cache        /cache      ext4	noatime,nosuid,nodev,noauto_da_alloc	        wait,check
 
 /devices/soc/11240000.mmc*                          auto        auto    defaults                                        voldmanaged=SD-Card:auto,noemulatedsd
-/devices/platform/mt_usb                            auto        vfat    defaults                                        voldmanaged=USB-OTG:auto
+/devices/platform/mt_usb                            auto        auto    defaults                                        voldmanaged=USB-OTG:auto
