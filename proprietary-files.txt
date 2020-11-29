@@ -172,7 +172,8 @@ lib/hw/sensors.mt8163.so
 lib64/hw/sensors.mt8163.so
 
 # Camera
-lib/hw/camera.mt8163.so
+#lib/hw/camera.mt8163.so
+#lib64/hw/camera.mt8163.so
 lib/libbwc.so
 lib64/libbwc.so
 lib/lib3a.so
