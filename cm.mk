@@ -16,3 +16,7 @@ PRODUCT_NAME := cm_douglas
 PRODUCT_BRAND := google
 PRODUCT_MODEL := Fire HD8 2017
 PRODUCT_MANUFACTURER := amzn
+
+# Profuct Characteristics
+PRODUCT_CHARACTERISTICS := tablet
+
