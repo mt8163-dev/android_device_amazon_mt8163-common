@@ -319,6 +319,9 @@ etc/firmware/gt9xx_fw.bin
 etc/firmware/md32_d.bin
 etc/firmware/md32_p.bin
 
+# Prebuilt Kernel Modules
+lib/modules/ufsd.ko
+
 # Audio
 lib/libcjson.so
 lib/libcjson.so
