@@ -45,12 +45,12 @@
              android:storageDescription="@string/storage_sd_card"
              android:primary="false"
              android:removable="true"
-             android:allowMassStorage="false" />
+             android:allowMassStorage="true" />
 
     <!-- external USB OTG storage -->
     <storage android:mountPoint="/storage/usbotg"
              android:storageDescription="@string/storage_usb"
              android:primary="false"
              android:removable="true"
-             android:allowMassStorage="false" />
+             android:allowMassStorage="true" />
 </StorageList>
