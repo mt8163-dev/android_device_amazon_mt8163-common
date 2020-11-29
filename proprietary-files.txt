@@ -73,14 +73,14 @@ lib64/lib_uree_mtk_video_secure_al.so
 vendor/lib/libwvm.so
 vendor/lib/libWVStreamControlAPI_L1.so
 vendor/lib/libdlbdapstorage.so
-vendor/lib/liboemcrypto.so:33ed5f4a5424dd12bce863de96cfd5e627df8487
+vendor/lib/liboemcrypto.so|33ed5f4a5424dd12bce863de96cfd5e627df8487
 vendor/lib/libstagefright_soft_ddpdec.so
 vendor/lib/libwvdrm_L1.so
 vendor/lib/drm/libdrmwvmplugin.so
-vendor/lib/mediadrm/libwvdrmengine.so:271de7687df970a9ceadbdc3fa02f32547e730e4
-vendor/lib/mediadrm/libplayreadydrmplugin.so:7e2c2228adb73c8ed241c8a2675026dff11c1b6a
-vendor/lib/mediadrm/libmockdrmcryptoplugin.so:b05d577854717d70503566d701e95ded7f7442a3
-vendor/lib/mediadrm/libdrmclearkeyplugin.so:0eaf1cf7c66a4385d9785b6c9b32444fb384e929
+vendor/lib/mediadrm/libwvdrmengine.so|271de7687df970a9ceadbdc3fa02f32547e730e4
+vendor/lib/mediadrm/libplayreadydrmplugin.so|7e2c2228adb73c8ed241c8a2675026dff11c1b6a
+vendor/lib/mediadrm/libmockdrmcryptoplugin.so|b05d577854717d70503566d701e95ded7f7442a3
+vendor/lib/mediadrm/libdrmclearkeyplugin.so|0eaf1cf7c66a4385d9785b6c9b32444fb384e929
 vendor/lib64/liboemcrypto.so
 vendor/lib64/mediadrm/libdrmclearkeyplugin.so
 vendor/lib64/mediadrm/libmockdrmcryptoplugin.so
@@ -141,7 +141,7 @@ lib64/hw/vibrator.default.so
 # Graphics
 bin/ged_srv
 bin/guiext-server
-etc/mtk_omx_core.cfg:vendor/etc/mtk_omx_core.cfg
+etc/mtk_omx_core.cfg|vendor/etc/mtk_omx_core.cfg
 lib/egl/libGLES_mali.so
 lib64/egl/libGLES_mali.so
 lib/hw/gralloc.mt8163.mali.so
