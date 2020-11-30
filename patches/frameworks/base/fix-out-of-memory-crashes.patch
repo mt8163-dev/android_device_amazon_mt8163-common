@@ -1,0 +1,52 @@
+From dfca20c35c64ea8dced4e3b91e3e0af6e21c2c19 Mon Sep 17 00:00:00 2001
+From: seluce <ferris.daehn@outlook.de>
+Date: Thu, 14 Jun 2018 11:42:37 +0200
+Subject: [PATCH] fix out of memory gl crashes
+
+Change-Id: I347622ab78e053283fb836bdff73f8dbb6f248b0
+---
+ libs/hwui/BakedOpRenderer.cpp            | 6 ++++--
+ libs/hwui/renderthread/CanvasContext.cpp | 3 ++-
+ 2 files changed, 6 insertions(+), 3 deletions(-)
+
+diff --git a/libs/hwui/BakedOpRenderer.cpp b/libs/hwui/BakedOpRenderer.cpp
+index 6db345a..1d68ca7 100644
+--- a/libs/hwui/BakedOpRenderer.cpp
++++ b/libs/hwui/BakedOpRenderer.cpp
+@@ -64,7 +64,8 @@ void BakedOpRenderer::startRepaintLayer(OffscreenBuffer* offscreenBuffer, const
+     // attach the texture to the FBO
+     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D,
+             offscreenBuffer->texture.id(), 0);
+-    GL_CHECKPOINT(LOW);
++    // GL_CHECKPOINT(LOW);
++    GL_CHECKPOINT(MODERATE);
+ 
+     int status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+     LOG_ALWAYS_FATAL_IF(status != GL_FRAMEBUFFER_COMPLETE,
+@@ -95,7 +96,8 @@ void BakedOpRenderer::endLayer() {
+ 
+     // Detach the texture from the FBO
+     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, 0, 0);
+-    GL_CHECKPOINT(LOW);
++    // GL_CHECKPOINT(LOW);
++    GL_CHECKPOINT(MODERATE);
+     mRenderState.deleteFramebuffer(mRenderTarget.frameBufferId);
+     mRenderTarget.frameBufferId = 0;
+ }
+diff --git a/libs/hwui/renderthread/CanvasContext.cpp b/libs/hwui/renderthread/CanvasContext.cpp
+index 975ac83..6b1a458 100644
+--- a/libs/hwui/renderthread/CanvasContext.cpp
++++ b/libs/hwui/renderthread/CanvasContext.cpp
+@@ -547,7 +547,8 @@ void CanvasContext::draw() {
+ 
+     waitOnFences();
+ 
+-    GL_CHECKPOINT(LOW);
++    // GL_CHECKPOINT(LOW);
++    GL_CHECKPOINT(MODERATE);
+ 
+     // Even if we decided to cancel the frame, from the perspective of jank
+     // metrics the frame was swapped at this point
+-- 
+2.7.4
+
