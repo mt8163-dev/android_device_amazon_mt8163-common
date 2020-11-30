@@ -3,6 +3,7 @@
 
 #define BTM_DEF_LOCAL_NAME   "Amazon Fire HD8 2017"
 
+#define BTA_AV_MAX_A2DP_MTU  1788
 #define BLE_VND_INCLUDED TRUE
 #define BLE_INCLUDED TRUE
 #define BTA_GATT_INCLUDED TRUE
