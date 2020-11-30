@@ -4,5 +4,6 @@
 #define BTM_DEF_LOCAL_NAME   "Amazon Fire HD8 2017"
 
 #define BLE_VND_INCLUDED TRUE
+#define BLE_INCLUDED TRUE
 
 #endif
