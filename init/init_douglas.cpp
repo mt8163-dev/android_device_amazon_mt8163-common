@@ -26,6 +26,8 @@
  */
 
 #include <stdlib.h>
+#include <stdio.h>
+#include <unistd.h>
 
 #include "vendor_init.h"
 #include "property_service.h"
@@ -36,7 +38,53 @@
 #include <sys/_system_properties.h>
 
 #define TARGET_PLATFORM "mt8163"
+#define BOOT_MODE_PATH "/sys/devices/virtual/BOOT/BOOT/boot/boot_mode"
+#define CHUNK 1024
 
+static void init_boot_mode_properties()
+{
+    /*
+     * Set the ro.bootmode property based on the MediaTek's
+     * BOOT_MODE kernel driver using the following structure:
+     *
+     *  - NORMAL_BOOT -> 0
+     *  - META_BOOT -> 1
+     *  - RECOVERY_BOOT -> 2
+     *  - SW_REBOOT -> 3
+     *  - FACTORY_BOOT -> 4
+     *  - ADVMETA_BOOT -> 5
+     *  - ATE_FACTORY_BOOT -> 6
+     *  - KERNEL_POWER_OFF_CHARGING_BOOT -> 8
+     *  - LOW_POWER_OFF_CHARGING_BOOT -> 9
+     *  - UNKNOWN_BOOT_MODE -> -1/unknown
+     */
+
+    char boot_mode[CHUNK] = "unknown";
+    FILE *sysfs_boot_mode;
+
+    sysfs_boot_mode = fopen(BOOT_MODE_PATH, "r");
+
+    if (sysfs_boot_mode != NULL)
+    {
+        INFO("Reading boot_mode status...\n");
+
+        fscanf(sysfs_boot_mode, "%[^\n]", boot_mode);
+        fclose(sysfs_boot_mode);
+
+        INFO("Current boot_mode is %s\n", boot_mode);
+    }
+
+    if (strcmp(boot_mode, "unknown") == 0)
+    {
+        INFO("Couldn't read current boot_mode, guessing UNKNOWN_BOOT_MODE...\n");
+        property_set("ro.bootmode", "unknown");
+        return; // We're done here, bail out...
+    }
+
+    INFO("Setting ro.bootmode to %s...\n", boot_mode);
+    property_set("ro.bootmode", boot_mode);
+}
+    
 void property_override(char const prop[], char const value[])
 {
     prop_info *pi;
@@ -55,4 +103,6 @@ void vendor_load_properties()
 
     if (platform != TARGET_PLATFORM)
         return;
+
+    init_boot_mode_properties();
 }
