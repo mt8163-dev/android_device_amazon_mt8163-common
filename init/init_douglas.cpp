@@ -101,7 +101,7 @@ void vendor_load_properties()
     std::string platform;
     platform = property_get("ro.board.platform");
 
-    if (platform != TARGET_PLATFORM)
+    if (strcmp(platform, TARGET_PLATFORM) == 0)
         INFO("Platform assert does not match, bailing out...");
         return;
 
