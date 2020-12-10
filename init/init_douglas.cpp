@@ -102,7 +102,10 @@ void vendor_load_properties()
     platform = property_get("ro.board.platform");
 
     if (platform != TARGET_PLATFORM)
+        INFO("Platform assert does not match, bailing out...");
         return;
 
     init_boot_mode_properties();
+
+    INFO("All done, exiting...");
 }
