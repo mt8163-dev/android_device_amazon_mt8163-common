@@ -7,7 +7,7 @@
  * any reproduction, modification, use or disclosure of MediaTek Software,
  * and information contained herein, in whole or in part, shall be strictly prohibited.
  */
-/* MediaTek Inc. (C) 2010. All rights reserved.
+/* MediaTek Inc. (C) 2020. All rights reserved.
  *
  * BY OPENING THIS FILE, RECEIVER HEREBY UNEQUIVOCALLY ACKNOWLEDGES AND AGREES
  * THAT THE SOFTWARE/FIRMWARE AND ITS DOCUMENTATIONS ("MEDIATEK SOFTWARE")
@@ -94,11 +94,11 @@
  * $Modtime:$
  * $Log:$
  *
- * 05 26 2010 chipeng.chang
+ * 05 26 2020 chipeng.chang
  * [ALPS00002287][Need Patch] [Volunteer Patch] ALPS.10X.W10.11 Volunteer patch for audio paramter
  * modify audio parameter.
  *
- * 05 26 2010 chipeng.chang
+ * 05 26 2020 chipeng.chang
  * [ALPS00002287][Need Patch] [Volunteer Patch] ALPS.10X.W10.11 Volunteer patch for audio paramter
  * modify for Audio parameter
  *

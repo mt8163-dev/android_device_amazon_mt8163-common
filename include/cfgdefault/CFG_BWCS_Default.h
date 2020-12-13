@@ -7,7 +7,7 @@
  * any reproduction, modification, use or disclosure of MediaTek Software,
  * and information contained herein, in whole or in part, shall be strictly prohibited.
  */
-/* MediaTek Inc. (C) 2010. All rights reserved.
+/* MediaTek Inc. (C) 2020. All rights reserved.
  *
  * BY OPENING THIS FILE, RECEIVER HEREBY UNEQUIVOCALLY ACKNOWLEDGES AND AGREES
  * THAT THE SOFTWARE/FIRMWARE AND ITS DOCUMENTATIONS ("MEDIATEK SOFTWARE")
@@ -92,19 +92,19 @@
  * $Modtime:$
  * $Log:$
  *
- * 06 30 2010 saker.hsia
+ * 06 30 2020 saker.hsia
  * [ALPS00002764][Need Patch] [Volunteer Patch] ALPS.10X.W10.28 Volunteer patch for BWCS NVRAM customization 
  * .
  *
- * 05 16 2010 saker.hsia
+ * 05 16 2020 saker.hsia
  * [ALPS00001913][BWCS] BT WiFi Single Antenna Feature check in Android 2.1 
  * .
  *
- * 05 14 2010 saker.hsia
+ * 05 14 2020 saker.hsia
  * [ALPS00001913][BWCS] BT WiFi Single Antenna Feature check in Android 2.1 
  * .
  *
- * 05 05 2010 saker.hsia
+ * 05 05 2020 saker.hsia
  * [ALPS00001913][BWCS] BT WiFi Single Antenna Feature check in Android 2.1 
  * Check in BT/WiFi Single Antenna Feature
  *

@@ -7,7 +7,7 @@
  * any reproduction, modification, use or disclosure of MediaTek Software,
  * and information contained herein, in whole or in part, shall be strictly prohibited.
  */
-/* MediaTek Inc. (C) 2010. All rights reserved.
+/* MediaTek Inc. (C) 2020. All rights reserved.
  *
  * BY OPENING THIS FILE, RECEIVER HEREBY UNEQUIVOCALLY ACKNOWLEDGES AND AGREES
  * THAT THE SOFTWARE/FIRMWARE AND ITS DOCUMENTATIONS ("MEDIATEK SOFTWARE")
@@ -100,23 +100,23 @@
  * [ALPS00138458] [Need Patch] [Volunteer Patch] OMA DM USB and SD format
  * <saved by Perforce>
  *
- * 12 24 2010 hao.lin
+ * 12 24 2020 hao.lin
  * [ALPS00138458] [Need Patch] [Volunteer Patch] OMA DM USB and SD format
  * <saved by Perforce>
  *
- * 11 05 2010 renbang.jiang
+ * 11 05 2020 renbang.jiang
  * [ALPS00134025] [Wi-Fi] move Wi-Fi NVRAM definition source file to project folder from common folder
  * .
  *
- * 07 10 2010 renbang.jiang
+ * 07 10 2020 renbang.jiang
  * [ALPS00121785][Need Patch] [Volunteer Patch] use NVRAM to save Wi-Fi custom data
  * .
  *
- * 05 05 2010 saker.hsia
+ * 05 05 2020 saker.hsia
  * [ALPS00001913][BWCS] BT WiFi Single Antenna Feature check in Android 2.1
  * .
  *
- * 04 26 2010 renbang.jiang
+ * 04 26 2020 renbang.jiang
  * [ALPS00005487][Wi-Fi] change Wi-Fi nvram LID
  * [ALPS00005487] [Wi-Fi] change Wi-Fi nvram LID
  * .
