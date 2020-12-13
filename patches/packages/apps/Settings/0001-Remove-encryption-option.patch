@@ -1,0 +1,64 @@
+diff --git a/AndroidManifest.xml b/AndroidManifest.xml
+index 4871306669..e647a8e7ea 100755
+--- a/AndroidManifest.xml
++++ b/AndroidManifest.xml
+@@ -2494,7 +2494,7 @@
+         />
+ 
+         <!-- Pseudo-activity used to provide an intent-filter entry point to encryption settings -->
+-        <activity android:name="Settings$CryptKeeperSettingsActivity"
++        <!--<activity android:name="Settings$CryptKeeperSettingsActivity"
+                 android:label="@string/crypt_keeper_encrypt_title">
+             <intent-filter android:priority="1">
+                 <action android:name="android.app.action.START_ENCRYPTION" />
+@@ -2506,7 +2506,7 @@
+             </intent-filter>
+             <meta-data android:name="com.android.settings.FRAGMENT_CLASS"
+                 android:value="com.android.settings.CryptKeeperSettings" />
+-        </activity>
++        </activity>-->
+ 
+         <activity android:name="Settings$DataUsageSummaryActivity"
+                 android:label="@string/data_usage_summary_title"
+diff --git a/src/com/android/settings/SecuritySettings.java b/src/com/android/settings/SecuritySettings.java
+index f92ec7ee33..835dd64c51 100644
+--- a/src/com/android/settings/SecuritySettings.java
++++ b/src/com/android/settings/SecuritySettings.java
+@@ -281,7 +281,7 @@ public class SecuritySettings extends SettingsPreferenceFragment
+         }
+ 
+         // Add options for device encryption
+-        mIsAdmin = mUm.isAdminUser();
++        /*mIsAdmin = mUm.isAdminUser();
+ 
+         if (mIsAdmin) {
+             if (LockPatternUtils.isDeviceEncryptionEnabled()) {
+@@ -291,7 +291,7 @@ public class SecuritySettings extends SettingsPreferenceFragment
+                 // This device supports encryption but isn't encrypted.
+                 addPreferencesFromResource(R.xml.security_settings_unencrypted);
+             }
+-        }
++        }*/
+ 
+         // Fingerprint and trust agents
+         PreferenceGroup securityCategory = (PreferenceGroup)
+@@ -873,7 +873,7 @@ public class SecuritySettings extends SettingsPreferenceFragment
+                         lockPatternUtils, managedPasswordProvider, profileUserId)));
+             }
+ 
+-            if (um.isAdminUser()) {
++            /*if (um.isAdminUser()) {
+                 switch (dpm.getStorageEncryptionStatus()) {
+                     case DevicePolicyManager.ENCRYPTION_STATUS_ACTIVE:
+                         // The device is currently encrypted.
+@@ -884,7 +884,7 @@ public class SecuritySettings extends SettingsPreferenceFragment
+                         index.add(getSearchResource(context, R.xml.security_settings_unencrypted));
+                         break;
+                 }
+-            }
++            }*/
+ 
+             final SearchIndexableResource sir = getSearchResource(context,
+                     SecuritySubSettings.getResIdForLockUnlockSubScreen(context, lockPatternUtils,
+-- 
+2.25.1
