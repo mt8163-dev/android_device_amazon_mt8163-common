@@ -125,6 +125,9 @@
     <integer name="config_screenBrightnessDoze">1</integer>
     <bool name="config_dozeAfterScreenOff">true</bool>
 
+    <!-- If supported, are dreams enabled? (by default) -->
+    <bool name="config_dreamsEnabledByDefault">true</bool>
+
     <!-- Flag indicating which package name can access the persistent data partition -->
     <string name="config_persistentDataPackageName" translatable="false">com.google.android.gms</string>
 </resources>
