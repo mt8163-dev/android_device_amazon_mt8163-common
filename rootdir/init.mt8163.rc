@@ -669,8 +669,6 @@ on post-fs-data
     start rpmb_svc
 
 on boot
-    start xlogboot
-
     write /proc/sys/vm/dirty_writeback_centisecs 300
     chmod 0660 /sys/power/autosleep
 
@@ -754,21 +752,9 @@ on boot
     chmod 0660 /dev/ttyGS3
     chown system radio /dev/ttyGS3
 
-on property:vold.decrypt=trigger_reset_main
-    start stop_modem
-
-on property:vold.decrypt=trigger_restart_min_framework
-    start start_modem
-    start msensord
-
 on property:vold.decrypt=trigger_restart_framework
     start nvram_daemon
-    start start_modem
-    start msensord
     start permission_check
-		
-on property:vold.decrypt=trigger_shutdown_framework
-    start stop_modem
 
 on property:sys.boot_completed=1
     # End boot time fs tune
@@ -780,116 +766,14 @@ service kisd /system/bin/kisd
 	user root
 	group system drmrpc
 
-service stop_modem /system/bin/md_ctrl 0
-    class main
-    disabled
-    oneshot
-
-service start_modem /system/bin/md_ctrl 1
-    class main
-    disabled
-    oneshot
-    exec /system/bin/setprop net.tcp.buffersize.default 4096,87380,524288,4096,16384,524288
-    exec /system/bin/setprop net.tcp.buffersize.wifi    524288,1048576,2097152,262144,524288,1048576
-    exec /system/bin/setprop net.tcp.buffersize.lte     524288,1048576,2097152,262144,524288,1048576
-    exec /system/bin/setprop net.tcp.buffersize.umts    4094,87380,524288,4096,16384,524288
-    exec /system/bin/setprop net.tcp.buffersize.hspa    4094,87380,524288,4096,16384,524288
-    exec /system/bin/setprop net.tcp.buffersize.hsupa   4094,87380,524288,4096,16384,524288
-    exec /system/bin/setprop net.tcp.buffersize.hsdpa   4094,87380,524288,4096,16384,524288
-    exec /system/bin/setprop net.tcp.buffersize.hspap   4094,87380,1220608,4096,16384,1220608
-    exec /system/bin/setprop net.tcp.buffersize.edge    4093,26280,35040,4096,16384,35040
-    exec /system/bin/setprop net.tcp.buffersize.gprs    4092,8760,11680,4096,8760,11680
-    exec /system/bin/setprop persist.sys.strictmode.disable 1
-
 # UART
 on property:persist.uartconsole.enable=1
     write /proc/mtprintk 1
-
-# Update the second boot logo
-service bootlogoupdater /system/bin/boot_logo_updater
-    class core
-    oneshot
-
-service met_log_d /system/bin/met_log_d
-    class main
-
-service bugreport /system/bin/dumpstate -d -p -B \
-        -o /data/data/com.android.shell/files/bugreports/bugreport
-    class main
-    disabled
-    oneshot
-    keycodes 114 115 116
 
 service nvram_daemon /system/bin/nvram_daemon
     class core
     user root
     group system
-    oneshot
-
-service featured /system/bin/featured
-    class core
-    user nvram
-    group system
-    socket dfo stream 660 nvram system
-
-service atci_service /system/bin/atci_service
-    class main
-    socket atci-service stream 660 radio system
-    socket atci-serv-fw stream 660 radio system
-    user root
-    disabled
-    group radio system
-
-service atcid-daemon-u /system/bin/atcid
-    class main
-    socket adb_atci_socket stream 660 radio system
-    user system
-    group radio system media inet wifi net_admin
-    disabled
-    oneshot
-
-service atcid-daemon-e /system/bin/atcid
-    class main
-    socket adb_atci_socket stream 660 radio system
-    user root
-    group radio system
-    disabled
-    oneshot
-
-on property:ro.build.type=eng
-    start atci_service
-    start atcid-daemon-e
-
-on property:persist.service.atci.autostart=1
-    start atci_service
-    start atcid-daemon-u
-
-service audio-daemon /system/bin/audiocmdservice_atci
-    class main
-    socket atci-audio stream 660 root system
-    user root
-    disabled
-    oneshot
-
-service md_minilog_util /system/bin/md_minilog_util
-    user root
-    disabled
-    oneshot
-
-service pq /system/bin/pq
-    class main
-    user system
-    group system graphics
-    oneshot
-
-service aal /system/bin/aal
-    class main
-    user system
-    group system graphics
-
-service rbfota /system/bin/fota1
-    class main
-    disabled
     oneshot
 
 service dhcpcd_bt-pan /system/bin/dhcpcd -BK -dd
@@ -928,133 +812,18 @@ service dhcp_inform /system/bin/dhcpcd -s -BK -A
     disabled
     oneshot
 
-service dhcpv6_inform /system/bin/dhcp6c -c "/etc/wide-dhcpv6/dhcp6cSIP.conf" -Dfi
-    class main
-    group system radio dhcp
-    disabled
-    oneshot
-
-service dhcp6cDNS_wlan0 /system/bin/dhcp6c -c "/etc/wide-dhcpv6/dhcp6cDNS.conf" -Df wlan0
-    disabled
-    oneshot
-
-service dhcp6c_wlan0 /system/bin/dhcp6c -c "/etc/wide-dhcpv6/dhcp6c.conf" -Df wlan0
-    disabled
-    oneshot
-
 service dhcpcd_eth0 /system/bin/dhcpcd -ABKL
     disabled
     oneshot
-
-on property:service.dhcp6c_wlan0.enable=0
-    stop dhcp6c_wlan0
-
-on property:service.dhcp6c_wlan0.enable=1
-    start dhcp6c_wlan0
 
 service dhcp6c_PD /system/bin/dhcp6c -c "/etc/wide-dhcpv6/dhcp6cPD.conf" -Df
     disabled
     oneshot
 
-service pppoe_wlan0 /system/bin/launchpppoe
-    user root
-    group radio cache inet misc
-    disabled
-    oneshot
-
-on property:service.pppoe_wlan0.enable=0
-    stop pppoe_wlan0
-
-on property:service.pppoe_wlan0.enable=1
-    start pppoe_wlan0
-    on property:gsm.sim.ril.testsim=0
-    write /proc/sys/net/netfilter/nf_conntrack_tcp_no_window_check 0
-    write /proc/sys/net/ipv4/tcp_rto_min 200
-    on property:gsm.sim.ril.testsim=1
-    write /proc/sys/net/netfilter/nf_conntrack_tcp_no_window_check 1
-    write /proc/sys/net/ipv4/tcp_rto_min 400
-    on property:gsm.sim.ril.testsim.2=0
-    write /proc/sys/net/netfilter/nf_conntrack_tcp_no_window_check 0
-    write /proc/sys/net/ipv4/tcp_rto_min 200
-    on property:gsm.sim.ril.testsim.2=1
-    write /proc/sys/net/netfilter/nf_conntrack_tcp_no_window_check 1
-    write /proc/sys/net/ipv4/tcp_rto_min 400
-    on property:gsm.sim.ril.testsim.3=0
-    write /proc/sys/net/netfilter/nf_conntrack_tcp_no_window_check 0
-    write /proc/sys/net/ipv4/tcp_rto_min 200
-    on property:gsm.sim.ril.testsim.3=1
-    write /proc/sys/net/netfilter/nf_conntrack_tcp_no_window_check 1
-    write /proc/sys/net/ipv4/tcp_rto_min 400
-    on property:gsm.sim.ril.testsim.4=0
-    write /proc/sys/net/netfilter/nf_conntrack_tcp_no_window_check 0
-    write /proc/sys/net/ipv4/tcp_rto_min 200
-    on property:gsm.sim.ril.testsim.4=1
-    write /proc/sys/net/netfilter/nf_conntrack_tcp_no_window_check 1
-    write /proc/sys/net/ipv4/tcp_rto_min 400
-
-service DMAgent /system/bin/dm_agent_binder
-    class main
-    user system
-    group system cache
-
-service PPLAgent /system/bin/ppl_agent
-    class main
-    user system
-    group system cache
-
-service vtservice /system/bin/vtservice
-    class main
-    socket soc_vt_tcv dgram 660 radio system
-    socket soc_vt_stk dgram 660 radio system
-    socket soc_vt_svc dgram 660 radio system
-    user root
-    group camera graphics media sdcard_rw radio sdcard_r media_rw
-    ioprio rt 4
-
-service cmmb /system/bin/cmmbsp
-    class main
-    user root
-    group system audio camera graphics inet net_bt net_bt_admin net_bw_acct media
-    ioprio rt 4
-
 service enableswap /system/bin/sh /enableswap.sh
     class core
     oneshot
     seclabel u:r:enableswap:s0
-
-service bluetoothd /system/bin/bluetoothd -n
-    class main
-    socket bluetooth stream 660 bluetooth bluetooth
-    socket dbus_bluetooth stream 660 bluetooth bluetooth
-    group bluetooth net_bt_admin misc
-    disabled
-
-service mtkbt /system/bin/mtkbt
-    class late_start
-    socket bt.int.adp dgram 660 bluetooth net_bt
-    socket bt.a2dp.stream dgram 660 bluetooth net_bt
-    user bluetooth
-    group system vpn net_admin inet net_raw net_bt bluetooth net_bt_admin net_bt_stack sdcard_r
-    oneshot
-
-service pppd_gprs /system/bin/pppd_dt /dev/ttyACM0 debug noauth refuse-eap usepeerdns nodetach
-    user root
-    group radio cache inet misc
-    disabled
-    oneshot
-
-service agpsd /system/bin/mtk_agpsd
-    class main
-    socket agpsd stream 660 gps system
-    socket agpsd2 stream 660 gps inet
-    socket agpsd3 stream 660 gps inet
-    user gps
-    group gps radio inet sdcard_r sdcard_rw misc
-
-service wifi2agps /system/bin/wifi2agps
-    class main
-    user wifi
-    group gps inet
 
 service mnld /system/xbin/mnld
     class main
@@ -1062,189 +831,10 @@ service mnld /system/xbin/mnld
     group gps inet misc sdcard_rw sdcard_r media_rw system
     socket mnld stream 660 gps system
 
-service ipod /system/bin/ipod
-    user root
-    group root
-    disabled
-
-service extmdlogger /system/bin/extmdlogger
-    class main
-    user shell
-    group shell system radio sdcard_rw inet sdcard_r media_rw
-
-service GoogleOtaAgent /system/bin/GoogleOtaBinder
-    class main
-    user system
-    group system
-
-service mdlogger /system/bin/mdlogger
-    class main
-    user shell
-    group shell system radio sdcard_rw inet sdcard_r media_rw
-    disabled
-    oneshot
-
-service dualmdlogger /system/bin/dualmdlogger
-    class main
-    user shell
-    group shell system radio sdcard_rw inet sdcard_r media_rw
-    disabled
-    oneshot
-
-service emdlogger1 /system/bin/emdlogger1
-    class main
-    user shell
-    group system shell radio sdcard_rw inet sdcard_r media_rw
-    disabled
-    oneshot
-
-service emdlogger2 /system/bin/emdlogger2
-    class main
-    user shell
-    group system shell radio sdcard_rw inet sdcard_r media_rw
-    disabled
-    oneshot
-
-service emdlogger5 /system/bin/emdlogger5
-    class main
-    user shell
-    group system shell radio sdcard_rw inet sdcard_r media_rw
-    disabled
-    oneshot
-
-service emdlogger6 /system/bin/emdlogger6
-    class main
-    user shell
-    group system shell radio sdcard_rw inet sdcard_r media_rw
-    disabled
-    oneshot
-
-service msensord /system/bin/msensord
-    class main
-    oneshot
-
-service s62xd /system/bin/s62xd
-    disabled
-    user compass
-    group system
-    class main
-
-service ami304d /system/bin/ami304d
-    user system
-    group system
-    disabled
-    class main
-
-service memsicd /system/bin/memsicd
-     disabled
-    user system
-    group system
-    class main
-
-service memsicd3416x /system/bin/memsicd3416x
-    disabled
-    user system
-    group system
-    class main
-
-service akmd8975 /system/bin/akmd8975
-    disabled
-    user system
-    group system
-    class main
-
-service akmd8963 /system/bin/akmd8963
-    disabled
-    user system
-    group system
-    class main
-
-service akmd09911 /system/bin/akmd09911
-    disabled
-    user system
-    group system
-    class main
-
-service bmm050d /system/bin/bmm050d
-    disabled
-    user system
-    group system
-    class main
-
-service bmm056d /system/bin/bmm056d
-    disabled
-    user system
-    group system
-    class main
-
-service mc6420d /system/bin/mc6420d
-    disabled
-    user system
-    group system
-    class main
-
-service qmc5983d /system/bin/qmc5983d
-    disabled
-    user system
-    group system
-    class main
-
-service orientationd /system/bin/orientationd
-    disabled
-    user system
-    group system input
-    class main
-
-service AcdApiDaemon /system/bin/AcdApiDaemon
-    disabled
-    user system
-    group system
-    class main
-
-service geomagneticd /system/bin/geomagneticd
-    disabled
-    user system
-    group system input
-    class main
-
-service mpud6050 /system/bin/mpud6050
-    oneshot
-    user system
-    group system
-
-service mc64xxd /system/bin/mc64xxd
-    disabled
-    user system
-    group system
-    class main
-
-on property:ro.build.type=eng
-    start emsvr
-
-on property:ro.build.type=user
-    start emsvr_user
-
-on property:ro.build.type=userdebug
-    start emsvr_user
-
-service emsvr_user /system/bin/em_svr
-    disabled
-    user system
-    group system radio diag
-
-service emsvr /system/bin/em_svr
-    disabled
-    user root
-
 service shutdown /system/bin/shutdown
     user root
     group root
     disabled
-
-service NvRAMAgent /system/bin/nvram_agent_binder
-    class main
-    user system
-    group system
 
 service thermal_manager /system/bin/thermal_manager
     class main
@@ -1256,47 +846,10 @@ service thermal /system/bin/thermal
     user system
     group system
 
-service thermald /system/bin/thermald
-    class main
-    user system
-    group system
-
-service sn /system/bin/sn
-    class main
-    user system
-    group system sdcard_r
-    oneshot
-
-service poad /system/bin/poad
-    class main
-    user system
-    group system
-    oneshot
-
-service batterywarning /system/bin/batterywarning
-    class main
-    user shell
-    group shell
-
-service backuprestore /system/bin/br_app_data_service
-	class main
-	socket backuprestore stream 0660 root sdcard_rw
-	user root
-
-service MtkCodecService /system/bin/MtkCodecService
-    class main
-    user system
-    group audio media sdcard_r
-
 service guiext-server /system/bin/guiext-server
     class main
     user system
     group system graphics
-
-service OperaMaxSystem /system/bin/OperaMaxSystem
-    class main
-    user root
-    group root
 
 service rpmb_svc /system/bin/rpmb_svc
     class main
