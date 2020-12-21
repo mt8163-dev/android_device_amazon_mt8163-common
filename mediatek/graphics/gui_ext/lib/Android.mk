@@ -52,9 +52,9 @@ MTK_HWC_CHIP = $(shell echo $(MTK_PLATFORM) | tr A-Z a-z )
 
 LOCAL_C_INCLUDES:= \
     $(TOP)/frameworks/base/include/ \
-    $(TOP)/device/amazon/douglas/mtk/graphics/gui_ext/inc \
-    $(TOP)/device/amazon/douglas/mtk/graphics/ui_ext/inc \
-    $(TOP)/device/amazon/douglas/mtk/graphics/gralloc_extra/include
+    $(TOP)/device/amazon/douglas/mediatek/graphics/gui_ext/inc \
+    $(TOP)/device/amazon/douglas/mediatek/graphics/ui_ext/inc \
+    $(TOP)/device/amazon/douglas/mediatek/graphics/gralloc_extra/include
 
 LOCAL_SHARED_LIBRARIES := \
     libutils \

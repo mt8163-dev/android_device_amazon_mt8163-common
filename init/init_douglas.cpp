@@ -28,6 +28,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <string.h>
 
 #include "vendor_init.h"
 #include "property_service.h"
@@ -101,7 +102,7 @@ void vendor_load_properties()
     std::string platform;
     platform = property_get("ro.board.platform");
 
-    if (strcmp(platform, TARGET_PLATFORM) == 0)
+    if (strcmp(platform.c_str(), TARGET_PLATFORM) != 0)
         INFO("Platform assert does not match, bailing out...");
         return;
 
