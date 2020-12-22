@@ -17,6 +17,7 @@
 #
 
 from hashlib import sha1
+import sys
 
 device='douglas'
 vendor='amazon'
@@ -25,7 +26,22 @@ lines = [ line for line in open('proprietary-files.txt', 'r') ]
 vendorPath = '../../../vendor/' + vendor + '/' + device + '/proprietary'
 needSHA1 = False
 
-for index, line in enumerate(lines):
+def cleanup():
+  for index, line in enumerate(lines):
+    # Remove '\n' character
+    line = line[:-1]
+
+    # Skip empty or commented lines
+    if len(line) == 0 or line[0] == '#':
+      continue
+
+    # Drop SHA1 hash, if existing
+    if '|' in line:
+      line = line.split('|')[0]
+      lines[index] = '%s\n' % (line)
+
+def update():
+  for index, line in enumerate(lines):
     # Remove '\n' character
     line = line[:-1]
 
@@ -50,6 +66,11 @@ for index, line in enumerate(lines):
 
         hash = sha1(file).hexdigest()
         lines[index] = '%s|%s\n' % (line, hash)
+
+if len(sys.argv) == 2 and sys.argv[1] == '-c':
+    cleanup()
+else:
+    update()
 
 with open('proprietary-files.txt', 'w') as file:
     for line in lines:
