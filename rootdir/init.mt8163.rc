@@ -47,11 +47,13 @@ on init
     chown system system /d/ion/heaps/ion_mm_heap
 
 on charger
-    symlink /dev/block/platform/soc /dev/block/platform/mtk-msdc.0
-    mount ext4 /dev/block/platform/mtk-msdc.0/11230000.MSDC0/by-name/system /system ro
+    mount_all /fstab.mt8163
 
     # Disable USB
     write /sys/devices/platform/mt_usb/cmode 0
+    
+    # Start Charger
+    class_start charger    
 
 on post-fs
     # Change permissions for mediaserver
@@ -863,3 +865,8 @@ service audiofix /system/xbin/audiofix
     user root
     group root
     oneshot
+
+service charger /sbin/healthd -c
+    class charger
+    critical
+    seclabel u:r:healthd:s0
