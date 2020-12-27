@@ -35,8 +35,15 @@
          available on *any* device with a telephony radio, even if the
          device is data-only. -->
      <bool name="config_voice_capable">false</bool>
-     
-     <!-- Whether a software navigation bar should be shown. NOTE: in the future this may be
+
+    <!-- List of regexpressions describing the interface (if any) that represent tetherable
+         USB interfaces.  If the device doesn't want to support tething over USB this should
+         be empty.  An example would be "usb.*" -->
+    <string-array translatable="false" name="config_tether_usb_regexs">
+        <item>"rndis0"</item>
+    </string-array>
+
+    <!-- Whether a software navigation bar should be shown. NOTE: in the future this may be
          autodetected from the Configuration. -->
     <bool name="config_showNavigationBar">true</bool>
     
