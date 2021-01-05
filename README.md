@@ -18,7 +18,7 @@ Front Camera  | 0.3 MP
 Rear Camera  | 2 MP
 
 <p align="center">
-  <img src="https://media.wired.com/photos/5a2b2d4ea850e23a4736f3be/master/w_582,c_limit/amazonfire-TA.jpg" alt="douglas"/>
+  <img src="https://www.pikpng.com/pngl/b/347-3474224_amazon-fire-hd-8-amazon-fire-7-tablet.png" alt="douglas"/>
 </p>
 
 This branch is for building LineageOS 14.1 (CM).
