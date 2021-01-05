@@ -75,6 +75,10 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/idc/amazon_touch.idc:system/usr/keylayout/amazon_touch.idc
 
+# Doze
+PRODUCT_PACKAGES += \
+    AmazonDoze
+
 # Wifi
 PRODUCT_PACKAGES += \
     libwpa_client \
