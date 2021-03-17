@@ -290,7 +290,7 @@ lib64/libmtkjpeg.so
 lib64/libmtklimiter.so
 lib64/libmtkplayer.so
 lib64/libmtkshifter.so
-lib/libplayready.so
+lib/libplayready.so|578aded81b2dc716d54ed933e60a44cf9ff43f31
 lib/libstagefrighthw.so
 lib64/libstagefrighthw.so
 lib/libvc1dec_sa.ca7.so
