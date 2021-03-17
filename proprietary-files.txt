@@ -197,7 +197,7 @@ lib/libcamdrv.so
 lib/libcam.exif.so
 lib/libcam.exif.v3.so
 lib/libcam.hal3a.v3.so
-lib/libcam.halsensor.so
+-lib/libcam2halsensor.so|33e201df5c26776ea5eb01c026104ad53e1f65ee
 lib/libcam_hwutils.so
 lib/libcam.iopipe_FrmB.so
 lib/libcam.iopipe.so
@@ -236,7 +236,7 @@ lib64/libcam.device3.so
 lib64/libcam.exif.so
 lib64/libcam.exif.v3.so
 lib64/libcam.hal3a.v3.so
-lib64/libcam.halsensor.so
+-lib64/libcam2halsensor.so|a8e2603124314e57c11317901d61e93753f121b5
 lib64/libcam.iopipe.so
 lib64/libcam.metadata.so
 lib64/libcam.metadataprovider.so
