@@ -316,8 +316,8 @@ lib64/hw/thermal.mt8163.so
 etc/firmware/gt9xx_fw.bin
 
 # MD32 Firmware Images
-etc/firmware/md32_d.bin
-etc/firmware/md32_p.bin
+etc/firmware/md32_d.bin|4ffe412be7709ce861cd4b1330cafb85a94ad583
+etc/firmware/md32_p.bin|19aa465136293aa09adc06726ad2f6893d8be619
 
 # Prebuilt Kernel Modules
 lib/modules/ufsd.ko
