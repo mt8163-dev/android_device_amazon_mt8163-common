@@ -324,7 +324,7 @@ lib/modules/ufsd.ko
 
 # Audio
 lib/libcjson.so
-lib/libcjson.so
+lib64/libcjson.so
 lib/libasp.so
 lib64/libasp.so
 lib/libaspclient.so
