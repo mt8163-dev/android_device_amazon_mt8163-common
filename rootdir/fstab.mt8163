@@ -12,3 +12,5 @@
 
 /devices/soc/11240000.mmc*		auto		vfat		defaults		voldmanaged=sdcard1:auto,encryptable=userdata
 /devices/platform/mt_usb* 		auto 		vfat 		defaults 		voldmanaged=usbotg:auto
+
+/dev/block/zram0 				none 		swap 		defaults 		zramsize=268435456,max_comp_streams=8

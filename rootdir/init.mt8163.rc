@@ -56,6 +56,9 @@ on charger
     class_start charger    
 
 on post-fs
+	# Enable swap
+	swapon_all /fstab.mt8163
+	
     # Change permissions for mediaserver
     chown root media /proc/clkmgr/mipi_test
 
