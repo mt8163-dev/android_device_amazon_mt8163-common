@@ -347,7 +347,7 @@ lib64/soundfx/libaudiofx.so
 vendor/lib/soundfx/libswdap.so
 lib/hw/audio.primary.mt8163.so
 lib64/hw/audio.primary.mt8163.so
-vendor/etc/audio-algorithms/ds1-0031.xml
+vendor/etc/dolby/ds1-0031.xml
 vendor/etc/audio_effects.conf
 vendor/etc/audio_policy.conf
 vendor/smartvolume/douglas/anlg_dock_headset.csv
