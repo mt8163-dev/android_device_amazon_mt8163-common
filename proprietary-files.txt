@@ -353,7 +353,7 @@ vendor/etc/audio-algorithms/MBCL.cfg
 vendor/etc/audio-algorithms/coefs_FilterBank.cfg
 vendor/etc/dolby/ds1-0031.xml
 vendor/etc/audio_effects.conf
-vendor/etc/audio_policy.conf
+etc/audio_policy.conf|2dfc062bf1d32c202c8e9b68922b30e9265846c0
 vendor/smartvolume/douglas/anlg_dock_headset.csv
 vendor/smartvolume/douglas/aux_digital.csv
 vendor/smartvolume/douglas/bt_a2dp.csv
