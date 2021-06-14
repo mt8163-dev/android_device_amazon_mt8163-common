@@ -38,7 +38,8 @@ int lab126_log_write(int bufID, int prio, const char *tag, const char *fmt, ...)
 		tag = "";
 	}
 	if( strncmp(tag, "Sensors", 7) == 0
-		||  strncmp(tag, "qcom_se", 7) == 0 )
+		||  strncmp(tag, "qcom_se", 7) == 0 
+				|| (strcmp(tag, "AudioALSAStreamOut", 7) == 0)
 	{
 		return 0;
 	}
