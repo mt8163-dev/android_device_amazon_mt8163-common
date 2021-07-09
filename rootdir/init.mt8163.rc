@@ -12,6 +12,23 @@ on late-fs
     write /sys/block/mmcblk0/queue/read_ahead_kb 2048
     write /sys/block/mmcblk0/queue/nr_requests 256
 
+on fs
+    # Legacy partition path support
+    symlink /dev/block/platform/soc/11230000.mmc /dev/block/platform/mtk-msdc.0
+
+    # Resize userdata partition
+    exec /sbin/resize_ext4 /dev/block/platform/mtk-msdc.0/by-name/userdata footer
+
+    # Mount all the partitions
+    mount_all /fstab.mt8163
+
+    # Set up SQFS
+    mkdir /mnt/sqfs 0771 system system
+    mount squashfs loop@/system/sqfs/container.sqfs /mnt/sqfs wait ro context=u:object_r:squashfs_file:s0
+
+    # Change the partition permissions
+    exec /system/etc/partition_permission.sh
+
 on init
     # Battery
     chown shell system /proc/mtk_battery_cmd/current_cmd

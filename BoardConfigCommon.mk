@@ -1,7 +1,9 @@
-DEVICE_FOLDER := device/amazon/douglas
+DEVICE_COMMON := device/amazon/mt8163-common
+KERNEL_COMMON := kernel/amazon/mt8163
+VENDOR_COMMON := vendor/amazon/mt8163-common
 
 # inherit from the proprietary version
--include vendor/amazon/douglas/BoardConfigVendor.mk
+-include $(VENDOR_COMMON)/BoardConfigVendor.mk
 
 # Platform
 TARGET_BOARD_PLATFORM := mt8163
@@ -43,12 +45,11 @@ BOARD_MKBOOTIMG_ARGS := \
 	--second_offset 0x00e88000 \
 	--tags_offset 0x07f88000
 
+TARGET_KERNEL_SOURCE := $(KERNEL_COMMON)
 TARGET_KERNEL_ARCH := arm64
 TARGET_KERNEL_HEADER_ARCH := arm64
 TARGET_KERNEL_CROSS_COMPILE_PREFIX := $(shell pwd)/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-
 BOARD_KERNEL_IMAGE_NAME := Image.gz-dtb
-TARGET_KERNEL_CONFIG := douglas_defconfig
-TARGET_KERNEL_SOURCE := kernel/amazon/douglas
 
 # 64 Bit Binder Userspace
 TARGET_USES_64_BIT_BINDER := true
@@ -66,7 +67,7 @@ BOARD_USES_MTK_AUDIO := true
 TARGET_OMX_LEGACY_RESCALING:= true
 
 # EGL
-BOARD_EGL_CFG := $(DEVICE_FOLDER)/configs/graphics/egl.cfg
+BOARD_EGL_CFG := $(DEVICE_COMMON)/configs/graphics/egl.cfg
 USE_OPENGL_RENDERER := true
 BOARD_EGL_WORKAROUND_BUG_10194508 := true
 TARGET_USES_C2D_COMPOSITION := true
@@ -101,7 +102,7 @@ WIFI_DRIVER_FW_PATH_STA := P2P
 BOARD_HAVE_BLUETOOTH := true
 BOARD_HAVE_BLUETOOTH_MTK := true
 BOARD_BLUETOOTH_DOES_NOT_USE_RFKILL := true
-BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := $(DEVICE_FOLDER)/bluetooth
+BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := $(DEVICE_COMMON)/bluetooth
 
 # Camera
 TARGET_HAS_LEGACY_CAMERA_HAL1 := true
@@ -119,11 +120,8 @@ TARGET_GLOBAL_CPPFLAGS += -DMTK_HARDWARE
 BOARD_GLOBAL_CFLAGS += -DCOMPAT_SENSORS_M -DCAMERA_VENDOR_L_COMPAT
 BOARD_GLOBAL_CLFAGS += -DMTK_HARDWARE -DADD_LEGACY_ACQUIRE_BUFFER_SYMBOL
 
-# System Properties
-TARGET_SYSTEM_PROP := $(DEVICE_FOLDER)/system.prop
-
 # Recovery Partition Table
-TARGET_RECOVERY_FSTAB := $(DEVICE_FOLDER)/recovery/etc/recovery.fstab
+TARGET_RECOVERY_FSTAB := $(DEVICE_COMMON)/recovery/etc/recovery.fstab
 
 # Screen/Bootanimation
 DEVICE_RESOLUTION := 800x1280
@@ -145,15 +143,15 @@ TARGET_USE_CUSTOM_LUN_FILE_PATH := "/sys/devices/virtual/android_usb/android0/f_
 
 # SELinux
 BOARD_SEPOLICY_DIRS += \
-    $(DEVICE_FOLDER)/sepolicy
+    $(DEVICE_COMMON)/sepolicy
 
 # Media Extractors
 BOARD_SECCOMP_POLICY := \
-    $(DEVICE_FOLDER)/seccomp-policy
+    $(DEVICE_COMMON)/seccomp-policy
 
 # Cyanogenmod H/W Hooks
 BOARD_USES_CYANOGEN_HARDWARE := true
-BOARD_HARDWARE_CLASS := $(DEVICE_FOLDER)/cmhw
+BOARD_HARDWARE_CLASS := $(DEVICE_COMMON)/cmhw
 
 # Shim Libraries
 TARGET_LDPRELOAD += libshim_audio.so
@@ -174,11 +172,8 @@ LINKER_FORCED_SHIM_LIBS := \
     /system/bin/amzn_dha_tool|libshim_drm.so \
     /system/lib/libwvm.so|libshim_wvm.so
 
-# Device-Specific Headers
-TARGET_SPECIFIC_HEADER_PATH := $(DEVICE_FOLDER)/include
-
-# Init Library
-TARGET_INIT_VENDOR_LIB := libinit_douglas
+# Common-Specific Headers
+TARGET_SPECIFIC_HEADER_PATH := $(DEVICE_COMMON)/include
 
 # Partitions
 BOARD_BOOTIMAGE_PARTITION_SIZE := 16777216
@@ -197,9 +192,6 @@ BOARD_CHARGING_MODE_BOOTING_LPM := /sys/class/BOOT/BOOT/boot/boot_mode
 # Offline charging
 BOARD_CHARGER_DISABLE_INIT_BLANK := true
 BACKLIGHT_PATH := /sys/devices/platform/leds-mt65xx/leds/lcd-backlight/brightness
-
-# Assert
-TARGET_OTA_ASSERT_DEVICE := douglas,KFDOWI
 
 # Block Based OTA
 BLOCK_BASED_OTA := false

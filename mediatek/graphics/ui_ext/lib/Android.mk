@@ -48,8 +48,8 @@ LOCAL_SRC_FILES:= \
 	RefBaseDump.cpp
 
 LOCAL_C_INCLUDES:= \
-	$(TOP)/device/amazon/douglas/mediatek/graphics/ui_ext/inc \
-	$(TOP)/device/amazon/douglas/mediatek/graphics/gralloc_extra/include \
+	$(TOP)/device/amazon/mt8163-common/mediatek/graphics/ui_ext/inc \
+	$(TOP)/device/amazon/mt8163-common/mediatek/graphics/gralloc_extra/include \
 	external/libpng \
 	external/zlib \
 	external/skia/src/images \

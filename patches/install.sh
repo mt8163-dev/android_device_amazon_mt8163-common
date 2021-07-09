@@ -10,7 +10,7 @@ for dir in $dirs ; do
 	cd $rootdirectory
 	cd $dir
     echo -e "${RED}Applying ${NC}$dir ${RED}patches...${NC}\n"
-	git apply $rootdirectory/device/amazon/douglas/patches/$dir/*.patch
+	git apply $rootdirectory/device/amazon/mt8163-common/patches/$dir/*.patch
 done
 
 echo "Done!"
