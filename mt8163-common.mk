@@ -15,7 +15,7 @@ DEVICE_PACKAGE_OVERLAYS += $(COMMON_PATH)/overlay
 
 # Power HAL
 PRODUCT_PACKAGES += \
-    power.default
+    power.mt8163
 
 # Lights HAL
 PRODUCT_PACKAGES += \
