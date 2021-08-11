@@ -64,11 +64,9 @@ static void power_fwrite(const char *path, char *s)
 
 static void power_hint(struct power_module *module, power_hint_t hint,
                        void *data) {
-    int32_t dataint = -1;
     switch (hint) {
         case POWER_HINT_LOW_POWER:
-            dataint = *(int32_t *)data;
-            if (dataint) {
+            if (data) {
                 power_fwrite(MT_FPS_UPPER_BOUND_PATH, "30");
                 power_fwrite(MT_RUSH_BOOST_PATH, "0");
             } else {
