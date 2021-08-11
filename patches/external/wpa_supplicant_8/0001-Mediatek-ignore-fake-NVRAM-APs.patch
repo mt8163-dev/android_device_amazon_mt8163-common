@@ -1,0 +1,82 @@
+From 113937058daf54a94b61c1921c75cb924ead837b Mon Sep 17 00:00:00 2001
+From: Yuri Konotopov <ykonotopov@gnome.org>
+Date: Fri, 2 Feb 2018 18:44:10 +0000
+Subject: [PATCH] Mediatek: ignore fake NVRAM APs.
+
+MTK wlan driver may insert such broken APs in search results instead of
+debug messages when wifi nvram file does not contains valid device mac.
+
+Change-Id: If6f0526b43d3a542a37f1bb0feb494b082bce8a7
+---
+ src/drivers/driver_nl80211_scan.c | 3 +++
+ wpa_supplicant/Android.mk         | 5 +++++
+ wpa_supplicant/bss.c              | 7 +++++++
+ wpa_supplicant/bss.h              | 4 ++++
+ 4 files changed, 19 insertions(+)
+
+diff --git a/src/drivers/driver_nl80211_scan.c b/src/drivers/driver_nl80211_scan.c
+index c115b6b..fd75540 100644
+--- a/src/drivers/driver_nl80211_scan.c
++++ b/src/drivers/driver_nl80211_scan.c
+@@ -134,6 +134,9 @@ nl80211_scan_common(struct i802_bss *bss, u8 cmd,
+ 		if (ssids == NULL)
+ 			goto fail;
+ 		for (i = 0; i < params->num_ssids; i++) {
++			if(!params->ssids[i].ssid_len)
++				continue;
++
+ 			wpa_hexdump_ascii(MSG_MSGDUMP, "nl80211: Scan SSID",
+ 					  params->ssids[i].ssid,
+ 					  params->ssids[i].ssid_len);
+diff --git a/wpa_supplicant/Android.mk b/wpa_supplicant/Android.mk
+index 87f357d..9fe6b0a 100644
+--- a/wpa_supplicant/Android.mk
++++ b/wpa_supplicant/Android.mk
+@@ -1616,6 +1616,11 @@ endif
+ LOCAL_CFLAGS := $(L_CFLAGS)
+ LOCAL_SRC_FILES := $(OBJS)
+ LOCAL_C_INCLUDES := $(INCLUDES)
++
++ifeq ($(BOARD_HAS_MTK_HARDWARE),true)
++LOCAL_CFLAGS += -DMTK_HARDWARE
++endif
++
+ ifeq ($(DBUS), y)
+ LOCAL_SHARED_LIBRARIES += libdbus
+ endif
+diff --git a/wpa_supplicant/bss.c b/wpa_supplicant/bss.c
+index 3687a2e..201cc7d 100644
+--- a/wpa_supplicant/bss.c
++++ b/wpa_supplicant/bss.c
+@@ -747,6 +747,13 @@ void wpa_bss_update_scan_res(struct wpa_supplicant *wpa_s,
+ 	if (mesh && mesh[1] <= SSID_MAX_LEN)
+ 		ssid = mesh;
+
++#ifdef MTK_HARDWARE
++	if (strncmp(ssid + 2, MTK_NVRAM_SSID, strlen(MTK_NVRAM_SSID)) == 0) {
++		wpa_printf(MSG_WARNING, "MTK: fake NVRAM AP skipped");
++		return;
++	}
++#endif
++
+ 	bss = wpa_bss_get(wpa_s, res->bssid, ssid + 2, ssid[1]);
+ 	if (bss == NULL)
+ 		bss = wpa_bss_add(wpa_s, ssid + 2, ssid[1], res, fetch_time);
+diff --git a/wpa_supplicant/bss.h b/wpa_supplicant/bss.h
+index f7f72f3..590d9cd 100644
+--- a/wpa_supplicant/bss.h
++++ b/wpa_supplicant/bss.h
+@@ -19,6 +19,10 @@ struct wpa_scan_res;
+ #define WPA_BSS_ASSOCIATED		BIT(5)
+ #define WPA_BSS_ANQP_FETCH_TRIED	BIT(6)
+
++#ifdef MTK_HARDWARE
++#define MTK_NVRAM_SSID "NVRAM WARNING: Err ="
++#endif
++
+ struct wpa_bss_anqp_elem {
+ 	struct dl_list list;
+ 	u16 infoid;
+-- 
+2.16.1
+

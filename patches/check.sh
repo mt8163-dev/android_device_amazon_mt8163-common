@@ -1,7 +1,7 @@
 #!/bin/sh
 
 rootdirectory="$PWD"
-dirs="bionic frameworks/av frameworks/base frameworks/native system/core packages/apps/Settings"
+dirs="bionic frameworks/av frameworks/base frameworks/native system/core packages/apps/Settings external/wpa_supplicant_8"
 
 RED='\033[0;31m'
 NC='\033[0m'
