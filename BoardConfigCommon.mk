@@ -195,3 +195,6 @@ BACKLIGHT_PATH := /sys/devices/platform/leds-mt65xx/leds/lcd-backlight/brightnes
 
 # Block Based OTA
 BLOCK_BASED_OTA := false
+
+# System Properties
+TARGET_SYSTEM_PROP += $(DEVICE_COMMON)/system.prop
