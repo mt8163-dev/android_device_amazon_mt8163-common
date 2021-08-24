@@ -175,7 +175,6 @@ write_int(char const* path, int value)
 #endif
 
     fd = open(path, O_RDWR);
-	ALOGD("write_int open fd=%d\n", fd);
     if (fd >= 0) {
         char buffer[20];
         int bytes = sprintf(buffer, "%d\n", value);
