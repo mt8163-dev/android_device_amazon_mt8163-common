@@ -85,7 +85,8 @@ PRODUCT_PACKAGES += \
     hostapd \
     wpa_supplicant \
     wpa_supplicant.conf \
-    libwifi-hal-mt66xx
+    libwifi-hal-mt66xx \
+    lib_driver_cmd_mt66xx
 
 # Patched Audio Configuration Files
 PRODUCT_COPY_FILES += \
