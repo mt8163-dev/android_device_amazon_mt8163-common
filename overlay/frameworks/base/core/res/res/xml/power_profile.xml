@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <device name="Android">
     <item name="none">0</item>
-    <item name="screen.on">82.75</item>
-    <item name="screen.full">201.16</item>
-    <item name="bluetooth.active">51.55</item>
-    <item name="bluetooth.on">0.79</item>
-    <item name="wifi.on">3.5</item>
-    <item name="wifi.active">73.24</item>
-    <item name="wifi.scan">75.48</item>
-    <item name="dsp.audio">0.1</item>
-    <item name="dsp.video">0.1</item>
-    <item name="radio.active">0.1</item>
-    <item name="radio.scanning">0.1</item>
-    <item name="gps.on">0.1</item>
+    <item name="screen.on">200</item>
+    <item name="screen.full">300</item>
+    <item name="bluetooth.active">10</item>
+    <item name="bluetooth.on">0.1</item>
+    <item name="wifi.on">3</item>
+    <item name="wifi.active">200</item>
+    <item name="wifi.scan">100</item>
+    <item name="dsp.audio">100</item>
+    <item name="dsp.video">50</item>
+    <item name="radio.active">200</item>
+    <item name="radio.scanning">10</item>
+    <item name="gps.on">50</item>
     <array name="radio.on">
-        <value>0.2</value>
-        <value>0.1</value>
+        <value>2</value>
+        <value>1</value>
     </array>
     <array name="cpu.speeds">
         <value>598000</value>
@@ -24,21 +24,21 @@
         <value>1196000</value>
         <value>1300000</value>
     </array>
-    <item name="cpu.idle">3.2</item>
-   <item name="cpu.awake">17.4</item>
+    <item name="cpu.idle">100</item>
+    <item name="cpu.awake">100</item>
     <array name="cpu.active">
-        <value>95.4</value>
+        <value>100</value>
         <value>140.2</value>
         <value>178.5</value>
         <value>189.3</value>
         <value>234.2</value>
     </array>
-    <item name="battery.capacity">2980</item>
+    <item name="battery.capacity">4750</item>
     <array name="wifi.batchedscan">
-        <value>.0002</value>
-        <value>.002</value>
-        <value>.02</value>
         <value>.2</value>
         <value>2</value>
+        <value>20</value>
+        <value>200</value>
+        <value>500</value>
     </array>
 </device>
