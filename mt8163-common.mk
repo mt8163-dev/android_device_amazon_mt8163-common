@@ -10,6 +10,9 @@ $(call inherit-product-if-exists, vendor/amazon/mt8163-common/mt8163-common-vend
 PRODUCT_AAPT_CONFIG := normal mdpi
 PRODUCT_AAPT_PREF_CONFIG := mdpi
 
+# Product Characteristics
+PRODUCT_CHARACTERISTICS := tablet
+
 # Overlay
 DEVICE_PACKAGE_OVERLAYS += $(COMMON_PATH)/overlay
 
