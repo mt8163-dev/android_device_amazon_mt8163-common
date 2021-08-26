@@ -40,7 +40,7 @@
          USB interfaces.  If the device doesn't want to support tething over USB this should
          be empty.  An example would be "usb.*" -->
     <string-array translatable="false" name="config_tether_usb_regexs">
-        <item>"rndis0"</item>
+        <item>"rndis\\d"</item>
     </string-array>
 
     <!-- Whether a software navigation bar should be shown. NOTE: in the future this may be
