@@ -13,8 +13,6 @@ etc/firmware/WIFI_RAM_CODE_8163
 etc/firmware/WMT_SOC.cfg
 lib/libccci_util.so
 lib64/libccci_util.so
-#lib/libwpa_client.so
-#lib64/libwpa_client.so
 
 # Nvram
 bin/nvram_daemon
@@ -134,24 +132,16 @@ lib64/hw/perfboost.mt8163.so
 lib/hw/lights.mt8163.so
 lib64/hw/lights.mt8163.so
 
-# Vibrator
-lib/hw/vibrator.default.so
-lib64/hw/vibrator.default.so
-
 # Graphics
 bin/ged_srv
 bin/guiext-server
-etc/mtk_omx_core.cfg|vendor/etc/mtk_omx_core.cfg
+etc/mtk_omx_core.cfg
 lib/egl/libGLES_mali.so
 lib64/egl/libGLES_mali.so
 lib/hw/gralloc.mt8163.mali.so
 lib/hw/hwcomposer.mt8163.so
 lib64/hw/gralloc.mt8163.mali.so
 lib64/hw/hwcomposer.mt8163.so
-#lib/libblisrc.so
-#lib/libblisrc32.so
-#lib64/libblisrc.so
-#lib64/libblisrc32.so
 -lib/libdpframework.so
 -lib64/libdpframework.so
 lib/libged.so
@@ -228,8 +218,8 @@ lib64/hw/thermal.mt8163.so
 etc/firmware/gt9xx_fw.bin
 
 # MD32 Firmware Images
-etc/firmware/md32_d.bin|4ffe412be7709ce861cd4b1330cafb85a94ad583
-etc/firmware/md32_p.bin|19aa465136293aa09adc06726ad2f6893d8be619
+etc/firmware/md32_d.bin
+etc/firmware/md32_p.bin
 
 # Prebuilt Kernel Modules
 lib/modules/ufsd.ko
