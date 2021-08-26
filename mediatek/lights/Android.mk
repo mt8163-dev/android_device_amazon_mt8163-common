@@ -31,4 +31,3 @@ LOCAL_MODULE := lights.mt8163
 LOCAL_PROPRIETARY_MODULE := true
 
 include $(BUILD_SHARED_LIBRARY)
-include $(LOCAL_PATH)/2.0/default/Android.mk

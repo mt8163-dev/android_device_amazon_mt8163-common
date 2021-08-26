@@ -128,10 +128,6 @@ lib/hw/perfboost.mt8163.so
 lib64/hw/perfboost.default.so
 lib64/hw/perfboost.mt8163.so
 
-# Lights
-lib/hw/lights.mt8163.so
-lib64/hw/lights.mt8163.so
-
 # Graphics
 bin/ged_srv
 bin/guiext-server
