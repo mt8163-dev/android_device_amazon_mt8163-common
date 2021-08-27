@@ -94,6 +94,10 @@ PRODUCT_PACKAGES += \
     libwifi-hal-mt66xx \
     lib_driver_cmd_mt66xx
 
+# Configstore
+PRODUCT_PACKAGES += \
+    android.hardware.configstore@1.0-service
+
 # Patched Audio Configuration Files
 PRODUCT_COPY_FILES += \
     $(COMMON_PATH)/configs/audio/audio_device.xml:system/etc/audio_device.xml \
