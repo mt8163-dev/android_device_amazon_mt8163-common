@@ -201,7 +201,10 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
 # DRM
 PRODUCT_PACKAGES += \
     libdrm \
-    libfwdlockengine
+    libfwdlockengine \
+    android.hardware.drm@1.0-impl \
+    android.hardware.drm@1.0-service.widevine \
+    android.hardware.drm@1.0-service
 
 # No RIL
 PRODUCT_PROPERTY_OVERRIDES += \
