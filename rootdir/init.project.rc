@@ -81,6 +81,10 @@ on init
 on boot
     insmod /system/lib/modules/ufsd.ko
 
+    # Wi-Fi firmware reload path
+    chown wifi wifi /sys/kernel/debug/mtwifi/wlan0/fwpath
+    chmod 0666 /sys/kernel/debug/mtwifi/wlan0/fwpath
+
 service atci_service /system/bin/atci_service 
 	socket atci-service stream 660 radio system 
 	socket atci-serv-fw stream 660 radio system 
