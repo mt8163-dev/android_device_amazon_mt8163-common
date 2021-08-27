@@ -156,8 +156,7 @@ PRODUCT_PACKAGES += \
     libshim_parcel \
     libshim_camera \
     libshim_drm \
-    libshim_audio \
-    libshim_wvm
+    libshim_audio
 
 # IPv6 tethering
 PRODUCT_PACKAGES += \

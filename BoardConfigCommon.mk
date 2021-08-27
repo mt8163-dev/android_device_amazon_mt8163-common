@@ -173,9 +173,7 @@ LINKER_FORCED_SHIM_LIBS := \
     /system/lib/libcam_utils.so|libshim_ui.so \
     /system/lib64/libcam_utils.so|libshim_ui.so \
     /system/bin/amzn_dha_hmac|libshim_drm.so \
-    /system/bin/amzn_dha_tool|libshim_drm.so \
-    /system/lib/libwvm.so|libshim_wvm.so
-
+    /system/bin/amzn_dha_tool|libshim_drm.so
 # Common-Specific Headers
 TARGET_SPECIFIC_HEADER_PATH := $(DEVICE_COMMON)/include
 
