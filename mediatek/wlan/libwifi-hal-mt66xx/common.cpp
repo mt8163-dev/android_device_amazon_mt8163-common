@@ -183,7 +183,7 @@ WifiCommand *wifi_unregister_cmd(wifi_handle handle, int id)
     for (int i = 0; i < info->num_cmd; i++) {
         if (info->cmd[i].id == id) {
             cmd = info->cmd[i].cmd;
-            memmove(&info->cmd[i], &info->cmd[i+1], (info->num_cmd - i) * sizeof(cmd_info));
+            memmove(&info->cmd[i], &info->cmd[i+1], (info->num_cmd - i - 1) * sizeof(cmd_info));
             info->num_cmd--;
             ALOGV("Successfully removed command %d: %p from %d", id, cmd, i);
             break;
@@ -220,7 +220,7 @@ void wifi_unregister_cmd(wifi_handle handle, WifiCommand *cmd)
     for (int i = 0; i < info->num_cmd; i++) {
         if (info->cmd[i].cmd == cmd) {
             int id = info->cmd[i].id;
-            memmove(&info->cmd[i], &info->cmd[i+1], (info->num_cmd - i) * sizeof(cmd_info));
+            memmove(&info->cmd[i], &info->cmd[i+1], (info->num_cmd - i - 1) * sizeof(cmd_info));
             info->num_cmd--;
             ALOGV("Successfully removed command %d: %p from %d", id, cmd, i);
             break;

@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2012 The Android Open Source Project
+# Copyright (C) 2008 The Android Open Source Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,11 +13,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
 LOCAL_PATH := $(call my-dir)
 
-ifeq ($(WPA_SUPPLICANT_VERSION),VER_0_8_X)
-$(warning Build wpa_supplicant_lib...)
+##### For Google SUPPLICANT #####
+ifeq ($(MTKPATH),)
+    $(warning build BASIC wpa_supplicant)
     WPA_SUPPL_DIR = external/wpa_supplicant_8
     WPA_SRC_FILE :=
 
@@ -57,7 +57,6 @@ L_CFLAGS += -DCONFIG_ANDROID_LOG
 endif
 
 ########################
-
 include $(CLEAR_VARS)
 LOCAL_MODULE := lib_driver_cmd_mt66xx
 LOCAL_SHARED_LIBRARIES := libc libcutils
@@ -65,7 +64,5 @@ LOCAL_CFLAGS := $(L_CFLAGS)
 LOCAL_SRC_FILES := $(WPA_SRC_FILE)
 LOCAL_C_INCLUDES := $(WPA_SUPPL_DIR_INCLUDE)
 include $(BUILD_STATIC_LIBRARY)
-
 ########################
-
 endif
