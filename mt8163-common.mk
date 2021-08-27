@@ -226,8 +226,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # Disable cameraserver
 PRODUCT_PROPERTY_OVERRIDES += \
-	media.stagefright.legacyencoder=true \
-	media.stagefright.less-secure=true \
+    media.stagefright.legacyencoder=true \
+    media.stagefright.less-secure=true \
 
 # Override Default Properties
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
@@ -269,7 +269,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # Limit Background Processes
 PRODUCT_PROPERTY_OVERRIDES += \
-	ro.sys.fw.bg_apps_limits=5
+    ro.sys.fw.bg_apps_limits=5
 
 # Configure dalvik heap
 $(call inherit-product, frameworks/native/build/phone-xhdpi-2048-dalvik-heap.mk)
