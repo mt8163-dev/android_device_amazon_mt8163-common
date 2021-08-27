@@ -59,33 +59,33 @@ extern "C" RET gralloc_extra_##API PROTOTYPE                            \
 
 /* ----  IMPLEMENTATION start  ---- */
 
-GRALLOC_EXTRA_IMPLEMENTATION_(int, -1, getIonFd, 
-    GRALLOC_EXTRA_PROTOTYPE_(buffer_handle_t handle, int *idx, int *num), 
+GRALLOC_EXTRA_IMPLEMENTATION_(int, -1, getIonFd,
+    GRALLOC_EXTRA_PROTOTYPE_(buffer_handle_t handle, int *idx, int *num),
     GRALLOC_EXTRA_ARGS_(handle, idx, num)
 )
 
-GRALLOC_EXTRA_IMPLEMENTATION_(int, -1, getSecureBuffer, 
-    GRALLOC_EXTRA_PROTOTYPE_(buffer_handle_t handle, int *type, int *hBuffer), 
+GRALLOC_EXTRA_IMPLEMENTATION_(int, -1, getSecureBuffer,
+    GRALLOC_EXTRA_PROTOTYPE_(buffer_handle_t handle, int *type, int *hBuffer),
     GRALLOC_EXTRA_ARGS_(handle, type, hBuffer)
 )
 
-GRALLOC_EXTRA_IMPLEMENTATION_(int, -1, getBufInfo, 
-    GRALLOC_EXTRA_PROTOTYPE_(buffer_handle_t handle, gralloc_buffer_info_t* bufInfo), 
+GRALLOC_EXTRA_IMPLEMENTATION_(int, -1, getBufInfo,
+    GRALLOC_EXTRA_PROTOTYPE_(buffer_handle_t handle, gralloc_buffer_info_t* bufInfo),
     GRALLOC_EXTRA_ARGS_(handle, bufInfo)
 )
 
-GRALLOC_EXTRA_IMPLEMENTATION_(int, -1, setBufParameter, 
-    GRALLOC_EXTRA_PROTOTYPE_(buffer_handle_t handle, int mask, int value), 
+GRALLOC_EXTRA_IMPLEMENTATION_(int, -1, setBufParameter,
+    GRALLOC_EXTRA_PROTOTYPE_(buffer_handle_t handle, int mask, int value),
     GRALLOC_EXTRA_ARGS_(handle, mask, value)
 )
-	
-GRALLOC_EXTRA_IMPLEMENTATION_(int, -1, getMVA, 
-    GRALLOC_EXTRA_PROTOTYPE_(buffer_handle_t handle, int *mvaddr), 
+
+GRALLOC_EXTRA_IMPLEMENTATION_(int, -1, getMVA,
+    GRALLOC_EXTRA_PROTOTYPE_(buffer_handle_t handle, int *mvaddr),
     GRALLOC_EXTRA_ARGS_(handle, mvaddr)
 )
 
-GRALLOC_EXTRA_IMPLEMENTATION_(int, -1, setBufInfo, 
-    GRALLOC_EXTRA_PROTOTYPE_(buffer_handle_t handle, const char * str), 
+GRALLOC_EXTRA_IMPLEMENTATION_(int, -1, setBufInfo,
+    GRALLOC_EXTRA_PROTOTYPE_(buffer_handle_t handle, const char * str),
     GRALLOC_EXTRA_ARGS_(handle, str)
 )
 
@@ -98,41 +98,23 @@ GRALLOC_EXTRA_IMPLEMENTATION_(int, -1, setBufInfo,
 #undef GRALLOC_EXTRA_ARGS_2
 
 int android::GraphicBufferExtra::query(
-        buffer_handle_t handle, GRALLOC_EXTRA_ATTRIBUTE_QUERY attribute, void * out_pointer) 
-{ 
-    ATRACE_CALL(); 
-    int err; 
+        buffer_handle_t handle, GRALLOC_EXTRA_ATTRIBUTE_QUERY attribute, void * out_pointer)
+{
+    ATRACE_CALL();
+    int err;
     if (!mExtraDev || !mExtraDev->query)
     {
         ALOGW("gralloc extra device query(...) is not supported");
         return -GRALLOC_EXTRA_NOT_SUPPORTED;
     }
     err = mExtraDev->query(mExtraDev, handle, attribute, out_pointer);
-    if (err < 0) 
+    if (err < 0)
         ALOGW("query(0x%x) failed %d", attribute, err);
-    return err; 
-} 
+    return err;
+}
 
 int android::GraphicBufferExtra::perform(
-        buffer_handle_t handle, GRALLOC_EXTRA_ATTRIBUTE_PERFORM attribute, void * in_pointer) 
-{ 
-    ATRACE_CALL(); 
-    int err; 
-    if (!mExtraDev || !mExtraDev->perform)
-    {
-        ALOGW("gralloc extra device perform(...) is not supported");
-        return -GRALLOC_EXTRA_NOT_SUPPORTED;
-    }
-    err = mExtraDev->perform(mExtraDev, handle, attribute, in_pointer); 
-    if (err < 0)
-        ALOGW("perform(0x%x) failed %d", attribute, err); 
-    return err; 
-} 
-
-
-#if 0
-int android::GraphicBufferExtra::free_sec(
-        buffer_handle_t handle)
+        buffer_handle_t handle, GRALLOC_EXTRA_ATTRIBUTE_PERFORM attribute, void * in_pointer)
 {
     ATRACE_CALL();
     int err;
@@ -141,33 +123,23 @@ int android::GraphicBufferExtra::free_sec(
         ALOGW("gralloc extra device perform(...) is not supported");
         return -GRALLOC_EXTRA_NOT_SUPPORTED;
     }
-    err = mExtraDev->free_sec(mExtraDev, handle);
+    err = mExtraDev->perform(mExtraDev, handle, attribute, in_pointer);
     if (err < 0)
-        ALOGW("free_sec failed %d", err);
+        ALOGW("perform(0x%x) failed %d", attribute, err);
     return err;
 }
-#endif
-
 
 extern "C" int gralloc_extra_query(
-        buffer_handle_t handle, GRALLOC_EXTRA_ATTRIBUTE_QUERY attribute, void * out_pointer) 
-{ 
-    return android::GraphicBufferExtra::get().query(handle, attribute, out_pointer); 
+        buffer_handle_t handle, GRALLOC_EXTRA_ATTRIBUTE_QUERY attribute, void * out_pointer)
+{
+    return android::GraphicBufferExtra::get().query(handle, attribute, out_pointer);
 }
 
 extern "C" int gralloc_extra_perform(
-        buffer_handle_t handle, GRALLOC_EXTRA_ATTRIBUTE_PERFORM attribute, void * in_pointer) 
-{ 
-    return android::GraphicBufferExtra::get().perform(handle, attribute, in_pointer); 
-}
-
-#if 0
-extern "C" int gralloc_extra_free_sec(buffer_handle_t handle )
+        buffer_handle_t handle, GRALLOC_EXTRA_ATTRIBUTE_PERFORM attribute, void * in_pointer)
 {
-    return android::GraphicBufferExtra::get().free_sec(handle);
+    return android::GraphicBufferExtra::get().perform(handle, attribute, in_pointer);
 }
-#endif
-
 
 static int __gralloc_extra_sf_set_int(int *data, int32_t mask, int32_t value)
 {

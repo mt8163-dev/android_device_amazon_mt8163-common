@@ -55,6 +55,8 @@ enum {
     HAL_PIXEL_FORMAT_UFO            = 0x0000010f,                        /// MTK UFO
     HAL_PIXEL_FORMAT_NV12           = 0x00000110,                        /// NV12
 
+    HAL_PIXEL_FORMAT_CAMERA_OPAQUE  = 0x00000111,                        /// for MTK CAMERA
+
 /**
  * Sapphire Driver use 0x120-0x121 as their "vendor formats"
  */

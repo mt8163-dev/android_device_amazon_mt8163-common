@@ -21,12 +21,7 @@ public:
     static inline GraphicBufferExtra& get() { return getInstance(); }
 
     int query(buffer_handle_t handle, GRALLOC_EXTRA_ATTRIBUTE_QUERY attribute, void *out_pointer);
-
     int perform(buffer_handle_t handle, GRALLOC_EXTRA_ATTRIBUTE_PERFORM attribute, void *in_pointer);
-#if 0
-    int free_sec(buffer_handle_t handle);
-#endif
-
 
     /** Deprecated methods
      * please use query/perform instead of using the following get/set methods.

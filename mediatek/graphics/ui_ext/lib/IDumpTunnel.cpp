@@ -67,9 +67,9 @@ DumpTunnelHelper::DumpTunnelHelper() :
     // dlopen must set RTLD_LAZY flag because of performance issue
     // need to use different path for 32/64 env
 #ifdef __LP64__
-    mSoHandle = dlopen("/system/lib64/libgui_ext.so", RTLD_LAZY);
+    mSoHandle = dlopen("/vendor/lib64/libgui_ext.so", RTLD_LAZY);
 #else
-    mSoHandle = dlopen("/system/lib/libgui_ext.so", RTLD_LAZY);
+    mSoHandle = dlopen("/vendor/lib/libgui_ext.so", RTLD_LAZY);
 #endif
     if (mSoHandle) {
         mRegDumpPtr = reinterpret_cast<RegDumpPrototype>(dlsym(mSoHandle, "regDump"));

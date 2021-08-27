@@ -32,10 +32,7 @@ typedef struct extra_device_t {
 
     int (*perform)(struct extra_device_t* dev,
         buffer_handle_t handle, GRALLOC_EXTRA_ATTRIBUTE_PERFORM attribute, void * in_pointer);
-    #if 0
-    int (*free_sec)(struct extra_device_t* dev, buffer_handle_t handle);
-    #endif
-	
+
     void* reserved_proc[2];
 } extra_device_t;
 

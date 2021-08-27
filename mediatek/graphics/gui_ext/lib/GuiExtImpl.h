@@ -87,7 +87,7 @@ public:
     status_t release(uint32_t usage, uint32_t type, int buf);
     status_t disconnect(uint32_t usage, uint32_t type);
 
-    virtual void onFrameAvailable(const BufferItem& item) {};
+    virtual void onFrameAvailable(const BufferItem& /* item */) {};
     virtual void onBuffersReleased() {};
     virtual void onSidebandStreamChanged() {};
 
