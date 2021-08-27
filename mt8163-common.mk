@@ -182,6 +182,11 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     android.hardware.usb@1.0-service
 
+# Bluetooth
+PRODUCT_PACKAGES += \
+    android.hardware.bluetooth@1.0-impl-mediatek \
+    android.hardware.bluetooth@1.0-service-mediatek
+
 # Camera Init
 PRODUCT_COPY_FILES += $(COMMON_PATH)/configs/init/mediaserver.rc:system/etc/init/mediaserver.rc
 
