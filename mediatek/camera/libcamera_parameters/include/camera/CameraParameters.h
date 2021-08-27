@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 The Android Open Source Project
+ * Copyright (C) 2008 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,6 +37,8 @@ struct Size {
     }
 };
 
+typedef DefaultKeyedVector<String8,String8> CAM_PARAMS_T;
+
 class CameraParameters
 {
 public:
@@ -46,6 +48,8 @@ public:
 
     String8 flatten() const;
     void unflatten(const String8 &params);
+
+    void exportParams(CAM_PARAMS_T &dst) const { dst = mMap; }
 
     void set(const char *key, const char *value);
     void set(const char *key, int value);
@@ -98,8 +102,6 @@ public:
     void getSupportedPictureSizes(Vector<Size> &sizes) const;
     void setPictureFormat(const char *format);
     const char *getPictureFormat() const;
-    void setCameraPictureFlip(const int format);
-    const int getCameraPictureFlip() const;
 
     void dump() const;
     status_t dump(int fd, const Vector<String16>& args) const;
@@ -685,9 +687,6 @@ public:
     // High-dynamic range mode
     static const char LIGHTFX_HDR[];
 
-    // Picture flip
-    static const char SNAPSHOT_PICTURE_FLIP[];
-
     /**
      * Returns the the supported preview formats as an enum given in graphics.h
      * corrsponding to the format given in the input string or -1 if no such
@@ -695,8 +694,8 @@ public:
      */
     static int previewFormatToEnum(const char* format);
 
-private:
-    DefaultKeyedVector<String8,String8>    mMap;
+protected:
+    CAM_PARAMS_T mMap;
 };
 
 }; // namespace android

@@ -1,6 +1,6 @@
 /*
 **
-** Copyright 2020, The Android Open Source Project
+** Copyright 2008, The Android Open Source Project
 **
 ** Licensed under the Apache License, Version 2.0 (the "License");
 ** you may not use this file except in compliance with the License.
@@ -18,9 +18,10 @@
 #define LOG_TAG "CameraParams"
 #include <utils/Log.h>
 
+#include <unistd.h>
 #include <string.h>
 #include <stdlib.h>
-#include "CameraParameters.h"
+#include <camera/CameraParameters.h>
 #include <system/graphics.h>
 
 namespace android {
@@ -173,9 +174,6 @@ const char CameraParameters::FOCUS_MODE_CONTINUOUS_PICTURE[] = "continuous-pictu
 const char CameraParameters::LIGHTFX_LOWLIGHT[] = "low-light";
 const char CameraParameters::LIGHTFX_HDR[] = "high-dynamic-range";
 
-// Value for picture flip
-const char CameraParameters::SNAPSHOT_PICTURE_FLIP[] = "snapshot-picture-flip";
-
 CameraParameters::CameraParameters()
                 : mMap()
 {
@@ -240,9 +238,6 @@ void CameraParameters::unflatten(const String8 &params)
 
 void CameraParameters::set(const char *key, const char *value)
 {
-    if (key == NULL || value == NULL)
-        return;
-
     // XXX i think i can do this with strspn()
     if (strchr(key, '=') || strchr(key, ';')) {
         //XXX ALOGE("Key \"%s\"contains invalid character (= or ;)", key);
@@ -253,14 +248,6 @@ void CameraParameters::set(const char *key, const char *value)
         //XXX ALOGE("Value \"%s\"contains invalid character (= or ;)", value);
         return;
     }
-#ifdef QCOM_HARDWARE
-    // qcom cameras default to delivering an extra zero-exposure frame on HDR.
-    // The android SDK only wants one frame, so disable this unless the app
-    // explicitly asks for it
-    if (!get("hdr-need-1x")) {
-        mMap.replaceValueFor(String8("hdr-need-1x"), String8("false"));
-    }
-#endif
 
     mMap.replaceValueFor(String8(key), String8(value));
 }
@@ -467,16 +454,6 @@ void CameraParameters::setPictureFormat(const char *format)
 const char *CameraParameters::getPictureFormat() const
 {
     return get(KEY_PICTURE_FORMAT);
-}
-
-void CameraParameters::setCameraPictureFlip(const int format)
-{
-    set(SNAPSHOT_PICTURE_FLIP, format);
-}
-
-const int CameraParameters::getCameraPictureFlip() const
-{
-    return getInt(SNAPSHOT_PICTURE_FLIP);
 }
 
 void CameraParameters::dump() const
