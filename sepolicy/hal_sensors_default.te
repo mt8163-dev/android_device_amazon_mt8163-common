@@ -1,0 +1,6 @@
+#============= hal_sensors_default ==============
+# 2017/9/9: daniel_hk(danielhk@github.com)
+allow hal_sensors_default sysfs:file { open read };
+allow hal_sensors_default hwmsensor_device:chr_file { ioctl open read };
+# oreo
+allow hal_sensors_default input_device:dir { search };

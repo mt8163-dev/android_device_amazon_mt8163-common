@@ -1,0 +1,18 @@
+#============= hal_camera_default ==============
+# 2017/9/16: daniel_hk(danielhk@github.com)
+allow hal_camera_default CAM_CAL_DRV_device:chr_file { open read write };
+allow hal_camera_default camera_isp_device:chr_file { ioctl open read write };
+allow hal_camera_default devmap_device:chr_file { open read ioctl };
+allow hal_camera_default hal_camera_default:capability { sys_nice };
+allow hal_camera_default kd_camera_flashlight_device:chr_file { ioctl open read write };
+allow hal_camera_default kd_camera_hw_device:chr_file { ioctl open read write };
+allow hal_camera_default proc:file { ioctl open read write };
+allow hal_camera_default nvram_device:blk_file { open read write };
+allow hal_camera_default nvram_data_file:file { getattr open read };
+allow hal_camera_default sysfs:file { open read };
+allow hal_camera_default vndbinder_device:chr_file { ioctl };
+allow hal_camera_default vndservicemanager:binder { call };
+allow hal_camera_default hal_graphics_mapper_hwservice:hwservice_manager { find };
+# oreo
+allow hal_camera_default nvram_prop:file { open read getattr };
+allow hal_camera_default kmsg_device:chr_file { open read write };

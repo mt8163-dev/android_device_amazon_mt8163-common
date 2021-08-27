@@ -1,0 +1,53 @@
+# ==============================================
+# MTK Policy Rule
+# ==============================================
+
+
+# Date : WK15.29
+# Operation : Migration
+# Purpose : for device bring up, not to block early migration
+allow toolbox self:capability { dac_read_search sys_admin dac_override };
+
+# Date : WK15.43
+# Operation : Migration
+# Purpose : partition need to change mode
+#allow toolbox self:capability { chown };
+
+# Date : WK15.43
+# Operation : Migration
+# Purpose : avoid modem EE, mkdir /mnt/protect_f permission deny
+allow toolbox labeledfs:filesystem unmount;
+allow toolbox protect_f_data_file:dir { read getattr open search ioctl };
+allow toolbox protect_s_data_file:dir { read getattr open search ioctl };
+allow toolbox protect_f_data_file:file { read getattr open ioctl };
+allow toolbox protect_s_data_file:file { read getattr open ioctl };
+allow toolbox self:capability { fowner fsetid };
+allow toolbox protect1_block_device:blk_file rw_file_perms;
+allow toolbox protect2_block_device:blk_file rw_file_perms;
+allow toolbox tmpfs:dir { write rmdir setattr remove_name create add_name };
+
+# Nougat
+allow toolbox self:capability { chown };
+allow toolbox device:dir { write add_name };
+allow toolbox device:chr_file { create };
+
+# oreo
+
+allow toolbox cache_file:dir { getattr };
+allow toolbox storage_file:dir { getattr };
+#allow toolbox labeledfs:filesystem { remount };
+allow toolbox su_exec:file { getattr };
+allow toolbox rootfs:dir { read open  };
+allow toolbox cache_file:dir { search };
+
+#isu
+allow toolbox system_block_device:blk_file { getattr setattr open read ioctl };
+allow toolbox init:fifo_file { getattr };
+allow toolbox storage_file:dir { search };
+allow toolbox mnt_media_rw_file:dir { search };
+allow toolbox property_socket:sock_file { write };
+allow toolbox init:unix_stream_socket { connectto };
+allow toolbox su_exec:file { open };
+allow toolbox system_file:dir  { add_name remove_name };
+allow toolbox system_file:file { read open };
+allow toolbox system_file:lnk_file { read open };

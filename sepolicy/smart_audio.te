@@ -1,0 +1,19 @@
+type  smart_audio, domain;
+type  smart_audio_exec, exec_type, file_type;
+init_daemon_domain(smart_audio)
+
+#unix_socket_connect(smart_audio,property,init);
+set_prop(smart_audio, init);
+allow smart_audio smart_audio_prop:property_service set;
+
+#/system/bin/sh
+allow smart_audio shell_exec:file { read execute open execute_no_trans };
+
+
+allow smart_audio radio_prop:property_service set;
+
+#/system/bin/climax
+allow smart_audio system_file:file execute_no_trans;
+
+#/dev/i2c_smartpa
+allow smart_audio tfa9890_device:chr_file { open read write ioctl };

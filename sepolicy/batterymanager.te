@@ -1,0 +1,1 @@
+allow platform_app battery_service:service_manager { find };

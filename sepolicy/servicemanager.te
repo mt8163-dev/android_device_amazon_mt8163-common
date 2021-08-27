@@ -1,3 +1,7 @@
-allow servicemanager init:dir { search };
-allow servicemanager init:file { read open };
-allow servicemanager init:process { getattr };
+# ==============================================
+# MTK Policy Rule
+# ============
+allow servicemanager guiext-server:dir { search };
+allow servicemanager guiext-server:file { read open };
+allow servicemanager guiext-server:process { getattr };
+allow servicemanager guiext-server_service:service_manager { add };

@@ -1,0 +1,33 @@
+# ==============================================
+# Policy File of /system/bin/tune2fs Executable File
+
+# ==============================================
+# Type Declaration
+# ==============================================
+type tune2fs, domain;
+type tune2fs_exec, exec_type, file_type;
+
+# ==============================================
+# MTK Policy Rule
+# ==============================================
+
+# Date : WK15.30
+# Operation : Migration
+# Purpose : tune /data.
+init_daemon_domain(tune2fs)
+
+allow tune2fs userdata_block_device:blk_file rw_file_perms;
+allow tune2fs block_device:dir search;
+
+# for Nougat
+allow tune2fs proc:file r_file_perms;
+allow tune2fs proc:lnk_file read;
+allow tune2fs rootfs:lnk_file { getattr read };
+allow tune2fs null_device:chr_file { read write };
+allow tune2fs init:fd use;
+allow tune2fs properties_serial:file { getattr read open };
+allow tune2fs system_file:file { read };
+allow tune2fs device:dir { search };
+allow tune2fs properties_device:dir getattr;
+allow tune2fs self:dir { search };
+allow tune2fs self:lnk_file read;

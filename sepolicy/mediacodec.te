@@ -1,23 +1,41 @@
+# Nougat Mediacodec policies
+allow mediacodec MTK_SMI_device:chr_file { ioctl read open };
+allow mediacodec Vcodec_device:chr_file { read write open ioctl };
+allow mediacodec pq_service:service_manager { find };
+allow mediacodec proc:file { read open getattr ioctl };
+allow mediacodec sysfs:file { read write open };
+allow mediacodec proc:file { ioctl getattr open read };
+allow mediacodec rootfs:lnk_file { getattr };
+allow mediacodec camera_device:chr_file { read open ioctl };
+allow mediacodec property_socket:sock_file write;
+allow mediacodec init:unix_stream_socket connectto;
+
 # nvram
 allow mediacodec nvdata_file:dir rw_dir_perms;
 allow mediacodec nvdata_file:file create_file_perms;
 allow mediacodec ccci_device:chr_file rw_file_perms;
 
-# video codec
-allow mediacodec Vcodec_device:chr_file rw_file_perms;
 allow mediacodec devmap_device:chr_file r_file_perms;
 allow mediacodec devmap_device:chr_file { ioctl };
-allow mediacodec mtk_smi_device:chr_file { ioctl read open };
-allow mediacodec proc:file { open read ioctl };
-allow mediacodec sysfs:file { open read write };
 allow mediacodec sysfs_devinfo:file { open read write };
-allow mediacodec proc_meminfo:file { open read getattr };
 
-allow mediacodec property_socket:sock_file write;
-allow mediacodec init:unix_stream_socket connectto;
+# omx
+allow mediacodec sysfs_ddr_type:file r_file_perms;
+allow mediacodec sysfs_membw:file { open rw_file_perms };
 
 # M4U
 allow mediacodec M4U_device_device:chr_file rw_file_perms;
 
-# PQ
-allow mediacodec pq_service:service_manager find;
+#bootmode
+allow mediacodec sysfs_boot_mode:file rw_file_perms;
+
+# proc/meminfo
+allow mediacodec proc_meminfo:file { getattr open read };
+allow mediacodec kernel:system { module_request };
+allow mediacodec guiext-server:binder { call transfer };
+allow mediacodec guiext-server_service:service_manager { find };
+# RRC
+allow mediacodec mtk_rrc_device:chr_file { ioctl  read open write };
+
+allow mediacodec untrusted_app:fifo_file { read };
+allow mediacodec pq_conf_prop:file { getattr open read };

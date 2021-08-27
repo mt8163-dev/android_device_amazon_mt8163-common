@@ -1,0 +1,50 @@
+# ==============================================
+# Policy File of /system/bin/sn Executable File
+
+
+# ==============================================
+# Type Declaration
+# ==============================================
+
+type sn_exec , exec_type, file_type;
+type sn ,domain;
+
+# ==============================================
+# Android Policy Rule
+# ==============================================
+
+# ==============================================
+# NSA Policy Rule
+# ==============================================
+
+# ==============================================
+# MTK Policy Rule
+# ==============================================
+
+init_daemon_domain(sn)
+
+# Date : WK14.31
+# Operation : Migration
+# Purpose : for L early bring up
+allow sn fuse:file { read getattr open };
+#allow sn sysfs:file write;
+#allow sn tmpfs:lnk_file read;
+allow sn self:capability { dac_read_search dac_override };
+allow sn mnt_user_file:dir search;
+allow sn mnt_user_file:lnk_file read;
+#allow sn storage_file:dir search;
+allow sn storage_file:lnk_file read;
+
+# Nougat
+allow sn tmpfs:dir { read search };
+allow sn nvram_data_file:file r_file_perms;
+allow sn nvram_device:blk_file { read write open };
+allow sn sysfs:file { read write open };
+allow sn system_prop:property_service set;
+
+allow sn property_socket:sock_file write;
+allow sn init:unix_stream_socket { connectto };
+allow sn rootfs:lnk_file { getattr };
+
+# O
+allow sn proc:file { read open ioctl };

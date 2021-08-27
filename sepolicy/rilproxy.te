@@ -1,0 +1,36 @@
+# ==============================================
+# Policy File of /system/bin/rilproxy Executable File
+
+
+# ==============================================
+# Type Declaration
+# ==============================================
+
+type rilproxy_exec , exec_type, file_type;
+type rilproxy ,domain;
+
+
+# ==============================================
+# MTK Policy Rule
+# ==============================================
+
+init_daemon_domain(rilproxy)
+net_domain(rilproxy)
+
+# Access to wake locks
+wakelock_use(rilproxy)
+
+# Rilproxy Bringup Policy
+allow rilproxy init:unix_stream_socket connectto;
+allow rilproxy mtkrild:unix_stream_socket connectto;
+allow rilproxy property_socket:sock_file write;
+allow rilproxy self:capability setuid;
+allow rilproxy socket_device:sock_file write;
+allow rilproxy statusd:unix_stream_socket connectto;
+allow rilproxy radio_prop:property_service set;
+allow rilproxy rild_via_socket:sock_file write;
+allow rilproxy viarild:unix_stream_socket connectto;
+allow rilproxy cdma_prop:property_service set;
+allow rilproxy ril_cdma_report_prop:property_service set;
+allow rilproxy ril_mux_report_case_prop:property_service set;
+allow rilproxy mtk_agpsd:unix_stream_socket connectto;

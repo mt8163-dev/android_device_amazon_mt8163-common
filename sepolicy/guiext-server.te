@@ -1,0 +1,46 @@
+# ==============================================
+# Policy File of /system/bin/guiext-server Executable File
+
+# ==============================================
+# Type Declaration
+# ==============================================
+type guiext-server, domain;
+type guiext-server_exec, exec_type, file_type;
+
+# ==============================================
+# MTK Policy Rule
+# ==============================================
+init_daemon_domain(guiext-server)
+
+# to allocate GraphicBuffer
+allow guiext-server surfaceflinger:binder call;
+allow guiext-server surfaceflinger:fd use;
+allow guiext-server gpu_device:chr_file { open read write ioctl };
+
+# for dump
+allow guiext-server system_server:binder call;
+
+# for MiraVision
+allow guiext-server graphics_device:chr_file { open read write ioctl };
+
+# for CTS
+allow guiext-server platform_app:binder call;
+allow guiext-server app_data_file:file write;
+
+# for SVP secure memory allocation
+#allow guiext-server proc_secmem:file { read write open };
+
+# allow guiext-server to read/write fifo
+allow guiext-server surfaceflinger:fifo_file {read write};
+
+# Nougat
+allow guiext-server rootfs:lnk_file { getattr };
+allow guiext-server ion_device:chr_file { open read write ioctl };
+allow guiext-server servicemanager:binder { call transfer };
+
+allow guiext-server guiext-server_service:service_manager { find add };
+allow guiext-server surfaceflinger:binder { transfer };
+allow guiext-server surfaceflinger_service:service_manager { find add };
+allow guiext-server proc:file { read open ioctl };
+
+

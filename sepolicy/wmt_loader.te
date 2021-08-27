@@ -1,13 +1,39 @@
-type wmt_loader_exec, exec_type, file_type;
-type wmt_loader, domain, domain_deprecated;
+# ==============================================
+# Policy File of /system/binwmt_loader Executable File
 
-init_daemon_domain(wmt_loader)
 
-allow wmt_loader wmtdetect_device:chr_file create_file_perms;
+# ==============================================
+# Type Declaration
+# ==============================================
+
+type wmt_loader_exec , exec_type, file_type;
+type wmt_loader ,domain;
+
+# ==============================================
+# Android Policy Rule
+# ==============================================
+
+# ==============================================
+# NSA Policy Rule
+# ==============================================
+
+# ==============================================
+# MTK Policy Rule
+# ==============================================
+
+allow wmt_loader init:unix_stream_socket connectto;
+allow wmt_loader proc:file setattr;
+allow wmt_loader property_socket:sock_file write;
 allow wmt_loader self:capability { chown dac_override };
-allow wmt_loader proc_wmt:file setattr;
-allow wmt_loader wmt_prop:property_service set;
+allow wmt_loader wmtdetect_device:chr_file { read write ioctl open };
+allow wmt_loader stpwmt_device:chr_file { read write ioctl open };
+allow wmt_loader devpts:chr_file { read write getattr ioctl };
+allow wmt_loader device:dir { write remove_name };
+allow wmt_loader device:file unlink;
 
-unix_socket_connect(wmt_loader, property, init)
-
-allow wmt_loader stpwmt_device:chr_file { read write open ioctl };
+# Nougat
+allow wmt_loader wmt_prop:file r_file_perms;
+allow wmt_loader device:chr_file { unlink };
+allow wmt_loader rootfs:lnk_file { getattr };
+init_daemon_domain(wmt_loader)
+set_prop(wmt_loader, wmt_prop)

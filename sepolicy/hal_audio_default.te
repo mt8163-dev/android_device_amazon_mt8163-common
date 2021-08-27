@@ -1,0 +1,29 @@
+#============= hal_audio_default ==============
+# 2017/9/16: daniel_hk(danielhk@github.com)
+allow hal_audio_default ccci_device:chr_file { ioctl open read write };
+allow hal_audio_default nvram_device:blk_file { open read write };
+allow hal_audio_default nvram_data_file:file { getattr open read };
+allow hal_audio_default sysfs:file { open read };
+allow hal_audio_default sysfs_boot_mode:file { open read };
+allow hal_audio_default kernel:system { module_request };
+allow hal_audio_default nvram_prop:file { read open getattr };
+allow hal_audio_default platformblk_device:dir { search };
+allow hal_audio_default audiohal_prop:file { read open getattr };
+allow hal_audio_default sysfs_ccci:dir { search };
+allow hal_audio_default sysfs_ccci:file { read open };
+allow hal_audio_default property_socket:sock_file { write };
+allow hal_audio_default init:unix_stream_socket  { connectto };
+# fix fmradio
+allow hal_audio_default fm_device:chr_file { open read write ioctl };
+allow hal_audio_default kmsg_device:chr_file { open read write };
+
+allow hal_audio_default wmt_prop:file { getattr open read };
+
+set_prop(hal_audio_default, af_rf_mode_prop );
+set_prop(hal_audio_default, af_modem_status_prop );
+set_prop(hal_audio_default, af_ril_speech_codec_info_prop );
+set_prop(hal_audio_default, af_ril_hd_voice_status_prop );
+
+#allow hal_audio_default hal_audio_hwservice:hwservice_manager { find add };
+#allow hal_audio_default hidl_base_hwservice:hwservice_manager { add };
+#allow hal_audio_default wmt_prop:file { getattr open read };

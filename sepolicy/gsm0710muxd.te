@@ -1,5 +1,5 @@
 type gsm0710muxd_exec, exec_type, file_type;
-type gsm0710muxd, domain, domain_deprecated;
+type gsm0710muxd, domain, device_domain_deprecated;
 
 init_daemon_domain(gsm0710muxd)
 
@@ -11,8 +11,19 @@ allow gsm0710muxd self:capability { setuid fowner chown };
 allow gsm0710muxd sysfs_ccci:dir search;
 allow gsm0710muxd sysfs_ccci:file r_file_perms;
 
-allow gsm0710muxd ctl_rildaemon_prop:property_service set;
-allow gsm0710muxd radio_prop:property_service set;
-allow gsm0710muxd ril_mux_report_case_prop:property_service set;
+set_prop(gsm0710muxd, ctl_rildaemon_prop)
+set_prop(gsm0710muxd, radio_prop)
+set_prop(gsm0710muxd, ril_mux_report_case_prop)
 
-unix_socket_connect(gsm0710muxd, property, init)
+
+allow gsm0710muxd device:dir { add_name remove_name };
+allow gsm0710muxd device:lnk_file { create unlink };
+allow gsm0710muxd kernel:system { module_request };
+allow gsm0710muxd gsm0710muxd_prop:file { read open getattr };
+allow gsm0710muxd gsm0710muxd:capability { dac_override fsetid };
+allow gsm0710muxd device:dir { write };
+#oreo 
+allow gsm0710muxd gsm0710muxd_prop:property_service { set };
+allow gsm0710muxd ctl_ril-daemon-mtk_prop:property_service { set };
+allow gsm0710muxd ril_muxreport_run_prop:property_service set;
+allow gsm0710muxd ril_ismdreseted_prop:property_service set;

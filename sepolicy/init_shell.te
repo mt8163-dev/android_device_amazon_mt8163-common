@@ -1,0 +1,6 @@
+# ==============================================
+# MTK Policy Rule
+# ============
+
+# allow sysinit sysinit:capability { fsetid };
+# allow sysinit nvram_data_file:file { open write read getattr setattr };

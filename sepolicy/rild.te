@@ -1,0 +1,30 @@
+# ==============================================
+# MTK Policy Rule
+# ============
+
+allow rild ccci_device:chr_file { read write ioctl open };
+allow rild devpts:chr_file { read write ioctl open };
+
+allow rild ril_active_md_prop:property_service set;
+allow rild ril_mux_report_case_prop:property_service set;
+allow rild ctl_muxreport-daemon_prop:property_service set;
+
+allow rild gsm0710muxd_prop:file { read open getattr };
+allow rild ril_mux_report_case_prop:file { read open getattr };
+allow rild nvram_prop:file { read open getattr };
+allow rild sysfs_vcorefs_pwrctrl:file { read open write };
+allow rild volte_prop:file { read open getattr };
+allow rild proc_lk_env:file { read open ioctl };
+allow rild platformblk_device:dir { search };
+allow rild para_block_device:blk_file { open read write ioctl };
+allow rild block_device:dir { search };
+# oreo for ims and volte
+allow rild mtkmal:unix_stream_socket connectto;
+allow rild mal_mfi_socket:sock_file { open read write };
+allow rild mal_mfi_socket2:sock_file { open read write };
+set_prop(rild,ro_ril_ecclist_prop);
+allow rild rild_ims_socket:sock_file { open read write };
+allow rild ril_muxreport_run_prop:property_service set;
+allow rild ril_ismdreseted_prop:property_service set;
+allow rild ril_muxreport_run_prop:file { read open getattr };
+allow rild ril_ismdreseted_prop:file { read open getattr };

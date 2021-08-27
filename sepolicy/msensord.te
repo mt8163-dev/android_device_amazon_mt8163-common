@@ -1,12 +1,55 @@
-type msensord_exec, exec_type, file_type;
-type msensord, domain, domain_deprecated;
+# ==============================================
+# Policy File of /system/bin/msensord Executable File
 
+
+# ==============================================
+# Type Declaration
+# ==============================================
+
+type msensord_exec , exec_type, file_type;
+type msensord ,domain, device_domain_deprecated;
+
+# ==============================================
+# Android Policy Rule
+# ==============================================
+
+# ==============================================
+# NSA Policy Rule
+# ==============================================
+
+# ==============================================
+# MTK Policy Rule
+# ==============================================
+
+#permissive msensord;
 init_daemon_domain(msensord)
+#unconfined_domain(msensord)
 
-allow msensord msensord_daemon_sysfs:file r_file_perms;
+# Data : WK14.43
+# Operation : Migration
+# Purpose : M-sensor daemon for access driver node
+allow msensord msensord_daemon:file { read open };
+allow msensord msensord_daemon2:file { read open };
 
-allow msensord ctl_qmc6983d_prop:property_service set;
-allow msensord ctl_mxg2320d_prop:property_service set;
-allow msensord ctl_memsicd3416x_prop:property_service set;
 
-unix_socket_connect(msensord, property, init)
+# Data : WK14.43
+# Operation : Migration
+# Purpose : M-sensor daemon for property operation
+allow msensord ctl_msensord_prop:property_service set;
+#set_prop(msensord, init)
+
+allow msensord ctl_akmd8963_prop:property_service set;
+allow msensord ctl_akmd09912_prop:property_service set;
+allow msensord ctl_bmi160d_prop:property_service set;
+allow msensord ctl_s62xd_prop:property_service set;
+allow msensord ctl_geomagneticd_prop:property_service set;
+allow msensord ctl_orientationd_prop:property_service set;
+allow msensord ctl_istd8303_prop:property_service set;
+allow msensord ctl_st480_prop:property_service set;
+
+# Nougat
+allow msensord rootfs:lnk_file { getattr };
+
+set_prop(msensord, ctl_memsicd3416x_prop)
+set_prop(msensord, ctl_akmd09911_prop)
+set_prop(msensord, ctl_mxg2320d_prop)

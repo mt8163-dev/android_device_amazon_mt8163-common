@@ -1,0 +1,12 @@
+# ==============================================
+# MTK Policy Rule
+# ============
+
+# Date : WK15.15
+# Operation : [Rose][Free Test][FTester]
+# Purpose : Chrome belong to GMS package. 
+#           it is blocked by selinux, need isolated_app to open permission.
+# allow isolated_app untrusted_app_tmpfs:file write;
+
+allow isolated_app app_data_file:file { setattr };
+allow isolated_app app_data_file:dir { getattr };

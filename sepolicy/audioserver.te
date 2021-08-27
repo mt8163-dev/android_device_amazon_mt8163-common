@@ -1,18 +1,38 @@
-# nvram
-allow audioserver nvdata_file:dir rw_dir_perms;
-allow audioserver nvdata_file:file create_file_perms;
+# audioserver - audio services
+allow audioserver audiohal_prop:file r_file_perms;
+allow audioserver DW9714AF_device:chr_file { read write open ioctl };
+allow audioserver DW9761BAF_device:chr_file { read write open ioctl };
+allow audioserver DW9814AF_device:chr_file { read write open ioctl };
+allow audioserver DW9714A_device:chr_file { read write open ioctl };
+allow audioserver nvram_data_file:file { read write open getattr setattr create };
+allow audioserver nvram_data_file:dir { write add_name };
+allow audioserver ccci_device:chr_file { read write open ioctl };
+allow audioserver sysfs:file { read open };
+allow audioserver rootfs:lnk_file { getattr };
+allow audioserver property_socket:sock_file { write };
+allow audioserver init:unix_stream_socket { connectto };
+allow audioserver nvdata_file:dir search;
+allow audioserver nvdata_file:file getattr;
+allow audioserver platformblk_device:dir search;
 allow audioserver nvdata_file:lnk_file r_file_perms;
-allow audioserver ccci_device:chr_file rw_file_perms;
 
-# fm radio
-allow audioserver fm_device:chr_file rw_file_perms;
+# boot_mode
+allow audioserver sysfs_boot_mode:file r_file_perms;
+allow audioserver kernel:system { module_request };
 
-# Audio
-allow audioserver sysfs:file { open read write };
-allow audioserver sysfs_devinfo:file { open read write };
-allow audioserver sysfs_ccci:file r_file_perms;
-allow audioserver sysfs_ccci:dir search;
-allow audioserver audiohal_prop:property_service set;
+#oreo
+allow audioserver sysfs_ccci:dir { search };
+allow audioserver sysfs_ccci:file { read open };
+allow audioserver nvram_prop:file { read open getattr };
+allow audioserver nvram_data_file:dir { search };
+allow audioserver kmsg_device:chr_file {  open read write };
 
-allow audioserver sysfs_boot_mode:file { read open };
-#allow audioserver device:chr_file { read write open };
+#allow audioserver af_rf_mode_prop:file { getattr open read write };
+#allow audioserver af_modem_status_prop:file { getattr open read write };
+#allow audioserver af_ril_speech_codec_info_prop:file { getattr open read write };
+#allow audioserver af_ril_hd_voice_status_prop:file { getattr open read write };
+
+set_prop(audioserver, af_rf_mode_prop );
+set_prop(audioserver, af_modem_status_prop );
+set_prop(audioserver, af_ril_speech_codec_info_prop );
+set_prop(audioserver, af_ril_hd_voice_status_prop );

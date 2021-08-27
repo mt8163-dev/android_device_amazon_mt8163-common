@@ -1,0 +1,27 @@
+# ==============================================
+# Policy File of /system/bin/rda Executable File
+
+# ==============================================
+# Type Declaration
+# ==============================================
+type rda, domain;
+type rda_exec, exec_type, file_type;
+typeattribute rda mlstrustedsubject;
+
+# ==============================================
+# MTK Policy Rule
+# ==============================================
+
+init_daemon_domain(rda)
+
+# Date : WK15.42
+# Operation : RDA Migration
+# Purpose : allow RDA read proc data for r symptom detection
+allow rda domain:dir { getattr search };
+allow rda domain:file { read open };
+allow rda shell_exec:file rx_file_perms;
+allow rda system_file:file rx_file_perms;
+allow rda rootfs:file rx_file_perms;
+userdebug_or_eng(`
+allow rda su_exec:file r_file_perms;
+')

@@ -1,1 +1,13 @@
-get_prop(domain, mtk_property_type)
+# ==============================================
+# MTK Policy Rule
+# ==============================================
+
+# allow domain anr_data_file:file append;
+
+# extmem policy for lca debug15 over external memory
+allow domain exm0_device:chr_file { read write ioctl open };
+
+# Date : WK15.29
+# Operation : Migration
+# Purpose : for device bring up, not to block early migration
+

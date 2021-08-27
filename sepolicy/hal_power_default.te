@@ -1,0 +1,33 @@
+#
+# please remove hal_power_default.te in sepolicy vendor directory otherwise it will cause double declaration errors
+#
+#type hal_power_default, domain , mlstrustedsubject , coredomain , hal_dumpstate_server;
+#hal_server_domain(hal_power_default, hal_power)
+
+#type hal_power_default_exec, exec_type, vendor_file_type, file_type;
+#init_daemon_domain(hal_power_default)
+
+
+allow hal_power_default thermal_manager_exec:file {  execute getattr read open };
+allow hal_power_default power_hal_sysfs:file { open read write getattr };
+allow hal_power_default hal_power_default:capability { dac_override };
+allow hal_power_default perf_control_sysfs:file { open read write getattr };
+allow hal_power_default sysfs:file { read open write getattr };
+allow hal_power_default sysfs_leds:dir { search };
+allow hal_power_default proc:file { getattr read open write };
+allow hal_power_default thermal_manager:process transition;
+allow hal_power_default shell_exec:file { getattr execute read open };
+allow hal_power_default kernel:system { module_request };
+allow hal_power_default thermal_manager_data_file:file { read write };
+allow hal_power_default proc_mtkcooler:dir { search };
+allow hal_power_default proc_mtkcooler:file { open read write };
+allow hal_power_default proc_thermal:dir { search };
+allow hal_power_default proc_thermal:file { open read write };
+allow hal_power_default proc_mtktz:dir  { search };
+allow hal_power_default proc_mtktz:file  { open read write };
+allow hal_power_default thermal_manager_data_file:file { open lock setattr getattr };
+allow hal_power_default thermal_manager_data_file:dir { search };
+allow hal_power_default hal_power_default:capability { chown fowner };
+allow hal_power_default sysfs_devices_system_cpu:file { read open write };
+allow hal_power_default thermal_manager_data_file:dir { open read write };
+allow hal_power_default debugfs:file { getattr };

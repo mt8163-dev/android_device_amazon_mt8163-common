@@ -1,9 +1,91 @@
-allow surfaceflinger pq_service:service_manager find;
+# ==============================================
+# MTK Policy Rule
+# ============
 
+# for debug purpose
+allow surfaceflinger self:capability { net_admin sys_nice };
+allow surfaceflinger self:netlink_socket { read bind create };
+allow surfaceflinger debug_prop:property_service set;
+file_type_auto_trans(surfaceflinger, system_data_file, sf_bqdump_data_file);
+allow surfaceflinger anr_data_file:dir { write search create add_name };
+allow surfaceflinger anr_data_file:file { create write};
+allow surfaceflinger aee_exp_data_file:file write;
+allow surfaceflinger custom_file:dir search;
+allow surfaceflinger aee_dumpsys_data_file:file write;
+allow surfaceflinger RT_Monitor_device:chr_file { read ioctl open };
+
+# watch dog use shell to move debug file
+allow surfaceflinger shell_exec:file { read execute open execute_no_trans };
+
+# for using toolbox
+allow surfaceflinger system_file:file x_file_perms;
+
+# for sf_dump
+userdebug_or_eng(`
+allow surfaceflinger sf_bqdump_data_file:{dir file} {relabelto open create read write getattr };
+allow surfaceflinger sf_bqdump_data_file:dir {search add_name};
+')
+
+# for driver access
+allow surfaceflinger sw_sync_device:chr_file { read write open ioctl };
+allow surfaceflinger MTK_SMI_device:chr_file { read write open ioctl };
+
+# for bootanimation
+allow surfaceflinger bootanim:dir search;
+allow surfaceflinger bootanim:file { read getattr open };
+allow surfaceflinger self:capability dac_override;
+
+# for ipo
+allow surfaceflinger ipod:dir search;
+binder_call(surfaceflinger, ipod)
+
+# for MTK Emulator HW GPU
+allow surfaceflinger qemu_pipe_device:chr_file rw_file_perms;
+
+# for SVP secure memory allocation
+#allow surfaceflinger proc_secmem:file { read write open ioctl };
+
+# for watchdog
+allow surfaceflinger anr_data_file:dir { relabelfrom read remove_name getattr };
+allow surfaceflinger anr_data_file:file { rename getattr unlink open };
+allow surfaceflinger sf_rtt_file:dir { create search write add_name remove_name};
+allow surfaceflinger sf_rtt_file:file { open read write create rename append getattr unlink};
+allow surfaceflinger sf_rtt_file:dir {relabelto getattr};
+
+# for BufferQueue check process name of em_svr
+allow surfaceflinger em_svr:dir search;
+allow surfaceflinger em_svr:file { read getattr open };
+
+# take down the boot time for bootprof
+
+# notify perf service of SF information for performance
+allow surfaceflinger mtk_perf_service:service_manager find;
+
+# Date : WK15.38
+# Operation : Migration
+# Purpose : allow surfaceflinger to find pq_service
+allow surfaceflinger pq_service:service_manager { find };
+allow surfaceflinger proc:file { write ioctl };
 allow surfaceflinger guiext-server_service:service_manager { find add };
 
-allow surfaceflinger debug_prop:property_service set;
+# boot_mode
+allow surfaceflinger sysfs_boot_mode:file r_file_perms;
 
-allow surfaceflinger mtk_smi_device:chr_file { read write open ioctl };
+#dev_info
+allow surfaceflinger sysfs_devinfo:file r_file_perms;
+allow surfaceflinger proc:file { read open };
+allow surfaceflinger guiext-server:binder { call };
+allow surfaceflinger system_server:fifo_file { read write };
+allow surfaceflinger guiext-server:binder { transfer };
+allow surfaceflinger mediacodec:fifo_file { read };
+allow surfaceflinger pq_conf_prop:file { read open getattr };
 
-allow surfaceflinger gpu_device:chr_file rw_file_perms;
+allow surfaceflinger su:fifo_file { read write };
+allow surfaceflinger platform_app:fifo_file  { read };
+allow surfaceflinger mediacodec:fifo_file { write };
+# screencap
+allow surfaceflinger shell:fifo_file { read };
+#allow surfaceflinger hal_graphics_allocator_hwservice:hwservice_manager { add };
+
+allow surfaceflinger proc:file { getattr read open };
+allow surfaceflinger nfc:fifo_file { read };

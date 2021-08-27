@@ -1,0 +1,21 @@
+# ==============================================
+# Policy File of /system/bin/pppd_btdun Executable File
+
+# ==============================================
+# Type Declaration
+# ==============================================
+type pppd_btdun, domain;
+type pppd_btdun_exec, exec_type, file_type;
+
+# ==============================================
+# MTK Policy Rule
+# ==============================================
+# Date : WK14.43
+# Operation : Migration
+# Purpose : Start pppd_btdun
+init_daemon_domain(pppd_btdun)
+
+allow pppd_btdun self:udp_socket { read write ioctl create };
+allow bluetooth pppd_btdun:unix_stream_socket { read write ioctl connectto create };
+allow pppd_btdun self:capability { net_admin net_raw };
+allow pppd_btdun tun_device:chr_file { read write ioctl open create };

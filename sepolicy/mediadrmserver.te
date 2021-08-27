@@ -1,0 +1,18 @@
+# ==============================================
+# MTK Policy Rule
+# ==============================================
+
+# Date : WK16.33
+# Purpose: Allow to access ged for gralloc_extra functions
+# allow mediadrmserver proc_ged:file {open read write ioctl getattr};
+# Date : WK16.25
+# Operation : WVL1 IT
+# Purpose : SVP module operates secmem driver
+allow mediadrmserver init:unix_stream_socket connectto;
+allow mediadrmserver proc:file { read ioctl open };
+allow mediadrmserver property_socket:sock_file write;
+#allow mediadrmserver proc_secmem:file { read write ioctl open};
+allow mediadrmserver persist_data_file:file { read getattr open };
+allow mediadrmserver persist_data_file:dir search;
+
+

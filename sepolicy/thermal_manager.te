@@ -1,5 +1,5 @@
 type thermal_manager_exec, exec_type, file_type;
-type thermal_manager, domain, domain_deprecated;
+type thermal_manager, domain, device_domain_deprecated;
 
 init_daemon_domain(thermal_manager)
 
@@ -12,3 +12,5 @@ allow thermal_manager proc_mtktz:dir search;
 allow thermal_manager proc_mtktz:file rw_file_perms;
 allow thermal_manager thermal_manager_data_file:dir rw_dir_perms;
 allow thermal_manager thermal_manager_data_file:file create_file_perms;
+# oreo
+allow thermal_manager kernel:system { module_request };

@@ -1,1 +1,20 @@
-allow ueventd sysfs_gps_file:file w_file_perms;
+# ==============================================
+# MTK Policy Rule
+# ============
+
+# for early-migration, set as permissive
+# permissive ueventd;
+
+# add for sysfs:leds; pls check it on L official policy
+allow ueventd sysfs:file setattr;
+
+#add for gmo+512M project
+allow ueventd platform_app:fd use;
+
+# Nougat
+allow ueventd device:chr_file { relabelfrom };
+allow ueventd fm_device:chr_file { relabelto };
+allow ueventd null_device:chr_file { read write };
+allow ueventd init:fd use;
+allow ueventd properties_serial:file { getattr read open };
+allow ueventd selinuxfs:filesystem getattr;

@@ -1,0 +1,15 @@
+# ==============================================
+# STONEX Policy Rule
+# ==============================================
+
+
+# ==============================================
+# Date      : 2018/01/28  
+# Operation : Refine
+# Purpose   : Set misc permissions.
+
+#allow nfc nfc_socket:dir { write remove_name add_name search };
+#allow nfc nfc_socket:sock_file { write create setattr unlink };
+
+allow sudaemon radio_service:service_manager { find };
+#allow sudaemon healthd_service:service_manager { add };

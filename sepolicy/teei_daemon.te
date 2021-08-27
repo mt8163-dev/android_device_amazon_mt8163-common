@@ -1,0 +1,28 @@
+type teei_daemon, domain;
+type teei_daemon_exec, exec_type, file_type;
+
+allow teei_daemon self:capability sys_module;
+allow teei_daemon teei_config_device:chr_file rw_file_perms;
+allow teei_daemon teei_vfs_device:chr_file rw_file_perms;
+allow teei_daemon teei_rpmb_device:chr_file rw_file_perms;
+allow teei_daemon teei_data_file:dir create_dir_perms;
+allow teei_daemon teei_data_file:file rw_file_perms;
+allow teei_daemon teei_data_file:file create_file_perms;
+allow teei_daemon self:capability dac_override;
+allow teei_daemon device:dir rw_dir_perms;
+allow teei_daemon cache_file:file rw_file_perms;
+
+#enable access android property
+allow teei_daemon property_socket:sock_file {read write};
+allow teei_daemon init:unix_stream_socket {connectto};
+allow teei_daemon teei_vfs_device:chr_file rw_file_perms;
+allow teei_daemon teei_rpmb_device:chr_file rw_file_perms;
+
+#set up domain
+init_daemon_domain(teei_daemon)
+
+#for debug only
+allow teei_daemon kmsg_device:chr_file {open write};
+
+#define for mlsconstrain
+typeattribute teei_client_device mlstrustedobject;

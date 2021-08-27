@@ -1,4 +1,10 @@
-type ged_srv, domain, domain_deprecated;
+# ==============================================
+# Policy File of /system/bin/ged_srv Executable File
+
+# ==============================================
+# Type Declaration
+# ==============================================
+type ged_srv, domain, device_domain_deprecated;
 type ged_srv_exec, exec_type, file_type;
 
 init_daemon_domain(ged_srv)
@@ -12,3 +18,5 @@ allow ged_srv surfaceflinger:binder call;
 allow ged_srv surfaceflinger_service:service_manager find;
 allow ged_srv self:netlink_kobject_uevent_socket { bind create setopt read};
 allow ged_srv sysfs_boot_mode:file r_file_perms;
+# O
+allow ged_srv debugfs:file { getattr };

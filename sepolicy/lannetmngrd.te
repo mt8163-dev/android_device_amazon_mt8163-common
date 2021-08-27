@@ -1,0 +1,114 @@
+# ==============================================
+# MTK Policy Rule
+# ==============================================
+
+#permissive lannetmngrd;
+
+type lannetmngrd, domain;
+type lannetmngrd_exec,exec_type,file_type;
+
+
+
+init_daemon_domain(lannetmngrd)
+
+
+# Date : WK14.34
+# Operation : Migration
+# Purpose :  wifi
+allow lannetmngrd wmtWifi_device:chr_file { write open };
+
+allow lannetmngrd kernel:system module_request;
+allow lannetmngrd self:capability sys_module;
+allow lannetmngrd self:capability fsetid;
+
+
+# Date : WK14.34
+# Operation : Migration
+# Purpose :  property_service for wifi
+allow lannetmngrd mtk_wifi_prop:property_service set;
+
+
+# Date : WK14.34
+# Operation : Migration
+# Purpose :   APP
+allow lannetmngrd platform_app:fd use;
+
+
+# Date : WK14.37
+# Operation : Migration
+# Purpose :  PPPOE Test
+allow lannetmngrd ppp:process sigkill;
+
+# Date : WK14.39
+# Operation : Migration
+# Purpose :  MDLogger USB logging
+allow lannetmngrd mdlogger:fd use;
+allow lannetmngrd mdlogger:tcp_socket { read write };
+allow lannetmngrd mdlogger:tcp_socket { getopt setopt };
+
+# Date : WK14.41
+# Operation : Migration
+# Purpose :  network logging
+allow lannetmngrd netdiag:fd use;
+allow lannetmngrd netdiag:udp_socket { read write getopt setopt};
+
+
+# Date : WK14.41
+# Operation : Migration
+# Purpose :  ipv6 Tethering Test
+#============= netd ==============
+allow lannetmngrd dhcp6s_exec:file execute;
+allow lannetmngrd dhcp_data_file:dir { read search write add_name remove_name };
+allow lannetmngrd dhcp_data_file:file { read write create open getattr unlink};
+
+allow lannetmngrd radvd_data_file:dir { read write search add_name remove_name};
+allow lannetmngrd radvd_data_file:file { read write create open unlink};
+
+allow lannetmngrd self:capability { setuid net_bind_service setgid };
+allow lannetmngrd wide_dhcpv6_data_file:dir { read search write add_name remove_name};
+allow lannetmngrd wide_dhcpv6_data_file:file { read write create open getattr unlink};
+
+# Date : WK14.42
+# Operation : Migration
+# Purpose : for VoLTE L early bring up and first call
+allow lannetmngrd volte_stack:fd use;
+allow lannetmngrd volte_stack:tcp_socket { read write setopt getopt };
+allow lannetmngrd volte_stack:udp_socket { read write setopt getopt };
+
+# Date : WK14.42
+# Operation : Migration
+# Purpose :  ALPS01774455[Need Patch] [Sanity Fail][95E2 L][WFD][EE]EE occur when connect dongle1
+allow lannetmngrd device:file { open write };
+
+
+# Date : WK14.44
+# Operation : Migration
+# Purpose : ALPS01789552
+#============= netd ==============
+allow lannetmngrd self:capability { setuid setgid };
+
+# Date : W14.52
+# Operation : Migration
+# Purpose :  add ePDG support
+allow lannetmngrd ipsec:fd use;
+allow lannetmngrd ipsec:tcp_socket { read write setopt getopt };
+
+#============= netd ==============
+allow lannetmngrd untrusted_app:fd use;
+
+#============= netd ==============
+# Date : W14.53
+# Operation : Migration
+# Purpose :  For volte_imcb ut
+allow lannetmngrd volte_imcb:fd use;
+allow lannetmngrd volte_imcb:tcp_socket { read write };
+allow lannetmngrd volte_imcb:tcp_socket getopt;
+allow lannetmngrd volte_imcb:tcp_socket setopt;
+
+
+# Date : W15.02
+# Operation :  SQC
+# Purpose :  CTS for wifi
+allow lannetmngrd untrusted_app:unix_stream_socket { read write getopt setopt};
+
+allow lannetmngrd isolated_app:fd use;

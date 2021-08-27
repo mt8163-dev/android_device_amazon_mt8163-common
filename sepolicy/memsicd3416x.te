@@ -1,5 +1,5 @@
 type memsicd3416x_exec, exec_type, file_type;
-type memsicd3416x, domain, domain_deprecated;
+type memsicd3416x, domain, device_domain_deprecated;
 
 init_daemon_domain(memsicd3416x)
 

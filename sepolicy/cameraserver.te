@@ -1,21 +1,77 @@
+# cameraserver - camera daemon
+allow cameraserver CAM_CAL_DRV_device:chr_file { read write open ioctl };
+allow cameraserver CAM_CAL_DRV_SHARP_device:chr_file { read write open ioctl };
+allow cameraserver CAM_CAL_DRV_OFILM_device:chr_file { read write open ioctl };
+allow cameraserver CAM_CAL_DRV_3L8_device:chr_file { read write open ioctl };
+allow cameraserver CAM_CAL_DRV_3L9_device:chr_file { read write open ioctl };
+allow cameraserver camera_sysram_device:chr_file { read write open ioctl };
+allow cameraserver camera_isp_device:chr_file { read write open ioctl };
+allow cameraserver camera_fdvt_device:chr_file { read write open ioctl };
+#allow cameraserver default_prop:property_service { set };	** need to change system/sepolicy, later **
+#allow cameraserver device:chr_file { read write open ioctl };
+allow cameraserver devmap_device:chr_file { read write open ioctl };
+allow cameraserver init:unix_stream_socket { connectto };
+allow cameraserver kd_camera_hw_device:chr_file { read write open ioctl };
+allow cameraserver kd_camera_flashlight_device:chr_file { read write open ioctl };
+allow cameraserver mediatek_prop:file { read open getattr };
+allow cameraserver mtk_sched_device:chr_file { read write open ioctl };
+allow cameraserver MTK_SMI_device:chr_file rw_file_perms;
+allow cameraserver nvram_data_file:file { read open getattr };
+allow cameraserver proc:file { read open ioctl };
+allow cameraserver proc_meminfo:file { read open getattr };
+allow cameraserver property_socket:sock_file { write };
+allow cameraserver pq_service:service_manager { find };
+allow cameraserver rootfs:lnk_file { getattr };
+allow cameraserver sensorservice_service:service_manager { find };
+allow cameraserver sysfs:file { read write open getattr };
+allow cameraserver system_server:unix_stream_socket { read write connectto };
+allow cameraserver sysfs_membw:file rw_file_perms;
+
 # nvram
 allow cameraserver nvdata_file:dir rw_dir_perms;
 allow cameraserver nvdata_file:file create_file_perms;
 allow cameraserver ccci_device:chr_file rw_file_perms;
 
-# camera
-allow cameraserver sensorservice_service:service_manager find;
-allow cameraserver system_server:unix_stream_socket { read write };
 allow cameraserver camera_device:chr_file rw_file_perms;
-allow cameraserver mtk_smi_device:chr_file rw_file_perms;
-allow cameraserver proc:file { read ioctl open };
-allow cameraserver devmap_device:chr_file r_file_perms;
-allow cameraserver devmap_device:chr_file { ioctl };
 allow cameraserver sysfs_devinfo:file rw_file_perms;
-allow cameraserver sysfs_membw:file rw_file_perms;
-allow cameraserver proc_meminfo:file { open read getattr };
-allow cameraserver sysfs_boot_mode:file r_file_perms;
-allow cameraserver sysfs_ddr_type:file r_file_perms;
 
-# PQ
-allow cameraserver pq_service:service_manager find;
+#bootmode
+#allow cameraserver sysfs_bootmode:file r_file_perms;
+allow cameraserver sysfs_ddr_type:file r_file_perms;
+allow cameraserver nvram_prop:file { read open getattr };
+allow cameraserver kernel:system { module_request };
+allow cameraserver platformblk_device:dir { search };
+allow cameraserver sysfs_boot_mode:file { read write};
+allow cameraserver nvram_device:blk_file { open };
+allow cameraserver sysfs_boot_mode:file { open };
+allow cameraserver sw_sync_device:chr_file { getattr read write open ioctl };
+allow cameraserver nvram_device:blk_file { read write };
+allow cameraserver surfaceflinger:fifo_file { read write };
+allow cameraserver DW9714AF_device:chr_file { open read write ioctl };
+allow cameraserver pq_conf_prop:file { open getattr read };
+allow cameraserver kmsg_device:chr_file { open read write };
+
+allow cameraserver hal_configstore_ISurfaceFlingerConfigs:hwservice_manager { find };
+allow cameraserver storage_file:dir { search };
+allow cameraserver storage_file:lnk_file { read };
+allow cameraserver mnt_user_file:dir { search };
+allow cameraserver block_device:dir { search };
+
+allow cameraserver proc:file { read open getattr };
+allow cameraserver hal_configstore_default:binder { call };
+allow cameraserver mtk_rrc_device:chr_file { read open ioctl };
+
+allow cameraserver nvram_data_file:dir { add_name write search };
+allow cameraserver nvram_data_file:file { create write setattr };
+
+allow hal_camera_default vndbinder_device:chr_file { open read write };
+allow hal_camera_default kernel:system { module_request };
+
+allow crash_dump cameraserver:fifo_file { getattr };
+
+# oreo
+allow cameraserver untrusted_app:fifo_file { read write };
+allow cameraserver untrusted_app_25:fifo_file { read write };
+
+allow cameraserver platform_app:fifo_file { getattr read open };
+allow cameraserver Vcodec_device:chr_file { open getattr read write ioctl };

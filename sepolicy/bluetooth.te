@@ -1,11 +1,41 @@
-# Allow access to the hardware node
+
+# Device access
 allow bluetooth stpbt_device:chr_file rw_file_perms;
 
-# Allow nvram access
+# RIL SAP socket access
+allow bluetooth mtkrild:unix_stream_socket connectto;
+
+# NVRAM access
+#============= bluetooth ==============
+allow bluetooth nvram_data_file:dir search;
+allow bluetooth nvram_data_file:file rw_file_perms;
+allow bluetooth nvram_data_file:lnk_file read;
 allow bluetooth nvdata_file:dir search;
-allow bluetooth nvdata_file:file rw_file_perms;
+allow bluetooth nvdata_file:file { read write getattr open };
 allow bluetooth nvdata_file:lnk_file r_file_perms;
 
 allow bluetooth block_device:dir search;
+#allow bluetooth proc_secmem:file { read open };
 
-allow bluetooth sysfs_boot_mode:file { read open };
+# Date : WK15.36
+# Operation : Migration
+# Purpose: Allow bluetooth to access surfaceflinger
+allow bluetooth surfaceflinger:fifo_file { read write };
+allow bluetooth bt_prop:file { getattr open read };
+
+# boot_mode
+allow bluetooth sysfs_boot_mode:file r_file_perms;
+
+# 2017/7/22: daniel_hk(danielhk@github.com)
+# O
+allow bluetooth wmt_prop:file { getattr open };
+
+allow bluetooth keystore_service:service_manager find;
+allow bluetooth nvram_prop:file { open getattr read };
+allow bluetooth nvram_device:blk_file { open };
+allow bluetooth wmt_prop:file { read open getattr };
+allow bluetooth persist_bt_prop:file { read open getattr };
+allow bluetooth kmsg_device:chr_file { open write };
+#allow bluetooth init:binder { call transfer };
+
+allow bluetooth proc:file { getattr read open ioctl };

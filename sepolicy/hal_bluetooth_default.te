@@ -1,0 +1,14 @@
+#============= hal_bluetooth_default ==============
+# 2017/9/16: daniel_hk(danielhk@github.com)
+allow hal_bluetooth_default nvram_device:blk_file { open read write };
+allow hal_bluetooth_default nvram_data_file:file { getattr open read };
+allow hal_bluetooth_default stpbt_device:chr_file { open read write };
+
+allow hal_bluetooth_default wmt_prop:file { getattr open read };
+allow hal_bluetooth_default persist_bt_prop:file { getattr open read };
+allow hal_bluetooth_default nvram_prop:file { getattr open read };
+allow hal_bluetooth_default kmsg_device:chr_file { open read write };
+
+# oreo Bluetooth
+#allow hal_bluetooth_default hal_bluetooth_hwservice:hwservice_manager { find add };
+#allow hal_bluetooth_default hidl_base_hwservice:hwservice_manager { add };

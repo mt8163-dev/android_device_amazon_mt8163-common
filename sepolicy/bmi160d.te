@@ -1,0 +1,55 @@
+# ==============================================
+# Policy File of /system/bin/bmi160d Executable File
+
+
+# ==============================================
+# Type Declaration
+# ==============================================
+
+type bmi160d_exec , exec_type, file_type;
+type bmi160d ,domain;
+
+# ==============================================
+# Android Policy Rule
+# ==============================================
+
+# ==============================================
+# NSA Policy Rule
+# ==============================================
+
+# ==============================================
+# MTK Policy Rule
+# ==============================================
+
+#permissive bmi160d;
+init_daemon_domain(bmi160d)
+#unconfined_domain(bmi160d)
+
+# Data : WK14.48
+# Operation : Migration
+# Purpose : M-sensor daemon for access driver node
+
+allow bmi160d bmi160d_data_file:file rw_file_perms;
+#allow bmi160d bmi160d_sensor_log_file:file { open create read write };
+allow bmi160d msensor_device:chr_file { open read write ioctl };
+allow bmi160d gsensor_device:chr_file { open read write ioctl };
+allow bmi160d input_device:dir { search open read write };
+allow bmi160d input_device:file { open read write ioctl };
+allow bmi160d sensor_data_file:dir {search open read write create getattr setattr };
+allow bmi160d sensor_data_file:file { open read write create append unlink ioctl getattr setattr };
+allow bmi160d system_sensor_data_file:dir { search open read create };
+allow bmi160d system_sensor_data_file:file { open read create write };
+allow bmi160d sysfs:file write;
+allow bmi160d sysfs_gsensor_file:dir { search open read create };
+allow bmi160d sysfs_gsensor_file:file { open read create write };
+allow bmi160d sysfs_gsensor_file:lnk_file read;
+allow bmi160d sysfs_msensor_file:dir { search open read create };
+allow bmi160d sysfs_msensor_file:file { open read create write };
+allow bmi160d sysfs_msensor_file:lnk_file read;
+# Operate data partation directly, need modify later,e.g. use "data/misc/sensor".
+# for msensor daemon access "data/misc".
+file_type_auto_trans(bmi160d, system_data_file, msensor_data_file)
+allow bmi160d system_data_file:dir { create setattr };
+allow bmi160d msensor_data_file:file { open write read create setattr};
+#allow bmi160d shell_data_file:dir { search };
+allow bmi160d shell_data_file:file { read write create append unlink ioctl getattr setattr };

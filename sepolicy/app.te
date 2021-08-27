@@ -1,0 +1,27 @@
+
+
+# ==============================================
+# MTK Policy Rule
+# ==============================================
+
+
+# Date: wk14.40
+# Operation : SQC
+# Purpose : [ALPS01756200] wwop boot up fail
+allow appdomain custom_file:dir { search getattr open read };
+allow appdomain custom_file:file { read open getattr};
+
+# Date : 2015/10/15
+# Operation: Migration
+# Purpose: rgx need fifo permission
+allow appdomain surfaceflinger:fifo_file rw_file_perms;
+
+# Data: 2015/10/28
+# Stage: SQC
+# Purpose: [SystemUI] Allow IMG GPU to touch sw_sync
+allow appdomain sw_sync_device:chr_file { read write getattr open ioctl };
+
+# Data: 2017/10/20
+# Operation: Add Feature
+# Purpose: Allow apps using hid_gadget_device to work properly.
+allow appdomain hid_gadget_device:chr_file rw_file_perms;

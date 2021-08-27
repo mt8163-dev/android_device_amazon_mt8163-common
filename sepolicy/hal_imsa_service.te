@@ -1,0 +1,28 @@
+type mtkimsa_hwservice, hwservice_manager_type;
+
+type hal_imsa_service, domain , mlstrustedsubject , coredomain ;
+#hal_server_domain(hal_imsa_service, hal_power)
+
+type hal_imsa_service_exec, exec_type, vendor_file_type, file_type;
+init_daemon_domain(hal_imsa_service)
+
+dontaudit mtkimsa_hwservice default_android_hwservice:hwservice_manager add;
+dontaudit mtkimsa_hwservice hidl_base_hwservice:hwservice_manager add;
+
+allow hal_imsa_service hal_imsa_service:capability { chown fowner };
+allow hal_imsa_service hwservicemanager_prop:file { read open getattr };
+allow hal_imsa_service hwservicemanager:binder { call transfer };
+allow hal_imsa_service rild_imsm_socket:sock_file { read write open };
+
+
+
+allow hal_imsa_service hidl_base_hwservice:hwservice_manager { add };
+allow hal_imsa_service mtkimsa_hwservice:hwservice_manager { add };
+
+allow radio mtkimsa_hwservice:hwservice_manager { find };
+allow radio hal_imsa_service:binder { call transfer };
+
+allow hwservicemanager hal_imsa_service:dir { search };
+allow hwservicemanager hal_imsa_service:file { read open };
+allow hwservicemanager hal_imsa_service:process { getattr };
+allow hwservicemanager hal_imsa_service:binder { call transfer };

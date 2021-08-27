@@ -1,0 +1,36 @@
+# ==============================================
+# Policy File of /system/bin nvram_backup_binder Executable File
+
+
+# ==============================================
+# Type Declaration
+# ==============================================
+
+type nvram_backup_binder_exec , exec_type, file_type;
+type nvram_backup_binder ,domain;
+
+# ==============================================
+# Android Policy Rule
+# ==============================================
+
+# ==============================================
+# NSA Policy Rule
+# ==============================================
+
+# ==============================================
+# MTK Policy Rule
+# ==============================================
+
+# permissive nvram_backup_binder;
+init_daemon_domain(nvram_backup_binder)
+
+
+# Date : WK14.35
+# Operation : access nvram by binder
+# Purpose : ensure nvram user can access nvram file normally.
+binder_use(nvram_backup_binder)
+binder_service(nvram_backup_binder)
+
+# Date : WK14.35
+# Operation : access nvram by binder
+# Purpose : ensure nvram user can access nvram file normally.

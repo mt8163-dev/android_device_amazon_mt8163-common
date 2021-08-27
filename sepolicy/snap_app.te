@@ -1,0 +1,1 @@
+allow snap_app proc:file { read open ioctl };

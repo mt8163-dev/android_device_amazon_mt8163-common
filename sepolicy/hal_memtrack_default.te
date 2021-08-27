@@ -1,0 +1,9 @@
+# memtrack fix
+
+
+allow hal_memtrack_default debugfs:file { getattr };
+allow hal_memtrack_default debugfs:dir { read open getattr };
+allow hal_memtrack_default proc:file { read open read ioctl };
+
+
+allow hal_graphics_allocator_default proc:file { read open read ioctl };

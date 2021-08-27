@@ -1,0 +1,4 @@
+# mediaprovider
+#allow mediaprovider proc:file { ioctl open read };
+allow mediaprovider rootfs:dir { read };
+allow mediaprovider cache_recovery_file:dir { getattr };

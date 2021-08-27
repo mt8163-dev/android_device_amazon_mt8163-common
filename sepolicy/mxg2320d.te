@@ -1,7 +1,28 @@
-type mxg2320d_exec, exec_type, file_type;
-type mxg2320d, domain, domain_deprecated;
+# ==============================================
+# Policy File of /system/bin/mxg2320d Executable File
 
+
+# ==============================================
+# Type Declaration
+# ==============================================
+
+type mxg2320d_exec , exec_type, file_type;
+type mxg2320d ,domain;
+
+# ==============================================
+# Android Policy Rule
+# ==============================================
+
+# ==============================================
+# NSA Policy Rule
+# ==============================================
+
+# ==============================================
+# MTK Policy Rule
+# ==============================================
+
+#permissive msensord;
 init_daemon_domain(mxg2320d)
-
+#unconfined_domain(mxg2320d)
 allow mxg2320d msensor_device:chr_file rw_file_perms;
 allow mxg2320d gsensor_device:chr_file rw_file_perms;

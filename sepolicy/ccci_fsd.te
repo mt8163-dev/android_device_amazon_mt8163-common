@@ -1,5 +1,5 @@
 type ccci_fsd_exec, exec_type, file_type;
-type ccci_fsd, domain, domain_deprecated;
+type ccci_fsd, domain, device_domain_deprecated;
 
 init_daemon_domain(ccci_fsd)
 
@@ -8,7 +8,6 @@ allow ccci_fsd ccci_cfg_file:dir create_dir_perms;
 allow ccci_fsd ccci_cfg_file:file create_file_perms;
 allow ccci_fsd nvdata_file:dir create_dir_perms;
 allow ccci_fsd nvdata_file:file create_file_perms;
-allow ccci_fsd nvdata_file:lnk_file r_file_perms;
 allow ccci_fsd protect_f_data_file:dir create_dir_perms;
 allow ccci_fsd protect_f_data_file:file create_file_perms;
 allow ccci_fsd protect_s_data_file:dir create_dir_perms;
@@ -16,3 +15,15 @@ allow ccci_fsd protect_s_data_file:file create_file_perms;
 allow ccci_fsd sysfs_ccci:file rw_file_perms;
 allow ccci_fsd sysfs_ccci:dir search;
 allow ccci_fsd sysfs_wake_lock:file rw_file_perms;
+allow ccci_fsd nvdata_file:lnk_file r_file_perms;
+allow ccci_fsd nvram_data_file:file { create open read write getattr unlink };
+allow ccci_fsd nvram_data_file:dir { open read write getattr };
+allow ccci_fsd kernel:system { module_request };
+allow ccci_fsd mtk_md_prop:file { read };
+allow ccci_fsd ccci_fsd:capability { dac_override };
+allow ccci_fsd mtk_md_prop:file { open read getattr };
+allow ccci_fsd nvram_prop:file { read open getattr };
+allow ccci_fsd nvram_data_file:dir { search create add_name remove_name };
+
+allow ccci_fsd ril_muxreport_run_prop:property_service set;
+allow ccci_fsd ril_ismdreseted_prop:property_service set;
