@@ -155,6 +155,11 @@ PRODUCT_PACKAGES += \
     android.hidl.base@1.0 \
     android.hidl.manager@1.0
 
+# OMX
+PRODUCT_PACKAGES += \
+    android.hardware.media.omx@1.0-impl \
+    android.hardware.media.omx@1.0-service
+
 # Camera Init
 PRODUCT_COPY_FILES += $(COMMON_PATH)/configs/init/mediaserver.rc:system/etc/init/mediaserver.rc
 
