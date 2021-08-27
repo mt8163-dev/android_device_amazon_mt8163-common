@@ -129,6 +129,11 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     audiofix
 
+# HIDL
+PRODUCT_PACKAGES += \
+    android.hidl.base@1.0 \
+    android.hidl.manager@1.0
+
 # Camera Init
 PRODUCT_COPY_FILES += $(COMMON_PATH)/configs/init/mediaserver.rc:system/etc/init/mediaserver.rc
 
