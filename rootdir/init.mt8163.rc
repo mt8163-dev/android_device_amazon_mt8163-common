@@ -97,6 +97,8 @@ on post-fs
     chown root system /proc/mtprof/reboot_pid
 
 on post-fs-data
+    # Preload shim libraries
+    export LD_PRELOAD "libshim_audio.so:libshim_atomic.so"
     chown system system /persist
     chmod 0771 /persist
 
