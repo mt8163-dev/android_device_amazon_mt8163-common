@@ -28,7 +28,8 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     Snap \
     libcamera_parameters_mtk \
-    libcam.halsensor
+    libcam.halsensor \
+    android.hardware.camera.provider@2.4-impl-legacy
 
 # Audio
 PRODUCT_PACKAGES += \
