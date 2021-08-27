@@ -5,7 +5,7 @@ on property:wlan.driver.status=ok
 on property:wlan.driver.status=unloaded
     write /dev/wmtWifi "0"
 
-service p2p_supplicant /system/bin/wpa_supplicant \
+service p2p_supplicant /vendor/bin/hw/wpa_supplicant \
     -iwlan0 -Dnl80211 -c/data/misc/wifi/wpa_supplicant.conf \
     -I/system/etc/wifi/wpa_supplicant_overlay.conf -N \
     -ip2p0 -Dnl80211 -c/data/misc/wifi/p2p_supplicant.conf -e/data/misc/wifi/entropy.bin \
@@ -20,7 +20,7 @@ service p2p_supplicant /system/bin/wpa_supplicant \
     disabled
     oneshot
 
-service wpa_supplicant /system/bin/wpa_supplicant \
+service wpa_supplicant /vendor/bin/hw/wpa_supplicant \
     -iwlan0 -Dnl80211 -c/data/misc/wifi/wpa_supplicant.conf -e/data/misc/wifi/entropy.bin \
     -I/system/etc/wifi/wpa_supplicant_overlay.conf \
     -O/data/misc/wifi/sockets -g@android:wpa_wlan0
