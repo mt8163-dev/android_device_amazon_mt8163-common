@@ -158,7 +158,7 @@ BOARD_USES_LINEAGE_HARDWARE := true
 BOARD_HARDWARE_CLASS := $(DEVICE_COMMON)/lineagehw
 
 # Shim Libraries
-TARGET_LDPRELOAD += libshim_audio.so
+TARGET_LDPRELOAD += libshim_audio.so:libshim_atomic.so
 LINKER_FORCED_SHIM_LIBS := \
     /system/lib/liblog.so|libshim_log.so \
     /system/lib64/liblog.so|libshim_log.so \
