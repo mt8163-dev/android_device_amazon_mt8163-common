@@ -29,8 +29,8 @@ LOCAL_PROPRIETARY_MODULE := true
 include $(BUILD_SHARED_LIBRARY)
 
 include $(CLEAR_VARS)
-LOCAL_SRC_FILES := camera/camera_shim.cpp
-LOCAL_SHARED_LIBRARIES := liblog libcutils libgui libbinder libutils libsensor
+LOCAL_SRC_FILES := camera/camera_shim.cpp camera/GraphicBuffer.cpp
+LOCAL_SHARED_LIBRARIES := liblog libcutils libgui libbinder libutils libsensor libui
 LOCAL_MODULE := libshim_camera
 LOCAL_MODULE_TAGS := optional
 LOCAL_MODULE_CLASS := SHARED_LIBRARIES
