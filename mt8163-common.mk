@@ -22,7 +22,9 @@ PRODUCT_PACKAGES += \
 
 # Lights HAL
 PRODUCT_PACKAGES += \
-    lights.mt8163
+    lights.mt8163 \
+    android.hardware.light@2.0-impl-mediatek \
+    android.hardware.light@2.0-service-mediatek
 
 # Camera
 PRODUCT_PACKAGES += \
