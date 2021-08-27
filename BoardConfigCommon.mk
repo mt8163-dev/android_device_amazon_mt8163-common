@@ -144,6 +144,9 @@ MALLOC_SVELTE := true
 # Sotrage Lun File Path
 TARGET_USE_CUSTOM_LUN_FILE_PATH := "/sys/devices/virtual/android_usb/android0/f_mass_storage/lun%d/file"
 
+# Manifest
+DEVICE_MANIFEST_FILE := $(DEVICE_COMMON)/manifest.xml
+
 # SELinux
 BOARD_SEPOLICY_DIRS += \
     $(DEVICE_COMMON)/sepolicy
