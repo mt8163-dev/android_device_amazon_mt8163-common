@@ -159,7 +159,7 @@ BOARD_HARDWARE_CLASS := $(DEVICE_COMMON)/lineagehw
 
 # Shim Libraries
 TARGET_LDPRELOAD += libshim_audio.so:libshim_atomic.so
-LINKER_FORCED_SHIM_LIBS := \
+TARGET_LD_SHIM_LIBS := \
     /system/lib/liblog.so|libshim_log.so \
     /system/lib64/liblog.so|libshim_log.so \
     /system/lib/libMtkOmxVdecEx.so|libshim_ui.so \
@@ -173,7 +173,10 @@ LINKER_FORCED_SHIM_LIBS := \
     /system/lib/libcam_utils.so|libshim_ui.so \
     /system/lib64/libcam_utils.so|libshim_ui.so \
     /system/bin/amzn_dha_hmac|libshim_drm.so \
-    /system/bin/amzn_dha_tool|libshim_drm.so
+    /system/bin/amzn_dha_tool|libshim_drm.so \
+    /system/lib/libcam.utils.sensorlistener.so|libshim_camera.so \
+    /system/lib64/libcam.utils.sensorlistener.so|libshim_camera.so
+
 # Common-Specific Headers
 TARGET_SPECIFIC_HEADER_PATH := $(DEVICE_COMMON)/include
 
