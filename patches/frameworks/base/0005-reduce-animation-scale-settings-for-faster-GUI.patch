@@ -1,0 +1,40 @@
+From e58281a186b1a9be160c257ac13b3d0026f08d1a Mon Sep 17 00:00:00 2001
+From: Bilux <i.bilux@gmail.com>
+Date: Thu, 30 Jan 2020 22:58:23 +0100
+Subject: [PATCH] reduce animation scale settings for faster GUI
+
+---
+ core/res/res/values/config.xml                              | 2 +-
+ .../java/com/android/server/wm/WindowManagerService.java    | 6 +++---
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/core/res/res/values/config.xml b/core/res/res/values/config.xml
+index 01b272186d5b..4070ca6c71f1 100644
+--- a/core/res/res/values/config.xml
++++ b/core/res/res/values/config.xml
+@@ -2932,7 +2932,7 @@
+          animations. Note that this is only a default and will be overridden by a
+          user-set value if toggled by settings so the "Transition animation scale" setting
+          should also be hidden if intended to be permanent. -->
+-    <item name="config_appTransitionAnimationDurationScaleDefault" format="float" type="dimen">1.0</item>
++    <item name="config_appTransitionAnimationDurationScaleDefault" format="float" type="dimen">0.5</item>
+ 
+     <!-- Flag indicates that whether non-system apps can be installed on internal storage. -->
+     <bool name="config_allow3rdPartyAppOnInternal">true</bool>
+diff --git a/services/core/java/com/android/server/wm/WindowManagerService.java b/services/core/java/com/android/server/wm/WindowManagerService.java
+index 0651dfc0b42c..11619f0ad1cb 100644
+--- a/services/core/java/com/android/server/wm/WindowManagerService.java
++++ b/services/core/java/com/android/server/wm/WindowManagerService.java
+@@ -714,9 +714,9 @@ public void onChange(boolean selfChange, Uri uri) {
+     PowerManager mPowerManager;
+     PowerManagerInternal mPowerManagerInternal;
+ 
+-    private float mWindowAnimationScaleSetting = 1.0f;
+-    private float mTransitionAnimationScaleSetting = 1.0f;
+-    private float mAnimatorDurationScaleSetting = 1.0f;
++    private float mWindowAnimationScaleSetting = 0.5f; // TRONX2100: for faster GUI
++    private float mTransitionAnimationScaleSetting = 0.5f;
++    private float mAnimatorDurationScaleSetting = 0.5f;
+     private boolean mAnimationsDisabled = false;
+ 
+     final InputManagerService mInputManager;

@@ -1,0 +1,68 @@
+From 7103886284b41ac432348f96b998ae0827f4902f Mon Sep 17 00:00:00 2001
+From: vishalk17 <vishalkapadi95@gmail.com>
+Date: Sat, 30 Mar 2019 15:43:10 +0000
+Subject: [PATCH] Revert "system/core: Make Thread::run threadName argument
+ required"
+
+This reverts commit e71b9147756ab4da306e4c16461ad23936769603.
+
+Change-Id: Ied37ddf93f1ab6b2d474f09d8442a4e8109d6daa
+---
+ libutils/Threads.cpp            | 5 -----
+ libutils/include/utils/Thread.h | 2 +-
+ libutils/tests/Looper_test.cpp  | 4 ++--
+ 3 files changed, 3 insertions(+), 8 deletions(-)
+
+diff --git a/libutils/Threads.cpp b/libutils/Threads.cpp
+index 2d7e46f..679a0c2 100644
+--- a/libutils/Threads.cpp
++++ b/libutils/Threads.cpp
+@@ -661,11 +661,6 @@ status_t Thread::readyToRun()
+ 
+ status_t Thread::run(const char* name, int32_t priority, size_t stack)
+ {
+-    if (name == nullptr) {
+-        ALOGW("Thread name not provided to Thread::run");
+-        name = 0;
+-    }
+-
+     Mutex::Autolock _l(mLock);
+ 
+     if (mRunning) {
+diff --git a/libutils/include/utils/Thread.h b/libutils/include/utils/Thread.h
+index a261fc8..0f7ac9f 100644
+--- a/libutils/include/utils/Thread.h
++++ b/libutils/include/utils/Thread.h
+@@ -45,7 +45,7 @@ public:
+     virtual             ~Thread();
+ 
+     // Start the thread in threadLoop() which needs to be implemented.
+-    virtual status_t    run(    const char* name,
++    virtual status_t    run(    const char* name = 0,
+                                 int32_t priority = PRIORITY_DEFAULT,
+                                 size_t stack = 0);
+     
+diff --git a/libutils/tests/Looper_test.cpp b/libutils/tests/Looper_test.cpp
+index 8ebcfaf..bdb1bb7 100644
+--- a/libutils/tests/Looper_test.cpp
++++ b/libutils/tests/Looper_test.cpp
+@@ -138,7 +138,7 @@ TEST_F(LooperTest, PollOnce_WhenNonZeroTimeoutAndAwokenBeforeWaiting_Immediately
+ 
+ TEST_F(LooperTest, PollOnce_WhenNonZeroTimeoutAndAwokenWhileWaiting_PromptlyReturns) {
+     sp<DelayedWake> delayedWake = new DelayedWake(100, mLooper);
+-    delayedWake->run("LooperTest");
++    delayedWake->run();
+ 
+     StopWatch stopWatch("pollOnce");
+     int result = mLooper->pollOnce(1000);
+@@ -251,7 +251,7 @@ TEST_F(LooperTest, PollOnce_WhenNonZeroTimeoutAndSignalledFDWhileWaiting_Promptl
+     sp<DelayedWriteSignal> delayedWriteSignal = new DelayedWriteSignal(100, & pipe);
+ 
+     handler.setCallback(mLooper, pipe.receiveFd, Looper::EVENT_INPUT);
+-    delayedWriteSignal->run("LooperTest");
++    delayedWriteSignal->run();
+ 
+     StopWatch stopWatch("pollOnce");
+     int result = mLooper->pollOnce(1000);
+-- 
+2.7.4

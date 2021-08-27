@@ -1,0 +1,42 @@
+From 7fb2cb83e289892bdcaabe4ef2eecb3181874741 Mon Sep 17 00:00:00 2001
+From: bilux <i.bilux@gmail.com>
+Date: Mon, 2 Mar 2020 20:05:53 +0100
+Subject: [PATCH] Fix video streaming
+
+Don't store metadata in buffers. We don't support that at all.
+
+Signed-off-by: bilux <i.bilux@gmail.com>
+---
+ media/libmediaplayerservice/StagefrightRecorder.cpp           | 2 +-
+ media/libstagefright/include/media/stagefright/CameraSource.h | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/media/libmediaplayerservice/StagefrightRecorder.cpp b/media/libmediaplayerservice/StagefrightRecorder.cpp
+index c58dcb9..c0eeb98 100644
+--- a/media/libmediaplayerservice/StagefrightRecorder.cpp
++++ b/media/libmediaplayerservice/StagefrightRecorder.cpp
+@@ -1581,7 +1581,7 @@ status_t StagefrightRecorder::setupCameraSource(
+         *cameraSource = CameraSource::CreateFromCamera(
+                 mCamera, mCameraProxy, mCameraId, mClientName, mClientUid, mClientPid,
+                 videoSize, mFrameRate,
+-                mPreviewSurface);
++                mPreviewSurface, false); // [*] Decker
+     }
+     mCamera.clear();
+     mCameraProxy.clear();
+diff --git a/media/libstagefright/include/media/stagefright/CameraSource.h b/media/libstagefright/include/media/stagefright/CameraSource.h
+index d6149c0..b0fedf2 100644
+--- a/media/libstagefright/include/media/stagefright/CameraSource.h
++++ b/media/libstagefright/include/media/stagefright/CameraSource.h
+@@ -90,7 +90,7 @@ public:
+                                           Size videoSize,
+                                           int32_t frameRate,
+                                           const sp<IGraphicBufferProducer>& surface,
+-                                          bool storeMetaDataInVideoBuffers = true);
++                                          bool storeMetaDataInVideoBuffers = false);
+ 
+     virtual ~CameraSource();
+ 
+-- 
+2.25.1
+

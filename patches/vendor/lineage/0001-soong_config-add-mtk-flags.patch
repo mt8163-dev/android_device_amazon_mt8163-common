@@ -1,0 +1,22 @@
+From 0c743c305c110bd6b0d75bb85716edf9296899ce Mon Sep 17 00:00:00 2001
+From: Bilux <i.bilux@gmail.com>
+Date: Mon, 24 Feb 2020 22:25:20 +0100
+Subject: [PATCH] soong_config: add mtk flags
+
+---
+ build/soong/soong_config.mk | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/build/soong/soong_config.mk b/build/soong/soong_config.mk
+index 0c98c89c1..ccaf5452b 100644
+--- a/build/soong/soong_config.mk
++++ b/build/soong/soong_config.mk
+@@ -4,6 +4,8 @@ lineage_soong:
+ 	$(hide) (\
+ 	echo '{'; \
+ 	echo '"Lineage": {'; \
++	echo '    "Uses_mtk_hardware": $(if $(filter true,$(BOARD_USES_MTK_HARDWARE)),true,false),'; \
++	echo '    "Uses_legacy_mtk_av_blob": $(if $(filter true,$(BOARD_USES_LEGACY_MTK_AV_BLOB)),true,false),'; \
+ 	echo '    "Has_legacy_camera_hal1": $(if $(filter true,$(TARGET_HAS_LEGACY_CAMERA_HAL1)),true,false),'; \
+ 	echo '    "Needs_legacy_camera_hal1_dyn_native_handle": $(if $(filter true,$(TARGET_NEEDS_LEGACY_CAMERA_HAL1_DYN_NATIVE_HANDLE)),true,false),'; \
+ 	echo '    "Needs_text_relocations": $(if $(filter true,$(TARGET_NEEDS_PLATFORM_TEXT_RELOCATIONS)),true,false),'; \

@@ -1,0 +1,25 @@
+From 88b98e134d725c04205420caa615afb9361c3764 Mon Sep 17 00:00:00 2001
+From: danielhk <daniel.p6800@gmail.com>
+Date: Sun, 3 Dec 2017 22:07:50 +0800
+Subject: [PATCH 4/4] Lower the requirement of sensor API version to 1.0
+
+---
+ sensors/1.0/default/Sensors.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/sensors/1.0/default/Sensors.cpp b/sensors/1.0/default/Sensors.cpp
+index 1100dd6..c41a744 100644
+--- a/sensors/1.0/default/Sensors.cpp
++++ b/sensors/1.0/default/Sensors.cpp
+@@ -95,7 +95,7 @@ Sensors::Sensors()
+ 
+     // Require all the old HAL APIs to be present except for injection, which
+     // is considered optional.
+-    CHECK_GE(getHalDeviceVersion(), SENSORS_DEVICE_API_VERSION_1_3);
++    CHECK_GE(getHalDeviceVersion(), SENSORS_DEVICE_API_VERSION_1_0);
+ 
+     if (getHalDeviceVersion() == SENSORS_DEVICE_API_VERSION_1_4) {
+         if (mSensorDevice->inject_sensor_data == nullptr) {
+-- 
+2.7.4
+

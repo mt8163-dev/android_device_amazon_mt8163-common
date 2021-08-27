@@ -1,0 +1,100 @@
+From 500b801b73fd24dd8b9c3e3b594b4a4a9a165719 Mon Sep 17 00:00:00 2001
+From: vishalk17 <vishalkapadi95@gmail.com>
+Date: Sun, 24 Mar 2019 18:47:22 +0000
+Subject: [PATCH 1/2] pthread patch
+
+Change-Id: I95ef08fc1c3ff4e3cb136366319a3eea67ec9bf8
+---
+ libc/Android.mk           | 2 ++
+ libc/bionic/ndk_cruft.cpp | 9 ++++++++-
+ libc/libc.arm.map         | 1 +
+ libc/libc.map.txt         | 1 +
+ libc/libc.mips.map        | 1 +
+ libc/libc.x86.map         | 1 +
+ 6 files changed, 14 insertions(+), 1 deletion(-)
+
+diff --git a/libc/Android.mk b/libc/Android.mk
+index 888404cf7..7c14eb969 100644
+--- a/libc/Android.mk
++++ b/libc/Android.mk
+@@ -1,4 +1,6 @@
+ LOCAL_PATH := $(call my-dir)
+ 
++# Define some common cfla
++
+ include $(call all-makefiles-under,$(LOCAL_PATH))
+ 
+diff --git a/libc/bionic/ndk_cruft.cpp b/libc/bionic/ndk_cruft.cpp
+index dbacf18f0..33181faaa 100644
+--- a/libc/bionic/ndk_cruft.cpp
++++ b/libc/bionic/ndk_cruft.cpp
+@@ -345,10 +345,17 @@ size_t dlmalloc_usable_size(void* ptr) {
+ }
+ 
+ // In L we added a public pthread_gettid_np, but some apps were using the private API.
+-pid_t __pthread_gettid(pthread_t t) {
++pid_t __pthread_gettid_libc(pthread_t t) {
+   return pthread_gettid_np(t);
+ }
+ 
++pid_t __pthread_gettid_libc_private(pthread_t t) {
++  return pthread_gettid_np(t);
++}
++
++__asm__(".symver __pthread_gettid_libc,__pthread_gettid@LIBC");
++__asm__(".symver __pthread_gettid_libc_private,__pthread_gettid@@LIBC_PRIVATE");
++
+ // Older versions of apportable used dlmalloc directly instead of malloc,
+ // so export this compatibility shim that simply calls malloc.
+ void* dlmalloc(size_t size) {
+diff --git a/libc/libc.arm.map b/libc/libc.arm.map
+index a4212dda7..6b441332b 100644
+--- a/libc/libc.arm.map
++++ b/libc/libc.arm.map
+@@ -121,6 +121,7 @@ LIBC {
+     __pselect6; # arm x86 mips introduced=21
+     __pthread_cleanup_pop;
+     __pthread_cleanup_push;
++    __pthread_gettid; # arm x86 mips nobrillo
+     __ptrace; # arm x86 mips
+     __putlong;
+     __putshort;
+diff --git a/libc/libc.map.txt b/libc/libc.map.txt
+index c271a57e4..ce2a0bf3c 100644
+--- a/libc/libc.map.txt
++++ b/libc/libc.map.txt
+@@ -121,6 +121,7 @@ LIBC {
+     __pselect6; # arm x86 mips introduced=21
+     __pthread_cleanup_pop;
+     __pthread_cleanup_push;
++    __pthread_gettid; # arm x86 mips nobrillo
+     __ptrace; # arm x86 mips
+     __putlong;
+     __putshort;
+diff --git a/libc/libc.mips.map b/libc/libc.mips.map
+index 214c7f506..382b2a590 100644
+--- a/libc/libc.mips.map
++++ b/libc/libc.mips.map
+@@ -118,6 +118,7 @@ LIBC {
+     __pselect6; # arm x86 mips introduced=21
+     __pthread_cleanup_pop;
+     __pthread_cleanup_push;
++    __pthread_gettid; # arm x86 mips nobrillo
+     __ptrace; # arm x86 mips
+     __putlong;
+     __putshort;
+diff --git a/libc/libc.x86.map b/libc/libc.x86.map
+index 145b64ebf..dc4ce9c5b 100644
+--- a/libc/libc.x86.map
++++ b/libc/libc.x86.map
+@@ -118,6 +118,7 @@ LIBC {
+     __pselect6; # arm x86 mips introduced=21
+     __pthread_cleanup_pop;
+     __pthread_cleanup_push;
++    __pthread_gettid; # arm x86 mips nobrillo
+     __ptrace; # arm x86 mips
+     __putlong;
+     __putshort;
+-- 
+2.17.1
+

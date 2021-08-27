@@ -1,0 +1,40 @@
+From 6928687b77cbb4d20f6d086c0425adff2bdd2501 Mon Sep 17 00:00:00 2001
+From: vishalk17 <vishalkapadi95@gmail.com>
+Date: Wed, 14 Mar 2018 12:14:26 +0000
+Subject: [PATCH] init: double the number of available environment variables (e.g. ril-daemon-mtk sockets)
+
+Change-Id: Ic56640c0ccc541b9b95c3086c3fa3097727aa722
+---
+ init/init.cpp                      |   2 +-
+ init/init.h                        |   2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/init/init.cpp b/init/init.cpp
+index 35fc442..f3814a3 100644
+--- a/init/init.cpp
++++ b/init/init.cpp
+@@ -88,7 +88,7 @@ static char qemu[32];
+ std::string default_console = "/dev/console";
+ static time_t process_needs_restart_at;
+ 
+-const char *ENV[32];
++const char *ENV[64];
+ 
+ static int epoll_fd = -1;
+ 
+diff --git a/init/init.h b/init/init.h
+index aaab523..02ba0f2 100644
+--- a/init/init.h
++++ b/init/init.h
+@@ -27,7 +27,7 @@ namespace init {
+ // Note: These globals are *only* valid in init, so they should not be used in ueventd,
+ // watchdogd, or any files that may be included in those, such as devices.cpp and util.cpp.
+ // TODO: Have an Init class and remove all globals.
+-extern const char *ENV[32];
++extern const char *ENV[64];
+ extern std::string default_console;
+ extern struct selabel_handle *sehandle;
+ extern struct selabel_handle *sehandle_prop;
+-- 
+2.7.4
+

@@ -1,0 +1,25 @@
+From e54473736775ce2f5397507124a95cfe21435fbb Mon Sep 17 00:00:00 2001
+From: Mister Oyster <oysterized@gmail.com>
+Date: Sun, 2 Jul 2017 18:30:07 +0200
+Subject: [PATCH] build: core: add BOARD_USES_MTK_HARDWARE
+
+Change-Id: I004d75d34b526f997960fb3eb0566ca8401aab65
+---
+ core/soong_config.mk | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/core/soong_config.mk b/core/soong_config.mk
+index 9cda3b109..e62e69366 100644
+--- a/core/soong_config.mk
++++ b/core/soong_config.mk
+@@ -46,6 +46,7 @@ $(SOONG_VARIABLES): FORCE
+ 	echo '    "Binder32bit": $(if $(BINDER32BIT),true,false),'; \
+ 	echo '    "DevicePrefer32BitExecutables": $(if $(filter true,$(TARGET_PREFER_32_BIT_EXECUTABLES)),true,false),'; \
+ 	echo '    "UseGoma": $(if $(filter-out false,$(USE_GOMA)),true,false),'; \
++	echo '    "Mtk_hardware": $(if $(filter true,$(BOARD_USES_MTK_HARDWARE)),true,false),'; \
+ 	echo '    "Debuggable": $(if $(filter userdebug eng,$(TARGET_BUILD_VARIANT)),true,false),'; \
+ 	echo '    "Eng": $(if $(filter eng,$(TARGET_BUILD_VARIANT)),true,false),'; \
+ 	echo '    "VendorPath": "$(TARGET_COPY_OUT_VENDOR)",'; \
+-- 
+2.11.0
+

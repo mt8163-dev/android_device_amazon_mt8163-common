@@ -1,0 +1,43 @@
+From bb225829405dfd2ea802c217edc8175605fa4561 Mon Sep 17 00:00:00 2001
+From: Bilux <i.bilux@gmail.com>
+Date: Thu, 30 Jan 2020 23:33:04 +0100
+Subject: [PATCH] sensors: fix proximity sensor
+
+Lower the requirement of proximity sensor API version to 1.1
+---
+ libs/sensor/Sensor.cpp        | 8 ++++++++
+ 1 file changed, 8 insertions(+), 0 deletion(-)
+
+diff --git a/libs/sensor/Sensor.cpp b/libs/sensor/Sensor.cpp
+index 2383516c9..52e836072 100644
+--- a/libs/sensor/Sensor.cpp
++++ b/libs/sensor/Sensor.cpp
+@@ -52,6 +52,7 @@ Sensor::Sensor(struct sensor_t const& hwSensor, const uuid_t& uuid, int halVersi
+     mMinDelay = hwSensor.minDelay;
+     mFlags = 0;
+     mUuid = uuid;
++    int mHalVersion = 0; // temporarily store overridden hal version
+ 
+     // Set fifo event count zero for older devices which do not support batching. Fused
+     // sensors also have their fifo counts set to zero.
+@@ -146,6 +147,8 @@ Sensor::Sensor(struct sensor_t const& hwSensor, const uuid_t& uuid, int halVersi
+     case SENSOR_TYPE_PROXIMITY:
+         mStringType = SENSOR_STRING_TYPE_PROXIMITY;
+         mFlags |= SENSOR_FLAG_ON_CHANGE_MODE;
++        mHalVersion = halVersion;
++        halVersion = SENSORS_DEVICE_API_VERSION_1_1;
+         if (halVersion < SENSORS_DEVICE_API_VERSION_1_3) {
+             mFlags |= SENSOR_FLAG_WAKE_UP;
+         }
+@@ -324,6 +327,11 @@ Sensor::Sensor(struct sensor_t const& hwSensor, const uuid_t& uuid, int halVersi
+                     String16(mRequiredPermission));
+         }
+     }
++
++    if (mHalVersion > 0){
++        halVersion = mHalVersion;
++        mHalVersion = 0;
++    }
+ }
+ 
+ Sensor::~Sensor() {

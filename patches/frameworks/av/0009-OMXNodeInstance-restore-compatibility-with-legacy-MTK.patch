@@ -1,0 +1,91 @@
+From 596cbc3bb0bee181333ad3e61f4990042b856bbf Mon Sep 17 00:00:00 2001
+From: bilux <i.bilux@gmail.com>
+Date: Tue, 17 Mar 2020 19:55:08 +0100
+Subject: [PATCH] OMXNodeInstance: restore compatibility with legacy MTK av
+
+Signed-off-by: bilux <i.bilux@gmail.com>
+---
+ media/libstagefright/omx/OMXNodeInstance.cpp  | 25 +++++++++++++++++++
+ .../media/stagefright/omx/OMXNodeInstance.h   |  5 ++++
+ 2 files changed, 30 insertions(+)
+
+diff --git a/media/libstagefright/omx/OMXNodeInstance.cpp b/media/libstagefright/omx/OMXNodeInstance.cpp
+index 1bf1af5..280f6ac 100644
+--- a/media/libstagefright/omx/OMXNodeInstance.cpp
++++ b/media/libstagefright/omx/OMXNodeInstance.cpp
+@@ -352,7 +352,9 @@ OMXNodeInstance::OMXNodeInstance(
+       mSailed(false),
+       mQueriedProhibitedExtensions(false),
+       mQuirks(0),
++#ifndef USE_LEGACY_MTK_AV_BLOB
+       mBufferIDCount(0),
++#endif
+       mRestorePtsFailed(false),
+       mMaxTimestampGapUs(-1ll),
+       mPrevOriginalTimeUs(-1ll),
+@@ -2379,6 +2381,7 @@ void OMXNodeInstance::freeActiveBuffers() {
+     }
+ }
+ 
++#ifndef USE_LEGACY_MTK_AV_BLOB
+ IOMX::buffer_id OMXNodeInstance::makeBufferID(OMX_BUFFERHEADERTYPE *bufferHeader) {
+     if (bufferHeader == NULL) {
+         return 0;
+@@ -2444,5 +2447,27 @@ void OMXNodeInstance::invalidateBufferID(IOMX::buffer_id buffer) {
+     mBufferHeaderToBufferID.removeItem(mBufferIDToBufferHeader.valueAt(index));
+     mBufferIDToBufferHeader.removeItemsAt(index);
+ }
++#else
++IOMX::buffer_id OMXNodeInstance::makeBufferID(OMX_BUFFERHEADERTYPE *bufferHeader) {
++    return (IOMX::buffer_id)(size_t)bufferHeader;
++}
++
++OMX_BUFFERHEADERTYPE *OMXNodeInstance::findBufferHeader(
++        IOMX::buffer_id buffer, OMX_U32 portIndex __unused) {
++    return findBufferHeader(buffer);
++}
++
++
++OMX_BUFFERHEADERTYPE *OMXNodeInstance::findBufferHeader(IOMX::buffer_id buffer) {
++    return (OMX_BUFFERHEADERTYPE *)(size_t)buffer;
++}
++
++IOMX::buffer_id OMXNodeInstance::findBufferID(OMX_BUFFERHEADERTYPE *bufferHeader) {
++    return (IOMX::buffer_id)(size_t)bufferHeader;
++}
++
++void OMXNodeInstance::invalidateBufferID(IOMX::buffer_id buffer __unused) {
++}
++#endif
+ 
+ }  // namespace android
+diff --git a/media/libstagefright/omx/include/media/stagefright/omx/OMXNodeInstance.h b/media/libstagefright/omx/include/media/stagefright/omx/OMXNodeInstance.h
+index 1065ca5..6e60b1b 100644
+--- a/media/libstagefright/omx/include/media/stagefright/omx/OMXNodeInstance.h
++++ b/media/libstagefright/omx/include/media/stagefright/omx/OMXNodeInstance.h
+@@ -145,10 +145,12 @@ private:
+     };
+     Vector<ActiveBuffer> mActiveBuffers;
+     // for buffer ptr to buffer id translation
++#ifndef USE_LEGACY_MTK_AV_BLOB
+     Mutex mBufferIDLock;
+     uint32_t mBufferIDCount;
+     KeyedVector<IOMX::buffer_id, OMX_BUFFERHEADERTYPE *> mBufferIDToBufferHeader;
+     KeyedVector<OMX_BUFFERHEADERTYPE *, IOMX::buffer_id> mBufferHeaderToBufferID;
++#endif
+ 
+     bool mLegacyAdaptiveExperiment;
+     IOMX::PortMode mPortMode[2];
+@@ -191,6 +193,9 @@ private:
+     // For buffer id management
+     IOMX::buffer_id makeBufferID(OMX_BUFFERHEADERTYPE *bufferHeader);
+     OMX_BUFFERHEADERTYPE *findBufferHeader(IOMX::buffer_id buffer, OMX_U32 portIndex);
++#ifdef USE_LEGACY_MTK_AV_BLOB
++    OMX_BUFFERHEADERTYPE *findBufferHeader(IOMX::buffer_id buffer);
++#endif
+     IOMX::buffer_id findBufferID(OMX_BUFFERHEADERTYPE *bufferHeader);
+     void invalidateBufferID(IOMX::buffer_id buffer);
+ 
+-- 
+2.25.1
+

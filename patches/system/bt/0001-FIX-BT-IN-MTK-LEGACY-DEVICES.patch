@@ -1,0 +1,42 @@
+diff --git a/device/src/controller.cc b/device/src/controller.cc
+index 33b9696b6..30b442981 100644
+--- a/device/src/controller.cc
++++ b/device/src/controller.cc
+@@ -187,6 +187,10 @@ static future_t* start_up(void) {
+   }
+ #endif
+ 
++  // Force this to 1 because 0 or less is wrong
++  if (last_features_classic_page_index < 1) last_features_classic_page_index = 1;
++
++  ble_supported = true;
+   ble_supported = last_features_classic_page_index >= 1 &&
+                   HCI_LE_HOST_SUPPORTED(features_classic[1].as_array);
+   if (ble_supported) {
+
+diff --git a/hci/src/hci_packet_parser.cc b/hci/src/hci_packet_parser.cc
+index a6b61f094..c9815fe41 100644
+--- a/hci/src/hci_packet_parser.cc
++++ b/hci/src/hci_packet_parser.cc
+@@ -122,18 +122,19 @@ static void parse_read_local_supported_commands_response(
+   buffer_allocator->free(response);
+ }
+ 
++
+ static void parse_read_local_extended_features_response(
+     BT_HDR* response, uint8_t* page_number_ptr, uint8_t* max_page_number_ptr,
+     bt_device_features_t* feature_pages, size_t feature_pages_count) {
+   uint8_t* stream = read_command_complete_header(
+       response, HCI_READ_LOCAL_EXT_FEATURES,
+       2 + sizeof(bt_device_features_t) /* bytes after */);
+-  CHECK(stream != NULL);
++  if (stream == NULL) return; // just stop here and don't crash
+ 
+   STREAM_TO_UINT8(*page_number_ptr, stream);
+   STREAM_TO_UINT8(*max_page_number_ptr, stream);
+ 
+-  CHECK(*page_number_ptr < feature_pages_count);
++  if (*page_number_ptr >= feature_pages_count) return; // just stop here and don't crash
+   STREAM_TO_ARRAY(feature_pages[*page_number_ptr].as_array, stream,
+                   (int)sizeof(bt_device_features_t));
+

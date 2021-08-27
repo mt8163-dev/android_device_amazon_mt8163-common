@@ -1,0 +1,34 @@
+From a647cc99d05814e9405f96a91933f35af7b41c11 Mon Sep 17 00:00:00 2001
+From: Bilux <i.bilux@gmail.com>
+Date: Wed, 27 Nov 2019 13:28:58 +0100
+Subject: [PATCH] build: Add option to disable block-based ota
+
+Provide an option to build file-based ota instead of block-based ota. This allows us to disable block-based ota with "BLOCK_BASED_OTA := false" that can be defined in the "boardconfig.mk".
+
+An alternative way, is that you have to remove the "--block" line manually from "android_build/core/Makefile" every time.
+---
+ core/Makefile | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/core/Makefile b/core/Makefile
+index f2a524d58c..a3dbfadf8f 100644
+--- a/core/Makefile
++++ b/core/Makefile
+@@ -2801,12 +2801,16 @@ else
+ endif
+ endif
+ 
++ifneq ($(BLOCK_BASED_OTA),false)
++    $(INTERNAL_OTA_PACKAGE_TARGET): block_based := --block
++endif
++
+ $(INTERNAL_OTA_PACKAGE_TARGET): $(BUILT_TARGET_FILES_PACKAGE) \
+ 		build/tools/releasetools/ota_from_target_files
+ 	@echo "Package OTA: $@"
+ 	$(hide) PATH=$(foreach p,$(INTERNAL_USERIMAGES_BINARY_PATHS),$(p):)$$PATH MKBOOTIMG=$(MKBOOTIMG) \
+ 	   ./build/tools/releasetools/ota_from_target_files -v \
+-	   --block \
++	   $(block_based) \
+ 	   --extracted_input_target_files $(patsubst %.zip,%,$(BUILT_TARGET_FILES_PACKAGE)) \
+ 	   -p $(HOST_OUT) \
+ 	   -k $(KEY_CERT_PAIR) \

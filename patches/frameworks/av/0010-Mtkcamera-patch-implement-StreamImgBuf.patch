@@ -1,0 +1,885 @@
+From 21a7a13834c51eca6fdeda5b5cab600336bd3910 Mon Sep 17 00:00:00 2001
+From: vishalk17 <vishalkapadi95@gmail.com>
+Date: Wed, 1 May 2019 06:08:51 +0000
+Subject: [PATCH 2/3] mtkcamera patch : implement StreamImgBuf
+
+WIP camera patch.
+
+basically based on @danielhk 's wrapper
+
+althorugh i m unable to save videos and photos
+Change-Id: I0b31721955d149f7355744189e5b3e21a432ee88
+
+Change-Id: I2e7ba128f60e1909a2c2567a9e8658fde0d44c54
+---
+ services/camera/libcameraservice/Android.mk   |  12 +-
+ .../camera/libcameraservice/api1/CamUtils.h   |  64 +++++
+ .../camera/libcameraservice/api1/Format.h     | 190 ++++++++++++++
+ .../camera/libcameraservice/api1/IBuffer.h    | 118 +++++++++
+ .../libcameraservice/api1/StreamImgBuf.cpp    | 244 ++++++++++++++++++
+ .../libcameraservice/api1/StreamImgBuf.h      | 161 ++++++++++++
+ 7 files changed, 788 insertions(+), 3 deletions(-)
+ create mode 100644 services/camera/libcameraservice/api1/CamUtils.h
+ create mode 100644 services/camera/libcameraservice/api1/Format.h
+ create mode 100644 services/camera/libcameraservice/api1/IBuffer.h
+ create mode 100644 services/camera/libcameraservice/api1/StreamImgBuf.cpp
+ create mode 100644 services/camera/libcameraservice/api1/StreamImgBuf.h
+
+diff --git a/services/camera/libcameraservice/Android.mk b/services/camera/libcameraservice/Android.mk
+index 762959430e..e502ef1564 100644
+--- a/services/camera/libcameraservice/Android.mk
++++ b/services/camera/libcameraservice/Android.mk
+@@ -39,6 +39,7 @@ LOCAL_SRC_FILES :=  \
+     api1/client2/JpegCompressor.cpp \
+     api1/client2/CaptureSequencer.cpp \
+     api1/client2/ZslProcessor.cpp \
++    api1/StreamImgBuf.cpp \
+     api2/CameraDeviceClient.cpp \
+     device1/CameraHardwareInterface.cpp \
+     device3/Camera3Device.cpp \
+@@ -74,6 +75,8 @@ LOCAL_SHARED_LIBRARIES:= \
+     libhidltransport \
+     libjpeg \
+     libmemunreachable \
++    libcam.client \
++    libcam_utils \
+     android.hardware.camera.common@1.0 \
+     android.hardware.camera.provider@2.4 \
+     android.hardware.camera.device@1.0 \
+@@ -90,12 +93,17 @@ LOCAL_EXPORT_SHARED_LIBRARY_HEADERS := libbinder libcamera_client libfmq
+ 
+ LOCAL_C_INCLUDES += \
+     system/media/private/camera/include \
+-    frameworks/native/include/media/openmax
++    system/media/camera/include \
++    frameworks/native/include/media/openmax \
++    frameworks/native/libs/nativewindow/include \
++    frameworks/native/libs/nativewindow/include \
++    frameworks/native/libs/nativebase/include \
++    frameworks/native/libs/arect/include
+ 
+ LOCAL_EXPORT_C_INCLUDE_DIRS := \
+     frameworks/av/services/camera/libcameraservice
+ 
+ LOCAL_CFLAGS += -Wall -Wextra -Wno-narrowing -DMTK_HARDWARE
+ 
+ # Workaround for invalid unused-lambda-capture warning http://b/38349491
+ LOCAL_CLANG_CFLAGS += -Wno-error=unused-lambda-capture
+ 
+ ifeq ($(TARGET_HAS_LEGACY_CAMERA_HAL1),true)
+     LOCAL_CFLAGS += -DNO_CAMERA_SERVER
+diff --git a/services/camera/libcameraservice/api1/CamUtils.h b/services/camera/libcameraservice/api1/CamUtils.h
+new file mode 100644
+index 000000000..db5c63702
+--- /dev/null
++++ b/services/camera/libcameraservice/api1/CamUtils.h
+@@ -0,0 +1,64 @@
++/* Copyright Statement:
++ *
++ * This software/firmware and related documentation ("MediaTek Software") are
++ * protected under relevant copyright laws. The information contained herein is
++ * confidential and proprietary to MediaTek Inc. and/or its licensors. Without
++ * the prior written permission of MediaTek inc. and/or its licensors, any
++ * reproduction, modification, use or disclosure of MediaTek Software, and
++ * information contained herein, in whole or in part, shall be strictly
++ * prohibited.
++ *
++ * MediaTek Inc. (C) 2010. All rights reserved.
++ *
++ * BY OPENING THIS FILE, RECEIVER HEREBY UNEQUIVOCALLY ACKNOWLEDGES AND AGREES
++ * THAT THE SOFTWARE/FIRMWARE AND ITS DOCUMENTATIONS ("MEDIATEK SOFTWARE")
++ * RECEIVED FROM MEDIATEK AND/OR ITS REPRESENTATIVES ARE PROVIDED TO RECEIVER
++ * ON AN "AS-IS" BASIS ONLY. MEDIATEK EXPRESSLY DISCLAIMS ANY AND ALL
++ * WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
++ * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE OR
++ * NONINFRINGEMENT. NEITHER DOES MEDIATEK PROVIDE ANY WARRANTY WHATSOEVER WITH
++ * RESPECT TO THE SOFTWARE OF ANY THIRD PARTY WHICH MAY BE USED BY,
++ * INCORPORATED IN, OR SUPPLIED WITH THE MEDIATEK SOFTWARE, AND RECEIVER AGREES
++ * TO LOOK ONLY TO SUCH THIRD PARTY FOR ANY WARRANTY CLAIM RELATING THERETO.
++ * RECEIVER EXPRESSLY ACKNOWLEDGES THAT IT IS RECEIVER'S SOLE RESPONSIBILITY TO
++ * OBTAIN FROM ANY THIRD PARTY ALL PROPER LICENSES CONTAINED IN MEDIATEK
++ * SOFTWARE. MEDIATEK SHALL ALSO NOT BE RESPONSIBLE FOR ANY MEDIATEK SOFTWARE
++ * RELEASES MADE TO RECEIVER'S SPECIFICATION OR TO CONFORM TO A PARTICULAR
++ * STANDARD OR OPEN FORUM. RECEIVER'S SOLE AND EXCLUSIVE REMEDY AND MEDIATEK'S
++ * ENTIRE AND CUMULATIVE LIABILITY WITH RESPECT TO THE MEDIATEK SOFTWARE
++ * RELEASED HEREUNDER WILL BE, AT MEDIATEK'S OPTION, TO REVISE OR REPLACE THE
++ * MEDIATEK SOFTWARE AT ISSUE, OR REFUND ANY SOFTWARE LICENSE FEES OR SERVICE
++ * CHARGE PAID BY RECEIVER TO MEDIATEK FOR SUCH MEDIATEK SOFTWARE AT ISSUE.
++ *
++ * The following software/firmware and/or related documentation ("MediaTek
++ * Software") have been modified by MediaTek Inc. All revisions are subject to
++ * any receiver's applicable license agreements with MediaTek Inc.
++ */
++
++#ifndef _MTK_CLIENT_DISPLAYCLIENT_INC_CAMUTILS_H_
++#define _MTK_CLIENT_DISPLAYCLIENT_INC_CAMUTILS_H_
++
++
++/******************************************************************************
++*
++*******************************************************************************/
++//
++#include <stdlib.h>
++//
++#include <hardware/camera.h>
++#include <system/camera.h>
++//
++#include <cutils/log.h>
++#include <common.h>
++#include <utils/common.h>
++
++#include <v1/camutils/CamInfo.h>
++#include <v1/camutils/IBuffer.h>
++#include <v1/camutils/ICameraBuffer.h>
++#include <v1/camutils/IImgBufQueue.h>
++#include <v1/camutils/ImgBufQueue.h>
++
++using namespace android::MtkCamUtils;
++
++
++#endif  //_MTK_CLIENT_DISPLAYCLIENT_INC_CAMUTILS_H_
+\ No newline at end of file
+diff --git a/services/camera/libcameraservice/api1/Format.h b/services/camera/libcameraservice/api1/Format.h
+new file mode 100644
+index 000000000..9866dbd34
+--- /dev/null
++++ b/services/camera/libcameraservice/api1/Format.h
+@@ -0,0 +1,190 @@
++/* Copyright Statement:
++ *
++ * This software/firmware and related documentation ("MediaTek Software") are
++ * protected under relevant copyright laws. The information contained herein is
++ * confidential and proprietary to MediaTek Inc. and/or its licensors. Without
++ * the prior written permission of MediaTek inc. and/or its licensors, any
++ * reproduction, modification, use or disclosure of MediaTek Software, and
++ * information contained herein, in whole or in part, shall be strictly
++ * prohibited.
++ *
++ * MediaTek Inc. (C) 2010. All rights reserved.
++ *
++ * BY OPENING THIS FILE, RECEIVER HEREBY UNEQUIVOCALLY ACKNOWLEDGES AND AGREES
++ * THAT THE SOFTWARE/FIRMWARE AND ITS DOCUMENTATIONS ("MEDIATEK SOFTWARE")
++ * RECEIVED FROM MEDIATEK AND/OR ITS REPRESENTATIVES ARE PROVIDED TO RECEIVER
++ * ON AN "AS-IS" BASIS ONLY. MEDIATEK EXPRESSLY DISCLAIMS ANY AND ALL
++ * WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
++ * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE OR
++ * NONINFRINGEMENT. NEITHER DOES MEDIATEK PROVIDE ANY WARRANTY WHATSOEVER WITH
++ * RESPECT TO THE SOFTWARE OF ANY THIRD PARTY WHICH MAY BE USED BY,
++ * INCORPORATED IN, OR SUPPLIED WITH THE MEDIATEK SOFTWARE, AND RECEIVER AGREES
++ * TO LOOK ONLY TO SUCH THIRD PARTY FOR ANY WARRANTY CLAIM RELATING THERETO.
++ * RECEIVER EXPRESSLY ACKNOWLEDGES THAT IT IS RECEIVER'S SOLE RESPONSIBILITY TO
++ * OBTAIN FROM ANY THIRD PARTY ALL PROPER LICENSES CONTAINED IN MEDIATEK
++ * SOFTWARE. MEDIATEK SHALL ALSO NOT BE RESPONSIBLE FOR ANY MEDIATEK SOFTWARE
++ * RELEASES MADE TO RECEIVER'S SPECIFICATION OR TO CONFORM TO A PARTICULAR
++ * STANDARD OR OPEN FORUM. RECEIVER'S SOLE AND EXCLUSIVE REMEDY AND MEDIATEK'S
++ * ENTIRE AND CUMULATIVE LIABILITY WITH RESPECT TO THE MEDIATEK SOFTWARE
++ * RELEASED HEREUNDER WILL BE, AT MEDIATEK'S OPTION, TO REVISE OR REPLACE THE
++ * MEDIATEK SOFTWARE AT ISSUE, OR REFUND ANY SOFTWARE LICENSE FEES OR SERVICE
++ * CHARGE PAID BY RECEIVER TO MEDIATEK FOR SUCH MEDIATEK SOFTWARE AT ISSUE.
++ *
++ * The following software/firmware and/or related documentation ("MediaTek
++ * Software") have been modified by MediaTek Inc. All revisions are subject to
++ * any receiver's applicable license agreements with MediaTek Inc.
++ */
++
++#ifndef _MTK_HARDWARE_INCLUDE_MTKCAM_UTILS_FORMAT_H_
++#define _MTK_HARDWARE_INCLUDE_MTKCAM_UTILS_FORMAT_H_
++//
++
++
++/******************************************************************************
++ *
++ ******************************************************************************/
++namespace NSCam {
++namespace Utils {
++namespace Format {
++
++bool
++checkValidFormat(
++    int const imageFormat
++);
++
++/*****************************************************************************
++ * @brief Query the plane count.
++ *
++ * @details Given a format of type EImageFormat, return its corresponding
++ * plane count.
++ *
++ * @note
++ *
++ * @param[in] imageFormat: A format of type EImageFormat.
++ *
++ * @return its corresponding plane count.
++ *
++ ******************************************************************************/
++size_t
++queryPlaneCount(
++    int const imageFormat
++);
++
++
++/*****************************************************************************
++ * @brief Query the width in pixels of a specific plane.
++ *
++ * @details Given a format of type EImageFormat, a plane index, and the width in
++ * in pixels of the 0-th plane, return the width in pixels of the given plane.
++ *
++ * @note
++ *
++ * @param[in] imageFormat: A format of type EImageFormat.
++ * @param[in] planeIndex: a specific plane index.
++ * @param[in] widthInPixels: the width in pixels of the 0-th plane.
++ *
++ * @return the width in pixels of the given plane.
++ *
++ ******************************************************************************/
++size_t
++queryPlaneWidthInPixels(
++    int const imageFormat,
++    size_t planeIndex,
++    size_t widthInPixels
++);
++
++
++/*****************************************************************************
++ * @brief Query the height in pixels of a specific plane.
++ *
++ * @details Given a format of type EImageFormat, a plane index, and the height
++ * in pixels of the 0-th plane, return the height in pixels of the given plane.
++ *
++ * @note
++ *
++ * @param[in] imageFormat: A format of type EImageFormat.
++ * @param[in] planeIndex: a specific plane index.
++ * @param[in] heightInPixels: the height in pixels of the 0-th plane.
++ *
++ * @return the height in pixels of the given plane.
++ *
++ ******************************************************************************/
++size_t
++queryPlaneHeightInPixels(
++    int const imageFormat,
++    size_t planeIndex,
++    size_t heightInPixels
++);
++
++
++/*****************************************************************************
++ * @brief Query the bits per pixel of a specific plane.
++ *
++ * @details Given a format of type EImageFormat and a plane index, return
++ * the bits per pixel of the given plane.
++ *
++ * @note
++ *
++ * @param[in] imageFormat: A format of type EImageFormat.
++ * @param[in] planeIndex: a specific plane index.
++ *
++ * @return the bits per pixel of the given plane.
++ *
++ ******************************************************************************/
++int
++queryPlaneBitsPerPixel(
++    int const imageFormat,
++    size_t planeIndex
++);
++
++
++/*****************************************************************************
++ * @brief Query the bits per pixel of a specific format.
++ *
++ * @details Given a format of type EImageFormat, return the bits per pixel.
++ *
++ * @note
++ *
++ * @param[in] imageFormat: A format of type EImageFormat.
++ *
++ * @return the bits per pixel.
++ *
++ ******************************************************************************/
++int
++queryImageBitsPerPixel(
++    int const imageFormat
++);
++
++
++/*****************************************************************************
++ * @brief Query the image format constant.
++ *
++ * @details Given a MtkCameraParameters::PIXEL_FORMAT_xxx, return its
++ * corresponding image format constant.
++ *
++ * @note
++ *
++ * @param[in] szPixelFormat: A null-terminated string for pixel format (i.e.
++ * MtkCameraParameters::PIXEL_FORMAT_xxx)
++ *
++ * @return its corresponding image format.
++ *
++ ******************************************************************************/
++int
++queryImageFormat(
++    char const* szPixelFormat
++);
++
++/*****************************************************************************
++ * @Dump the information of Image map.
++ ******************************************************************************/
++void
++dumpMapInformation();
++
++/******************************************************************************
++ *
++ ******************************************************************************/
++};  // namespace Format
++};  // namespace Utils
++};  // namespace NSCam
++#endif  //_MTK_HARDWARE_INCLUDE_MTKCAM_UTILS_FORMAT_H_
+\ No newline at end of file
+diff --git a/services/camera/libcameraservice/api1/IBuffer.h b/services/camera/libcameraservice/api1/IBuffer.h
+new file mode 100644
+index 000000000..b7b0e591f
+--- /dev/null
++++ b/services/camera/libcameraservice/api1/IBuffer.h
+@@ -0,0 +1,118 @@
++/* Copyright Statement:
++ *
++ * This software/firmware and related documentation ("MediaTek Software") are
++ * protected under relevant copyright laws. The information contained herein is
++ * confidential and proprietary to MediaTek Inc. and/or its licensors. Without
++ * the prior written permission of MediaTek inc. and/or its licensors, any
++ * reproduction, modification, use or disclosure of MediaTek Software, and
++ * information contained herein, in whole or in part, shall be strictly
++ * prohibited.
++ *
++ * MediaTek Inc. (C) 2010. All rights reserved.
++ *
++ * BY OPENING THIS FILE, RECEIVER HEREBY UNEQUIVOCALLY ACKNOWLEDGES AND AGREES
++ * THAT THE SOFTWARE/FIRMWARE AND ITS DOCUMENTATIONS ("MEDIATEK SOFTWARE")
++ * RECEIVED FROM MEDIATEK AND/OR ITS REPRESENTATIVES ARE PROVIDED TO RECEIVER
++ * ON AN "AS-IS" BASIS ONLY. MEDIATEK EXPRESSLY DISCLAIMS ANY AND ALL
++ * WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
++ * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE OR
++ * NONINFRINGEMENT. NEITHER DOES MEDIATEK PROVIDE ANY WARRANTY WHATSOEVER WITH
++ * RESPECT TO THE SOFTWARE OF ANY THIRD PARTY WHICH MAY BE USED BY,
++ * INCORPORATED IN, OR SUPPLIED WITH THE MEDIATEK SOFTWARE, AND RECEIVER AGREES
++ * TO LOOK ONLY TO SUCH THIRD PARTY FOR ANY WARRANTY CLAIM RELATING THERETO.
++ * RECEIVER EXPRESSLY ACKNOWLEDGES THAT IT IS RECEIVER'S SOLE RESPONSIBILITY TO
++ * OBTAIN FROM ANY THIRD PARTY ALL PROPER LICENSES CONTAINED IN MEDIATEK
++ * SOFTWARE. MEDIATEK SHALL ALSO NOT BE RESPONSIBLE FOR ANY MEDIATEK SOFTWARE
++ * RELEASES MADE TO RECEIVER'S SPECIFICATION OR TO CONFORM TO A PARTICULAR
++ * STANDARD OR OPEN FORUM. RECEIVER'S SOLE AND EXCLUSIVE REMEDY AND MEDIATEK'S
++ * ENTIRE AND CUMULATIVE LIABILITY WITH RESPECT TO THE MEDIATEK SOFTWARE
++ * RELEASED HEREUNDER WILL BE, AT MEDIATEK'S OPTION, TO REVISE OR REPLACE THE
++ * MEDIATEK SOFTWARE AT ISSUE, OR REFUND ANY SOFTWARE LICENSE FEES OR SERVICE
++ * CHARGE PAID BY RECEIVER TO MEDIATEK FOR SUCH MEDIATEK SOFTWARE AT ISSUE.
++ *
++ * The following software/firmware and/or related documentation ("MediaTek
++ * Software") have been modified by MediaTek Inc. All revisions are subject to
++ * any receiver's applicable license agreements with MediaTek Inc.
++ */
++
++#ifndef _MTK_CAMERA_INC_COMMON_CAMUTILS_IBUFFER_H_
++#define _MTK_CAMERA_INC_COMMON_CAMUTILS_IBUFFER_H_
++//
++#include <sys/types.h>
++//
++#include <utils/RefBase.h>
++#include <utils/String8.h>
++
++/******************************************************************************
++ *
++ ******************************************************************************/
++
++namespace android {
++namespace MtkCamUtils {
++/******************************************************************************
++ *
++ ******************************************************************************/
++
++/******************************************************************************
++ *  Memory Buffer Interface.
++ ******************************************************************************/
++class IMemBuf : public virtual RefBase
++{
++public:     ////                Attributes.
++    //
++    virtual int64_t             getTimestamp() const                    = 0;
++    virtual void                setTimestamp(int64_t const timestamp)   = 0;
++    //
++public:     ////                Attributes.
++    virtual const char*         getBufName() const                      = 0;
++    virtual size_t              getBufSize() const                      = 0;
++    //
++    virtual void*               getVirAddr() const                      = 0;
++    virtual void*               getPhyAddr() const                      = 0;
++    //
++    virtual int                 getIonFd() const                        { return -1; }
++    virtual int                 getBufSecu() const                      { return 0; }
++    virtual int                 getBufCohe() const                      { return 0; }
++    //
++public:     ////
++    //
++    virtual                     ~IMemBuf() {};
++};
++
++
++/******************************************************************************
++ *  Image Buffer Interface.
++ ******************************************************************************/
++class IImgBuf : public IMemBuf
++{
++public:     ////                Attributes.
++    virtual String8 const&      getImgFormat()      const               = 0;
++    virtual uint32_t            getImgWidth()       const               = 0;
++    virtual uint32_t            getImgHeight()      const               = 0;
++
++    //
++    //  planeIndex
++    //      [I] plane's index; 0, 1, and 2 refer to 1st-, 2nd-, and 3rd planes,
++    //          respectively.
++    //
++    //  return
++    //      return its corresponding plane's stride, in pixel
++    //
++    virtual uint32_t            getImgWidthStride(
++                                    uint_t const uPlaneIndex = 0
++                                )   const                               = 0;
++
++    virtual uint32_t            getBitsPerPixel()   const               = 0;
++    //
++public:     ////
++    //
++    virtual                     ~IImgBuf() {};
++};
++
++
++/******************************************************************************
++ *
++ ******************************************************************************/
++};  // namespace MtkCamUtils
++};  // namespace android
++#endif  //_MTK_CAMERA_INC_COMMON_CAMUTILS_IBUFFER_H_
+\ No newline at end of file
+diff --git a/services/camera/libcameraservice/api1/StreamImgBuf.cpp b/services/camera/libcameraservice/api1/StreamImgBuf.cpp
+new file mode 100644
+index 000000000..1902db8f9
+--- /dev/null
++++ b/services/camera/libcameraservice/api1/StreamImgBuf.cpp
+@@ -0,0 +1,244 @@
++/* Copyright Statement:
++ *
++ * This software/firmware and related documentation ("MediaTek Software") are
++ * protected under relevant copyright laws. The information contained herein is
++ * confidential and proprietary to MediaTek Inc. and/or its licensors. Without
++ * the prior written permission of MediaTek inc. and/or its licensors, any
++ * reproduction, modification, use or disclosure of MediaTek Software, and
++ * information contained herein, in whole or in part, shall be strictly
++ * prohibited.
++ *
++ * MediaTek Inc. (C) 2010. All rights reserved.
++ *
++ * BY OPENING THIS FILE, RECEIVER HEREBY UNEQUIVOCALLY ACKNOWLEDGES AND AGREES
++ * THAT THE SOFTWARE/FIRMWARE AND ITS DOCUMENTATIONS ("MEDIATEK SOFTWARE")
++ * RECEIVED FROM MEDIATEK AND/OR ITS REPRESENTATIVES ARE PROVIDED TO RECEIVER
++ * ON AN "AS-IS" BASIS ONLY. MEDIATEK EXPRESSLY DISCLAIMS ANY AND ALL
++ * WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
++ * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE OR
++ * NONINFRINGEMENT. NEITHER DOES MEDIATEK PROVIDE ANY WARRANTY WHATSOEVER WITH
++ * RESPECT TO THE SOFTWARE OF ANY THIRD PARTY WHICH MAY BE USED BY,
++ * INCORPORATED IN, OR SUPPLIED WITH THE MEDIATEK SOFTWARE, AND RECEIVER AGREES
++ * TO LOOK ONLY TO SUCH THIRD PARTY FOR ANY WARRANTY CLAIM RELATING THERETO.
++ * RECEIVER EXPRESSLY ACKNOWLEDGES THAT IT IS RECEIVER'S SOLE RESPONSIBILITY TO
++ * OBTAIN FROM ANY THIRD PARTY ALL PROPER LICENSES CONTAINED IN MEDIATEK
++ * SOFTWARE. MEDIATEK SHALL ALSO NOT BE RESPONSIBLE FOR ANY MEDIATEK SOFTWARE
++ * RELEASES MADE TO RECEIVER'S SPECIFICATION OR TO CONFORM TO A PARTICULAR
++ * STANDARD OR OPEN FORUM. RECEIVER'S SOLE AND EXCLUSIVE REMEDY AND MEDIATEK'S
++ * ENTIRE AND CUMULATIVE LIABILITY WITH RESPECT TO THE MEDIATEK SOFTWARE
++ * RELEASED HEREUNDER WILL BE, AT MEDIATEK'S OPTION, TO REVISE OR REPLACE THE
++ * MEDIATEK SOFTWARE AT ISSUE, OR REFUND ANY SOFTWARE LICENSE FEES OR SERVICE
++ * CHARGE PAID BY RECEIVER TO MEDIATEK FOR SUCH MEDIATEK SOFTWARE AT ISSUE.
++ *
++ * The following software/firmware and/or related documentation ("MediaTek
++ * Software") have been modified by MediaTek Inc. All revisions are subject to
++ * any receiver's applicable license agreements with MediaTek Inc.
++ */
++
++#define LOG_TAG "MtkCam/DisplayClient"
++//
++#include "StreamImgBuf.h"
++#include "Format.h"
++using namespace android;
++using namespace NSDisplayClient;
++using namespace NSCam::Utils;
++//
++#include "log/log.h"
++#include "system/graphics.h"
++//
++/******************************************************************************
++*
++*******************************************************************************/
++#define MY_LOGV(fmt, arg...)        ALOGV("[%s] " fmt, __FUNCTION__, ##arg)
++#define MY_LOGD(fmt, arg...)        ALOGD("[%s] " fmt, __FUNCTION__, ##arg)
++#define MY_LOGI(fmt, arg...)        ALOGI("[%s] " fmt, __FUNCTION__, ##arg)
++#define MY_LOGW(fmt, arg...)        ALOGW("[%s] " fmt, __FUNCTION__, ##arg)
++#define MY_LOGE(fmt, arg...)        ALOGE("[%s] " fmt, __FUNCTION__, ##arg)
++#define MY_LOGA(fmt, arg...)        ALOGA("[%s] " fmt, __FUNCTION__, ##arg)
++#define MY_LOGF(fmt, arg...)        ALOGF("[%s] " fmt, __FUNCTION__, ##arg)
++//
++#define MY_LOGV_IF(cond, ...)       do { if ( (cond) ) { MY_LOGV(__VA_ARGS__); } }while(0)
++#define MY_LOGD_IF(cond, ...)       do { if ( (cond) ) { MY_LOGD(__VA_ARGS__); } }while(0)
++#define MY_LOGI_IF(cond, ...)       do { if ( (cond) ) { MY_LOGI(__VA_ARGS__); } }while(0)
++#define MY_LOGW_IF(cond, ...)       do { if ( (cond) ) { MY_LOGW(__VA_ARGS__); } }while(0)
++#define MY_LOGE_IF(cond, ...)       do { if ( (cond) ) { MY_LOGE(__VA_ARGS__); } }while(0)
++#define MY_LOGA_IF(cond, ...)       do { if ( (cond) ) { MY_LOGA(__VA_ARGS__); } }while(0)
++#define MY_LOGF_IF(cond, ...)       do { if ( (cond) ) { MY_LOGF(__VA_ARGS__); } }while(0)
++//
++#define GET_IIMGBUF_IMG_STRIDE_IN_BYTE_FOR_DISPLAY_ROTATION(pImgInfo, plane)  \
++            ((Format::queryPlaneCount(Format::queryImageFormat(pImgInfo->ms8ImgFormat)) >= (plane+1)) ? \
++            ((getImgWidthStride(plane+3)*Format::queryPlaneBitsPerPixel(Format::queryImageFormat(pImgInfo->ms8ImgFormat),plane)))>>3 : 0)
++//
++#define GET_IIMGBUF_IMG_STRIDE_IN_BYTE(pImgInfo, plane)   \
++            ((Format::queryPlaneCount(Format::queryImageFormat(pImgInfo->ms8ImgFormat)) >= (plane+1)) ? \
++            ((getImgWidthStride(plane)*Format::queryPlaneBitsPerPixel(Format::queryImageFormat(pImgInfo->ms8ImgFormat),plane)))>>3 : 0)
++
++/******************************************************************************
++ *
++ ******************************************************************************/
++ImgInfo::
++ImgInfo(
++    uint32_t const u4ImgWidth,
++    uint32_t const u4ImgHeight,
++    char const*const ImgFormat,
++    int32_t const i4ImgFormat,
++    char const*const pImgName,
++    uint32_t const u4Orientation
++)
++    : ms8ImgName(pImgName)
++    , ms8ImgFormat(ImgFormat)
++    , mi4ImgFormat(i4ImgFormat)
++    , mu4ImgWidth(u4ImgWidth)
++    , mu4ImgHeight(u4ImgHeight)
++    , mu4BitsPerPixel(Format::queryImageBitsPerPixel(i4ImgFormat))
++    , mi4Orientation(u4Orientation)
++{
++    ALOGD(
++        "[%s](%s@%dx%d@%d-bit)",
++        ms8ImgName.string(), ms8ImgFormat.string(),
++        mu4ImgWidth, mu4ImgHeight, mu4BitsPerPixel
++    );
++}
++
++
++/******************************************************************************
++ *
++ ******************************************************************************/
++StreamImgBuf::
++StreamImgBuf(
++    sp<ImgInfo const>const& rpImgInfo,
++    int32_t const   i4Stride,
++    void*const      pBufBase,
++    buffer_handle_t*pBufHndl,
++    int const       fdIon,
++    int64_t const   timestamp
++)
++    : IImgBuf()
++    , mpImgInfo(rpImgInfo)
++    , mi8Timestamp(timestamp)
++    , mfdIon(fdIon)
++    , mpBufBase(pBufBase)
++    , mpBufHndl(pBufHndl)
++    , mpANWBuffer(0)
++    , mi4Stride(i4Stride)
++    , mBufSize(0)
++    , mbNeedRotation(false)
++{
++/*
++#ifndef container_of
++#define container_of(ptr, type, member) \
++    (type *)((char*)(ptr) - offsetof(type, member))
++#endif
++    mpANWBuffer = container_of(pBufHndl, ANativeWindowBuffer, handle);
++    MY_LOGE_IF(mpANWBuffer->stride != (int)getImgWidthStride(0),"mismatch stride: %d %d", mpANWBuffer->stride, mi4Stride);
++    MY_LOGE_IF(mpANWBuffer->width  != (int)getImgWidth(),       "mismatch width: %d %d", mpANWBuffer->width, getImgWidth());
++    MY_LOGE_IF(mpANWBuffer->height != (int)getImgHeight(),      "mismatch height: %d %d", mpANWBuffer->height, getImgHeight());
++*/
++#if 1
++
++    if(rpImgInfo->mi4Orientation & HAL_TRANSFORM_ROT_90)    //It also included rot 270 case, because rot 270 = rot90|flipH|flipV )
++    {
++        //If rotated, the fromat must be YUYV
++        //For (Rotated) YUYV Format
++        mBufSize =  getImgWidth() * (GET_IIMGBUF_IMG_STRIDE_IN_BYTE_FOR_DISPLAY_ROTATION(rpImgInfo,0));
++    }
++    else
++    {
++        //If not rotated, the fromat must be YV12
++        //For YV12 Format
++        size_t const y_size = getImgHeight() * (GET_IIMGBUF_IMG_STRIDE_IN_BYTE(rpImgInfo,0));
++        size_t const vu_size= (getImgHeight()>>1) * ((GET_IIMGBUF_IMG_STRIDE_IN_BYTE(rpImgInfo,1)) + (GET_IIMGBUF_IMG_STRIDE_IN_BYTE(rpImgInfo,2)));
++        mBufSize = y_size + vu_size;
++    }
++#endif
++#if 0
++    dump();
++#endif
++}
++
++
++/******************************************************************************
++ *
++ ******************************************************************************/
++StreamImgBuf::
++~StreamImgBuf()
++{
++#if 0
++    MY_LOGD(
++        "%dx%d ion:%d, pBuf/pBufHndl=%p/%p/%p",
++        getImgWidth(), getImgHeight(),
++        mfdIon, mpBufBase, mpBufHndl, *mpBufHndl
++    );
++#endif
++}
++
++
++/******************************************************************************
++ *
++ ******************************************************************************/
++uint32_t
++StreamImgBuf::
++getImgWidthStride(uint_t const uPlaneIndex) const
++{
++    if(mpImgInfo->mi4Orientation == 0 || uPlaneIndex <= 2)
++    {
++        return  (0 == uPlaneIndex)
++            ?   mi4Stride
++            :   ((~15) & (15 + (mi4Stride>>1)))
++                ;
++    }
++    else
++    {
++        int stride = mi4Stride;
++
++        return ((3 == uPlaneIndex) ? stride : 0);
++    }
++}
++
++
++/******************************************************************************
++ *
++ ******************************************************************************/
++void
++StreamImgBuf::
++dump() const
++{
++    MY_LOGD(
++        "[%s](%s@%dx%d@%d-bit@%d), ion:%d, pBuf/pBufHndl=%p/%p/%p, Stride:%d, Timestamp:%lld",
++        getBufName(), getImgFormat().string(), getImgWidth(), getImgHeight(),
++        getBitsPerPixel(), (int)getBufSize(),
++        mfdIon,
++        mpBufBase, mpBufHndl, *mpBufHndl, mi4Stride, (long long)mi8Timestamp
++    );
++}
++
++
++/******************************************************************************
++ *
++ ******************************************************************************/
++uint32_t
++StreamImgBuf::
++getOrientation()
++{
++    return mpImgInfo->mi4Orientation;
++}
++
++/******************************************************************************
++ *
++ ******************************************************************************/
++void
++StreamImgBuf::
++setNeedDisplayRotation(bool bNeed)
++{
++    mbNeedRotation = bNeed;
++}
++
++/******************************************************************************
++ *
++ ******************************************************************************/
++bool
++StreamImgBuf::
++getNeedDisplayRotation()
++{
++    return mbNeedRotation;
++}
+diff --git a/services/camera/libcameraservice/api1/StreamImgBuf.h b/services/camera/libcameraservice/api1/StreamImgBuf.h
+new file mode 100644
+index 000000000..13c8b54e1
+--- /dev/null
++++ b/services/camera/libcameraservice/api1/StreamImgBuf.h
+@@ -0,0 +1,161 @@
++/* Copyright Statement:
++ *
++ * This software/firmware and related documentation ("MediaTek Software") are
++ * protected under relevant copyright laws. The information contained herein is
++ * confidential and proprietary to MediaTek Inc. and/or its licensors. Without
++ * the prior written permission of MediaTek inc. and/or its licensors, any
++ * reproduction, modification, use or disclosure of MediaTek Software, and
++ * information contained herein, in whole or in part, shall be strictly
++ * prohibited.
++ *
++ * MediaTek Inc. (C) 2010. All rights reserved.
++ *
++ * BY OPENING THIS FILE, RECEIVER HEREBY UNEQUIVOCALLY ACKNOWLEDGES AND AGREES
++ * THAT THE SOFTWARE/FIRMWARE AND ITS DOCUMENTATIONS ("MEDIATEK SOFTWARE")
++ * RECEIVED FROM MEDIATEK AND/OR ITS REPRESENTATIVES ARE PROVIDED TO RECEIVER
++ * ON AN "AS-IS" BASIS ONLY. MEDIATEK EXPRESSLY DISCLAIMS ANY AND ALL
++ * WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
++ * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE OR
++ * NONINFRINGEMENT. NEITHER DOES MEDIATEK PROVIDE ANY WARRANTY WHATSOEVER WITH
++ * RESPECT TO THE SOFTWARE OF ANY THIRD PARTY WHICH MAY BE USED BY,
++ * INCORPORATED IN, OR SUPPLIED WITH THE MEDIATEK SOFTWARE, AND RECEIVER AGREES
++ * TO LOOK ONLY TO SUCH THIRD PARTY FOR ANY WARRANTY CLAIM RELATING THERETO.
++ * RECEIVER EXPRESSLY ACKNOWLEDGES THAT IT IS RECEIVER'S SOLE RESPONSIBILITY TO
++ * OBTAIN FROM ANY THIRD PARTY ALL PROPER LICENSES CONTAINED IN MEDIATEK
++ * SOFTWARE. MEDIATEK SHALL ALSO NOT BE RESPONSIBLE FOR ANY MEDIATEK SOFTWARE
++ * RELEASES MADE TO RECEIVER'S SPECIFICATION OR TO CONFORM TO A PARTICULAR
++ * STANDARD OR OPEN FORUM. RECEIVER'S SOLE AND EXCLUSIVE REMEDY AND MEDIATEK'S
++ * ENTIRE AND CUMULATIVE LIABILITY WITH RESPECT TO THE MEDIATEK SOFTWARE
++ * RELEASED HEREUNDER WILL BE, AT MEDIATEK'S OPTION, TO REVISE OR REPLACE THE
++ * MEDIATEK SOFTWARE AT ISSUE, OR REFUND ANY SOFTWARE LICENSE FEES OR SERVICE
++ * CHARGE PAID BY RECEIVER TO MEDIATEK FOR SUCH MEDIATEK SOFTWARE AT ISSUE.
++ *
++ * The following software/firmware and/or related documentation ("MediaTek
++ * Software") have been modified by MediaTek Inc. All revisions are subject to
++ * any receiver's applicable license agreements with MediaTek Inc.
++ */
++
++#ifndef _MTK_CAMERA_CLIENT_DISPLAYCLIENT_STREAMIMGBUF_H_
++#define _MTK_CAMERA_CLIENT_DISPLAYCLIENT_STREAMIMGBUF_H_
++//
++//#include <utils/RefBase.h>
++//#include <utils/String8.h>
++#include <system/window.h>
++#include "IBuffer.h"
++
++using namespace android::MtkCamUtils;
++
++namespace android {
++namespace NSDisplayClient {
++/******************************************************************************
++ *
++ ******************************************************************************/
++
++
++/******************************************************************************
++ *  Image Info
++ ******************************************************************************/
++struct ImgInfo : public LightRefBase<ImgInfo>
++{
++    String8                         ms8ImgName;
++    String8                         ms8ImgFormat;
++    int32_t                         mi4ImgFormat;
++    uint32_t                        mu4ImgWidth;
++    uint32_t                        mu4ImgHeight;
++    uint32_t                        mu4BitsPerPixel;
++    uint32_t                        mi4Orientation;
++    //
++                                    ImgInfo(
++                                        uint32_t const u4ImgWidth,
++                                        uint32_t const u4ImgHeight,
++                                        char const*const ImgFormat,
++                                        int32_t const i4ImgFormat,
++                                        char const*const pImgName = "",
++                                        uint32_t const u4Orientation = 0
++                                    );
++};
++
++/******************************************************************************
++ *  preview_stream_ops image buffer
++ ******************************************************************************/
++class StreamImgBuf : public IImgBuf
++{
++//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++//  IMemBuf Interface.
++//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++public:     ////                    Attributes.
++    virtual int64_t                 getTimestamp() const                    { return mi8Timestamp; }
++    virtual void                    setTimestamp(int64_t const timestamp)   { mi8Timestamp = timestamp; }
++    //
++public:     ////                    Attributes.
++    virtual const char*             getBufName() const                      { return mpImgInfo->ms8ImgName.string(); }
++    virtual size_t                  getBufSize() const                      { return mBufSize; }
++    //
++    virtual void*                   getVirAddr() const                      { return mpBufBase; }
++    virtual void*                   getPhyAddr() const                      { return 0; }
++    //
++    virtual int                     getIonFd() const                        { return mfdIon; }
++    //
++//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++//  IImgBuf Interface.
++//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++public:     ////                    Attributes.
++    virtual String8 const&          getImgFormat()      const               { return mpImgInfo->ms8ImgFormat; }
++    virtual uint32_t                getImgWidth()       const               { return mpImgInfo->mu4ImgWidth; }
++    virtual uint32_t                getImgHeight()      const               { return mpImgInfo->mu4ImgHeight; }
++    virtual uint32_t                getImgWidthStride(
++                                        uint_t const uPlaneIndex = 0
++                                    )                   const;
++    virtual uint32_t                getBitsPerPixel()   const               { return mpImgInfo->mu4BitsPerPixel; }
++    //
++//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++//  preview_stream_ops Interface.
++//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++public:     ////    Attributes.
++    //
++    inline  native_handle_t const*  getNativeHndlPtr() const                { return *mpBufHndl; }
++    //
++    inline  buffer_handle_t         getBufHndl()    const                   { return *mpBufHndl; }
++    //
++    inline  buffer_handle_t*        getBufHndlPtr() const                   { return mpBufHndl; }
++    //
++//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++//  Operations.
++//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++public:     ////                    Instantiation.
++    virtual                         ~StreamImgBuf();
++                                    StreamImgBuf(
++                                        sp<ImgInfo const>const& rpImgInfo,
++                                        int32_t const   i4Stride,
++                                        void*const      pBufBase,
++                                        buffer_handle_t*pBufHndl,
++                                        int const       fdIon    = -1,
++                                        int64_t const   timestamp= 0
++                                    );
++
++//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
++public:     ////                    Debug.
++    void                            dump() const;
++    //
++    uint32_t                        getOrientation();
++    void                            setNeedDisplayRotation(bool bNeed);
++    bool                            getNeedDisplayRotation();
++//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++//  Data Members.
++//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++protected:  ////                    Memory.
++    sp<ImgInfo const>               mpImgInfo;
++    int64_t                         mi8Timestamp;
++    int                             mfdIon;         //  ion shared file descriptor.
++    void*                           mpBufBase;      //  Pointer to the locked buffer base address.
++    buffer_handle_t*                mpBufHndl;      //  Pointer to the locked buffer handle.
++    sp<ANativeWindowBuffer>         mpANWBuffer;    //
++    int32_t                         mi4Stride;      //
++    size_t                          mBufSize;       //
++    bool                            mbNeedRotation; //  for display rotation
++};
++
++
++}; // namespace NSDisplayClient
++}; // namespace android
++#endif  //_MTK_CAMERA_CLIENT_DISPLAYCLIENT_STREAMIMGBUF_H_
+\ No newline at end of file
+-- 
+2.20.1
+
+

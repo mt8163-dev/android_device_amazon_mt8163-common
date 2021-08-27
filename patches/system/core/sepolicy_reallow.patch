@@ -1,0 +1,29 @@
+From aa4de369adfdd43bc09f3f5f504b706b120d8bcd Mon Sep 17 00:00:00 2001
+From: Bilux <i.bilux@gmail.com>
+Date: Mon, 31 Dec 2018 16:37:45 +0100
+Subject: [PATCH] init: Allow to start services without sepolicy defined
+
+Temperary, can be removed when we switch to enforcing
+---
+ init/service.cpp | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/init/service.cpp b/init/service.cpp
+index 7c50165c17..30ae4d6b61 100644
+--- a/init/service.cpp
++++ b/init/service.cpp
+@@ -83,12 +83,14 @@ static std::string ComputeContextFromExecutable(std::string& service_name,
+         computed_context = new_con;
+         free(new_con);
+     }
++    #if 0
+     if (rc == 0 && computed_context == mycon.get()) {
+         LOG(ERROR) << "service " << service_name << " does not have a SELinux domain defined";
+         if (selinux_status_getenforce() > 0) {
+             return "";
+         }
+     }
++    #endif
+     if (rc < 0) {
+         LOG(ERROR) << "could not get context while starting '" << service_name << "'";
+         return "";

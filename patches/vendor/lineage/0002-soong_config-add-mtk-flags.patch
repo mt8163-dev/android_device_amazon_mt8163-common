@@ -1,0 +1,34 @@
+From a3096abd77b1106760d85adf5899d6a573913aa6 Mon Sep 17 00:00:00 2001
+From: Bilux <i.bilux@gmail.com>
+Date: Mon, 24 Feb 2020 22:25:14 +0100
+Subject: [PATCH] soong_config: add mtk flags
+
+---
+ build/soong/android/variable.go | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/build/soong/android/variable.go b/build/soong/android/variable.go
+index d92ae929f..6ac9ae0de 100644
+--- a/build/soong/android/variable.go
++++ b/build/soong/android/variable.go
+@@ -1,5 +1,11 @@
+ package android
+ type Product_variables struct {
++	uses_mtk_hardware struct {
++		Cppflags []string
++	}
++	uses_legacy_mtk_av_blob struct {
++		Cppflags []string
++	}
+ 	Has_legacy_camera_hal1 struct {
+ 		Cflags []string
+ 	}
+@@ -28,6 +34,8 @@ type Product_variables struct {
+ }
+ 
+ type ProductVariables struct {
++	Uses_mtk_hardware  *bool `json:",omitempty"`
++	Uses_legacy_mtk_av_blob  *bool `json:",omitempty"`
+ 	Has_legacy_camera_hal1  *bool `json:",omitempty"`
+ 	Needs_legacy_camera_hal1_dyn_native_handle  *bool `json:",omitempty"`
+ 	Needs_text_relocations  *bool `json:",omitempty"`

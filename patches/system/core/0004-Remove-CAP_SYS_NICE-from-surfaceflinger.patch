@@ -1,0 +1,28 @@
+From 19e7ee4848e9ad88c6d29704f6d419e7fb0de1e9 Mon Sep 17 00:00:00 2001
+From: vishalk17 <vishalkapadi95@gmail.com>
+Date: Wed, 14 Mar 2018 12:16:17 +0000
+Subject: [PATCH 4/6] Remove CAP_SYS_NICE from surfaceflinger
+
+Change-Id: Ide8c2933f5c89597c90b8508fa4da481ed4032a0
+---
+ libcutils/fs_config.cpp | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/libcutils/fs_config.cpp b/libcutils/fs_config.cpp
+index cb15b57..872961f 100644
+--- a/libcutils/fs_config.cpp
++++ b/libcutils/fs_config.cpp
+@@ -182,8 +182,8 @@ static const struct fs_path_config android_files[] = {
+                                               "system/bin/run-as" },
+ 
+     // Support FIFO scheduling mode in SurfaceFlinger.
+-    { 00755, AID_SYSTEM,    AID_GRAPHICS,  CAP_MASK_LONG(CAP_SYS_NICE),
+-                                              "system/bin/surfaceflinger" },
++//    { 00755, AID_SYSTEM,    AID_GRAPHICS,  CAP_MASK_LONG(CAP_SYS_NICE),
++//                                              "system/bin/surfaceflinger" },
+ 
+     // Support hostapd administering a network interface.
+     { 00755, AID_WIFI,      AID_WIFI,      CAP_MASK_LONG(CAP_NET_ADMIN) |
+-- 
+2.7.4
+

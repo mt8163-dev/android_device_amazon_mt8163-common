@@ -1,0 +1,283 @@
+From 54f0e0de94fc26a4081724848f94c80199b8734a Mon Sep 17 00:00:00 2001
+From: Adrian DC <radian.dc@gmail.com>
+Date: Tue, 25 Jul 2017 01:43:38 +0200
+Subject: [PATCH 6/6] adb: Conditionally restore support for legacy f_adb
+ interface
+
+ * Restore full support of USB and ADB on devices using the
+    legacy f_adb kernel drivers (to enable it, devices must
+    set TARGET_USES_LEGACY_ADB_INTERFACE flag to true)
+
+ * Forward port with commits:
+    'adb: kill adb_thread_{create, join, detach, exit}'
+
+This reverts commit 183b73e665a4cd369ef88c657019cd29f009672b.
+Change-Id: I37f3ad237ee38a23736b2378e790a97efdf95bf0
+Signed-off-by: Adrian DC <radian.dc@gmail.com>
+---
+ adb/Android.mk      |   8 +++
+ adb/adb.h           |   3 ++
+ adb/daemon/main.cpp |   4 ++
+ adb/daemon/usb.cpp  | 139 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+ adb/daemon/usb.h    |   5 ++
+ rootdir/ueventd.rc  |   2 +
+ 6 files changed, 161 insertions(+)
+
+diff --git a/adb/Android.mk b/adb/Android.mk
+index ece0645..2a81f06 100644
+--- a/adb/Android.mk
++++ b/adb/Android.mk
+@@ -113,6 +113,10 @@ LOCAL_MODULE := libadbd_usb
+ LOCAL_CFLAGS := $(LIBADB_CFLAGS) -DADB_HOST=0
+ LOCAL_SRC_FILES := daemon/usb.cpp
+ 
++ifeq ($(TARGET_USES_LEGACY_ADB_INTERFACE),true)
++LOCAL_CFLAGS += -DLEGACY_ADB_INTERFACE
++endif
++
+ LOCAL_SANITIZE := $(adb_target_sanitize)
+ 
+ # Even though we're building a static library (and thus there's no link step for
+@@ -357,6 +361,10 @@ LOCAL_CFLAGS += -DALLOW_ADBD_DISABLE_VERITY=1
+ LOCAL_CFLAGS += -DALLOW_ADBD_ROOT=1
+ endif
+ 
++ifeq ($(TARGET_USES_LEGACY_ADB_INTERFACE),true)
++LOCAL_CFLAGS += -DLEGACY_ADB_INTERFACE
++endif
++
+ LOCAL_MODULE := adbd
+ 
+ LOCAL_FORCE_STATIC_EXECUTABLE := true
+diff --git a/adb/adb.h b/adb/adb.h
+index 68384f1..acea77d 100644
+--- a/adb/adb.h
++++ b/adb/adb.h
+@@ -215,6 +215,9 @@ extern int SHELL_EXIT_NOTIFY_FD;
+ #define CHUNK_SIZE (64*1024)
+ 
+ #if !ADB_HOST
++#ifdef LEGACY_ADB_INTERFACE
++#define USB_ADB_PATH     "/dev/android_adb"
++#endif
+ #define USB_FFS_ADB_PATH  "/dev/usb-ffs/adb/"
+ #define USB_FFS_ADB_EP(x) USB_FFS_ADB_PATH#x
+ 
+diff --git a/adb/daemon/main.cpp b/adb/daemon/main.cpp
+index c510535..5f39c50 100644
+--- a/adb/daemon/main.cpp
++++ b/adb/daemon/main.cpp
+@@ -177,7 +177,11 @@ int adbd_main(int server_port) {
+     drop_privileges(server_port);
+ 
+     bool is_usb = false;
++#ifdef LEGACY_ADB_INTERFACE
++    if (access(USB_ADB_PATH, F_OK) == 0) {
++#else
+     if (access(USB_FFS_ADB_EP0, F_OK) == 0) {
++#endif
+         // Listen on USB.
+         usb_init();
+         is_usb = true;
+diff --git a/adb/daemon/usb.cpp b/adb/daemon/usb.cpp
+index 0f92282..690a031 100644
+--- a/adb/daemon/usb.cpp
++++ b/adb/daemon/usb.cpp
+@@ -64,7 +64,9 @@ using namespace std::chrono_literals;
+ 
+ #define FUNCTIONFS_ENDPOINT_ALLOC       _IOR('g', 231, __u32)
+ 
++#ifndef LEGACY_ADB_INTERFACE
+ static constexpr size_t ENDPOINT_ALLOC_RETRIES = 10;
++#endif
+ 
+ static int dummy_fd = -1;
+ 
+@@ -105,6 +107,138 @@ struct desc_v2 {
+     struct usb_ext_compat_desc os_desc;
+ } __attribute__((packed));
+ 
++#ifdef LEGACY_ADB_INTERFACE
++static void usb_adb_open_thread(void* x) {
++    struct usb_handle *usb = (struct usb_handle *)x;
++    int fd;
++
++    adb_thread_setname("usb open");
++
++    while (true) {
++        // wait until the USB device needs opening
++        std::unique_lock<std::mutex> lock(usb->lock);
++        while (!usb->open_new_connection) {
++            usb->notify.wait(lock);
++        }
++        usb->open_new_connection = false;
++        lock.unlock();
++
++        D("[ usb_thread - opening device ]");
++        do {
++            /* XXX use inotify? */
++            fd = unix_open("/dev/android_adb", O_RDWR);
++            if (fd < 0) {
++                // to support older kernels
++                fd = unix_open("/dev/android", O_RDWR);
++            }
++            if (fd < 0) {
++                std::this_thread::sleep_for(1s);
++            }
++        } while (fd < 0);
++        D("[ opening device succeeded ]");
++
++        close_on_exec(fd);
++        usb->fd = fd;
++
++        D("[ usb_thread - registering device ]");
++        register_usb_transport(usb, 0, 0, 1);
++    }
++
++    // never gets here
++    abort();
++}
++
++static int usb_adb_write(usb_handle *h, const void *data, int len)
++{
++    int n;
++
++    D("about to write (fd=%d, len=%d)", h->fd, len);
++    n = unix_write(h->fd, data, len);
++    if(n != len) {
++        D("ERROR: fd = %d, n = %d, errno = %d (%s)",
++            h->fd, n, errno, strerror(errno));
++        return -1;
++    }
++    if (h->kicked) {
++        D("usb_adb_write finished due to kicked");
++        return -1;
++    }
++    D("[ done fd=%d ]", h->fd);
++    return 0;
++}
++
++static int usb_adb_read(usb_handle *h, void *data, int len)
++{
++    D("about to read (fd=%d, len=%d)", h->fd, len);
++    while (len > 0) {
++        // The kernel implementation of adb_read in f_adb.c doesn't support
++        // reads larger then 4096 bytes. Read the data in 4096 byte chunks to
++        // avoid the issue. (The ffs implementation doesn't have this limit.)
++        int bytes_to_read = len < 4096 ? len : 4096;
++        int n = unix_read(h->fd, data, bytes_to_read);
++        if (n != bytes_to_read) {
++            D("ERROR: fd = %d, n = %d, errno = %d (%s)",
++                h->fd, n, errno, strerror(errno));
++            return -1;
++        }
++        if (h->kicked) {
++            D("usb_adb_read finished due to kicked");
++            return -1;
++        }
++        len -= n;
++        data = ((char*)data) + n;
++    }
++    D("[ done fd=%d ]", h->fd);
++    return 0;
++}
++
++static void usb_adb_kick(usb_handle *h) {
++    D("usb_kick");
++    // Other threads may be calling usb_adb_read/usb_adb_write at the same time.
++    // If we close h->fd, the file descriptor will be reused to open other files,
++    // and the read/write thread may operate on the wrong file. So instead
++    // we set the kicked flag and reopen h->fd to a dummy file here. After read/write
++    // threads finish, we close h->fd in usb_adb_close().
++    h->kicked = true;
++    TEMP_FAILURE_RETRY(dup2(dummy_fd, h->fd));
++}
++
++static void usb_adb_close(usb_handle *h) {
++    h->kicked = false;
++    adb_close(h->fd);
++    // Notify usb_adb_open_thread to open a new connection.
++    h->lock.lock();
++    h->open_new_connection = true;
++    h->lock.unlock();
++    h->notify.notify_one();
++}
++
++static void usb_adb_init()
++{
++    usb_handle* h = new usb_handle();
++
++    h->write = usb_adb_write;
++    h->read = usb_adb_read;
++    h->kick = usb_adb_kick;
++    h->close = usb_adb_close;
++
++    // Open the file /dev/android_adb_enable to trigger
++    // the enabling of the adb USB function in the kernel.
++    // We never touch this file again - just leave it open
++    // indefinitely so the kernel will know when we are running
++    // and when we are not.
++    int fd = unix_open("/dev/android_adb_enable", O_RDWR);
++    if (fd < 0) {
++       D("failed to open /dev/android_adb_enable");
++    } else {
++        close_on_exec(fd);
++    }
++
++    D("[ usb_init - starting thread ]");
++    std::thread(usb_adb_open_thread, h).detach();
++}
++#else
++
+ static struct func_desc fs_descriptors = {
+     .intf = {
+         .bLength = sizeof(fs_descriptors.intf),
+@@ -458,11 +592,16 @@ static void usb_ffs_init() {
+     D("[ usb_init - starting thread ]");
+     std::thread(usb_ffs_open_thread, h).detach();
+ }
++#endif
+ 
+ void usb_init() {
+     dummy_fd = adb_open("/dev/null", O_WRONLY);
+     CHECK_NE(dummy_fd, -1);
++#ifdef LEGACY_ADB_INTERFACE
++    usb_adb_init();
++#else
+     usb_ffs_init();
++#endif
+ }
+ 
+ int usb_write(usb_handle* h, const void* data, int len) {
+diff --git a/adb/daemon/usb.h b/adb/daemon/usb.h
+index 55b5995..431591a 100644
+--- a/adb/daemon/usb.h
++++ b/adb/daemon/usb.h
+@@ -34,6 +34,11 @@ struct usb_handle {
+     void (*kick)(usb_handle* h);
+     void (*close)(usb_handle* h);
+ 
++#ifdef LEGACY_ADB_INTERFACE
++    // Legacy f_adb
++    int fd = -1;
++#endif
++
+     // FunctionFS
+     int control = -1;
+     int bulk_out = -1; /* "out" from the host's perspective => source for adbd */
+diff --git a/rootdir/ueventd.rc b/rootdir/ueventd.rc
+index eadf219..0cf9253 100644
+--- a/rootdir/ueventd.rc
++++ b/rootdir/ueventd.rc
+@@ -68,6 +68,8 @@ subsystem sound
+ # these should not be world writable
+ /dev/diag                 0660   radio      radio
+ /dev/diag_arm9            0660   radio      radio
++/dev/android_adb          0660   adb        adb
++/dev/android_adb_enable   0660   adb        adb
+ /dev/ttyMSM0              0600   bluetooth  bluetooth
+ /dev/uhid                 0660   uhid       uhid
+ /dev/uinput               0660   system     bluetooth
+-- 
+2.7.4
+

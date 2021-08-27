@@ -1,0 +1,85 @@
+From b6e2c6bae1cc0ed9b452d37056cd68f5e4b56876 Mon Sep 17 00:00:00 2001
+From: bilux <i.bilux@gmail.com>
+Date: Thu, 30 Jan 2020 18:23:15 +0100
+Subject: [PATCH] libstagefright: fix Autoscale Omx
+
+add USE_LEGACY_RESCALING flag to support Omx autoscale
+
+Signed-off-by: bilux <i.bilux@gmail.com>
+---
+ media/libstagefright/ACodec.cpp | 38 +++++++++++++++++++++++++++++++++
+ 1 file changed, 38 insertions(+)
+
+diff --git a/media/libstagefright/ACodec.cpp b/media/libstagefright/ACodec.cpp
+index def8ada..337c8af 100644
+--- a/media/libstagefright/ACodec.cpp
++++ b/media/libstagefright/ACodec.cpp
+@@ -62,6 +62,8 @@
+ #include "include/SharedMemoryBuffer.h"
+ #include <media/stagefright/omx/OMXUtils.h>
+ 
++#define USE_LEGACY_RESCALING 1
++
+ namespace android {
+ 
+ using binder::Status;
+@@ -7888,6 +7890,15 @@ bool ACodec::OutputPortSettingsChangedState::onOMXEvent(
+                     return false;
+                 }
+ 
++#ifdef USE_LEGACY_RESCALING
++                // Resolution is about to change
++                // Make sure the decoder knows
++                sp<AMessage> reply = new AMessage(kWhatOutputBufferDrained, mCodec);
++                mCodec->onOutputFormatChanged();
++                mCodec->addKeyFormatChangesToRenderBufferNotification(reply);
++                mCodec->sendFormatChange();
++#endif
++
+                 ALOGV("[%s] Output port now reenabled.", mCodec->mComponentName.c_str());
+ 
+                 if (mCodec->mExecutingState->active()) {
+@@ -7902,6 +7913,14 @@ bool ACodec::OutputPortSettingsChangedState::onOMXEvent(
+             return false;
+         }
+ 
++#ifdef USE_LEGACY_RESCALING
++        case OMX_EventPortSettingsChanged:
++            // Exynos OMX wants to share its' output crop
++            // For some reason trying to handle this here doesn't do anything
++            // We'll do it right before transitioning to ExecutingState
++            return true;
++        break;
++#endif
+         default:
+             return BaseState::onOMXEvent(event, data1, data2);
+     }
+@@ -8463,6 +8482,25 @@ status_t ACodec::getOMXChannelMapping(size_t numChannels, OMX_AUDIO_CHANNELTYPE
+     return OK;
+ }
+ 
++#ifdef USE_LEGACY_RESCALING
++void ACodec::addKeyFormatChangesToRenderBufferNotification(sp<AMessage> &notify) {
++    AString mime;
++    CHECK(mOutputFormat->findString("mime", &mime));
++    if (mime == MEDIA_MIMETYPE_VIDEO_RAW && mNativeWindow != NULL) {
++        // notify renderer of the crop change and dataspace change
++        // NOTE: native window uses extended right-bottom coordinate
++        int32_t left, top, right, bottom;
++        if (mOutputFormat->findRect("crop", &left, &top, &right, &bottom)) {
++            notify->setRect("crop", left, top, right + 1, bottom + 1);
++        }
++        int32_t dataSpace;
++        if (mOutputFormat->findInt32("android._dataspace", &dataSpace)) {
++            notify->setInt32("dataspace", dataSpace);
++        }
++    }
++}
++#endif
++
+ void ACodec::setTrebleFlag(bool trebleFlag) {
+     mTrebleFlag = trebleFlag;
+ }
+-- 
+2.25.0
+

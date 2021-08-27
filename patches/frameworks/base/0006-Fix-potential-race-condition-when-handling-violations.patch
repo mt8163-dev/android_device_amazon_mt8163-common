@@ -1,0 +1,69 @@
+From 11f0255596e539192368e78a7c6c15ade6330a7f Mon Sep 17 00:00:00 2001
+From: PVineeth <vineeth.pen@outlook.com>
+Date: Wed, 07 Nov 2018 17:58:13 -0600
+Subject: [PATCH] Fix potential race condition when handling violations
+
+This patch fixes NullPointerException which can occasionally
+happen due to an still unregistered ActivityManager when trying
+to handle application StrictMode violation.
+
+--------- beginning of crash
+01-01 00:03:49.979   403   436 E AndroidRuntime: *** FATAL EXCEPTION IN SYSTEM PROCESS: android.display
+01-01 00:03:49.979   403   436 E AndroidRuntime: java.lang.NullPointerException: Attempt to invoke interface method 'void android.app.IActivityManager.handleApplicationStrictModeViolation(android.os.IBinder, int, android.os.StrictMode$ViolationInfo)' on a null object reference
+01-01 00:03:49.979   403   436 E AndroidRuntime: 	at android.os.StrictMode$AndroidBlockGuardPolicy.handleViolation(StrictMode.java:1711)
+01-01 00:03:49.979   403   436 E AndroidRuntime: 	at android.os.StrictMode$AndroidBlockGuardPolicy$1.run(StrictMode.java:1606)
+01-01 00:03:49.979   403   436 E AndroidRuntime: 	at android.os.Handler.handleCallback(Handler.java:790)
+01-01 00:03:49.979   403   436 E AndroidRuntime: 	at android.os.Handler.dispatchMessage(Handler.java:99)
+01-01 00:03:49.979   403   436 E AndroidRuntime: 	at android.os.Looper.loop(Looper.java:164)
+01-01 00:03:49.979   403   436 E AndroidRuntime: 	at android.os.HandlerThread.run(HandlerThread.java:65)
+01-01 00:03:49.979   403   436 E AndroidRuntime: 	at com.android.server.ServiceThread.run(ServiceThread.java:46)
+01-01 00:03:50.159   403   436 E AndroidRuntime: Error reporting crash
+01-01 00:03:50.159   403   436 E AndroidRuntime: java.lang.NullPointerException: Attempt to invoke interface method 'void android.app.IActivityManager.handleApplicationCrash(android.os.IBinder, android.app.ApplicationErrorReport$ParcelableCrashInfo)' on a null object reference
+01-01 00:03:50.159   403   436 E AndroidRuntime: 	at com.android.internal.os.RuntimeInit$KillApplicationHandler.uncaughtException(RuntimeInit.java:143)
+01-01 00:03:50.159   403   436 E AndroidRuntime: 	at java.lang.ThreadGroup.uncaughtException(ThreadGroup.java:1068)
+01-01 00:03:50.159   403   436 E AndroidRuntime: 	at java.lang.ThreadGroup.uncaughtException(ThreadGroup.java:1063)
+01-01 00:03:50.159   403   436 E AndroidRuntime: 	at java.lang.Thread.dispatchUncaughtException(Thread.java:1955)
+
+Change-Id: I98deda0b893ab628280f348992c318a52333a2d0
+---
+
+diff --git a/core/java/android/os/StrictMode.java b/core/java/android/os/StrictMode.java
+index 3b6df5d..bf68cfa 100644
+--- a/core/java/android/os/StrictMode.java
++++ b/core/java/android/os/StrictMode.java
+@@ -1659,10 +1659,13 @@
+                     // We restore the current policy below, in the finally block.
+                     setThreadPolicyMask(0);
+ 
+-                    ActivityManager.getService().handleApplicationStrictModeViolation(
+-                        RuntimeInit.getApplicationObject(),
+-                        violationMaskSubset,
+-                        info);
++                    IActivityManager am = ActivityManager.getService();
++                    if (am == null) {
++                        Log.d(TAG, "No activity manager; failed to handle strict violation!");
++                    } else {
++                        am.handleApplicationStrictModeViolation(RuntimeInit.getApplicationObject(),
++                                violationMaskSubset, info);
++                    }
+                 } catch (RemoteException e) {
+                     if (e instanceof DeadObjectException) {
+                         // System process is dead; ignore
+@@ -2082,10 +2085,13 @@
+                 // We restore the current policy below, in the finally block.
+                 setThreadPolicyMask(0);
+ 
+-                ActivityManager.getService().handleApplicationStrictModeViolation(
+-                    RuntimeInit.getApplicationObject(),
+-                    violationMaskSubset,
+-                    info);
++                IActivityManager am = ActivityManager.getService();
++                if (am == null) {
++                    Log.d(TAG, "No activity manager; failed to handle strict violation!");
++                } else {
++                    am.handleApplicationStrictModeViolation(RuntimeInit.getApplicationObject(),
++                            violationMaskSubset, info);
++                }
+             } catch (RemoteException e) {
+                 if (e instanceof DeadObjectException) {
+                     // System process is dead; ignore

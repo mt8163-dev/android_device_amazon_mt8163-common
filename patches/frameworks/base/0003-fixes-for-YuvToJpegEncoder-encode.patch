@@ -1,0 +1,33 @@
+From 5549cd39cb395cd6fb0eede0de156a91c29270e0 Mon Sep 17 00:00:00 2001
+From: Bilux <i.bilux@gmail.com>
+Date: Thu, 30 Jan 2020 21:23:25 +0100
+Subject: [PATCH] Fixes for YuvToJpegEncoder::encode
+
+Call jpeg_destroy_compress after compression (and failure), eliminating a memory leak.
+
+https://github.com/ibilux/android_frameworks_base/commit/1c3ded39f2ebd57286577a648d5a906752046386#diff-d16cb2083b524753883750d1cfc4f6f8
+---
+ core/jni/android/graphics/YuvToJpegEncoder.cpp | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/core/jni/android/graphics/YuvToJpegEncoder.cpp b/core/jni/android/graphics/YuvToJpegEncoder.cpp
+index 31567f727a99..76cc76c4fe91 100644
+--- a/core/jni/android/graphics/YuvToJpegEncoder.cpp
++++ b/core/jni/android/graphics/YuvToJpegEncoder.cpp
+@@ -32,6 +32,7 @@ bool YuvToJpegEncoder::encode(SkWStream* stream, void* inYuv, int width,
+     cinfo.err = jpeg_std_error(&sk_err);
+     sk_err.error_exit = skjpeg_error_exit;
+     if (setjmp(sk_err.fJmpBuf)) {
++        jpeg_destroy_compress(&cinfo);
+         return false;
+     }
+     jpeg_create_compress(&cinfo);
+@@ -45,6 +46,8 @@ bool YuvToJpegEncoder::encode(SkWStream* stream, void* inYuv, int width,
+     compress(&cinfo, (uint8_t*) inYuv, offsets);
+ 
+     jpeg_finish_compress(&cinfo);
++
++    jpeg_destroy_compress(&cinfo);
+ 
+     return true;
+ }

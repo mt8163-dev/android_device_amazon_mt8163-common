@@ -1,0 +1,27 @@
+diff --git a/libc/Android.bp b/libc/Android.bp
+index c339b04..d9d3c88 100644
+--- a/libc/Android.bp
++++ b/libc/Android.bp
+@@ -42,6 +42,7 @@ libc_common_flags = [
+     "-Wunused",
+     "-Wno-deprecated-declarations",
+     "-Wframe-larger-than=2048",
++    "-fno-stack-protector",
+ 
+     // Try to catch typical 32-bit assumptions that break with 64-bit pointers.
+     "-Werror=pointer-to-int-cast",
+
+diff --git a/linker/Android.bp b/linker/Android.bp
+index d74fbd3..4945c34 100644
+--- a/linker/Android.bp
++++ b/linker/Android.bp
+@@ -115,7 +115,8 @@ cc_binary {
+         },
+     },
+ 
+-    cppflags: ["-Wold-style-cast"],
++    cppflags: ["-Wold-style-cast",
++               "-DUSE_LD_CONFIG_FILE"],
+ 
+     // we are going to link libc++_static manually because
+     // when stl is not set to "none" build system adds libdl

@@ -1,0 +1,48 @@
+From eb76267ac1c22a187debf6cd29c6a77e797a1ee1 Mon Sep 17 00:00:00 2001
+From: danielhk <daniel.p6800@gmail.com>
+Date: Fri, 22 Dec 2017 23:35:45 +0800
+Subject: [PATCH 2/6] gatekeeperd:Add use software gatekeeper option
+
+Add BOARD_USE_SOFT_GATEKEEPER flag to use software gatekeeper.
+
+Change-Id: Ic9ab1c485fb2998f126bf5e71e4187ee2beeea3e
+---
+ gatekeeperd/Android.mk      | 4 ++++
+ gatekeeperd/gatekeeperd.cpp | 5 ++++-
+ 2 files changed, 8 insertions(+), 1 deletion(-)
+
+diff --git a/gatekeeperd/Android.mk b/gatekeeperd/Android.mk
+index 28f0b07..acb1114 100644
+--- a/gatekeeperd/Android.mk
++++ b/gatekeeperd/Android.mk
+@@ -38,6 +38,10 @@ LOCAL_SHARED_LIBRARIES := \
+ 	libhwbinder \
+ 	android.hardware.gatekeeper@1.0 \
+ 
++ifeq ($(strip $(BOARD_USE_SOFT_GATEKEEPER)),true)
++LOCAL_CFLAGS += -DUSE_SOFT_GATEKEEPER
++endif
++
+ LOCAL_STATIC_LIBRARIES := libscrypt_static
+ LOCAL_C_INCLUDES := external/scrypt/lib/crypto
+ LOCAL_INIT_RC := gatekeeperd.rc
+diff --git a/gatekeeperd/gatekeeperd.cpp b/gatekeeperd/gatekeeperd.cpp
+index 61c8804..1a061d5 100644
+--- a/gatekeeperd/gatekeeperd.cpp
++++ b/gatekeeperd/gatekeeperd.cpp
+@@ -57,8 +57,11 @@ class GateKeeperProxy : public BnGateKeeperService {
+ public:
+     GateKeeperProxy() {
+         clear_state_if_needed_done = false;
++#ifdef USE_SOFT_GATEKEEPER
++	hw_device = nullptr;
++#else
+         hw_device = IGatekeeper::getService();
+-
++#endif
+         if (hw_device == nullptr) {
+             ALOGW("falling back to software GateKeeper");
+             soft_device.reset(new SoftGateKeeperDevice());
+-- 
+2.7.4
+

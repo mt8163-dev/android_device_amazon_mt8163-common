@@ -1,0 +1,74 @@
+From b737c64ed265f4b2c6094f8efbb320e76b99b888 Mon Sep 17 00:00:00 2001
+From: Mister Oyster <oysterized@gmail.com>
+Date: Sun, 3 Sep 2017 16:45:22 +0200
+Subject: [PATCH] build: soong: add BOARD_USES_MTK_HARDWARE (v2)
+
+* now done properly
+* C&Cpp flags
+
+Change-Id: I9affcbc31411c9f1b22ae9ce19e12144012d0cc7
+---
+ android/config.go   | 4 ++++
+ android/variable.go | 8 ++++++++
+ cc/compiler.go      | 4 ++++
+ 3 files changed, 16 insertions(+)
+
+diff --git a/android/config.go b/android/config.go
+index aa0ac82..f4065cb 100644
+--- a/android/config.go
++++ b/android/config.go
+@@ -519,6 +519,10 @@ func (c *deviceConfig) BtConfigIncludeDir() string {
+ 	return String(c.config.ProductVariables.BtConfigIncludeDir)
+ }
+ 
++func (c *deviceConfig) Mtk_hardware() bool {
++        return Bool(c.config.ProductVariables.Mtk_hardware)
++}
++
+ func (c *deviceConfig) DeviceKernelHeaderDirs() []string {
+ 	return c.config.ProductVariables.DeviceKernelHeaders
+ }
+diff --git a/android/variable.go b/android/variable.go
+index 6113063..2adc563 100644
+--- a/android/variable.go
++++ b/android/variable.go
+@@ -69,6 +69,13 @@ type variableProperties struct {
+ 			Cflags []string
+ 		}
+ 
++		// Add BOARD_USES_MTK_HARDWARE
++		// This controls Mediatek code specifics
++		Mtk_hardware struct {
++			Cflags []string
++			Cppflags []string
++		}
++
+ 		// treble is true when a build is a Treble compliant device.  This is automatically set when
+ 		// a build is shipped with Android O, but can be overriden.  This controls such things as
+ 		// the sepolicy split and enabling the Treble linker namespaces.
+@@ -143,6 +150,7 @@ type productVariables struct {
+ 	Eng                        *bool `json:",omitempty"`
+ 	EnableCFI                  *bool `json:",omitempty"`
+ 	Device_uses_hwc2           *bool `json:",omitempty"`
++	Mtk_hardware               *bool `json:",omitempty"`
+ 	Treble                     *bool `json:",omitempty"`
+ 	Pdk                        *bool `json:",omitempty"`
+ 
+diff --git a/cc/compiler.go b/cc/compiler.go
+index c7fcca7..07fdf61 100644
+--- a/cc/compiler.go
++++ b/cc/compiler.go
+@@ -336,6 +336,10 @@ func (compiler *baseCompiler) compilerFlags(ctx ModuleContext, flags Flags) Flag
+ 			flags.GlobalFlags = append(flags.GlobalFlags, "-D__BRILLO__")
+ 		}
+ 
++		if (Bool(ctx.AConfig().ProductVariables.Mtk_hardware)) {
++			flags.CppFlags = append(flags.CppFlags, "-DMTK_HARDWARE")
++		}
++
+ 		if ctx.Device() {
+ 			if Bool(compiler.Properties.Rtti) {
+ 				flags.CppFlags = append(flags.CppFlags, "-frtti")
+-- 
+2.14.1
+

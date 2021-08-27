@@ -1,0 +1,37 @@
+From 1b3a74a23ae6bb177aaf31bbf372d4233fbbe85c Mon Sep 17 00:00:00 2001
+From: bilux <i.bilux@gmail.com>
+Date: Tue, 18 Feb 2020 11:31:29 +0100
+Subject: [PATCH] Add support of YUV color profiles
+
+Signed-off-by: bilux <i.bilux@gmail.com>
+---
+ headers/media_plugin/media/openmax/OMX_IVCommon.h | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
+
+diff --git a/headers/media_plugin/media/openmax/OMX_IVCommon.h b/headers/media_plugin/media/openmax/OMX_IVCommon.h
+index f9b6f4b..a43143f 100644
+--- a/headers/media_plugin/media/openmax/OMX_IVCommon.h
++++ b/headers/media_plugin/media/openmax/OMX_IVCommon.h
+@@ -149,6 +149,19 @@ typedef enum OMX_COLOR_FORMATTYPE {
+     OMX_COLOR_Format24BitABGR6666,
+     OMX_COLOR_FormatKhronosExtensions = 0x6F000000, /**< Reserved region for introducing Khronos Standard Extensions */
+     OMX_COLOR_FormatVendorStartUnused = 0x7F000000, /**< Reserved region for introducing Vendor Extensions */
++
++// MTK
++    OMX_COLOR_FormatVendorMTKYUV = 0x7F000001,
++    OMX_COLOR_FormatVendorMTKYUV_FCM = 0x7F000002,
++    OMX_COLOR_FormatVendorMTKYUV_UFO = 0x7F000003,
++    OMX_COLOR_FormatVendorMTKYUV_10BIT_H = 0x7F000004,
++    OMX_COLOR_FormatVendorMTKYUV_10BIT_V = 0x7F000005,
++    OMX_COLOR_FormatVendorMTKYUV_UFO_10BIT_H = 0x7F000006,
++    OMX_COLOR_FormatVendorMTKYUV_UFO_10BIT_V = 0x7F000007,
++    OMX_MTK_COLOR_FormatYV12 = 0x7F000200,
++    OMX_MTK_COLOR_FormatBitStream = 0x7F000300,
++// end MTK
++
+     /**<Reserved android opaque colorformat. Tells the encoder that
+      * the actual colorformat will be  relayed by the
+      * Gralloc Buffers.
+-- 
+2.25.0
+

@@ -1,0 +1,31 @@
+From 46c29c362b643b660bf5b4da53ab395584b4f8df Mon Sep 17 00:00:00 2001
+From: bilux <i.bilux@gmail.com>
+Date: Fri, 7 Feb 2020 19:54:18 +0100
+Subject: [PATCH] mediatek: Port AV changes
+
+This ports the changes required to perform proper video decoding.
+The changes are ported from the mediatek BSP.
+
+Signed-off-by: bilux <i.bilux@gmail.com>
+---
+ media/libstagefright/ACodec.cpp | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/media/libstagefright/ACodec.cpp b/media/libstagefright/ACodec.cpp
+index 337c8af..74bfc76 100644
+--- a/media/libstagefright/ACodec.cpp
++++ b/media/libstagefright/ACodec.cpp
+@@ -1108,6 +1108,10 @@ status_t ACodec::setupNativeWindowSizeFormatAndUsage(
+         usage |= GRALLOC_USAGE_PROTECTED;
+     }
+ 
++#ifdef MTK_HARDWARE
++    usage |= (GRALLOC_USAGE_SW_WRITE_OFTEN | GRALLOC_USAGE_SW_READ_OFTEN);
++#endif
++
+     usage |= kVideoGrallocUsage;
+     *finalUsage = usage;
+ 
+-- 
+2.25.0
+

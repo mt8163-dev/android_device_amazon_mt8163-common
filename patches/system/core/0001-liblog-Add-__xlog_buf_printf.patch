@@ -1,0 +1,56 @@
+From d4f419ec94227de1609449932153051c72c68b85 Mon Sep 17 00:00:00 2001
+From: danielhk <daniel.p6800@gmail.com>
+Date: Fri, 22 Dec 2017 22:59:13 +0800
+Subject: [PATCH 1/6] liblog:Add __xlog_buf_printf()
+
+1. Add __xlog_buf_printf function.
+2. Add a system property to allow suppress all xlog
+---
+ liblog/logger_write.c | 27 +++++++++++++++++++++++++++
+ 1 file changed, 27 insertions(+)
+
+diff --git a/liblog/logger_write.c b/liblog/logger_write.c
+index 84feb20..c6b54de 100644
+--- a/liblog/logger_write.c
++++ b/liblog/logger_write.c
+@@ -34,6 +34,10 @@
+ #include "log_portability.h"
+ #include "logger.h"
+ 
++#ifndef FAKE_LOG_DEVICE
++#include <sys/system_properties.h>
++#endif
++
+ #define LOG_BUF_SIZE 1024
+ 
+ static int __write_to_log_init(log_id_t, struct iovec* vec, size_t nr);
+@@ -701,3 +705,26 @@ LIBLOG_ABI_PUBLIC int android_get_log_transport() {
+ 
+   return ret;
+ }
++#ifndef __unused
++#define __unused  __attribute__((__unused__))
++#endif
++struct xlog_record {
++    const char *tag_str;
++    const char *fmt_str;
++    int prio;
++};
++
++LIBLOG_ABI_PUBLIC void __attribute__((weak)) __xlog_buf_printf(int bufid __unused, const struct xlog_record *xlog_record __unused, ...) {
++#ifndef FAKE_LOG_DEVICE
++    char prop[32]="0";
++    /* check property for diable all xlog */
++    __system_property_get("ro.disable.xlog",prop);
++    if (!strcmp(prop, "0"))
++#endif
++    {
++	va_list args;
++	va_start(args, xlog_record);
++	__android_log_vprint(xlog_record->prio, xlog_record->tag_str, xlog_record->fmt_str, args);
++    }
++}
++
+-- 
+2.7.4
+

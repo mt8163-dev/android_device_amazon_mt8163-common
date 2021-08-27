@@ -1,0 +1,27 @@
+From 04f3d79165f0e5c77f256248b5a0f0ae3ca715a1 Mon Sep 17 00:00:00 2001
+From: Bilux <i.bilux@gmail.com>
+Date: Sat, 15 Feb 2020 10:45:10 +0100
+Subject: [PATCH]  Use SELINUX_IGNORE_NEVERALLOWS to disable tests
+
+The intent of this flag is to disable tests during early device bringup so that vendor drops can occur without build breakages. When SELINUX_IGNORE_NEVERALLOWS=true also disable labeling tests sepolicy_tests, and treble_sepolicy_tests.
+---
+ Android.mk | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/Android.mk b/Android.mk
+index 25a3474a4..6f9b20392 100644
+--- a/Android.mk
++++ b/Android.mk
+@@ -186,10 +186,12 @@ LOCAL_REQUIRED_MODULES += \
+     plat_sepolicy_vers.txt
+ 
+ ifneq ($(with_asan),true)
++ifneq ($(SELINUX_IGNORE_NEVERALLOWS),true) 
+ LOCAL_REQUIRED_MODULES += \
+     treble_sepolicy_tests \
+     sepolicy_tests
+ endif
++endif
+ 
+ # Include precompiled policy, unless told otherwise
+ ifneq ($(PRODUCT_PRECOMPILED_SEPOLICY),false)

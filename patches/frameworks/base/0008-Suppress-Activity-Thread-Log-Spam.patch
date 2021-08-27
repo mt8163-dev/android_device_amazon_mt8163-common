@@ -1,0 +1,12 @@
+diff --git a/core/java/android/app/ActivityThread.java b/core/java/android/app/ActivityThread.java
+index 45f7eba2af0..48b03e1d852 100644
+--- a/core/java/android/app/ActivityThread.java
++++ b/core/java/android/app/ActivityThread.java
+@@ -5839,7 +5839,7 @@ public final class ActivityThread {
+             throw ex.rethrowFromSystemServer();
+         }
+         if (holder == null) {
+-            Slog.e(TAG, "Failed to find provider info for " + auth);
++            //Slog.e(TAG, "Failed to find provider info for " + auth);
+             return null;
+         }

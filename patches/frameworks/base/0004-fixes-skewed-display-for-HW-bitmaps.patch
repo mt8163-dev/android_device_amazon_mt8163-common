@@ -1,0 +1,137 @@
+From 6f453e4ae7354b1fe2e46af73e9b4d8397671fc4 Mon Sep 17 00:00:00 2001
+From: Bilux <i.bilux@gmail.com>
+Date: Thu, 30 Jan 2020 22:46:07 +0100
+Subject: [PATCH] Fixes skewed display for HW bitmaps
+
+The issue was related to bad support status for HW bitmaps.
+
+Revert: Support Bitmap.copy for hardware bitmaps
+https://github.com/LineageOS/android_frameworks_base/commit/05126d151eb3caa85bd3a039cffb6e37940c3fa4
+---
+ core/jni/android/graphics/Bitmap.cpp        |  4 +--
+ core/jni/android/graphics/BitmapFactory.cpp | 35 +++++++++++++++++++++
+ graphics/java/android/graphics/Bitmap.java  |  4 +--
+ libs/hwui/hwui/Bitmap.cpp                   |  3 +-
+ libs/hwui/renderthread/OpenGLPipeline.cpp   |  6 ++--
+ 5 files changed, 44 insertions(+), 8 deletions(-)
+
+diff --git a/core/jni/android/graphics/Bitmap.cpp b/core/jni/android/graphics/Bitmap.cpp
+index 108fdbce386f..3a9415d8236b 100755
+--- a/core/jni/android/graphics/Bitmap.cpp
++++ b/core/jni/android/graphics/Bitmap.cpp
+@@ -791,13 +791,13 @@ static jobject Bitmap_copy(JNIEnv* env, jobject, jlong srcHandle,
+                            jint dstConfigHandle, jboolean isMutable) {
+     SkBitmap src;
+     reinterpret_cast<BitmapWrapper*>(srcHandle)->getSkBitmap(&src);
+-    if (dstConfigHandle == GraphicsJNI::hardwareLegacyBitmapConfig()) {
++    /*if (dstConfigHandle == GraphicsJNI::hardwareLegacyBitmapConfig()) {
+         sk_sp<Bitmap> bitmap(Bitmap::allocateHardwareBitmap(src));
+         if (!bitmap.get()) {
+             return NULL;
+         }
+         return createBitmap(env, bitmap.release(), getPremulBitmapCreateFlags(isMutable));
+-    }
++    }*/
+ 
+     SkColorType dstCT = GraphicsJNI::legacyBitmapConfigToColorType(dstConfigHandle);
+     SkBitmap result;
+diff --git a/core/jni/android/graphics/BitmapFactory.cpp b/core/jni/android/graphics/BitmapFactory.cpp
+index 325f6d4615d7..56b8f9a51cc5 100644
+--- a/core/jni/android/graphics/BitmapFactory.cpp
++++ b/core/jni/android/graphics/BitmapFactory.cpp
+@@ -348,6 +348,41 @@ static jobject doDecode(JNIEnv* env, SkStreamRewindable* stream, jobject padding
+         scaledHeight = static_cast<int>(scaledHeight * scale + 0.5f);
+     }
+ 
++    /* TRONX2100 and RAWMAIN for MTK L861 fixes skewed display for hw bitmaps */
++    /* also needs to revert bitmap copy hw
++     * https://gitlab.bangl.de/crackling-dev/android_frameworks_base/commit/05126d151eb3caa85bd3a039cffb6e37940c3fa4 */
++    const int needsOffset = 32;
++    const int minScaleHandlesize = 16; // we do not handle smaller sizes needsOffset/2
++    if (isHardware && scaledWidth >= minScaleHandlesize && scaledHeight >= minScaleHandlesize) {
++        int rx = scaledWidth % needsOffset;
++        int ry = scaledHeight % needsOffset;
++        bool scaleX = false;
++
++        //ALOGI("[Before scaling] scaledWidth: %d, scaledHeight: %d, rx: %d, ry: %d", scaledWidth, scaledHeight, rx, ry);
++        if (rx != 0) {
++            willScale = true;
++            if (rx >= (needsOffset / 2)){
++                scaleX = true; // upscale
++                rx = needsOffset - rx;
++                scaledWidth = scaledWidth + rx;
++            } else {
++                scaledWidth = scaledWidth - rx;
++            }
++        }
++        if (ry != 0) {
++            willScale = true;
++            if (ry >= (needsOffset / 2) || scaleX){
++                // upscale
++                ry = needsOffset - ry;
++                scaledHeight = scaledHeight + ry;
++            } else {
++                scaledHeight = scaledHeight - ry;
++            }
++        }
++        //ALOGI("[After scaling] scaledWidth: %d, scaledHeight: %d, rx: %d, ry: %d", scaledWidth, scaledHeight, rx, ry);
++    }
++    /* END TRONX2100 */
++
+     android::Bitmap* reuseBitmap = nullptr;
+     unsigned int existingBufferSize = 0;
+     if (javaBitmap != NULL) {
+diff --git a/graphics/java/android/graphics/Bitmap.java b/graphics/java/android/graphics/Bitmap.java
+index 57c75490ec47..035d06aa9f56 100644
+--- a/graphics/java/android/graphics/Bitmap.java
++++ b/graphics/java/android/graphics/Bitmap.java
+@@ -635,9 +635,9 @@ private void noteHardwareBitmapSlowCall() {
+      */
+     public Bitmap copy(Config config, boolean isMutable) {
+         checkRecycled("Can't copy a recycled bitmap");
+-        if (config == Config.HARDWARE && isMutable) {
++        /*if (config == Config.HARDWARE && isMutable) {
+             throw new IllegalArgumentException("Hardware bitmaps are always immutable");
+-        }
++        }*/
+         noteHardwareBitmapSlowCall();
+         Bitmap b = nativeCopy(mNativePtr, config.nativeInt, isMutable);
+         if (b != null) {
+diff --git a/libs/hwui/hwui/Bitmap.cpp b/libs/hwui/hwui/Bitmap.cpp
+index 75b6d233643d..a43a85bd3f82 100644
+--- a/libs/hwui/hwui/Bitmap.cpp
++++ b/libs/hwui/hwui/Bitmap.cpp
+@@ -141,8 +141,7 @@ sk_sp<Bitmap> Bitmap::createFrom(sp<GraphicBuffer> graphicBuffer) {
+         return nullptr;
+     }
+     SkImageInfo info = SkImageInfo::Make(graphicBuffer->getWidth(), graphicBuffer->getHeight(),
+-            kRGBA_8888_SkColorType, kPremul_SkAlphaType,
+-            SkColorSpace::MakeSRGB());
++            kRGBA_8888_SkColorType, kPremul_SkAlphaType);
+     return sk_sp<Bitmap>(new Bitmap(graphicBuffer.get(), info));
+ }
+ 
+diff --git a/libs/hwui/renderthread/OpenGLPipeline.cpp b/libs/hwui/renderthread/OpenGLPipeline.cpp
+index 7283eb123d6a..13f3a53aec9a 100644
+--- a/libs/hwui/renderthread/OpenGLPipeline.cpp
++++ b/libs/hwui/renderthread/OpenGLPipeline.cpp
+@@ -373,6 +373,8 @@ static bool uploadBitmapToGraphicBuffer(uirenderer::Caches& caches, SkBitmap& bi
+ // TODO: handle SRGB sanely
+ static PixelFormat internalFormatToPixelFormat(GLint internalFormat) {
+     switch (internalFormat) {
++    case GL_ALPHA:
++        return PIXEL_FORMAT_TRANSPARENT;
+     case GL_LUMINANCE:
+         return PIXEL_FORMAT_RGBA_8888;
+     case GL_SRGB8_ALPHA8:
+@@ -395,8 +397,8 @@ sk_sp<Bitmap> OpenGLPipeline::allocateHardwareBitmap(RenderThread& renderThread,
+     uirenderer::Caches& caches = uirenderer::Caches::getInstance();
+ 
+     const SkImageInfo& info = skBitmap.info();
+-    if (info.colorType() == kUnknown_SkColorType || info.colorType() == kAlpha_8_SkColorType) {
+-        ALOGW("unable to create hardware bitmap of colortype: %d", info.colorType());
++    if (info.colorType() == kUnknown_SkColorType) {
++        ALOGW("unable to create hardware bitmap of configuration");
+         return nullptr;
+     }
+ 

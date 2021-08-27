@@ -1,0 +1,73 @@
+From ee109a768d68a95684a046b616a5ed788cd12058 Mon Sep 17 00:00:00 2001
+From: bilux <i.bilux@gmail.com>
+Date: Fri, 14 Feb 2020 10:08:25 +0100
+Subject: [PATCH] Fix "_ZN7android13GraphicBufferC1Ejjij" symbol
+
+Signed-off-by: bilux <i.bilux@gmail.com>
+---
+ libs/ui/Android.bp                 |  1 -
+ libs/ui/GraphicBuffer.cpp          | 20 ++++++++++++++++++++
+ libs/ui/include/ui/GraphicBuffer.h |  4 ++++
+ 3 files changed, 24 insertions(+), 1 deletion(-)
+
+diff --git a/libs/ui/Android.bp b/libs/ui/Android.bp
+index 59173cb..fa9e6cf 100644
+--- a/libs/ui/Android.bp
++++ b/libs/ui/Android.bp
+@@ -22,7 +22,6 @@ cc_library_shared {
+     clang: true,
+     cppflags: [
+         "-Weverything",
+-        "-Werror",
+ 
+         // The static constructors and destructors in this library have not been noted to
+         // introduce significant overheads
+diff --git a/libs/ui/GraphicBuffer.cpp b/libs/ui/GraphicBuffer.cpp
+index 6235bd6..b6169a3 100644
+--- a/libs/ui/GraphicBuffer.cpp
++++ b/libs/ui/GraphicBuffer.cpp
+@@ -57,6 +57,26 @@ GraphicBuffer::GraphicBuffer()
+     handle = NULL;
+ }
+ 
++#ifdef MTK_HARDWARE
++GraphicBuffer::GraphicBuffer(uint32_t inWidth, uint32_t inHeight,
++        PixelFormat inFormat, uint32_t inUsage)
++    : BASE(), mOwner(ownData), mBufferMapper(GraphicBufferMapper::get()),
++      mInitCheck(NO_ERROR), mId(getUniqueId()), mGenerationNumber(0)
++{
++    width  =
++    height =
++    stride =
++    format =
++    usage_deprecated = 0;
++    usage  = 0;
++    layerCount = 0;
++    handle = NULL;
++    std::string requestorName = "<unknown>";
++    mInitCheck = initWithSize(inWidth, inHeight, inFormat, 0,
++            inUsage, std::move(requestorName));
++}
++#endif
++
+ // deprecated
+ GraphicBuffer::GraphicBuffer(uint32_t inWidth, uint32_t inHeight,
+         PixelFormat inFormat, uint32_t inUsage, std::string requestorName)
+diff --git a/libs/ui/include/ui/GraphicBuffer.h b/libs/ui/include/ui/GraphicBuffer.h
+index 95c2d22..11f3972 100644
+--- a/libs/ui/include/ui/GraphicBuffer.h
++++ b/libs/ui/include/ui/GraphicBuffer.h
+@@ -80,6 +80,10 @@ public:
+ 
+     // Create a GraphicBuffer by allocating and managing a buffer internally.
+     // This function is privileged.  See reallocate for details.
++#ifdef MTK_HARDWARE
++    GraphicBuffer(uint32_t inWidth, uint32_t inHeight, PixelFormat inFormat,
++            uint32_t inUsage);
++#endif
+     GraphicBuffer(uint32_t inWidth, uint32_t inHeight, PixelFormat inFormat,
+             uint32_t inLayerCount, uint64_t inUsage,
+             std::string requestorName = "<Unknown>");
+-- 
+2.25.0
+

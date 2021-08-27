@@ -1,0 +1,49 @@
+From 328cb94c6ddf9a94de9a88e9ad13814291a06536 Mon Sep 17 00:00:00 2001
+From: bilux <i.bilux@gmail.com>
+Date: Mon, 2 Mar 2020 20:34:12 +0100
+Subject: [PATCH] Fix the microphone on MediaTek
+
+Signed-off-by: bilux <i.bilux@gmail.com>
+---
+ services/audioflinger/Android.mk  | 4 ++++
+ services/audioflinger/Threads.cpp | 2 ++
+ 2 files changed, 6 insertions(+)
+
+diff --git a/services/audioflinger/Android.mk b/services/audioflinger/Android.mk
+index d0454d4..578dc9a 100644
+--- a/services/audioflinger/Android.mk
++++ b/services/audioflinger/Android.mk
+@@ -76,6 +76,10 @@ LOCAL_SRC_FILES += \
+     FastThreadDumpState.cpp  \
+     FastThreadState.cpp
+ 
++ifeq ($(BOARD_USES_LEGACY_MTK_AV_BLOB), true)
++LOCAL_CFLAGS += -DLEGACY_MTK_AV_BLOB
++endif
++
+ LOCAL_CFLAGS += -DSTATE_QUEUE_INSTANTIATIONS='"StateQueueInstantiations.cpp"'
+ 
+ LOCAL_CFLAGS += -fvisibility=hidden
+diff --git a/services/audioflinger/Threads.cpp b/services/audioflinger/Threads.cpp
+index e202ca4..8d12d5f 100644
+--- a/services/audioflinger/Threads.cpp
++++ b/services/audioflinger/Threads.cpp
+@@ -6381,6 +6381,7 @@ reacquire_wakelock:
+         mTimestamp.mTimeNs[ExtendedTimestamp::LOCATION_SERVER] = systemTime();
+ 
+         // Update server timestamp with kernel stats
++#ifndef LEGACY_MTK_AV_BLOB
+         if (mPipeSource.get() == nullptr /* don't obtain for FastCapture, could block */) {
+             int64_t position, time;
+             int ret = mInput->stream->getCapturePosition(&position, &time);
+@@ -6394,6 +6395,7 @@ reacquire_wakelock:
+                 // as the read obtains a lock, preventing the timestamp call from executing.
+             }
+         }
++#endif
+         // Use this to track timestamp information
+         // ALOGD("%s", mTimestamp.toString().c_str());
+ 
+-- 
+2.25.1
+
