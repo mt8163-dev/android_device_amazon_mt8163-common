@@ -157,9 +157,9 @@ BOARD_SEPOLICY_DIRS += \
 BOARD_SECCOMP_POLICY := \
     $(DEVICE_COMMON)/seccomp-policy
 
-# Cyanogenmod H/W Hooks
-BOARD_USES_CYANOGEN_HARDWARE := true
-BOARD_HARDWARE_CLASS := $(DEVICE_COMMON)/cmhw
+# LineageOS Hardware
+BOARD_USES_LINEAGE_HARDWARE := true
+BOARD_HARDWARE_CLASS := $(DEVICE_COMMON)/lineagehw
 
 # Shim Libraries
 TARGET_LDPRELOAD += libshim_audio.so
