@@ -29,7 +29,6 @@ lib64/libnvramagentclient.so
 
 # Bluetooth
 bin/autobt
-lib/libbt-vendor.so
 lib/libbluetoothem_mtk.so
 lib/libbluetooth_relayer.so
 lib/libbluetooth_mtk_pure.so
