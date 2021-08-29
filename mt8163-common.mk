@@ -188,12 +188,6 @@ PRODUCT_PACKAGES += \
     android.hardware.bluetooth@1.0-service-mediatek \
     libbt-vendor
 
-# Camera Init
-PRODUCT_COPY_FILES += $(COMMON_PATH)/configs/init/mediaserver.rc:system/etc/init/mediaserver.rc
-
-# Audio Wakelock (So Music will not stop while turn off screen)
-PRODUCT_COPY_FILES += $(COMMON_PATH)/configs/init/audioserver.rc:system/etc/init/audioserver.rc
-
 # Ramdisk
 PRODUCT_COPY_FILES += \
     $(COMMON_PATH)/rootdir/fstab.mt8163:root/fstab.mt8163 \
