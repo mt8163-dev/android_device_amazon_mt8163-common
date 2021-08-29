@@ -47,6 +47,8 @@ bin/kisd
 bin/rpmb_svc
 lib/hw/amzn_dha.mt8163.so
 lib64/hw/amzn_dha.mt8163.so
+lib/hw/amzn_drmprov.mt8163.so 
+lib64/hw/amzn_drmprov.mt8163.so 
 lib/hw/keystore.mt8163.so
 lib64/hw/keystore.mt8163.so
 lib/drm/libdrmctaplugin.so
