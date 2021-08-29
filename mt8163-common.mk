@@ -97,6 +97,10 @@ PRODUCT_PACKAGES += \
     lib_driver_cmd_mt66xx \
     android.hardware.wifi@1.0-service
 
+# Gatekeeper
+PRODUCT_PACKAGES += \
+    gatekeeper.mt8163
+
 # Configstore
 PRODUCT_PACKAGES += \
     android.hardware.configstore@1.0-service
