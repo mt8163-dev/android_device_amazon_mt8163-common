@@ -26,7 +26,7 @@ on post-fs-data
 
     # Wi-Fi
     exec /system/bin/mknod /dev/wmtWifi c 153 0
-    chmod 0660 /dev/wmtWifi
+    chmod 0666 /dev/wmtWifi
     chown system system /dev/wmtWifi
 
     mkdir /data/misc/wifi 0770 wifi wifi
