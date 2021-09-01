@@ -32,11 +32,9 @@ bin/autobt
 lib/libbluetoothem_mtk.so
 lib/libbluetooth_relayer.so
 lib/libbluetooth_mtk_pure.so
-lib/libbluetooth_mtk.so
 lib64/libbluetoothem_mtk.so
 lib64/libbluetooth_relayer.so
 lib64/libbluetooth_mtk_pure.so
-lib64/libbluetooth_mtk.so
 
 # Widevine DRM (Crypto)
 bin/amzn_dha_hmac
