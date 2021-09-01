@@ -54,6 +54,10 @@ PRODUCT_PACKAGES += \
     android.hardware.soundtrigger@2.0-impl \
     android.hardware.soundtrigger@2.0-service
 
+# WFD
+PRODUCT_PACKAGES += \
+    audio.r_submix.mt8163
+
 # Blisrc
 PRODUCT_PACKAGES += \
     libblisrc \
