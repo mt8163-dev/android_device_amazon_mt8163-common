@@ -14,4 +14,7 @@
 <resources>
     <!-- Default values for LiveDisplay -->
     <integer name="config_defaultLiveDisplayMode">0</integer>
+
+    <!-- Default value for swapping volume keys on rotation -->
+    <bool name="def_swap_volume_keys_on_rotation">true</bool>
 </resources>

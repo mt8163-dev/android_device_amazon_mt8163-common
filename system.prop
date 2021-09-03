@@ -54,7 +54,7 @@ ro.usb.vid=1949
 persist.sys.usb.config=mtp,adb
 
 # Swapped Volume Keys
-ro.audio.monitorRotation=false
+ro.audio.monitorRotation=true
 
 # Headset MISC
 ro.audio.hw_vol_devices=0x0C
