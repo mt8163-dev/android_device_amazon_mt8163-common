@@ -53,7 +53,7 @@ allow nvram_daemon system_file:file execute_no_trans;
 
 # Date : WK14.43
 allow nvram_daemon als_ps_device:chr_file { read ioctl open };
-#allow nvram_daemon mtk_adc_cali_device:chr_file { read write ioctl open };
+allow nvram_daemon mtk_adc_cali_device:chr_file { read write ioctl open };
 allow nvram_daemon gsensor_device:chr_file { read ioctl open };
 allow nvram_daemon gyroscope_device:chr_file { read ioctl open };
 allow nvram_daemon init:unix_stream_socket connectto;

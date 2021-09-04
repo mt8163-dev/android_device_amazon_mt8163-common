@@ -151,6 +151,7 @@ type scp_device, dev_type;
 type etb_device, dev_type;
 type MT_pmic_adc_cali_device, dev_type;
 type mtk-adc-cali_device, dev_type;
+type mtk_adc_cali_device, dev_type;
 type MT_pmic_cali_device,dev_type;
 type barometer_device,dev_type;
 type humidity_device,dev_type;

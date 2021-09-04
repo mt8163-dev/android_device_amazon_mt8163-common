@@ -159,7 +159,7 @@
 /dev/mt9p012(/.*)? u:object_r:mt9p012_device:s0
 /dev/mtfreqhopping(/.*)? u:object_r:mtfreqhopping_device:s0
 /dev/mtgpio(/.*)? u:object_r:mtgpio_device:s0
-#/dev/mtk-adc-cali(/.*)? u:object_r:mtk_adc_cali_device:s0
+/dev/mtk-adc-cali(/.*)? u:object_r:mtk_adc_cali_device:s0
 /dev/mtk_disp.* u:object_r:graphics_device:s0
 /dev/mtkfb_vsync(/.*)? u:object_r:graphics_device:s0
 /dev/mtkg2d(/.*)? u:object_r:mtkg2d_device:s0
@@ -603,3 +603,4 @@
 /system/xbin/audiofix                                                               u:object_r:audiofix_exec:s0
 /sys/devices/virtual/switch/h2w/state                                               u:object_r:sysfs_h2w_state:s0
 /dev/snd/controlC0                                                                  u:object_r:tmpfs_snd_control:s0
+
