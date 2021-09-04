@@ -1,0 +1,11 @@
+type rpmb_svc, domain;
+type rpmb_svc_exec, exec_type, vendor_file_type, file_type;
+init_daemon_domain(rpmb_svc)
+allow rpmb_svc block_device:dir search;
+allow rpmb_svc self:capability setuid;
+allow rpmb_svc self:capability sys_rawio;
+allow rpmb_svc rpmb_block_device:blk_file { read write open ioctl getattr };
+allow rpmb_svc trustzone_device:chr_file { read write open ioctl getattr };
+allow rpmb_svc property_socket:sock_file write;
+allow rpmb_svc init:unix_stream_socket connectto;
+allow rpmb_svc trustzone_device:chr_file rw_file_perms;

@@ -212,3 +212,4 @@ type gps_device, dev_type;
 type urandom_device, dev_type, mlstrustedobject;
 type kb_block_device,dev_type;
 type dkb_block_device,dev_type;
+type rpmb_block_device, dev_type;

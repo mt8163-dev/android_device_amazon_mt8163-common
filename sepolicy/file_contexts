@@ -407,7 +407,6 @@
 /(system|system\/vendor|vendor)/bin/ipo_swap u:object_r:ipo_swap_exec:s0
 /(system|system\/vendor|vendor)/bin/launchpppoe u:object_r:launchpppoe_exec:s0
 /(system|system\/vendor|vendor)/bin/matv u:object_r:matv_exec:s0
-/(system|system\/vendor|vendor)/bin/kisd u:object_r:kisd_exec:s0
 /(system|system\/vendor|vendor)/bin/mc6420d u:object_r:mc6420d_exec:s0
 /(system|system\/vendor|vendor)/bin/mdlogger u:object_r:mdlogger_exec:s0
 /(system|system\/vendor|vendor)/bin/memsicd3416x u:object_r:memsicd3416x_exec:s0
@@ -607,3 +606,8 @@
 
 # Update Securetime
 /data/SecureTD                                                                      u:object_r:securetime_data:s0
+
+# DRM (amazon)
+/(system|system\/vendor|vendor)/bin/rpmb_svc          u:object_r:rpmb_svc_exec:s0
+/(system|system\/vendor|vendor)/bin/kisd              u:object_r:kisd_exec:s0
+/dev/block/mmcblk0rpmb                                u:object_r:rpmb_block_device:s0
