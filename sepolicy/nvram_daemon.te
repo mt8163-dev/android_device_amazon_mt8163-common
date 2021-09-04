@@ -100,3 +100,5 @@ allow nvram_daemon system_data_file:dir { write add_name };
 allow nvram_daemon device:chr_file { ioctl };
 #allow nvram_daemon default_prop:property_service { set };
 allow nvram_daemon platformblk_device:dir { search };
+allow nvram_daemon nvram_device:chr_file rw_file_perms;
+allow nvram_daemon platformblk_device:blk_file { read write open getattr ioctl };
