@@ -10,3 +10,7 @@ genfscon proc /driver/icusb u:object_r:proc_icusb:s0
 
 genfscon iso9660 / u:object_r:iso9660:s0
 genfscon rawfs / u:object_r:rawfs:s0
+
+# Memtrack
+genfscon debugfs /mali0/gpu_memory u:object_r:debugfs_gpu_mali:s0
+genfscon debugfs /mali/gpu_memory u:object_r:debugfs_gpu_mali:s0

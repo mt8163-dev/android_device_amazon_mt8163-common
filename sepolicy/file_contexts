@@ -580,4 +580,6 @@
 #lights
 #/(vendor|system/vendor)/bin/hw/android\.hardware\.light@2\.0-service-mediatek	u:object_r:hal_lights_service_mediatek_exec:s0
 
-
+# Memtrack
+/sys/kernel/debug/mali0/gpu_memory                                     u:object_r:debugfs_gpu_mali:s0
+/sys/kernel/debug/mali/gpu_memory                                      u:object_r:debugfs_gpu_mali:s0
