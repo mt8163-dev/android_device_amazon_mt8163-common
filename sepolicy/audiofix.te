@@ -1,0 +1,12 @@
+# Types
+type audiofix, domain;
+type audiofix_exec, exec_type, file_type, vendor_file_type;
+
+# Init Daemon
+init_daemon_domain(audiofix)
+
+# Rules
+allow audiofix audiofix:netlink_kobject_uevent_socket { bind create setopt read };
+allow audiofix sysfs_h2w_state:file rw_file_perms;
+allow audiofix tmpfs_snd_control:chr_file rw_file_perms;
+allow audiofix self:capability dac_override;
