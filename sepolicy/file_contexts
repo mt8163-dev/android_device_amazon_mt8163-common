@@ -589,3 +589,5 @@
 
 # Sensors
 /(vendor|system/vendor)/bin/hw/android\.hardware\.sensors@1\.0-service-mediatek     u:object_r:hal_sensors_default_exec:s0
+/sys/devices/virtual/misc/m_acc_misc/accactive                                      u:object_r:sysfs_accactive:s0
+

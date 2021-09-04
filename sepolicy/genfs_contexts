@@ -16,3 +16,6 @@ genfscon debugfs /mali0/gpu_memory u:object_r:debugfs_gpu_mali:s0
 genfscon debugfs /mali/gpu_memory u:object_r:debugfs_gpu_mali:s0
 genfscon debugfs /ion/ion_mm_heap u:object_r:debugfs_ion_mm_heap:s0
 genfscon debugfs /ion/heaps u:object_r:debugfs_ion_mm_heap:s0
+
+# Sensors
+genfscon sysfs /devices/virtual/misc/m_acc_misc/accactive u:object_r:sysfs_accactive:s0

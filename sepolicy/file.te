@@ -256,3 +256,6 @@ type cw2015_data_file, file_type, data_file_type;
 # Memtrack
 type debugfs_gpu_mali, fs_type, debugfs_type;
 type debugfs_ion_mm_heap, fs_type, debugfs_type;
+
+# Sensors HAL
+type sysfs_accactive, fs_type, sysfs_type;

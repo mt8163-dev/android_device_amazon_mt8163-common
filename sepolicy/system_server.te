@@ -300,3 +300,6 @@ allow system_server power_hal_data_files:file rw_file_perms;
 
 
 allow system_server init:unix_dgram_socket { sendto };
+
+# Sensors
+allow system_server sysfs_accactive:file rw_file_perms;
