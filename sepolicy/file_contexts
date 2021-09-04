@@ -605,3 +605,5 @@
 /sys/devices/virtual/switch/h2w/state                                               u:object_r:sysfs_h2w_state:s0
 /dev/snd/controlC0                                                                  u:object_r:tmpfs_snd_control:s0
 
+# Update Securetime
+/data/SecureTD                                                                      u:object_r:securetime_data:s0

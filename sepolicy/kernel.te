@@ -88,4 +88,4 @@ allow kernel untrusted_app:fd { use };
 allow kernel tmpfs:file write;
 allow kernel untrusted_app:file { write };
 
-
+allow kernel securetime_data:file rw_file_perms;

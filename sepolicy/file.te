@@ -265,3 +265,6 @@ type sysfs_alsps_alsactive, fs_type, sysfs_type;
 # Headphones
 type sysfs_h2w_state, fs_type, sysfs_type;
 type tmpfs_snd_control, fs_type, dev_type;
+
+# Update Securetime
+type securetime_data, file_type, data_file_type;
