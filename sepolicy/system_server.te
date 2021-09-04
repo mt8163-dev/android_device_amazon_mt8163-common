@@ -304,3 +304,4 @@ allow system_server init:unix_dgram_socket { sendto };
 # Sensors
 allow system_server sysfs_acc_accactive:file rw_file_perms;
 allow system_server sysfs_alsps_psactive:file rw_file_perms;
+allow system_server sysfs_alsps_alsactive:file rw_file_perms;

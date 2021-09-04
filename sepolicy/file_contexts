@@ -595,6 +595,7 @@
 /(vendor|system/vendor)/bin/hw/android\.hardware\.sensors@1\.0-service-mediatek     u:object_r:hal_sensors_default_exec:s0
 /sys/devices/virtual/misc/m_acc_misc/accactive                                      u:object_r:sysfs_acc_accactive:s0
 /sys/devices/virtual/misc/m_alsps_misc/psactive                                     u:object_r:sysfs_alsps_psactive:s0
+/sys/devices/virtual/misc/m_alsps_misc/alsaactive                                   u:object_r:sysfs_alsps_alsactive:s0
 
 # Lights
 /(system\/vendor|vendor)/bin/hw/android\.hardware\.light@2\.0-service-mediatek      u:object_r:mtk_hal_light_exec:s0

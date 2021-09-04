@@ -260,6 +260,7 @@ type debugfs_ion_mm_heap, fs_type, debugfs_type;
 # Sensors HAL
 type sysfs_acc_accactive, fs_type, sysfs_type;
 type sysfs_alsps_psactive, fs_type, sysfs_type;
+type sysfs_alsps_alsactive, fs_type, sysfs_type;
 
 # Kisd
 type platformblk_device, dev_type;
