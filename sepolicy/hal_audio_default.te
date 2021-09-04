@@ -27,3 +27,6 @@ set_prop(hal_audio_default, af_ril_hd_voice_status_prop );
 #allow hal_audio_default hal_audio_hwservice:hwservice_manager { find add };
 #allow hal_audio_default hidl_base_hwservice:hwservice_manager { add };
 #allow hal_audio_default wmt_prop:file { getattr open read };
+
+allow hal_audio_default sysfs_h2w_state:file rw_file_perms;
+allow hal_audio_default tmpfs_snd_control:chr_file rw_file_perms;
