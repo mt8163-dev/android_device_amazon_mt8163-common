@@ -583,3 +583,6 @@
 # Memtrack
 /sys/kernel/debug/mali0/gpu_memory                                     u:object_r:debugfs_gpu_mali:s0
 /sys/kernel/debug/mali/gpu_memory                                      u:object_r:debugfs_gpu_mali:s0
+/sys/kernel/debug/ion/ion_mm_heap(/.*)?                                u:object_r:debugfs_ion_mm_heap:s0
+/sys/kernel/debug/ion/heaps(/.*)?                                      u:object_r:debugfs_ion_mm_heap:s0
+/sys/kernel/debug/ion/heaps/ion_mm_heap                                u:object_r:debugfs_ion_mm_heap:s0

@@ -5,3 +5,4 @@ allow hal_memtrack_default proc:file { read open read ioctl };
 allow hal_graphics_allocator_default proc:file { read open read ioctl };
 
 allow hal_memtrack_default debugfs_gpu_mali:file r_file_perms;
+r_dir_file(hal_memtrack_default, debugfs_ion_mm_heap)
