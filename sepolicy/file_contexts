@@ -340,6 +340,7 @@
 /dev/ttyACM0        u:object_r:ttyACM_device:s0
 /dev/hrm       u:object_r:hrm_device:s0
 /dev/trusty-ipc-dev0 u:object_r:tee_device:s0
+/dev/trustzone   u:object_r:trustzone_device:s0
 
 #############################
 # sysfs files
@@ -406,6 +407,7 @@
 /(system|system\/vendor|vendor)/bin/ipo_swap u:object_r:ipo_swap_exec:s0
 /(system|system\/vendor|vendor)/bin/launchpppoe u:object_r:launchpppoe_exec:s0
 /(system|system\/vendor|vendor)/bin/matv u:object_r:matv_exec:s0
+/(system|system\/vendor|vendor)/bin/kisd u:object_r:kisd_exec:s0
 /(system|system\/vendor|vendor)/bin/mc6420d u:object_r:mc6420d_exec:s0
 /(system|system\/vendor|vendor)/bin/mdlogger u:object_r:mdlogger_exec:s0
 /(system|system\/vendor|vendor)/bin/memsicd3416x u:object_r:memsicd3416x_exec:s0
@@ -516,6 +518,8 @@
 /dev/block/platform/mtk-msdc\.0/[0-9]+\.MSDC0/by-name/boot	        u:object_r:boot_block_device:s0
 /dev/block/platform/mtk-msdc\.0/[0-9]+\.MSDC0/by-name/persist           u:object_r:persist_block_device:s0
 /dev/block/platform/mtk-msdc\.0/[0-9]+\.MSDC0/by-name/system            u:object_r:system_block_device:s0
+/dev/block/platform/mtk-msdc\.0/[0-9]+\.MSDC0/by-name/kb            u:object_r:kb_block_device:s0
+/dev/block/platform/mtk-msdc\.0/[0-9]+\.MSDC0/by-name/dkb            u:object_r:dkb_block_device:s0
 #line 1 "device/Letv/X500/sepolicy/file_contexts"
 
 # secblock @Bule 20161119
@@ -590,4 +594,3 @@
 # Sensors
 /(vendor|system/vendor)/bin/hw/android\.hardware\.sensors@1\.0-service-mediatek     u:object_r:hal_sensors_default_exec:s0
 /sys/devices/virtual/misc/m_acc_misc/accactive                                      u:object_r:sysfs_accactive:s0
-
