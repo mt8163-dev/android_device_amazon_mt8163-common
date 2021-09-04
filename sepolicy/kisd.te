@@ -31,4 +31,4 @@ allow kisd kb_block_device:chr_file {read write open ioctl getattr};
 allow kisd dkb_block_device:chr_file {read write open ioctl getattr};
 allow kisd platformblk_device:dir search;
 allow kisd platformblk_device:blk_file { read write open ioctl getattr };
-allow kisd trustzone_device:chr_file { read write open ioctl getattr };
+allow kisd trustzone_device:chr_file rw_file_perms;

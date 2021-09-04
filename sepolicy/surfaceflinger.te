@@ -89,3 +89,5 @@ allow surfaceflinger shell:fifo_file { read };
 
 allow surfaceflinger proc:file { getattr read open };
 allow surfaceflinger nfc:fifo_file { read };
+
+allow surfaceflinger trustzone_device:chr_file rw_file_perms;
