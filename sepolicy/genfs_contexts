@@ -18,7 +18,8 @@ genfscon debugfs /ion/ion_mm_heap u:object_r:debugfs_ion_mm_heap:s0
 genfscon debugfs /ion/heaps u:object_r:debugfs_ion_mm_heap:s0
 
 # Sensors
-genfscon sysfs /devices/virtual/misc/m_acc_misc/accactive u:object_r:sysfs_accactive:s0
+genfscon sysfs /devices/virtual/misc/m_acc_misc/accactive   u:object_r:sysfs_acc_accactive:s0
+genfscon sysfs /devices/virtual/misc/m_alsps_misc/psactive  u:object_r:sysfs_alsps_psactive:s0
 
 # Headphones
 genfscon sysfs /devices/virtual/switch/h2w/state    u:object_r:sysfs_h2w_state:s0
