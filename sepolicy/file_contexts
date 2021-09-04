@@ -595,6 +595,9 @@
 /(vendor|system/vendor)/bin/hw/android\.hardware\.sensors@1\.0-service-mediatek     u:object_r:hal_sensors_default_exec:s0
 /sys/devices/virtual/misc/m_acc_misc/accactive                                      u:object_r:sysfs_accactive:s0
 
+# Lights
+/(system\/vendor|vendor)/bin/hw/android\.hardware\.light@2\.0-service-mediatek      u:object_r:mtk_hal_light_exec:s0
+
 # Headphones Service
 /system/xbin/audiofix                                                               u:object_r:audiofix_exec:s0
 /sys/devices/virtual/switch/h2w/state                                               u:object_r:sysfs_h2w_state:s0
