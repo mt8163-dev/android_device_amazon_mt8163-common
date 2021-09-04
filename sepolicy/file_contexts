@@ -586,3 +586,6 @@
 /sys/kernel/debug/ion/ion_mm_heap(/.*)?                                u:object_r:debugfs_ion_mm_heap:s0
 /sys/kernel/debug/ion/heaps(/.*)?                                      u:object_r:debugfs_ion_mm_heap:s0
 /sys/kernel/debug/ion/heaps/ion_mm_heap                                u:object_r:debugfs_ion_mm_heap:s0
+
+# Sensors
+/(vendor|system/vendor)/bin/hw/android\.hardware\.sensors@1\.0-service-mediatek     u:object_r:hal_sensors_default_exec:s0
