@@ -608,6 +608,11 @@
 /data/SecureTD                                                                      u:object_r:securetime_data:s0
 
 # DRM (amazon)
-/(system|system\/vendor|vendor)/bin/rpmb_svc          u:object_r:rpmb_svc_exec:s0
-/(system|system\/vendor|vendor)/bin/kisd              u:object_r:kisd_exec:s0
-/dev/block/mmcblk0rpmb                                u:object_r:rpmb_block_device:s0
+/(system|system\/vendor|vendor)/bin/rpmb_svc            u:object_r:rpmb_svc_exec:s0
+/(system|system\/vendor|vendor)/bin/kisd                u:object_r:kisd_exec:s0
+/dev/block/mmcblk0rpmb                                  u:object_r:rpmb_block_device:s0
+/(system|system\/vendor|vendor)/bin/amzn_dha_test	    u:object_r:amzn_dha_test_exec:s0
+/(system|system\/vendor|vendor)/bin/amzn_dha_tool	    u:object_r:amzn_dha_tool_exec:s0
+/(system|system\/vendor|vendor)/bin/amzn_dha_hmac       u:object_r:amzn_dha_hmac_exec:s0
+/(system|system\/vendor|vendor)/bin/amzn_drmprov_check  u:object_r:amzn_drmprov_check_exec:s0
+/(system|system\/vendor|vendor)/bin/amzn_drmprov_tool   u:object_r:amzn_drmprov_tool_exec:s0
