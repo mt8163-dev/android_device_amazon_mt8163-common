@@ -159,8 +159,6 @@ BOARD_HARDWARE_CLASS := $(DEVICE_COMMON)/lineagehw
 
 # Shim Libraries
 TARGET_LD_SHIM_LIBS := \
-    /system/lib/liblog.so|libshim_log.so \
-    /system/lib64/liblog.so|libshim_log.so \
     /system/lib/libMtkOmxVdecEx.so|libshim_ui.so \
     /system/lib/libMtkOmxVenc.so|libshim_ui.so \
     /system/lib/libasp.so|libshim_parcel.so \
