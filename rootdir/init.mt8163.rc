@@ -839,8 +839,14 @@ service rpmb_svc /system/bin/rpmb_svc
 
 on property:dev.bootcomplete=1
     start audiofix
+    start kvolcb
 
 service audiofix /system/xbin/audiofix
+    user root
+    group root
+    oneshot
+
+service kvolcb /system/xbin/kvolcb 0
     user root
     group root
     oneshot

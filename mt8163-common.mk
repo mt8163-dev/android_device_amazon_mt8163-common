@@ -175,7 +175,8 @@ PRODUCT_PACKAGES += \
 
 # Headphones
 PRODUCT_PACKAGES += \
-    audiofix
+    audiofix \
+    kvolcb
 
 # HIDL
 PRODUCT_PACKAGES += \
