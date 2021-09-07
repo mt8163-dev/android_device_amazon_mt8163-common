@@ -207,7 +207,8 @@ PRODUCT_COPY_FILES += \
     $(COMMON_PATH)/rootdir/init.wifi.rc:root/init.wifi.rc \
     $(COMMON_PATH)/rootdir/ueventd.mt8163.rc:root/ueventd.mt8163.rc \
     $(COMMON_PATH)/rootdir/sbin/resize_ext4:root/sbin/resize_ext4 \
-    $(COMMON_PATH)/rootdir/sbin/resize2fs_static:root/sbin/resize2fs_static
+    $(COMMON_PATH)/rootdir/sbin/resize2fs_static:root/sbin/resize2fs_static \
+    $(COMMON_PATH)/rootdir/bin/reboot-amonet:system/xbin/reboot-amonet
 
 # Permissions
 PRODUCT_COPY_FILES += \
