@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Indicates if internal storage is shown as default or not. -->
+    <bool name="config_default_show_device_root">true</bool>
+</resources>
