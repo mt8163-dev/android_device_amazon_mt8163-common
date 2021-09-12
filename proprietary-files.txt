@@ -13,6 +13,7 @@ etc/firmware/WIFI_RAM_CODE_8163
 etc/firmware/WMT_SOC.cfg
 lib/libccci_util.so
 lib64/libccci_util.so
+vendor/lib64/libwifi-hal.so|44315cf9e894a251728f3c28b94236521b3212ee
 
 # Nvram
 bin/nvram_daemon

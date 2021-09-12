@@ -99,7 +99,6 @@ PRODUCT_PACKAGES += \
     hostapd \
     wpa_supplicant \
     wpa_supplicant.conf \
-    libwifi-hal-mt66xx \
     lib_driver_cmd_mt66xx \
     android.hardware.wifi@1.0-service
 

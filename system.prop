@@ -16,6 +16,7 @@ ro.mtk_wlan_support=1
 ro.mtk_dhcpv6c_wifi=1
 ro.mtk_wifi_mcc_support=1
 ro.mtk_passpoint_r1_support=1
+ro.wlan.mtk.wifi.5g=1
 
 # Wi-Fi Direct
 wifi.direct.interface=p2p0
