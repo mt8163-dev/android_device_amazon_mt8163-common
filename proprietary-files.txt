@@ -4,9 +4,9 @@ bin/6620_wmt_concurrency
 bin/6620_wmt_lpbk
 bin/wmt_loader
 bin/dhcpcd
-etc/wifi/wpa_supplicant_overlay.conf
-etc/wifi/p2p_supplicant_overlay.conf
-etc/wifi/wpa_supplicant.conf
+etc/wifi/wpa_supplicant_overlay.conf|f5d7ec82221347ca9b0a8d746751c7a8d5004844
+etc/wifi/p2p_supplicant_overlay.conf|f3d47a576e30d160a64ea65e30e2e360ce295d56
+etc/wifi/wpa_supplicant.conf|1d638487fc7436721e1d1b42f5f845bef7642e83
 etc/firmware/ROMv2_lm_patch_1_0_hdr.bin
 etc/firmware/ROMv2_lm_patch_1_1_hdr.bin
 etc/firmware/WIFI_RAM_CODE_8163
