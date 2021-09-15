@@ -31,6 +31,7 @@ PRODUCT_PACKAGES += \
 # Camera
 PRODUCT_PACKAGES += \
     Camera2 \
+    libcam.client
     libcamera_parameters_mtk \
     android.hardware.camera.provider@2.4-impl-legacy
 
