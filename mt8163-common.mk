@@ -16,7 +16,7 @@ PRODUCT_CHARACTERISTICS := tablet
 # Overlay
 DEVICE_PACKAGE_OVERLAYS += \
     $(COMMON_PATH)/overlay \
-	$(COMMON_PATH)/overlay-lineage
+    $(COMMON_PATH)/overlay-lineage
 
 # Power HAL
 PRODUCT_PACKAGES += \
@@ -31,7 +31,8 @@ PRODUCT_PACKAGES += \
 # Camera
 PRODUCT_PACKAGES += \
     Camera2 \
-    libcam.client
+    libcam.client \
+    libcam.utils.sensorlistener \
     libcamera_parameters_mtk \
     android.hardware.camera.provider@2.4-impl-legacy
 
