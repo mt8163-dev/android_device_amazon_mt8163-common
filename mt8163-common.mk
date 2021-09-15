@@ -30,7 +30,7 @@ PRODUCT_PACKAGES += \
 
 # Camera
 PRODUCT_PACKAGES += \
-    Camera2 \
+    Snap \
     libcam.client \
     libcam.utils.sensorlistener \
     libcamera_parameters_mtk \
