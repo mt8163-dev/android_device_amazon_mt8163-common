@@ -260,8 +260,8 @@ lib/libpq_prot.so
 lib64/libpq_prot.so
 lib/libpq_cust.so
 lib64/libpq_cust.so
-lib/lib3a.so
-lib64/lib3a.so
+lib/lib3a.so|d1a33b3e9065bc1a7496a32337e22290aeae7557
+lib64/lib3a.so|26423712a5a4cc840e28084efa21aeaecf3a956e
 lib/libaed.so
 lib64/libaed.so
 lib/libJpgDecPipe.so
