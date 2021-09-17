@@ -351,7 +351,7 @@ lib/libcam.sdkclient.so
 lib64/libcam.sdkclient.so
 lib/libcam.utils.so
 lib64/libcam.utils.so
-lib/libcam_utils.so
-lib64/libcam_utils.so
+-lib/libcam_utils.so
+-lib64/libcam_utils.so
 lib/libmtkcamera_client.so
 lib64/libmtkcamera_client.so
