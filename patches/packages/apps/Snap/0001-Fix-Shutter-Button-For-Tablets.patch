@@ -1,0 +1,48 @@
+diff --git a/res/layout/camera_controls.xml b/res/layout/camera_controls.xml
+index a59725a..115e2bc 100755
+--- a/res/layout/camera_controls.xml
++++ b/res/layout/camera_controls.xml
+@@ -50,12 +50,11 @@
+         android:layout_width="@dimen/shutter_size"
+         android:layout_height="@dimen/shutter_size"
+         android:layout_gravity="bottom|center_horizontal"
+-        android:layout_marginBottom="@dimen/shutter_offset"
+-        android:layout_marginTop="@dimen/shutter_offset_top"
++        android:layout_marginBottom="30dip"
+         android:clickable="true"
+         android:contentDescription="@string/accessibility_shutter_button"
+         android:focusable="true"
+-        android:scaleType="fitCenter"
++        android:scaleType="center"
+         android:src="@drawable/btn_new_shutter" />
+
+     <ImageView
+@@ -64,12 +63,11 @@
+         android:layout_width="@dimen/shutter_size"
+         android:layout_height="@dimen/shutter_size"
+         android:layout_gravity="bottom|center_horizontal"
+-        android:layout_marginBottom="@dimen/shutter_offset"
+-        android:layout_marginTop="@dimen/shutter_offset_top"
++        android:layout_marginBottom="30dip"
+         android:clickable="true"
+         android:contentDescription="@string/accessibility_shutter_button"
+         android:focusable="true"
+-        android:scaleType="fitCenter"
++        android:scaleType="center"
+         android:src="@drawable/btn_new_shutter_video" />
+
+     <com.android.camera.ui.RotateImageView
+diff --git a/res/values/dimens.xml b/res/values/dimens.xml
+index 29fbbe5..81f8432 100755
+--- a/res/values/dimens.xml
++++ b/res/values/dimens.xml
+@@ -98,7 +98,7 @@
+     <dimen name="focus_circle_max_size">96dp</dimen>
+     <dimen name="focus_circle_initial_size">48dp</dimen>
+     <dimen name="zoom_font_size">14pt</dimen>
+-    <dimen name="shutter_offset">11dp</dimen>
++    <dimen name="shutter_offset">4dp</dimen>
+     <dimen name="shutter_offset_top">2dp</dimen>
+     <dimen name="size_thumbnail">200dip</dimen>
+     <dimen name="size_preview">400dip</dimen>
+
