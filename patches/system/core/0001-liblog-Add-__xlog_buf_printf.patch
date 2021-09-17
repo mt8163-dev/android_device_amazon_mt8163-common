@@ -40,7 +40,7 @@ index 84feb20..7da8df4 100644
 +    }
 +}
 +
-+LIBLOG_ABI_PUBLIC void __attribute__((weak)) int lab126_log_write(int bufID, int prio, const char *tag, const char *fmt, ...) {
++LIBLOG_ABI_PUBLIC int __attribute__((weak)) lab126_log_write(int bufID, int prio, const char *tag, const char *fmt, ...) {
 +	va_list ap;
 +	char buf[LOG_BUF_SIZE];
 +	int _a = bufID;
