@@ -75,7 +75,6 @@ on post-fs-data
     setprop vold.post_fs_data_done 1
 
 on init
-    export SECONDARY_STORAGE /storage/sdcard1
     export SECONDARY_STORAGE_USB /storage/usbotg
 
 on boot
