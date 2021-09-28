@@ -149,6 +149,14 @@ PRODUCT_PACKAGES += \
     android.hardware.sensors@1.0-impl-mediatek \
     android.hardware.sensors@1.0-service-mediatek
 
+# Sensors MultiHAL
+PRODUCT_PACKAGES += \
+    sensors.mt8163
+
+# MultiHAL config
+PRODUCT_COPY_FILES += \
+    $(COMMON_PATH)/configs/sensors/_hals.conf:system/vendor/etc/sensors/_hals.conf
+
 # Charger
 PRODUCT_PACKAGES += \
     charger_res_images
