@@ -175,7 +175,9 @@ TARGET_LD_SHIM_LIBS := \
     /system/lib64/libcam.utils.sensorlistener.so|libshim_camera.so \
     /system/lib/libmtk_mmutils.so|libshim_ui.so \
     /system/lib64/libmtk_mmutils.so|libshim_ui.so \
-    /system/lib/libMtkOmxAIVPlayer.so|libshim_stagefright.so
+    /system/lib/libMtkOmxAIVPlayer.so|libshim_stagefright.so \
+    /system/lib/libaspclient.so|libshim_parcel.so \
+    /system/lib64/libaspclient.so|libshim_parcel.so
 
 # Common-Specific Headers
 TARGET_SPECIFIC_HEADER_PATH := $(DEVICE_COMMON)/include
