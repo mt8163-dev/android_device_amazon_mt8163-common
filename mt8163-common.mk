@@ -174,7 +174,8 @@ PRODUCT_PACKAGES += \
     libshim_camera \
     libshim_drm \
     libshim_audio \
-    libshim_atomic
+    libshim_atomic \
+    libshim_stagefright
 
 # IPv6 tethering
 PRODUCT_PACKAGES += \

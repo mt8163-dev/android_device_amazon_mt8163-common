@@ -55,4 +55,13 @@ LOCAL_MODULE := libshim_atomic
 LOCAL_MODULE_TAGS := optional
 LOCAL_VENDOR_MODULE := true
 LOCAL_MODULE_CLASS := SHARED_LIBRARIES
+include $(BUILD_SHARED_LIBRARY)
+
+include $(CLEAR_VARS)
+LOCAL_SRC_FILES := stagefright/MediaTypes.cpp
+LOCAL_SHARED_LIBRARIES := liblog libstagefright
+LOCAL_MODULE := libshim_stagefright
+LOCAL_MODULE_TAGS := optional
+LOCAL_VENDOR_MODULE := true
+LOCAL_MODULE_CLASS := SHARED_LIBRARIES
 include $(BUILD_SHARED_LIBRARY) 
