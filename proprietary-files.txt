@@ -190,10 +190,6 @@ lib/libplayready.so|578aded81b2dc716d54ed933e60a44cf9ff43f31
 lib/libstagefrighthw.so
 lib64/libstagefrighthw.so
 lib/libvc1dec_sa.ca7.so
-lib/libvcodec_oal.so
-lib/libvcodec_utility.so
-lib64/libvcodec_utility.so
-lib/libvcodecdrv.so
 lib/libvp8dec_sa.ca7.so
 lib/libvp8enc_sa.ca7.so
 lib/libvp9dec_sa.ca7.so
@@ -355,3 +351,11 @@ lib64/libcam.utils.so
 -lib64/libcam_utils.so
 lib/libmtkcamera_client.so
 lib64/libmtkcamera_client.so
+lib/libvcodec_cap.so
+lib/libvcodecdrv.so
+lib/libvcodec_oal.so
+lib/libvcodec_utility.so
+lib64/libvcodec_cap.so
+lib64/libvcodecdrv.so
+lib64/libvcodec_utility.so
+
