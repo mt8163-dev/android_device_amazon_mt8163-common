@@ -233,6 +233,10 @@ lib64/libaudiodcrflt.so
 lib64/libaudiosetting.so
 lib64/libbessound_hd_mtk.so
 lib/libsmartvolume.so
+lib/libaudiostream.so
+lib64/libaudiostream.so
+lib/libaudiostream_jni.so
+lib64/libaudiostream_jni.so
 lib64/libsmartvolume.so
 lib/soundfx/libaudiofx.so
 lib64/soundfx/libaudiofx.so
