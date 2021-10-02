@@ -187,3 +187,6 @@ ro.sim_me_lock_mode=0
 
 # EGL
 debug.hwui.use_buffer_age=false
+
+# SdcardFS
+ro.sys.sdcardfs=false
