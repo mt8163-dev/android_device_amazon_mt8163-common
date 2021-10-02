@@ -23,9 +23,6 @@ on fs
     mkdir /mnt/sqfs 0771 system system
     mount squashfs loop@/system/sqfs/container.sqfs /mnt/sqfs wait ro context=u:object_r:squashfs_file:s0
 
-    # Change the partition permissions
-    exec /system/etc/partition_permission.sh
-
 on init
     # Battery
     chown shell system /proc/mtk_battery_cmd/current_cmd
