@@ -85,6 +85,10 @@ vendor/lib64/liboemcrypto.so
 vendor/lib64/mediadrm/libdrmclearkeyplugin.so
 vendor/lib64/mediadrm/libmockdrmcryptoplugin.so
 
+# Amazon Crypto
+-lib/libcrypaz.so|7cde5699c81b452fba6bae3cb7420488f1f3e46a
+-lib64/libcrypaz.so|4aa2658796ac9d7ab90c0e726dd6419914efb102
+
 # Misc
 bin/devicetype_service
 bin/dump-ramdump.sh
