@@ -835,9 +835,16 @@ service rpmb_svc /system/bin/rpmb_svc
     group system drmrpc
     disabled
 
+service ged_srv /system/bin/ged_srv
+    class core
+    user system
+    group system
+    disabled
+
 on property:dev.bootcomplete=1
     start audiofix
     start kvolcb
+    start ged_srv
 
 service audiofix /system/xbin/audiofix
     user root

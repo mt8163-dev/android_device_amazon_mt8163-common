@@ -135,7 +135,6 @@ lib64/hw/perfboost.default.so
 lib64/hw/perfboost.mt8163.so
 
 # Graphics
-bin/ged_srv
 bin/guiext-server
 etc/mtk_omx_core.cfg
 lib/egl/libGLES_mali.so
@@ -144,14 +143,21 @@ lib/hw/gralloc.mt8163.mali.so
 lib/hw/hwcomposer.mt8163.so
 lib64/hw/gralloc.mt8163.mali.so
 lib64/hw/hwcomposer.mt8163.so
-lib/libged.so
 lib/libgpu_aux.so
-lib64/libged.so
 lib64/libgpu_aux.so
 vendor/lib64/libhadeanframework_core.so
 vendor/lib64/libhadeangpu_util.so
 lib/libm4u.so
 lib64/libm4u.so
+
+# GPU Extension Device
+bin/ged_srv|2092850ef341fc07b0a2d4fe4b6d331fce655a11
+lib/libged.so|c527b2ee0826917813b3590d45f520e6fa5a0157
+lib64/libged.so|0a44eb15119604364c5aad0b1793cdedd23cfca6
+lib/libgas.so|2d46b57e3050263d9c0640f80ffdd4ad0c6360e2
+lib64/libgas.so|861eb951809af8a59294e6d3343cf8150fc3b944
+lib/libfposervice.so|9b38ac09339e58da130b627d9bb8759f28483b2b
+lib64/libfposervice.so|e1ec23988204b9bc316baadb4a732e923c7882e0
 
 # Sensors
 lib/libhwm.so
