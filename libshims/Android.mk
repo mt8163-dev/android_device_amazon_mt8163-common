@@ -58,8 +58,8 @@ LOCAL_MODULE_CLASS := SHARED_LIBRARIES
 include $(BUILD_SHARED_LIBRARY)
 
 include $(CLEAR_VARS)
-LOCAL_SRC_FILES := stagefright/MediaTypes.cpp stagefright/TimedEventQueue.cpp
-LOCAL_SHARED_LIBRARIES := liblog libstagefright
+LOCAL_SRC_FILES := stagefright/MediaTypes.cpp stagefright/TimedEventQueue.cpp stagefright/MediaBuffer.cpp
+LOCAL_SHARED_LIBRARIES := liblog libstagefright libstagefright_foundation libui libgui
 LOCAL_MODULE := libshim_stagefright
 LOCAL_MODULE_TAGS := optional
 LOCAL_VENDOR_MODULE := true
