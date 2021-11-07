@@ -75,6 +75,11 @@ PRODUCT_COPY_FILES += \
     $(COMMON_PATH)/configs/media/media_codecs_google_video_le.xml:system/etc/media_codecs_google_video_le.xml \
     $(COMMON_PATH)/configs/media/mtk_omx_core.cfg:system/vendor/etc/mtk_omx_core.cfg
 
+# Media Policy
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/seccomp-policy/mediacodec-seccomp.policy:system/vendor/etc/seccomp_policy/mediacodec.policy \
+    $(LOCAL_PATH)/seccomp-policy/mediaextractor-seccomp.policy:system/vendor/etc/seccomp_policy/mediaextractor.policy
+
 # Prebuilt Keylayouts
 PRODUCT_COPY_FILES += \
     $(COMMON_PATH)/configs/keylayouts/lightning-device.kl:system/usr/keylayout/lightning-device.kl \

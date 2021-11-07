@@ -145,10 +145,6 @@ DEVICE_MANIFEST_FILE := $(DEVICE_COMMON)/manifest.xml
 BOARD_SEPOLICY_DIRS += \
     $(DEVICE_COMMON)/sepolicy
 
-# Media Extractors
-BOARD_SECCOMP_POLICY := \
-    $(DEVICE_COMMON)/seccomp-policy
-
 # LineageOS Hardware
 BOARD_USES_LINEAGE_HARDWARE := true
 BOARD_HARDWARE_CLASS := $(DEVICE_COMMON)/lineagehw
