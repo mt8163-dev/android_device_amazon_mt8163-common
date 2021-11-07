@@ -136,7 +136,6 @@ lib64/hw/perfboost.mt8163.so
 
 # Graphics
 bin/guiext-server
-etc/mtk_omx_core.cfg
 lib/egl/libGLES_mali.so
 lib64/egl/libGLES_mali.so
 lib/hw/gralloc.mt8163.mali.so
