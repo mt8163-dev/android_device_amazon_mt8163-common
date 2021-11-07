@@ -85,6 +85,7 @@ vendor/lib/mediadrm/libdrmclearkeyplugin.so|0eaf1cf7c66a4385d9785b6c9b32444fb384
 vendor/lib64/liboemcrypto.so
 vendor/lib64/mediadrm/libdrmclearkeyplugin.so
 vendor/lib64/mediadrm/libmockdrmcryptoplugin.so
+lib/libplayready.so|578aded81b2dc716d54ed933e60a44cf9ff43f31
 
 # Amazon Crypto
 -lib/libcrypaz.so|7cde5699c81b452fba6bae3cb7420488f1f3e46a
@@ -165,13 +166,7 @@ lib64/libhwm.so
 lib/hw/sensors.mt8163.so:lib/libsensors.mt8163.so
 lib64/hw/sensors.mt8163.so:lib64/libsensors.mt8163.so
 
-# Media (HW Codecs from karnak-user 6.0 NS6314 2315 amz-p,release-keys)
-lib/libMtkOmxAIVPlayer.so
-lib/libMtkOmxCore.so|29ee5876ed9b03f78a54206028d0fd5c8124d55c
-lib64/libMtkOmxCore.so
-lib/libMtkOmxMp3Dec.so|0c9b7d7d25f36d650aed3f071030dff81d27a0cb
-lib/libMtkOmxVdecEx.so|996524b5fcb9ad5fb8c4c423aea7b9389d3efe4e
-lib/libMtkOmxVenc.so|0dd7e5e2088e3ee02571b3ca366a6f9cd30979f1
+# OMX (SW)
 lib/libSwJpgCodec.so
 lib/libcvsd_mtk.so
 lib64/libcvsd_mtk.so
@@ -196,13 +191,33 @@ lib64/libmtkjpeg.so
 lib64/libmtklimiter.so
 lib64/libmtkplayer.so
 lib64/libmtkshifter.so
-lib/libplayready.so|578aded81b2dc716d54ed933e60a44cf9ff43f31
 lib/libstagefrighthw.so
 lib64/libstagefrighthw.so
 lib/libvc1dec_sa.ca7.so
 lib/libvp8dec_sa.ca7.so
 lib/libvp8enc_sa.ca7.so
 lib/libvp9dec_sa.ca7.so
+
+# OMX (HW)
+lib/libMtkOmxAdpcmDec.so|e94d8ad3971c45b988f89c14fc2d70d00c0bc2eb
+lib/libMtkOmxAdpcmEnc.so|d2449d8cb5a3ddf9476e999dc296eaae48c7a424
+lib/libMtkOmxApeDec.so|57bed4f0791ef3e9cec3012300e692e4c1b4529c
+lib/libMtkOmxCore.so|e424bd726004e7f26109efa58b80ddc615b029e0
+lib/libMtkOmxFlacDec.so|c6de09f01876ef444509bf55b6a702ffdf835c02
+lib/libMtkOmxG711Dec.so|b8df5b7c3a879ce1374f9fc9e7bdf96829df7454
+lib/libMtkOmxGsmDec.so|242fac1d84b83a24ef71723ed22f5c98a416f236
+lib/libMtkOmxMp3Dec.so|48b1014bfa112b8b527020822a840c4171e63963
+lib/libMtkOmxRawDec.so|b57c01c6c6654fee47e49fe691cd60ceb29e8ebe
+lib/libMtkOmxVdecEx.so|a19a7d842664ad738029088bc945a92701a821aa
+lib/libMtkOmxVenc.so|416b5978d67850f748807667b1ba503712a5b349
+lib/libMtkOmxVorbisEnc.so|87e1d31f81cecbe605de7c7d44f5cb9abcece288
+lib/libClearMotionFW.so|5b49cb7248bdb268589209b5190aab68d9bdaf52
+lib/libvcodec_cap.so|985dda0744aa0848858d9d1c548a7f7a9c8ba966 
+lib/libvcodec_oal.so|2f88fec361dcd209930056439dab33bf6276c33f
+lib/libvcodec_utility.so|9a60c75c262b1e457e129038fe7e7f3c52a94b61
+lib64/libMtkOmxCore.so|99439d562078de61761b7508bf47353942b6689a
+lib64/libvcodec_cap.so|f74f076ba29e0e76640e31508f070df077b82628
+lib64/libvcodec_utility.so|3d091719fbb47cd4283cd8bc58b8fd2c643b605d
 
 # Thermal
 bin/thermal_manager
