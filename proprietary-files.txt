@@ -70,6 +70,7 @@ lib64/lib_uree_mtk_modular_drm.so
 lib64/liburee_meta_drmkeyinstall_v2.so
 lib64/lib_uree_mtk_crypto.so
 lib64/lib_uree_mtk_video_secure_al.so
+lib/libvcodecdrv.so
 vendor/lib/libwvm.so:lib/libwvm.so
 vendor/lib/libWVStreamControlAPI_L1.so
 vendor/lib/libdlbdapstorage.so
@@ -365,10 +366,8 @@ lib64/libcam.utils.so
 lib/libmtkcamera_client.so
 lib64/libmtkcamera_client.so
 lib/libvcodec_cap.so
-lib/libvcodecdrv.so
 lib/libvcodec_oal.so
 lib/libvcodec_utility.so
 lib64/libvcodec_cap.so
-lib64/libvcodecdrv.so
 lib64/libvcodec_utility.so
 
