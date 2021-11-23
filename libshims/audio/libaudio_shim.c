@@ -43,23 +43,17 @@ int mixer_ctl_set_enum_by_string(struct mixer_ctl *ctl, const char *string) {
 	int (*orig_mixer_ctl_set_enum_by_string)(struct mixer_ctl *ctl, const char *string);
 	
 	orig_mixer_ctl_set_enum_by_string = dlsym(RTLD_NEXT, "mixer_ctl_set_enum_by_string");
-	
-	ALOGD("mixer_ctl_set_enum_by_string, id:%d, name:%s, val:%s",ctl->info->id.numid, ctl->info->id.name, string);
-	
+		
 	if(ctl->info->id.numid == EXT_SPEAKER_SWITCH_CTRL_ID) {
-		ALOGD("Detected Spk switch commands: %s", string);
 		if(strcmp(string, "On") == 0) {
 			if(readH2wState() > 0) {
-				ALOGD("HP detected, disabling Spk");
 				return orig_mixer_ctl_set_enum_by_string(ctl, "Off");
 			}
 		}
 	}
 	else if(ctl->info->id.numid == EXT_HP_SWITCH_CTRL_ID) {
-		ALOGD("Detected HP switch commands: %s", string);
 		if(strcmp(string, "On") == 0) {
 			if(readH2wState() > 0) {
-				ALOGD("HP detected, enabling");
 				return orig_mixer_ctl_set_enum_by_string(ctl, "On");
 			}
 			else {

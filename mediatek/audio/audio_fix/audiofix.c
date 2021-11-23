@@ -85,7 +85,6 @@ int getALSAControlValue(char *name)
     }
 
     int val = mixer_ctl_get_value(ctl, 0);
-    ALOGD("Value for %s: %d", name, val);
     mixer_close(mixer1);
 
     return val;
