@@ -273,8 +273,6 @@ vendor/etc/audio-algorithms/EQ_2048.cfg
 vendor/etc/audio-algorithms/MBCL.cfg
 vendor/etc/audio-algorithms/coefs_FilterBank.cfg
 vendor/etc/dolby/ds1-0031.xml
-vendor/etc/audio_effects.conf
-etc/audio_policy.conf|2dfc062bf1d32c202c8e9b68922b30e9265846c0
 
 # Camera - from karin - MRA58K 1537280832
 lib/hw/camera.mt8163.so
