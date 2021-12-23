@@ -640,7 +640,7 @@ on post-fs-data
 
     # Concurrency Scenario
     chmod 0664 /sys/bus/platform/drivers/mem_bw_ctrl/concurrency_scenario
-    chown media media /sys/bus/platform/drivers/mem_bw_ctrl/concurrency_scenario
+    chown system media /sys/bus/platform/drivers/mem_bw_ctrl/concurrency_scenario
 
     # SCHED
     chmod 0660 /dev/mtk_sched
