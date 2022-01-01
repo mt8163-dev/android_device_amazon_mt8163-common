@@ -22,6 +22,14 @@ DEVICE_PACKAGE_OVERLAYS += \
 PRODUCT_PACKAGES += \
     power.mt8163
 
+# Perf
+PRODUCT_PACKAGES += \
+    libperfservice \
+    libperfservicenative
+
+PRODUCT_COPY_FILES += \
+    $(COMMON_PATH)/configs/perf/perfservscntbl.txt:system/etc/perfservscntbl.txt
+
 # Lights HAL
 PRODUCT_PACKAGES += \
     lights.mt8163 \

@@ -298,10 +298,6 @@ lib/libfeatureiodrv.so
 lib64/libfeatureiodrv.so
 lib/libmmsdkservice.so
 lib64/libmmsdkservice.so
-lib/libperfservice.so
-lib64/libperfservice.so
-lib/libperfservicenative.so
-lib64/libperfservicenative.so
 lib/libbwc.so
 lib64/libbwc.so
 lib/libion_mtk.so
