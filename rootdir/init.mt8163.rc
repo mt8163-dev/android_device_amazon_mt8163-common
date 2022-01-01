@@ -856,7 +856,8 @@ service kvolcb /system/xbin/kvolcb 0
     group root
     oneshot
 
-service charger /sbin/healthd -c
+service charger /charger
     class charger
     critical
-    seclabel u:r:healthd:s0
+    group system
+    seclabel u:r:charger:s0
