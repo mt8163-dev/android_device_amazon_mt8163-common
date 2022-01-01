@@ -54,6 +54,7 @@
          be empty.  An example would be "usb.*" -->
     <string-array translatable="false" name="config_tether_usb_regexs">
         <item>"rndis\\d"</item>
+        <item>"usb\\d"</item>
     </string-array>
 
     <!-- Whether a software navigation bar should be shown. NOTE: in the future this may be
