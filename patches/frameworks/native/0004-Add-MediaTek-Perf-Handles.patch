@@ -1,0 +1,97 @@
+diff --git a/services/inputflinger/Android.bp b/services/inputflinger/Android.bp
+index 30d32b5..558a322 100644
+--- a/services/inputflinger/Android.bp
++++ b/services/inputflinger/Android.bp
+@@ -35,6 +35,7 @@ cc_library_shared {
+         "libutils",
+         "libui",
+         "libhardware_legacy",
++		"libdl",
+     ],
+ 
+     cflags: [
+diff --git a/services/inputflinger/InputDispatcher.cpp b/services/inputflinger/InputDispatcher.cpp
+index aed16bf..141e50a 100644
+--- a/services/inputflinger/InputDispatcher.cpp
++++ b/services/inputflinger/InputDispatcher.cpp
+@@ -50,6 +50,7 @@
+ #include <stddef.h>
+ #include <time.h>
+ #include <unistd.h>
++#include <dlfcn.h>
+ 
+ #include <log/log.h>
+ #include <utils/Trace.h>
+@@ -88,6 +89,15 @@ const nsecs_t SLOW_EVENT_PROCESSING_WARNING_TIMEOUT = 2000 * 1000000LL; // 2sec
+ // Number of recent events to keep for debugging purposes.
+ const size_t RECENT_QUEUE_MAX_SIZE = 10;
+ 
++// MediaTek's Perf Service Native Boost
++#define SCN_APP_TOUCH 5
++typedef int (*PerfServiceBoostEnableAsyncPtr)(int);
++static PerfServiceBoostEnableAsyncPtr gPerfServiceBoostEnableAsyncPtr = NULL;
++typedef int (*PerfServiceBoostEnableTimeoutAsyncPtr)(int);
++static PerfServiceBoostEnableTimeoutAsyncPtr gPerfServiceBoostEnableTimeoutAsyncPtr = NULL;
++typedef int (*PerfServiceBoostDisableAsyncPtr)(int);
++static PerfServiceBoostDisableAsyncPtr gPerfServiceBoostDisableAsyncPtr = NULL;
++
+ static inline nsecs_t now() {
+     return systemTime(SYSTEM_TIME_MONOTONIC);
+ }
+@@ -210,6 +220,38 @@ InputDispatcher::InputDispatcher(const sp<InputDispatcherPolicyInterface>& polic
+ 
+     mKeyRepeatState.lastKeyEntry = NULL;
+ 
++    if (gPerfServiceBoostEnableAsyncPtr == NULL) {
++        ALOGI("Opening libperfservicenative.so");
++        void * perfServiceLib = dlopen("libperfservicenative.so", RTLD_NOW);
++        if (perfServiceLib == NULL) {
++            ALOGE("Cannot open libperfservicenative.so");
++        } else {
++            gPerfServiceBoostEnableAsyncPtr = (PerfServiceBoostEnableAsyncPtr)
++                dlsym(perfServiceLib, "PerfServiceNative_boostEnableAsync");
++            if (gPerfServiceBoostEnableAsyncPtr == NULL) {
++                ALOGE("Cannot get PerfServiceNative_boostEnableAsync ptr");
++            }
++            gPerfServiceBoostEnableTimeoutAsyncPtr = (PerfServiceBoostEnableTimeoutAsyncPtr)
++                dlsym(perfServiceLib, "PerfServiceNative_boostEnableTimeoutAsync");
++            if (gPerfServiceBoostEnableTimeoutAsyncPtr == NULL) {
++                ALOGI("Cannot get PerfServiceNative_boostEnableTimeoutAsync ptr");
++            }
++            gPerfServiceBoostDisableAsyncPtr = (PerfServiceBoostDisableAsyncPtr)
++                dlsym(perfServiceLib, "PerfServiceNative_boostDisableAsync");
++            if (gPerfServiceBoostDisableAsyncPtr == NULL) {
++                ALOGI("Cannot get PerfServiceNative_boostDisableAsync ptr");
++            }
++            if (gPerfServiceBoostEnableAsyncPtr == NULL && gPerfServiceBoostEnableTimeoutAsyncPtr == NULL &&
++                    gPerfServiceBoostDisableAsyncPtr == NULL) {
++                ALOGI("Cannot get PerfServiceNative ptrs, closing library");
++                dlclose(perfServiceLib);
++                gPerfServiceBoostEnableAsyncPtr = NULL;
++                gPerfServiceBoostEnableTimeoutAsyncPtr = NULL;
++                gPerfServiceBoostDisableAsyncPtr = NULL;
++            }
++        }
++    }
++
+     policy->getDispatcherConfiguration(&mConfig);
+ }
+ 
+@@ -877,6 +919,17 @@ bool InputDispatcher::dispatchMotionLocked(
+                 "conflicting pointer actions");
+         synthesizeCancelationEventsForAllConnectionsLocked(options);
+     }
++
++    if (entry->action == AMOTION_EVENT_ACTION_UP || entry->action == AMOTION_EVENT_ACTION_CANCEL) {
++        if (gPerfServiceBoostDisableAsyncPtr != NULL) {
++            (void)gPerfServiceBoostDisableAsyncPtr(SCN_APP_TOUCH);
++        }
++    } else if (entry->action == AMOTION_EVENT_ACTION_DOWN) {
++        if (gPerfServiceBoostEnableAsyncPtr != NULL) {
++            (void)gPerfServiceBoostEnableAsyncPtr(SCN_APP_TOUCH);
++        }
++    }
++
+     dispatchEventLocked(currentTime, entry, inputTargets);
+     return true;
+ }
