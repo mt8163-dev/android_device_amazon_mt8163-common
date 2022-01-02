@@ -71,7 +71,7 @@ enum {
 static int inited = 0;
 static char packName[128] = "";
 static sp<IServiceManager> sm ;
-static sp<IBinder> binder = NULL;
+static sp<IBinder> binderptr = NULL;
 
 #define BOOT_INFO_FILE "/sys/class/BOOT/BOOT/boot/boot_mode"
 #define RENDER_THREAD_UPDATE_DURATION   400000000
@@ -111,8 +111,8 @@ static void init(void)
 
         sm = defaultServiceManager();
         //binder = sm->getService(String16("mtk-perfservice"));
-        binder = sm->checkService(String16("mtk-perfservice")); // use check to avoid null binder
-        if(binder!=NULL) {
+        binderptr = sm->checkService(String16("mtk-perfservice")); // use check to avoid null binder
+        if(binderptr!=NULL) {
             inited = 1;
         }
     }
@@ -124,12 +124,12 @@ void PerfServiceNative_boostEnable(int scenario)
     Parcel data, reply;
     init();
 
-    ALOGI("PerfServiceNative_boostEnable:%d", scenario);
+    //ALOGI("PerfServiceNative_boostEnable:%d", scenario);
 
-    if(binder!=NULL) {
+    if(binderptr!=NULL) {
         data.writeInterfaceToken(String16("com.mediatek.perfservice.IPerfService"));
         data.writeInt32(scenario);
-        binder->transact(TRANSACTION_boostEnable ,data,&reply); // should sync with IPerfService
+        binderptr->transact(TRANSACTION_boostEnable ,data,&reply); // should sync with IPerfService
     }
 }
 
@@ -139,12 +139,12 @@ void PerfServiceNative_boostDisable(int scenario)
     Parcel data, reply;
     init();
 
-    ALOGI("PerfServiceNative_boostDisable:%d", scenario);
+    //ALOGI("PerfServiceNative_boostDisable:%d", scenario);
 
-    if(binder!=NULL) {
+    if(binderptr!=NULL) {
         data.writeInterfaceToken(String16("com.mediatek.perfservice.IPerfService"));
         data.writeInt32(scenario);
-        binder->transact(TRANSACTION_boostDisable ,data,&reply);
+        binderptr->transact(TRANSACTION_boostDisable ,data,&reply);
     }
 }
 
@@ -154,13 +154,13 @@ void PerfServiceNative_boostEnableTimeout(int scenario, int timeout)
     Parcel data, reply;
     init();
 
-    ALOGI("PerfServiceNative_boostEnableTimeout:%d, %d", scenario, timeout);
+    //ALOGI("PerfServiceNative_boostEnableTimeout:%d, %d", scenario, timeout);
 
-    if(binder!=NULL) {
+    if(binderptr!=NULL) {
         data.writeInterfaceToken(String16("com.mediatek.perfservice.IPerfService"));
         data.writeInt32(scenario);
         data.writeInt32(timeout);
-        binder->transact(TRANSACTION_boostEnableTimeout ,data,&reply);
+        binderptr->transact(TRANSACTION_boostEnableTimeout ,data,&reply);
     }
 }
 
@@ -170,13 +170,13 @@ void PerfServiceNative_boostEnableTimeoutMs(int scenario, int timeout_ms)
     Parcel data, reply;
     init();
 
-    ALOGI("PerfServiceNative_boostEnableTimeoutMs:%d, %d", scenario, timeout_ms);
+    //ALOGI("PerfServiceNative_boostEnableTimeoutMs:%d, %d", scenario, timeout_ms);
 
-    if(binder!=NULL) {
+    if(binderptr!=NULL) {
         data.writeInterfaceToken(String16("com.mediatek.perfservice.IPerfService"));
         data.writeInt32(scenario);
         data.writeInt32(timeout_ms);
-        binder->transact(TRANSACTION_boostEnableTimeoutMs ,data,&reply);
+        binderptr->transact(TRANSACTION_boostEnableTimeoutMs ,data,&reply);
     }
 }
 
@@ -186,12 +186,12 @@ void PerfServiceNative_boostEnableAsync(int scenario)
     Parcel data, reply;
     init();
 
-    ALOGI("PerfServiceNative_boostEnableAsync:%d", scenario);
+    //ALOGI("PerfServiceNative_boostEnableAsync:%d", scenario);
 
-    if(binder!=NULL) {
+    if(binderptr!=NULL) {
         data.writeInterfaceToken(String16("com.mediatek.perfservice.IPerfService"));
         data.writeInt32(scenario);
-        binder->transact(TRANSACTION_boostEnable ,data,&reply,IBinder::FLAG_ONEWAY); // should sync with IPerfService
+        binderptr->transact(TRANSACTION_boostEnable ,data,&reply,IBinder::FLAG_ONEWAY); // should sync with IPerfService
     }
 }
 
@@ -201,12 +201,12 @@ void PerfServiceNative_boostDisableAsync(int scenario)
     Parcel data, reply;
     init();
 
-    ALOGI("PerfServiceNative_boostDisableAsync:%d", scenario);
+    //ALOGI("PerfServiceNative_boostDisableAsync:%d", scenario);
 
-    if(binder!=NULL) {
+    if(binderptr!=NULL) {
         data.writeInterfaceToken(String16("com.mediatek.perfservice.IPerfService"));
         data.writeInt32(scenario);
-        binder->transact(TRANSACTION_boostDisable ,data,&reply,IBinder::FLAG_ONEWAY);
+        binderptr->transact(TRANSACTION_boostDisable ,data,&reply,IBinder::FLAG_ONEWAY);
     }
 }
 
@@ -216,13 +216,13 @@ void PerfServiceNative_boostEnableTimeoutAsync(int scenario, int timeout)
     Parcel data, reply;
     init();
 
-    ALOGI("PerfServiceNative_boostEnableTimeoutAsync:%d, %d", scenario, timeout);
+    //ALOGI("PerfServiceNative_boostEnableTimeoutAsync:%d, %d", scenario, timeout);
 
-    if(binder!=NULL) {
+    if(binderptr!=NULL) {
         data.writeInterfaceToken(String16("com.mediatek.perfservice.IPerfService"));
         data.writeInt32(scenario);
         data.writeInt32(timeout);
-        binder->transact(TRANSACTION_boostEnableTimeout ,data,&reply,IBinder::FLAG_ONEWAY);
+        binderptr->transact(TRANSACTION_boostEnableTimeout ,data,&reply,IBinder::FLAG_ONEWAY);
     }
 }
 
@@ -232,13 +232,13 @@ void PerfServiceNative_boostEnableTimeoutMsAsync(int scenario, int timeout_ms)
     Parcel data, reply;
     init();
 
-    ALOGI("PerfServiceNative_boostEnableTimeoutMsAsync:%d, %d", scenario, timeout_ms);
+    //ALOGI("PerfServiceNative_boostEnableTimeoutMsAsync:%d, %d", scenario, timeout_ms);
 
-    if(binder!=NULL) {
+    if(binderptr!=NULL) {
         data.writeInterfaceToken(String16("com.mediatek.perfservice.IPerfService"));
         data.writeInt32(scenario);
         data.writeInt32(timeout_ms);
-        binder->transact(TRANSACTION_boostEnableTimeoutMs ,data,&reply,IBinder::FLAG_ONEWAY);
+        binderptr->transact(TRANSACTION_boostEnableTimeoutMs ,data,&reply,IBinder::FLAG_ONEWAY);
     }
 }
 
@@ -252,15 +252,15 @@ int PerfServiceNative_userReg(int scn_core, int scn_freq)
     pid = (int)getpid();
     tid = (int)gettid();
 
-    ALOGI("PerfServiceNative_userReg: %d, %d (pid:%d, tid:%d)", scn_core, scn_freq, pid, tid);
+    //ALOGI("PerfServiceNative_userReg: %d, %d (pid:%d, tid:%d)", scn_core, scn_freq, pid, tid);
 
-    if(binder!=NULL) {
+    if(binderptr!=NULL) {
         data.writeInterfaceToken(String16("com.mediatek.perfservice.IPerfService"));
         data.writeInt32(scn_core);
         data.writeInt32(scn_freq);
         data.writeInt32(pid);
         data.writeInt32(tid);
-        binder->transact(TRANSACTION_userReg ,data,&reply); // should sync with IPerfService
+        binderptr->transact(TRANSACTION_userReg ,data,&reply); // should sync with IPerfService
         reply.readExceptionCode();
         handle = reply.readInt32();
     }
@@ -277,9 +277,9 @@ int PerfServiceNative_userRegBigLittle(int scn_core_big, int scn_freq_big, int s
     pid = (int)getpid();
     tid = (int)gettid();
 
-    ALOGI("PerfServiceNative_userRegBigLittle: %d, %d, %d, %d (pid:%d, tid:%d)", scn_core_little, scn_freq_little, scn_core_big, scn_freq_big, pid, tid);
+    //ALOGI("PerfServiceNative_userRegBigLittle: %d, %d, %d, %d (pid:%d, tid:%d)", scn_core_little, scn_freq_little, scn_core_big, scn_freq_big, pid, tid);
 
-    if(binder!=NULL) {
+    if(binderptr!=NULL) {
         data.writeInterfaceToken(String16("com.mediatek.perfservice.IPerfService"));
         data.writeInt32(scn_core_big);
         data.writeInt32(scn_freq_big);
@@ -287,7 +287,7 @@ int PerfServiceNative_userRegBigLittle(int scn_core_big, int scn_freq_big, int s
         data.writeInt32(scn_freq_little);
         data.writeInt32(pid);
         data.writeInt32(tid);
-        binder->transact(TRANSACTION_userRegBigLittle ,data,&reply); // should sync with IPerfService
+        binderptr->transact(TRANSACTION_userRegBigLittle ,data,&reply); // should sync with IPerfService
         reply.readExceptionCode();
         handle = reply.readInt32();
     }
@@ -300,12 +300,12 @@ void PerfServiceNative_userUnreg(int handle)
     Parcel data, reply;
     init();
 
-    ALOGI("PerfServiceNative_userUnreg:%d", handle);
+    //ALOGI("PerfServiceNative_userUnreg:%d", handle);
 
-    if(binder!=NULL) {
+    if(binderptr!=NULL) {
         data.writeInterfaceToken(String16("com.mediatek.perfservice.IPerfService"));
         data.writeInt32(handle);
-        binder->transact(TRANSACTION_userUnreg ,data,&reply); // should sync with IPerfService
+        binderptr->transact(TRANSACTION_userUnreg ,data,&reply); // should sync with IPerfService
     }
 }
 
@@ -316,12 +316,12 @@ int PerfServiceNative_userGetCapability(int cmd)
     int value = -1;
     init();
 
-    ALOGI("PerfServiceNative_userGetCapability: %d", cmd);
+    //ALOGI("PerfServiceNative_userGetCapability: %d", cmd);
 
-    if(binder!=NULL) {
+    if(binderptr!=NULL) {
         data.writeInterfaceToken(String16("com.mediatek.perfservice.IPerfService"));
         data.writeInt32(cmd);
-        binder->transact(TRANSACTION_userGetCapability ,data,&reply); // should sync with IPerfService
+        binderptr->transact(TRANSACTION_userGetCapability ,data,&reply); // should sync with IPerfService
         reply.readExceptionCode();
         value = reply.readInt32();
     }
@@ -338,13 +338,13 @@ int PerfServiceNative_userRegScn(void)
     pid = (int)getpid();
     tid = (int)gettid();
 
-    ALOGI("PerfServiceNative_userRegScn: (pid:%d, tid:%d)", pid, tid);
+    //ALOGI("PerfServiceNative_userRegScn: (pid:%d, tid:%d)", pid, tid);
 
-    if(binder!=NULL) {
+    if(binderptr!=NULL) {
         data.writeInterfaceToken(String16("com.mediatek.perfservice.IPerfService"));
         data.writeInt32(pid);
         data.writeInt32(tid);
-        binder->transact(TRANSACTION_userRegScn ,data,&reply); // should sync with IPerfService
+        binderptr->transact(TRANSACTION_userRegScn ,data,&reply); // should sync with IPerfService
         reply.readExceptionCode();
         handle = reply.readInt32();
     }
@@ -357,9 +357,9 @@ void PerfServiceNative_userRegScnConfig(int handle, int cmd, int param_1, int pa
     Parcel data, reply;
     init();
 
-    ALOGI("PerfServiceNative_userRegScnConfig: handle:%d, cmd:%d, p1:%d, p2:%d, p3:%d, p4:%d", handle, cmd, param_1, param_2, param_3, param_4);
+    //ALOGI("PerfServiceNative_userRegScnConfig: handle:%d, cmd:%d, p1:%d, p2:%d, p3:%d, p4:%d", handle, cmd, param_1, param_2, param_3, param_4);
 
-    if(binder!=NULL) {
+    if(binderptr!=NULL) {
         data.writeInterfaceToken(String16("com.mediatek.perfservice.IPerfService"));
         data.writeInt32(handle);
         data.writeInt32(cmd);
@@ -367,7 +367,7 @@ void PerfServiceNative_userRegScnConfig(int handle, int cmd, int param_1, int pa
         data.writeInt32(param_2);
         data.writeInt32(param_3);
         data.writeInt32(param_4);
-        binder->transact(TRANSACTION_userRegScnConfig,data,&reply); // should sync with IPerfService
+        binderptr->transact(TRANSACTION_userRegScnConfig,data,&reply); // should sync with IPerfService
     }
 }
 
@@ -379,10 +379,10 @@ void PerfServiceNative_userUnregScn(int handle)
 
     ALOGI("PerfServiceNative_userUnregScn: handle:%d", handle);
 
-    if(binder!=NULL) {
+    if(binderptr!=NULL) {
         data.writeInterfaceToken(String16("com.mediatek.perfservice.IPerfService"));
         data.writeInt32(handle);
-        binder->transact(TRANSACTION_userUnregScn,data,&reply); // should sync with IPerfService
+        binderptr->transact(TRANSACTION_userUnregScn,data,&reply); // should sync with IPerfService
     }
 }
 
@@ -392,12 +392,12 @@ void PerfServiceNative_userEnable(int handle)
     Parcel data, reply;
     init();
 
-    ALOGI("PerfServiceNative_userEnable:%d", handle);
+    //ALOGI("PerfServiceNative_userEnable:%d", handle);
 
-    if(binder!=NULL) {
+    if(binderptr!=NULL) {
         data.writeInterfaceToken(String16("com.mediatek.perfservice.IPerfService"));
         data.writeInt32(handle);
-        binder->transact(TRANSACTION_userEnable ,data,&reply); // should sync with IPerfService
+        binderptr->transact(TRANSACTION_userEnable ,data,&reply); // should sync with IPerfService
     }
 }
 
@@ -407,13 +407,13 @@ void PerfServiceNative_userEnableTimeout(int handle, int timeout)
     Parcel data, reply;
     init();
 
-    ALOGI("PerfServiceNative_userEnableTimeout:%d, %d", handle, timeout);
+    //ALOGI("PerfServiceNative_userEnableTimeout:%d, %d", handle, timeout);
 
-    if(binder!=NULL) {
+    if(binderptr!=NULL) {
         data.writeInterfaceToken(String16("com.mediatek.perfservice.IPerfService"));
         data.writeInt32(handle);
         data.writeInt32(timeout);
-        binder->transact(TRANSACTION_userEnableTimeout ,data,&reply);
+        binderptr->transact(TRANSACTION_userEnableTimeout ,data,&reply);
     }
 }
 
@@ -423,13 +423,13 @@ void PerfServiceNative_userEnableTimeoutMs(int handle, int timeout_ms)
     Parcel data, reply;
     init();
 
-    ALOGI("PerfServiceNative_userEnableTimeoutMs:%d, %d", handle, timeout_ms);
+    //ALOGI("PerfServiceNative_userEnableTimeoutMs:%d, %d", handle, timeout_ms);
 
-    if(binder!=NULL) {
+    if(binderptr!=NULL) {
         data.writeInterfaceToken(String16("com.mediatek.perfservice.IPerfService"));
         data.writeInt32(handle);
         data.writeInt32(timeout_ms);
-        binder->transact(TRANSACTION_userEnableTimeoutMs ,data,&reply);
+        binderptr->transact(TRANSACTION_userEnableTimeoutMs ,data,&reply);
     }
 }
 
@@ -439,12 +439,12 @@ void PerfServiceNative_userEnableAsync(int handle)
     Parcel data, reply;
     init();
 
-    ALOGI("PerfServiceNative_userEnableAsync:%d", handle);
+    //ALOGI("PerfServiceNative_userEnableAsync:%d", handle);
 
-    if(binder!=NULL) {
+    if(binderptr!=NULL) {
         data.writeInterfaceToken(String16("com.mediatek.perfservice.IPerfService"));
         data.writeInt32(handle);
-        binder->transact(TRANSACTION_userEnableAsync ,data,&reply); // should sync with IPerfService
+        binderptr->transact(TRANSACTION_userEnableAsync ,data,&reply); // should sync with IPerfService
     }
 }
 
@@ -454,13 +454,13 @@ void PerfServiceNative_userEnableTimeoutAsync(int handle, int timeout)
     Parcel data, reply;
     init();
 
-    ALOGI("PerfServiceNative_userEnableTimeoutAsync:%d, %d", handle, timeout);
+    //ALOGI("PerfServiceNative_userEnableTimeoutAsync:%d, %d", handle, timeout);
 
-    if(binder!=NULL) {
+    if(binderptr!=NULL) {
         data.writeInterfaceToken(String16("com.mediatek.perfservice.IPerfService"));
         data.writeInt32(handle);
         data.writeInt32(timeout);
-        binder->transact(TRANSACTION_userEnableTimeoutAsync ,data,&reply);
+        binderptr->transact(TRANSACTION_userEnableTimeoutAsync ,data,&reply);
     }
 }
 
@@ -470,13 +470,13 @@ void PerfServiceNative_userEnableTimeoutMsAsync(int handle, int timeout_ms)
     Parcel data, reply;
     init();
 
-    ALOGI("PerfServiceNative_userEnableTimeoutMsAsync:%d, %d", handle, timeout_ms);
+    //ALOGI("PerfServiceNative_userEnableTimeoutMsAsync:%d, %d", handle, timeout_ms);
 
-    if(binder!=NULL) {
+    if(binderptr!=NULL) {
         data.writeInterfaceToken(String16("com.mediatek.perfservice.IPerfService"));
         data.writeInt32(handle);
         data.writeInt32(timeout_ms);
-        binder->transact(TRANSACTION_userEnableTimeoutMsAsync ,data,&reply);
+        binderptr->transact(TRANSACTION_userEnableTimeoutMsAsync ,data,&reply);
     }
 }
 
@@ -486,12 +486,12 @@ void PerfServiceNative_userDisable(int handle)
     Parcel data, reply;
     init();
 
-    ALOGI("PerfServiceNative_userDisable:%d", handle);
+    //ALOGI("PerfServiceNative_userDisable:%d", handle);
 
-    if(binder!=NULL) {
+    if(binderptr!=NULL) {
         data.writeInterfaceToken(String16("com.mediatek.perfservice.IPerfService"));
         data.writeInt32(handle);
-        binder->transact(TRANSACTION_userDisable ,data,&reply);
+        binderptr->transact(TRANSACTION_userDisable ,data,&reply);
     }
 }
 
@@ -501,11 +501,11 @@ void PerfServiceNative_userResetAll(void)
     Parcel data, reply;
     init();
 
-    ALOGI("PerfServiceNative_userResetAll");
+    //ALOGI("PerfServiceNative_userResetAll");
 
-    if(binder!=NULL) {
+    if(binderptr!=NULL) {
         data.writeInterfaceToken(String16("com.mediatek.perfservice.IPerfService"));
-        binder->transact(TRANSACTION_userResetAll ,data,&reply);
+        binderptr->transact(TRANSACTION_userResetAll ,data,&reply);
     }
 }
 
@@ -515,11 +515,11 @@ void PerfServiceNative_userDisableAll(void)
     Parcel data, reply;
     init();
 
-    ALOGI("PerfServiceNative_userDisableAll");
+    //ALOGI("PerfServiceNative_userDisableAll");
 
-    if(binder!=NULL) {
+    if(binderptr!=NULL) {
         data.writeInterfaceToken(String16("com.mediatek.perfservice.IPerfService"));
-        binder->transact(TRANSACTION_userDisableAll ,data,&reply);
+        binderptr->transact(TRANSACTION_userDisableAll ,data,&reply);
     }
 }
 
@@ -529,11 +529,11 @@ void PerfServiceNative_dumpAll(void)
     Parcel data, reply;
     init();
 
-    ALOGI("PerfServiceNative_dumpAll");
+    //ALOGI("PerfServiceNative_dumpAll");
 
-    if(binder!=NULL) {
+    if(binderptr!=NULL) {
         data.writeInterfaceToken(String16("com.mediatek.perfservice.IPerfService"));
-        binder->transact(TRANSACTION_dumpAll ,data,&reply);
+        binderptr->transact(TRANSACTION_dumpAll ,data,&reply);
     }
 }
 
@@ -543,12 +543,12 @@ void PerfServiceNative_setFavorPid(int pid)
     Parcel data, reply;
     init();
 
-    ALOGI("PerfServiceNative_setFavorPid: pid:%d", pid);
+    //ALOGI("PerfServiceNative_setFavorPid: pid:%d", pid);
 
-    if(binder!=NULL) {
+    if(binderptr!=NULL) {
         data.writeInterfaceToken(String16("com.mediatek.perfservice.IPerfService"));
         data.writeInt32(pid);
-        binder->transact(TRANSACTION_setFavorPid,data,&reply,IBinder::FLAG_ONEWAY);
+        binderptr->transact(TRANSACTION_setFavorPid,data,&reply,IBinder::FLAG_ONEWAY);
     }
 }
 
@@ -560,12 +560,12 @@ void PerfServiceNative_setBoostThread(void)
     init();
 
     tid = (int)gettid();
-    ALOGI("PerfServiceNative_setBoostThread: pid:%d, tid:%d", (int)getpid(), tid);
+    //ALOGI("PerfServiceNative_setBoostThread: pid:%d, tid:%d", (int)getpid(), tid);
 
-    if(binder!=NULL) {
+    if(binderptr!=NULL) {
         data.writeInterfaceToken(String16("com.mediatek.perfservice.IPerfService"));
         data.writeInt32(tid | RENDER_BIT);
-        binder->transact(TRANSACTION_setFavorPid,data,&reply,IBinder::FLAG_ONEWAY);
+        binderptr->transact(TRANSACTION_setFavorPid,data,&reply,IBinder::FLAG_ONEWAY);
     }
 }
 
@@ -577,12 +577,12 @@ void PerfServiceNative_restoreBoostThread(void)
     init();
 
     tid = (int)gettid();
-    ALOGI("PerfServiceNative_restoreBoostThread: pid:%d, tid:%d", (int)getpid(), tid);
+    //ALOGI("PerfServiceNative_restoreBoostThread: pid:%d, tid:%d", (int)getpid(), tid);
 
-    if(binder!=NULL) {
+    if(binderptr!=NULL) {
         data.writeInterfaceToken(String16("com.mediatek.perfservice.IPerfService"));
         data.writeInt32(tid | RENDER_BIT);
-        binder->transact(TRANSACTION_restorePolicy,data,&reply,IBinder::FLAG_ONEWAY);
+        binderptr->transact(TRANSACTION_restorePolicy,data,&reply,IBinder::FLAG_ONEWAY);
     }
 }
 
@@ -605,10 +605,10 @@ void PerfServiceNative_notifyFrameUpdate(int level)
 
     if(mPreviousTime == 0 || (now - mPreviousTime) > RENDER_THREAD_UPDATE_DURATION) { // 400ms
         //ALOGI("PerfServiceNative_notifyFrameUpdate:%d", (now - mPreviousTime)/1000000);
-        if(binder!=NULL) {
+        if(binderptr!=NULL) {
             data.writeInterfaceToken(String16("com.mediatek.perfservice.IPerfService"));
             data.writeInt32(level);
-            binder->transact(TRANSACTION_notifyFrameUpdate ,data,&reply,IBinder::FLAG_ONEWAY);
+            binderptr->transact(TRANSACTION_notifyFrameUpdate ,data,&reply,IBinder::FLAG_ONEWAY);
         }
         mPreviousTime = now;
     }
@@ -620,11 +620,11 @@ void PerfServiceNative_notifyDisplayType(int type)
     Parcel data, reply;
     init();
 
-    ALOGI("PerfServiceNative_notifyDisplayType:%d", type);
-    if(binder!=NULL) {
+    //ALOGI("PerfServiceNative_notifyDisplayType:%d", type);
+    if(binderptr!=NULL) {
         data.writeInterfaceToken(String16("com.mediatek.perfservice.IPerfService"));
         data.writeInt32(type);
-        binder->transact(TRANSACTION_notifyDisplayType ,data,&reply,IBinder::FLAG_ONEWAY);
+        binderptr->transact(TRANSACTION_notifyDisplayType ,data,&reply,IBinder::FLAG_ONEWAY);
     }
 }
 
@@ -634,12 +634,12 @@ void PerfServiceNative_notifyUserStatus(int type, int status)
     Parcel data, reply;
     init();
 
-    ALOGI("PerfServiceNative_notifyUserStatus:%d, status:%d", type, status);
-    if(binder!=NULL) {
+    //ALOGI("PerfServiceNative_notifyUserStatus:%d, status:%d", type, status);
+    if(binderptr!=NULL) {
         data.writeInterfaceToken(String16("com.mediatek.perfservice.IPerfService"));
         data.writeInt32(type);
         data.writeInt32(status);
-        binder->transact(TRANSACTION_notifyUserStatus ,data,&reply,IBinder::FLAG_ONEWAY);
+        binderptr->transact(TRANSACTION_notifyUserStatus ,data,&reply,IBinder::FLAG_ONEWAY);
     }
 }
 
@@ -651,9 +651,9 @@ int PerfServiceNative_getLastBoostPid()
     init();
 
     //ALOGI("PerfServiceNative_getLastBoostPid");
-    if(binder!=NULL) {
+    if(binderptr!=NULL) {
         data.writeInterfaceToken(String16("com.mediatek.perfservice.IPerfService"));
-        binder->transact(TRANSACTION_getLastBoostPid,data,&reply);
+        binderptr->transact(TRANSACTION_getLastBoostPid,data,&reply);
         reply.readExceptionCode();
 
         return reply.readInt32();
