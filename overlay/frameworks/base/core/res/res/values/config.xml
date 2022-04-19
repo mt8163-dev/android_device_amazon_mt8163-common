@@ -94,36 +94,34 @@
          Software implementation will be used if config_hardware_auto_brightness_available is not set -->
     <bool name="config_automatic_brightness_available">true</bool>
 
-        <!-- Array of light sensor LUX values to define our levels for auto backlight brightness support.
-         The N entries of this array define N + 1 control points as follows:
-         (1-based arrays)
-
-         Point 1:            (0, value[1]):             lux <= 0
-         Point 2:     (level[1], value[2]):  0        < lux <= level[1]
-         Point 3:     (level[2], value[3]):  level[2] < lux <= level[3]
+    <!-- Array of light sensor LUX values to define our levels for auto backlight brightness support.
+         The N entries of this array define N  1 zones as follows:
+         Zone 0:        0 <= LUX < array[0]
+         Zone 1:        array[0] <= LUX < array[1]
          ...
-         Point N+1: (level[N], value[N+1]):  level[N] < lux
-
-         The control points must be strictly increasing.  Each control point
-         corresponds to an entry in the brightness backlight values arrays.
-         For example, if LUX == level[1] (first element of the levels array)
-         then the brightness will be determined by value[2] (second element
-         of the brightness values array).
-
-         Spline interpolation is used to determine the auto-brightness
-         backlight values for LUX levels between these control points.
-
+         Zone N:        array[N - 1] <= LUX < array[N]
+         Zone N + 1     array[N] <= LUX < infinity
          Must be overridden in platform specific overlays -->
     <integer-array name="config_autoBrightnessLevels">
+        <item>6</item>
+        <item>8</item>
         <item>10</item>
+        <item>15</item>
+        <item>30</item>
         <item>50</item>
         <item>100</item>
-        <item>170</item>
-        <item>240</item>
-        <item>300</item>
+        <item>230</item>
         <item>400</item>
         <item>500</item>
         <item>650</item>
+        <item>825</item>
+        <item>1000</item>
+        <item>2500</item>
+        <item>5000</item>
+        <item>6250</item>
+        <item>8400</item>
+        <item>9500</item>
+        <item>10240</item>
     </integer-array>
 
         <!-- Array of output values for LCD backlight corresponding to the LUX values
@@ -132,16 +130,26 @@
          The brightness values must be between 0 and 255 and be non-decreasing.
          This must be overridden in platform specific overlays -->
     <integer-array name="config_autoBrightnessLcdBacklightValues">
-        <item>11</item>
-        <item>38</item>
-        <item>58</item>
-        <item>87</item>
-        <item>114</item>
-        <item>139</item>
-        <item>179</item>
-        <item>210</item>
-        <item>255</item>
-        <item>255</item>
+       <item>12</item>     <!-- 0-5 -->
+        <item>16</item>     <!-- 6-7 -->
+        <item>18</item>     <!-- 8-9 -->
+        <item>20</item>     <!-- 10-14 -->
+        <item>25</item>     <!-- 15-29 -->
+        <item>28</item>     <!-- 30-49 -->
+        <item>34</item>     <!-- 50-99 -->
+        <item>37</item>     <!-- 100-229 -->
+        <item>41</item>     <!-- 239-399 -->
+        <item>48</item>     <!-- 400-499 -->
+        <item>57</item>     <!-- 500-649 -->
+        <item>75</item>     <!-- 650-824 -->
+        <item>81</item>     <!-- 825-999 -->
+        <item>90</item>     <!-- 1000-2499 -->
+        <item>100</item>    <!-- 2500-4999 -->
+        <item>125</item>    <!-- 5000-6249 -->
+        <item>165</item>    <!-- 6250-7499 -->
+        <item>200</item>    <!-- 7500-9999 -->
+        <item>225</item>    <!-- 10000-11999 -->
+        <item>255</item>    <!-- 12000-19417 (max value of light sensor) -->
     </integer-array>
 
     <!-- Enable doze mode
