@@ -229,7 +229,8 @@ PRODUCT_COPY_FILES += \
     $(COMMON_PATH)/rootdir/init.project.rc:root/init.project.rc \
     $(COMMON_PATH)/rootdir/init.wifi.rc:root/init.wifi.rc \
     $(COMMON_PATH)/rootdir/ueventd.mt8163.rc:root/ueventd.mt8163.rc \
-    $(COMMON_PATH)/rootdir/bin/reboot-amonet:system/xbin/reboot-amonet
+    $(COMMON_PATH)/rootdir/bin/reboot-amonet:system/xbin/reboot-amonet \
+    $(COMMON_PATH)/rootdir/bin/fix-symlinks.sh:system/xbin/fix-symlinks.sh
 
 # Permissions
 PRODUCT_COPY_FILES += \
