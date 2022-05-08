@@ -1,6 +1,12 @@
 # RIL
 rild.libpath=mtk-ril.so
 rild.libargs=-d /dev/ttyC0
+keyguard.no_require_sim=1
+ro.radio.use-ppp=no
+ro.config.nocheckin=yes
+ro.radio.noril=1
+ro.carrier=wifi-only
+persist.radio.noril=1
 
 # Wi-Fi
 ro.mediatek.wlan.wsc=1

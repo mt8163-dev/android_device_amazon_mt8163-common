@@ -5,9 +5,10 @@ VENDOR_COMMON := vendor/amazon/mt8163-common
 # inherit from the proprietary version
 -include $(VENDOR_COMMON)/BoardConfigVendor.mk
 
-# Platform
+# Board
 TARGET_BOARD_PLATFORM := mt8163
 TARGET_NO_BOOTLOADER := true
+TARGET_BOOTLOADER_BOARD_NAME := mt8163
 
 # GPU
 TARGET_BOARD_PLATFORM_GPU := mali-720mp2
@@ -17,20 +18,13 @@ TARGET_ARCH := arm64
 TARGET_ARCH_VARIANT := armv8-a
 TARGET_CPU_ABI := arm64-v8a
 TARGET_CPU_VARIANT := generic
+TARGET_CPU_SMP := true
+
 TARGET_2ND_ARCH := arm
 TARGET_2ND_ARCH_VARIANT := armv7-a-neon
 TARGET_2ND_CPU_ABI := armeabi-v7a
 TARGET_2ND_CPU_ABI2 := armeabi
 TARGET_2ND_CPU_VARIANT := cortex-a15
-TARGET_CPU_SMP := true
-
-# Bootloader
-TARGET_BOOTLOADER_BOARD_NAME := mt8163
-
-# Filesystems
-TARGET_USERIMAGES_USE_EXT4:= true
-TARGET_USERIMAGES_SPARSE_EXT_DISABLED := false
-BOARD_CACHEIMAGE_FILE_SYSTEM_TYPE := ext4
 
 # Kernel
 BOARD_KERNEL_CMDLINE := bootopt=64S3,32N2,64N2
@@ -45,28 +39,24 @@ BOARD_MKBOOTIMG_ARGS := \
 	--second_offset 0x00e88000 \
 	--tags_offset 0x07f88000
 
+TARGET_KMODULES := true
 TARGET_KERNEL_SOURCE := $(KERNEL_COMMON)
 TARGET_KERNEL_ARCH := arm64
 TARGET_KERNEL_HEADER_ARCH := arm64
 TARGET_KERNEL_CROSS_COMPILE_PREFIX := $(shell pwd)/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-
 BOARD_KERNEL_IMAGE_NAME := Image.gz-dtb
 
-# 64 Bit Binder Userspace
+# Binder
 TARGET_USES_64_BIT_BINDER := true
-
-# Kernel Modules
-TARGET_KMODULES := true
-
-# Disable memcpy opt (for audio libraries)
-TARGET_CPU_MEMCPY_OPT_DISABLE := true
 
 # Audio
 BOARD_USES_MTK_AUDIO := true
 BOARD_SUPPORTS_SOUND_TRIGGER := true
 USE_XML_AUDIO_POLICY_CONF := 0
+BOARD_USES_LEGACY_MTK_AV_BLOB := true
 
 # OMX
-TARGET_OMX_LEGACY_RESCALING:= true
+TARGET_OMX_LEGACY_RESCALING := true
 
 # EGL
 BOARD_EGL_CFG := $(DEVICE_COMMON)/configs/graphics/egl.cfg
@@ -83,9 +73,6 @@ MAX_EGL_CACHE_SIZE := 1024*1024
 # MediaTek Hardware
 BOARD_HAS_MTK_HARDWARE := true
 MTK_HARDWARE := true
-
-# MediaTek Legacy AV Blob
-BOARD_USES_LEGACY_MTK_AV_BLOB := true
 
 # WIFI
 BOARD_CONNECTIVITY_VENDOR        := MediaTek
@@ -113,15 +100,10 @@ TARGET_HAS_LEGACY_CAMERA_HAL1 := true
 TARGET_SPECIFIC_CAMERA_PARAMETER_LIBRARY := libcamera_parameters_mtk
 TARGET_USES_NON_TREBLE_CAMERA := true
 
-# Digital Restrictions Management (DRM)
-MTK_WVDRM_SUPPORT := yes
-MTK_WVDRM_L1_SUPPORT := yes
-
 # Recovery Partition Table
-TARGET_RECOVERY_FSTAB := $(DEVICE_COMMON)/recovery/etc/recovery.fstab
+TARGET_RECOVERY_FSTAB := $(DEVICE_COMMON)/rootdir/etc/fstab.mt8163
 
 # Screen/Bootanimation
-DEVICE_RESOLUTION := 800x1280
 TARGET_SCREEN_WIDTH := 800
 TARGET_SCREEN_HEIGHT := 1280
 TARGET_BOOTANIMATION_MULTITHREAD_DECODE := true
@@ -135,10 +117,10 @@ USE_MINIKIN := true
 # Use dlmalloc Instead of Jemalloc for Mallocs
 MALLOC_SVELTE := true
 
-# Sotrage Lun File Path
+# Vold
 TARGET_USE_CUSTOM_LUN_FILE_PATH := "/sys/devices/virtual/android_usb/android0/f_mass_storage/lun%d/file"
 
-# Manifest
+# Vintf
 DEVICE_MANIFEST_FILE := $(DEVICE_COMMON)/manifest.xml
 
 # SELinux
@@ -149,7 +131,7 @@ BOARD_SEPOLICY_DIRS += \
 BOARD_USES_LINEAGE_HARDWARE := true
 BOARD_HARDWARE_CLASS := $(DEVICE_COMMON)/lineagehw
 
-# Shim Libraries
+# Shims
 TARGET_LD_SHIM_LIBS := \
     /system/lib/libMtkOmxVdecEx.so|libshim_ui.so \
     /system/lib/libMtkOmxVenc.so|libshim_ui.so \
@@ -177,23 +159,24 @@ TARGET_LD_SHIM_LIBS := \
     /system/lib/libdrmmtkutil.so|libcrypaz.so \
     /system/lib64/libdrmmtkutil.so|libcrypaz.so
 
-# Common-Specific Headers
+# Headers
 TARGET_SPECIFIC_HEADER_PATH := $(DEVICE_COMMON)/include
 
 # Partitions
 BOARD_FLASH_BLOCK_SIZE := 131072
 
-# System Stability
+# Filesystem
 TARGET_USES_MKE2FS := true
-
-# LPM
-BOARD_CHARGING_MODE_BOOTING_LPM := /sys/class/BOOT/BOOT/boot/boot_mode
+TARGET_USERIMAGES_USE_EXT4:= true
+TARGET_USERIMAGES_SPARSE_EXT_DISABLED := false
+BOARD_CACHEIMAGE_FILE_SYSTEM_TYPE := ext4
 
 # Offline charging
+BOARD_CHARGING_MODE_BOOTING_LPM := /sys/class/BOOT/BOOT/boot/boot_mode
 BOARD_CHARGER_DISABLE_INIT_BLANK := true
 BACKLIGHT_PATH := /sys/devices/platform/leds-mt65xx/leds/lcd-backlight/brightness
 
-# Block Based OTA
+# OTAs
 BLOCK_BASED_OTA := false
 
 # System Properties

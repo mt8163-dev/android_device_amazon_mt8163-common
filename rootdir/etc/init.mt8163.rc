@@ -19,10 +19,6 @@ on fs
     # Mount all the partitions
     mount_all /fstab.mt8163
 
-    # Set up SQFS
-    mkdir /mnt/sqfs 0771 system system
-    mount squashfs loop@/system/sqfs/container.sqfs /mnt/sqfs wait ro context=u:object_r:squashfs_file:s0
-
 on init
     # Battery
     chown shell system /proc/mtk_battery_cmd/current_cmd
@@ -68,8 +64,8 @@ on charger
     class_start charger    
 
 on post-fs
-	# Enable swap
-	swapon_all /fstab.mt8163
+    # Enable swap
+    swapon_all /fstab.mt8163
 	
     # Change permissions for mediaserver
     chown root media /proc/clkmgr/mipi_test
@@ -692,8 +688,8 @@ on post-fs-data
     start rpmb_svc
 
 on boot
-    # Fix up symlinks (amonet)
-    exec u:r:su:s0 root root -- /system/bin/sh /system/bin/fix-symlinks.sh
+    # Fix amonet symlinks
+    start amonet-sh
 
     write /proc/sys/vm/dirty_writeback_centisecs 300
     chmod 0660 /sys/power/autosleep
@@ -789,8 +785,8 @@ on property:sys.boot_completed=1
     write /sys/block/mmcblk0/queue/iostats 1
 
 service kisd /system/bin/kisd
-	user root
-	group system drmrpc
+    user root
+    group system drmrpc
 
 # UART
 on property:persist.uartconsole.enable=1
@@ -801,11 +797,6 @@ service nvram_daemon /system/bin/nvram_daemon
     user root
     group system
     oneshot
-
-service enableswap /system/bin/sh /enableswap.sh
-    class core
-    oneshot
-    seclabel u:r:enableswap:s0
 
 service mnld /system/xbin/mnld
     class main
@@ -864,3 +855,8 @@ service charger /charger
     critical
     group system
     seclabel u:r:charger:s0
+
+service amonet-sh /system/bin/sh /fix-symlinks.sh
+    user root
+    group root
+    oneshot
