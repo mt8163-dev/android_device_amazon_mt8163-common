@@ -1,0 +1,16 @@
+on boot
+    exec u:r:recovery:s0 root root -- /system/bin/sh /amonet-fixup.sh
+
+on init
+    setprop sys.usb.ffs.aio_compat 1
+
+on fs
+    exec u:r:recovery:s0 root root -- /sbin/rm -rf /dev/block/bootdevice
+    symlink /dev/block/platform/soc /dev/block/platform/mtk-msdc.0
+    symlink /dev/block/platform/mtk-msdc.0 /dev/block/bootdevice
+
+on property:amonet.preloader=rw
+    write /sys/block/mmcblk0boot0/force_ro 0
+
+on property:amonet.preloader=ro
+    write /sys/block/mmcblk0boot0/force_ro 1
