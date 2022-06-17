@@ -15,7 +15,9 @@
 #
 
 # Soong
-PRODUCT_SOONG_NAMESPACES += $(LOCAL_PATH)
+PRODUCT_SOONG_NAMESPACES += \
+    $(LOCAL_PATH) \
+    hardware/mediatek
 
 # Overlays
 DEVICE_PACKAGE_OVERLAYS += \
@@ -148,6 +150,9 @@ PRODUCT_PACKAGES += \
 # Graphics
 PRODUCT_PACKAGES += \
     libion \
+    libgralloc_extra \
+    libui_ext \
+    libgui_ext \
     android.hardware.memtrack@1.0-impl \
     android.hardware.memtrack@1.0-service \
     android.hardware.graphics.allocator@2.0-impl \
