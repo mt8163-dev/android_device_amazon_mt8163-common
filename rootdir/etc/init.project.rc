@@ -102,28 +102,6 @@ service fuse_usbotg /system/bin/sdcard -u 1023 -g 1023 -w 1023 -d /mnt/media_rw/
 #
 # Connectivity related services (Begin)
 #
-
-service atci_service /system/bin/atci_service 
-	socket atci-service stream 660 radio system 
-	socket atci-serv-fw stream 660 radio system 
-	user root 
-        disabled
-	group radio system                         
-service atcid-daemon-u /system/bin/atcid
-	user system
-	group radio system media
-	disabled
-	oneshot
-
-service atcid-daemon-e /system/bin/atcid
-	user root
-	group radio system
-	disabled
-	oneshot
-
-on early_property:ro.build.type=eng
-start atci_service
-start atcid-daemon-e
 service audio-daemon /system/bin/audiocmdservice_atci
     class main
     socket atci-audio stream 660 media system
