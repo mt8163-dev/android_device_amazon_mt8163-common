@@ -66,6 +66,9 @@ function blob_fixup() {
     	bin/amzn_dha_hmac|bin/amzn_dha_tool)
             patchelf --add-needed "libshim_crypto.so" "${2}"
             ;;
+        lib/libdrmmtkutil.so|lib64/libdrmmtkutil.so)
+            patchelf --add-needed "libshim_icuuc.so" "${2}"
+            ;;
     esac
 }
 

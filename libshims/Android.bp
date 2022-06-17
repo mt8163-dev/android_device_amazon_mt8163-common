@@ -15,3 +15,14 @@ cc_library_shared {
     ],
     proprietary: true,
 }
+
+cc_library_shared {
+    name: "libshim_icuuc",
+    srcs: [
+        "libshim_icuuc.cpp",
+    ],
+    shared_libs: [
+        "libicuuc",
+    ],
+    proprietary: true,
+}
