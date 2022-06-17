@@ -17,6 +17,10 @@
 # Soong
 PRODUCT_SOONG_NAMESPACES += $(LOCAL_PATH)
 
+# Overlays
+DEVICE_PACKAGE_OVERLAYS += \
+    $(LOCAL_PATH)/overlay
+
 # Recovery
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/recovery/root/init.recovery.mt8163.rc:recovery/root/init.recovery.mt8163.rc \

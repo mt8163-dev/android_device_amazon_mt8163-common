@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- These resources are around just to allow their values to be customized
+     for different hardware and product builds. -->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- This device does not allow sms service. -->
+    <bool name="config_sms_capable">false</bool>
+
+    <!-- Flag indicating whether the current device is "voice capable".
+         If true, this means that the device supports circuit-switched
+         (i.e. voice) phone calls over the telephony network, and is
+         allowed to display the in-call UI while a cellular voice call is
+         active.  This can be overridden to false for "data only" devices
+         which can't make voice calls and don't support any in-call UI.
+         Note: this flag is subtly different from the
+         PackageManager.FEATURE_TELEPHONY system feature, which is
+         available on *any* device with a telephony radio, even if the
+         device is data-only. -->
+     <bool name="config_voice_capable">false</bool>
+
+    <string-array name="networkAttributes" translatable="false" >
+        <item>wifi,1,1,2,-1,true</item>
+        <item>bluetooth,7,7,0,-1,true</item>
+        <item>ethernet,9,9,0,-1,true</item>
+    </string-array>
+
+     <!-- radio modes. -->
+    <string-array name="radioAttributes" translatable="false">
+        <item>1,1</item>
+        <item>7,1</item>
+        <item>9,1</item>
+    </string-array>
+
+    <!-- List of regexpressions describing the interface (if any) that represent tetherable
+         USB interfaces.  If the device doesn't want to support tething over USB this should
+         be empty.  An example would be "usb.*" -->
+    <string-array translatable="false" name="config_tether_usb_regexs">
+        <item>"rndis\\d"</item>
+        <item>"usb\\d"</item>
+    </string-array>
+
+    <!-- Whether a software navigation bar should be shown. NOTE: in the future this may be
+         autodetected from the Configuration. -->
+    <bool name="config_showNavigationBar">true</bool>
+
+    <!-- Maximum number of supported users -->
+    <bool name="config_enableMultiUserUI">true</bool>
+    <integer name="config_multiuserMaximumUsers">5</integer>
+
+    <!-- Whether WiFi display is supported by this device.
+         There are many prerequisites for this feature to work correctly.
+         Here are a few of them:
+         * The WiFi radio must support WiFi P2P.
+         * The WiFi radio must support concurrent connections to the WiFi display and
+           to an access point.
+         * The Audio Flinger audio_policy.conf file must specify a rule for the "r_submix"
+           remote submix module.  This module is used to record and stream system
+           audio output to the WiFi display encoder in the media server.
+         * The remote submix module "audio.r_submix.default" must be installed on the device.
+         * The device must be provisioned with HDCP keys (for protected content).
+    -->
+    <bool name="config_enableWifiDisplay">true</bool>
+
+    <!-- Boolean indicating whether the wifi chipset supports background scanning mechanism.
+         This mechanism allows the host to remain in suspend state and the dongle to actively
+         scan and wake the host when a configured SSID is detected by the dongle. This chipset
+         capability can provide power savings when wifi needs to be always kept on. -->
+    <bool translatable="false" name="config_wifi_background_scan_support">true</bool>
+
+    <!-- Boolean indicating whether the wifi chipset has dual frequency band support -->
+    <bool translatable="false" name="config_wifi_dual_band_support">true</bool>
+
+    <!-- Indicate whether closing the lid causes the device to go to sleep and opening
+      it causes the device to wake up.
+      The default is false.
+    -->
+    <bool name="config_lidControlsSleep">true</bool>
+
+     <!-- Flag indicating whether the we should enable the automatic brightness in Settings.
+         Software implementation will be used if config_hardware_auto_brightness_available is not set -->
+    <bool name="config_automatic_brightness_available">true</bool>
+
+    <!-- Array of light sensor LUX values to define our levels for auto backlight brightness support.
+         The N entries of this array define N  1 zones as follows:
+         Zone 0:        0 <= LUX < array[0]
+         Zone 1:        array[0] <= LUX < array[1]
+         ...
+         Zone N:        array[N - 1] <= LUX < array[N]
+         Zone N + 1     array[N] <= LUX < infinity
+         Must be overridden in platform specific overlays -->
+    <integer-array name="config_autoBrightnessLevels">
+        <item>6</item>
+        <item>8</item>
+        <item>10</item>
+        <item>15</item>
+        <item>30</item>
+        <item>50</item>
+        <item>100</item>
+        <item>230</item>
+        <item>400</item>
+        <item>500</item>
+        <item>650</item>
+        <item>825</item>
+        <item>1000</item>
+        <item>2500</item>
+        <item>5000</item>
+        <item>6250</item>
+        <item>8400</item>
+        <item>9500</item>
+        <item>10240</item>
+    </integer-array>
+
+    <!-- Array of output values for LCD backlight corresponding to the LUX values
+         in the config_autoBrightnessLevels array.  This array should have size one greater
+         than the size of the config_autoBrightnessLevels array.
+         The brightness values must be between 0 and 255 and be non-decreasing.
+         This must be overridden in platform specific overlays -->
+    <integer-array name="config_autoBrightnessLcdBacklightValues">
+       <item>12</item>     <!-- 0-5 -->
+        <item>16</item>     <!-- 6-7 -->
+        <item>18</item>     <!-- 8-9 -->
+        <item>20</item>     <!-- 10-14 -->
+        <item>25</item>     <!-- 15-29 -->
+        <item>28</item>     <!-- 30-49 -->
+        <item>34</item>     <!-- 50-99 -->
+        <item>37</item>     <!-- 100-229 -->
+        <item>41</item>     <!-- 239-399 -->
+        <item>48</item>     <!-- 400-499 -->
+        <item>57</item>     <!-- 500-649 -->
+        <item>75</item>     <!-- 650-824 -->
+        <item>81</item>     <!-- 825-999 -->
+        <item>90</item>     <!-- 1000-2499 -->
+        <item>100</item>    <!-- 2500-4999 -->
+        <item>125</item>    <!-- 5000-6249 -->
+        <item>165</item>    <!-- 6250-7499 -->
+        <item>200</item>    <!-- 7500-9999 -->
+        <item>225</item>    <!-- 10000-11999 -->
+        <item>255</item>    <!-- 12000-19417 (max value of light sensor) -->
+    </integer-array>
+
+    <!-- Disable lockscreen rotation by default -->
+    <bool name="config_enableLockScreenRotation">true</bool>
+
+    <!-- If true, the screen can be rotated via the accelerometer in all 4
+         rotations as the default behavior. -->
+    <bool name="config_allowAllRotations">true</bool>
+	
+    <!-- Flag indicating whether we should enable smart battery. -->
+    <bool name="config_smart_battery_available">true</bool>
+
+    <!-- Flag indicating which package name can access the persistent data partition -->
+    <string name="config_persistentDataPackageName" translatable="false">com.google.android.gms</string>
+</resources>
