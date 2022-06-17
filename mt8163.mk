@@ -55,6 +55,21 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.software.midi.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/android.software.midi.xml
 
 # Audio
+PRODUCT_PACKAGES += \
+    audio.a2dp.default \
+    audio.r_submix.default \
+    audio.usb.default \
+    audio_policy.stub \
+    libalsautils \
+    libaudio-resampler \
+    libtinyalsa \
+    libtinycompress \
+    libtinyxml \
+    libaudioroute \
+    android.hardware.audio@2.0-impl \
+    android.hardware.audio@2.0-service \
+    android.hardware.audio.effect@2.0-impl
+
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/audio/audio_device.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/audio_device.xml \
     $(LOCAL_PATH)/configs/audio/audio_policy.conf:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy.conf
@@ -71,10 +86,61 @@ PRODUCT_COPY_FILES += \
     frameworks/av/media/libstagefright/data/media_codecs_google_video_le.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/media_codecs_google_video_le.xml
 
 # Wi-Fi
+PRODUCT_PACKAGES += \
+    libwpa_client \
+    android.hardware.wifi@1.0-service
+
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/wifi/p2p_supplicant_overlay.conf:$(TARGET_COPY_OUT_SYSTEM)/etc/wifi/p2p_supplicant_overlay.conf \
     $(LOCAL_PATH)/configs/wifi/wpa_supplicant.conf:$(TARGET_COPY_OUT_SYSTEM)/etc/wifi/wpa_supplicant.conf \
     $(LOCAL_PATH)/configs/wifi/wpa_supplicant_overlay.conf:$(TARGET_COPY_OUT_SYSTEM)/etc/wifi/wpa_supplicant_overlay.conf
+
+# Power
+PRODUCT_PACKAGES += \
+    android.hardware.power@1.0-impl \
+    android.hardware.power@1.0-service
+
+# Light
+PRODUCT_PACKAGES += \
+    android.hardware.light@2.0-impl \
+    android.hardware.light@2.0-service
+
+# Sensors
+PRODUCT_PACKAGES += \
+    android.hardware.sensors@1.0-impl \
+    android.hardware.sensors@1.0-service
+
+# DRM
+PRODUCT_PACKAGES += \
+    android.hardware.drm@1.0-service \
+    android.hardware.drm@1.0-impl \
+    android.hardware.drm@1.1-service.clearkey
+
+# USB
+PRODUCT_PACKAGES += \
+    android.hardware.usb@1.0-impl \
+    android.hardware.usb@1.0-service
+
+# Keymaster
+PRODUCT_PACKAGES += \
+    android.hardware.keymaster@3.0-service \
+    android.hardware.keymaster@3.0-impl
+
+# Gatekeeper
+PRODUCT_PACKAGES += \
+    android.hardware.gatekeeper@1.0-service \
+    android.hardware.gatekeeper@1.0-impl
+
+# Graphics
+PRODUCT_PACKAGES += \
+    libion \
+    android.hardware.memtrack@1.0-impl \
+    android.hardware.memtrack@1.0-service \
+    android.hardware.graphics.allocator@2.0-impl \
+    android.hardware.graphics.allocator@2.0-service \
+    android.hardware.graphics.composer@2.1-impl \
+    android.hardware.graphics.mapper@2.0-impl \
+    android.hardware.renderscript@1.0-impl
 
 # Proprietary
 $(call inherit-product-if-exists, vendor/amazon/mt8163-common/mt8163-common-vendor.mk)
