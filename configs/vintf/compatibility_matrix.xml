@@ -27,7 +27,4 @@
         <name>android.system.wifi.keystore</name>
         <version>1.0</version>
     </hal>
-    <vndk>
-        <version>0.0.0</version>
-    </vndk>
 </compatibility-matrix>
