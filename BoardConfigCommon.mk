@@ -71,6 +71,9 @@ TARGET_LINUX_KERNEL_VERSION := 3.18
 # Extended filesystem support
 TARGET_EXFAT_DRIVER := exfat
 
+# Properties
+TARGET_SYSTEM_PROP += $(COMMON_PATH)/configs/props/system.prop
+
 # Filesystems
 TARGET_USERIMAGES_USE_EXT4 := true
 TARGET_USERIMAGES_SPARSE_EXT_DISABLED := false
