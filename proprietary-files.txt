@@ -134,8 +134,8 @@ vendor/lib64/libhadeangpu_util.so
 # Sensors
 lib/libhwm.so
 lib64/libhwm.so
-lib/hw/sensors.mt8163.so
-lib64/hw/sensors.mt8163.so
+lib/hw/sensors.mt8163.so:lib/libsensors.mt8163.so
+lib64/hw/sensors.mt8163.so:lib64/libsensors.mt8163.so
 
 # OMX
 lib/libSwJpgCodec.so
