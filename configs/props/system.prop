@@ -133,6 +133,7 @@ ro.have_aacencode_feature=1
 ro.mtk_thumbnail_play_support=1
 ro.mtk_safemedia_support=1
 ro.mtk_slidevideo_support=1
+debug.stagefright.ccodec=0
 
 # CPU
 ro.mediatek.chip_ver=S01
