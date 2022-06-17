@@ -26,3 +26,14 @@ cc_library_shared {
     ],
     proprietary: true,
 }
+
+cc_library_shared {
+    name: "libshim_binder",
+    srcs: [
+        "libshim_binder.cpp",
+    ],
+    shared_libs: [
+        "libbinder",
+    ],
+    proprietary: true,
+}

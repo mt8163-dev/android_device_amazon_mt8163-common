@@ -69,6 +69,9 @@ function blob_fixup() {
         lib/libdrmmtkutil.so|lib64/libdrmmtkutil.so)
             patchelf --add-needed "libshim_icuuc.so" "${2}"
             ;;
+        lib/libasp.so|lib64/libasp.so|lib/libaspclient.so)
+            patchelf --add-needed "libshim_binder.so" "${2}"
+            ;;
     esac
 }
 
