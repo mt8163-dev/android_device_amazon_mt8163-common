@@ -4,3 +4,14 @@ cc_library_shared {
     shared_libs: ["liblog"],
     proprietary: true,
 }
+
+cc_library_shared {
+    name: "libshim_crypto",
+    srcs: [
+        "libshim_crypto.cpp",
+    ],
+    shared_libs: [
+        "libcrypto",
+    ],
+    proprietary: true,
+}
