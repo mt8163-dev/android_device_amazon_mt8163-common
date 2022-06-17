@@ -30,7 +30,6 @@ on post-fs-data
     chmod 0660 /dev/ttyMT2
     chown system system /dev/ttyMT2
 
-    mknod /dev/wmtWifi c 153 0
     chmod 0660 /dev/wmtWifi
     chown system system /dev/wmtWifi
 
@@ -73,7 +72,6 @@ on post-fs-data
     chown system /dev/ttyGS1
 
 # Char device for BT 3.0 HS
-    mknod /dev/ampc0 c 151 0
     chown bluetooth bluetooth /dev/ampc0
     chmod 0660 /dev/ampc0
 
