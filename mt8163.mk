@@ -24,5 +24,13 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/recovery/root/fix-symlinks.sh:recovery/root/fix-symlinks.sh \
     $(LOCAL_PATH)/recovery/root/fix-bootpatch.sh:recovery/root/fix-bootpatch.sh
 
+# Ramdisk
+PRODUCT_PACKAGES += \
+    fstab.mt8163 \
+    init.mt8163.rc \
+    init.mt8163.usb.rc \
+    init.project.rc \
+    ueventd.mt8163.rc
+
 # Proprietary
 $(call inherit-product-if-exists, vendor/amazon/mt8163-common/mt8163-common-vendor.mk)
