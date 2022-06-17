@@ -134,6 +134,7 @@ ro.mtk_thumbnail_play_support=1
 ro.mtk_safemedia_support=1
 ro.mtk_slidevideo_support=1
 debug.stagefright.ccodec=0
+media.stagefright.thumbnail.prefer_hw_codecs=true
 
 # CPU
 ro.mediatek.chip_ver=S01
