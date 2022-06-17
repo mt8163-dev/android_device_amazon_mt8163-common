@@ -156,5 +156,9 @@ PRODUCT_PACKAGES += \
     android.hardware.graphics.mapper@2.0-impl \
     android.hardware.renderscript@1.0-impl
 
+# Shim libraries
+PRODUCT_PACKAGES += \
+    libshim_log
+
 # Proprietary
 $(call inherit-product-if-exists, vendor/amazon/mt8163-common/mt8163-common-vendor.mk)

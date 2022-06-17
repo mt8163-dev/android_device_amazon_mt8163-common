@@ -1,0 +1,6 @@
+cc_library_shared {
+    name: "libshim_log",
+    srcs: ["libshim_log.cpp"],
+    shared_libs: ["liblog"],
+    proprietary: true,
+}
