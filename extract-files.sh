@@ -76,6 +76,12 @@ function blob_fixup() {
             sed -i 's|_ZN7android19GraphicBufferMapper4lockEPK13native_handleiRKNS_4RectEPPv|_ZN7android19GraphicBufferMapper4lockEPK13native_handlejRKNS_4RectEPPv|g' "${2}"
             patchelf --add-needed "libshim_ui.so" "${2}"
             ;;
+        lib/libaudiocomponentengine.so|lib64/libaudiocomponentengine.so)
+            patchelf --add-needed "libutilscallstack.so" "${2}"
+            ;;
+        lib/egl/libGLES_mali.so|lib64/egl/libGLES_mali.so)
+            patchelf --add-needed "libutilscallstack.so" "${2}"
+            ;;
     esac
 }
 
