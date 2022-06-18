@@ -1067,7 +1067,7 @@ service mtkbt /system/bin/mtkbt
 	socket bt.int.adp dgram 660 bluetooth net_bt
 	socket bt.a2dp.stream dgram 660 bluetooth net_bt
 	user bluetooth
-	group system vpn net_admin inet net_raw net_bt bluetooth net_bt_admin net_bt_stack sdcard_r
+	group system vpn net_admin inet net_raw net_bt bluetooth net_bt_admin bluetooth sdcard_r
 	oneshot
 
 
