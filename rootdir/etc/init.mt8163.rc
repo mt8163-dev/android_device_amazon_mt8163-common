@@ -4,6 +4,9 @@ import /vendor/etc/init/hw/init.project.rc
 on early-init
     mount debugfs debugfs /sys/kernel/debug
     chmod 0755 /sys/kernel/debug
+    
+    # Set permissions so radio can read cmdline
+    chmod 0444 /proc/cmdline
 
 on fs
     # Legacy partition path support
