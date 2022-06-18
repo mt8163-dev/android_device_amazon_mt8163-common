@@ -200,6 +200,10 @@ lib/libaudiocustparam.so
 lib/libaudiodcrflt.so
 lib/libaudiosetting.so
 lib/libbessound_hd_mtk.so
+lib/libblisrc.so|4379a0170a7932130ae30348a85d2c2c495e3c20
+lib64/libblisrc.so|f1711ecfe7c88499f362c0a43214bb26efb42dfb
+lib/libblisrc32.so|18b1075697bfd331b6811ab8acc59c87223dd544
+lib64/libblisrc32.so|134cfceeb6078c0b0a6ce6cf972e3c74cd5b9503
 lib64/libaudiocompensationfilter.so
 lib64/libaudiocomponentengine.so
 lib64/libaudiocustparam.so
