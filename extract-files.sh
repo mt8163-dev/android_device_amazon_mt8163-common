@@ -72,6 +72,9 @@ function blob_fixup() {
         lib/libasp.so|lib64/libasp.so|lib/libaspclient.so)
             patchelf --add-needed "libshim_binder.so" "${2}"
             ;;
+        lib/hw/hwcomposer.mt8163.so|lib64/hw/hwcomposer.mt8163.so)
+            sed -i 's|_ZN7android19GraphicBufferMapper4lockEPK13native_handleiRKNS_4RectEPPv|_ZN7android19GraphicBufferMapper4lockEPK13native_handlejRKNS_4RectEPPv|g' "${2}"
+            ;;
     esac
 }
 
