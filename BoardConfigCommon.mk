@@ -78,6 +78,9 @@ TARGET_SYSTEM_PROP += $(COMMON_PATH)/configs/props/system.prop
 DEVICE_MANIFEST_FILE := $(COMMON_PATH)/configs/vintf/manifest.xml
 DEVICE_MATRIX_FILE := $(COMMON_PATH)/configs/vintf/compatibility_matrix.xml
 
+# Camera
+TARGET_HAS_LEGACY_CAMERA_HAL1 := true
+
 # Filesystems
 TARGET_USERIMAGES_USE_EXT4 := true
 TARGET_USERIMAGES_SPARSE_EXT_DISABLED := false
