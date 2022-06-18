@@ -126,6 +126,13 @@ PRODUCT_PACKAGES += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/sensors/_hals.conf:system/vendor/etc/sensors/_hals.conf
 
+# Bluetooth
+PRODUCT_PACKAGES += \
+    libbluetooth_mtk \
+    libbt-vendor \
+    android.hardware.bluetooth@1.0-impl \
+    android.hardware.bluetooth@1.0-service
+
 # DRM
 PRODUCT_PACKAGES += \
     android.hardware.drm@1.0-service \

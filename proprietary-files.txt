@@ -8,11 +8,11 @@ bin/wmt_loader
 bin/nvram_daemon
 lib/libcustom_nvram.so
 lib64/libcustom_nvram.so
-lib/libnvram.so
+-lib/libnvram.so
 lib/libnvram_daemon_callback.so
 lib/libnvram_platform.so
 lib/libnvramagentclient.so
-lib64/libnvram.so
+-lib64/libnvram.so
 lib64/libnvram_daemon_callback.so
 lib64/libnvram_platform.so
 lib64/libnvramagentclient.so
