@@ -74,6 +74,7 @@ function blob_fixup() {
             ;;
         lib/hw/hwcomposer.mt8163.so|lib64/hw/hwcomposer.mt8163.so)
             sed -i 's|_ZN7android19GraphicBufferMapper4lockEPK13native_handleiRKNS_4RectEPPv|_ZN7android19GraphicBufferMapper4lockEPK13native_handlejRKNS_4RectEPPv|g' "${2}"
+            patchelf --add-needed "libshim_ui.so" "${2}"
             ;;
     esac
 }

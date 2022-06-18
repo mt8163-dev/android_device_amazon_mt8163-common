@@ -203,7 +203,8 @@ PRODUCT_PACKAGES += \
     libshim_log \
     libshim_crypto \
     libshim_icuuc \
-    libshim_binder
+    libshim_binder \
+    libshim_ui
 
 # Proprietary
 $(call inherit-product-if-exists, vendor/amazon/mt8163-common/mt8163-common-vendor.mk)

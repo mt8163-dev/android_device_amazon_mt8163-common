@@ -37,3 +37,14 @@ cc_library_shared {
     ],
     proprietary: true,
 }
+
+cc_library_shared {
+    name: "libshim_ui",
+    srcs: [
+        "libshim_ui.cpp",
+    ],
+    shared_libs: [
+        "libui",
+    ],
+    proprietary: true,
+}
