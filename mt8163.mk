@@ -132,6 +132,11 @@ PRODUCT_PACKAGES += \
     android.hardware.drm@1.0-impl \
     android.hardware.drm@1.1-service.clearkey
 
+# LiveDisplay
+ifneq ($(wildcard vendor/lineage/.),)
+    PRODUCT_PACKAGES += vendor.lineage.livedisplay@2.0-service-mediatek
+endif
+
 # USB
 PRODUCT_PACKAGES += \
     android.hardware.usb@1.0-impl \
