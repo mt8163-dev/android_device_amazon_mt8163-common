@@ -3,6 +3,19 @@ on boot
     chown wifi wifi /sys/kernel/debug/mtwifi/wlan0/fwpath
     chmod 0666 /sys/kernel/debug/mtwifi/wlan0/fwpath
 
+# Define TCP buffer sizes for various networks
+#   ReadMin, ReadInitial, ReadMax, WriteMin, WriteInitial, WriteMax,
+    setprop net.tcp.buffersize.default 4096,87380,524288,4096,16384,524288
+    setprop net.tcp.buffersize.wifi    524288,1048576,2097152,262144,524288,1048576
+    setprop net.tcp.buffersize.lte     524288,1048576,2097152,262144,524288,1048576
+    setprop net.tcp.buffersize.umts    4094,87380,524288,4096,16384,524288
+    setprop net.tcp.buffersize.hspa    4094,87380,524288,4096,16384,524288
+    setprop net.tcp.buffersize.hsupa   4094,87380,524288,4096,16384,524288
+    setprop net.tcp.buffersize.hsdpa   4094,87380,524288,4096,16384,524288
+    setprop net.tcp.buffersize.hspap   4094,87380,1220608,4096,16384,1220608
+    setprop net.tcp.buffersize.edge    4093,26280,35040,4096,16384,35040
+    setprop net.tcp.buffersize.gprs    4092,8760,11680,4096,8760,11680
+
 on init
     mount tmpfs tmpfs /mnt/media_rw/ mode=0755,uid=1000,gid=1000
     mkdir /mnt/media_rw/usbotg 0700 media_rw media_rw
