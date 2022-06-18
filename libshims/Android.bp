@@ -22,7 +22,7 @@ cc_library_shared {
         "libshim_icuuc.cpp",
     ],
     shared_libs: [
-        "libicuuc",
+        "libandroidicu",
     ],
     proprietary: true,
 }
