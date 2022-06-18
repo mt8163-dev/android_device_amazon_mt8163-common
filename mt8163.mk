@@ -137,6 +137,10 @@ ifneq ($(wildcard vendor/lineage/.),)
     PRODUCT_PACKAGES += vendor.lineage.livedisplay@2.0-service-mediatek
 endif
 
+# Camera
+PRODUCT_PACKAGES += \
+    android.hardware.camera.provider@2.4-impl-legacy
+
 # USB
 PRODUCT_PACKAGES += \
     android.hardware.usb@1.0-impl \
