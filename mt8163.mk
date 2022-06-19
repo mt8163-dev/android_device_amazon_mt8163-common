@@ -108,6 +108,7 @@ PRODUCT_COPY_FILES += \
 # Wi-Fi
 PRODUCT_PACKAGES += \
     libwpa_client \
+    lib_driver_cmd_mt66xx \
     android.hardware.wifi@1.0-service
 
 PRODUCT_COPY_FILES += \
