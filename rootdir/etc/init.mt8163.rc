@@ -18,6 +18,9 @@ on fs
     # Mount all the partitions
     mount_all /vendor/etc/fstab.mt8163
 
+    # Set up ZRAM
+    swapon_all /vendor/etc/fstab.mt8163
+
 on init
     # BATTERY proc
     chown shell system /proc/mtk_battery_cmd/current_cmd
