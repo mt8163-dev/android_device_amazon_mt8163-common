@@ -108,7 +108,7 @@ ro.kernel.zio=38,108,105,16
 ro.boot.selinux=disable
 
 # Disable dirty region for Mali
-debug.hwui.render_dirty_regions=false
+debug.hwui.use_partial_updates=false
 
 # Screen
 ro.sf.lcd_density=213
