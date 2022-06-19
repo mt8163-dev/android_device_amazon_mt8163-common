@@ -34,6 +34,7 @@ cc_library_shared {
     ],
     shared_libs: [
         "libbinder",
+        "libutils",
     ],
     proprietary: true,
 }

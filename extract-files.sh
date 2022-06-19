@@ -82,6 +82,12 @@ function blob_fixup() {
         lib/egl/libGLES_mali.so|lib64/egl/libGLES_mali.so)
             patchelf --add-needed "libutilscallstack.so" "${2}"
             ;;
+        lib/hw/audio.primary.mt8163.so|lib64/hw/audio.primary.mt8163.so)
+            patchelf --add-needed "libshim_binder.so" "${2}"
+            ;;
+        lib/libbwc.so|lib64/libbwc.so)
+            patchelf --add-needed "libshim_binder.so" "${2}"
+            ;;
     esac
 }
 
