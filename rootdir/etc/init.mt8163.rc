@@ -64,6 +64,7 @@ on init
 
 # Memtrack alignment between FOS devices
     chown system system /d/ion/heaps/ion_mm_heap
+	chmod 0666 /d/ion/heaps/ion_mm_heap
 
 on charger
     mount_all /fstab.mt8163
