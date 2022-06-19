@@ -49,3 +49,16 @@ cc_library_shared {
     ],
     proprietary: true,
 }
+
+cc_library_shared {
+    name: "libshim_atomic",
+    srcs: [
+        "libshim_atomic.cpp",
+    ],
+    shared_libs: [
+        "liblog",
+        "libcutils",
+        "libbase"
+    ],
+    proprietary: true,
+}
