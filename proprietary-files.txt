@@ -3,6 +3,7 @@ bin/6620_launcher
 bin/6620_wmt_concurrency
 bin/6620_wmt_lpbk
 bin/wmt_loader
+lib64/libwifi-hal.so|217a449787e1561527330febc8e6b37de378f337
 
 # Nvram
 bin/nvram_daemon
