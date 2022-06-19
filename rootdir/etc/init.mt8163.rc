@@ -1397,7 +1397,7 @@ on property:wlan.driver.status=unloaded
     write /dev/wmtWifi "0"
 
 service wpa_supplicant /system/bin/wpa_supplicant \
-    -iwlan0 -Dnl80211 -c/data/misc/wifi/wpa_supplicant.conf -e/data/misc/wifi/entropy.bin \
+    -iwlan0 -Dnl80211 -c/data/misc/wifi/wpa_supplicant.conf \
     -I/system/etc/wifi/wpa_supplicant_overlay.conf \
     -O/data/misc/wifi/sockets -g@android:wpa_wlan0
     #   we will start as root and wpa_supplicant will switch to user wifi
