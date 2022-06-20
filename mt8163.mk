@@ -14,6 +14,9 @@
 # limitations under the License.
 #
 
+# Inherit go optimizations for mt8163
+$(call inherit-product, device/amazon/mt8163-common/go_opt.mk)
+
 # Soong
 PRODUCT_SOONG_NAMESPACES += \
     $(LOCAL_PATH) \
