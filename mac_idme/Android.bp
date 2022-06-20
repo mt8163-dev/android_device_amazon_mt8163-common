@@ -1,0 +1,15 @@
+cc_binary {
+    name: "mac_idme",
+    srcs: ["mac_idme.cpp"],
+    relative_install_path: "hw",
+    shared_libs: [
+	"libcutils",
+	"liblog",
+    ],
+    cflags: [
+	"-Wall",
+	"-Wextra",
+	"-Werror",
+    ],
+    vendor: true,
+}

@@ -105,6 +105,11 @@ on post-fs
     chown system system /protect_s
     chmod 0770 /protect_s
 
+    mkdir /data/misc/bluedroid 0770 bluetooth bluetooth
+    mkdir /data/misc/wifi 0770 wifi wifi
+
+    start mac_idme
+
 on post-fs-data
     chown system system /persist
     chmod 0771 /persist
@@ -798,6 +803,12 @@ on boot
 # define device for EMCSMDLOGGER
     chmod 0660 /dev/ttyGS3
     chown system radio /dev/ttyGS3
+
+service mac_idme /vendor/bin/hw/mac_idme
+    user root
+    group bluetooth system wifi
+    oneshot
+    disabled
 
 on property:vold.decrypt=trigger_reset_main
     start stop_modem
