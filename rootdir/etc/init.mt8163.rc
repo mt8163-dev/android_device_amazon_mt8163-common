@@ -113,7 +113,12 @@ on post-fs-data
     mkdir /data/nvram 2771 root system
     mkdir /data/nvram/media 0770 media audio
 
-    chmod 0660 /data/misc/wifi/p2p_supplicant.conf
+    # Create the directories used by the Wireless subsystem
+    mkdir /data/vendor/wifi 0770 wifi wifi
+    mkdir /data/vendor/wifi/sockets 0770 wifi wifi
+    mkdir /data/vendor/wifi/hostapd/ctrl 0770 wifi wifi
+    mkdir /data/vendor/wifi/wpa_supplicant 0770 wifi wifi
+    chmod 0660 /data/vendor/wifi/p2p_supplicant.conf
 
     #give system access to rfkill device node
     chmod 0660 /dev/rfkill
@@ -1396,8 +1401,8 @@ on property:wlan.driver.status=ok
 on property:wlan.driver.status=unloaded
     write /dev/wmtWifi "0"
 
-service wpa_supplicant /vendor/bin/hw/wpa_supplicant \
-    -O/data/misc/wifi/sockets -g@android:wpa_wlan0
+service wpa_supplicant /system/vendor/bin/hw/wpa_supplicant \
+    -O/data/vendor/wifi/wpa/sockets -g@android:wpa_wlan0
     interface android.hardware.wifi.supplicant@1.0::ISupplicant default
     interface android.hardware.wifi.supplicant@1.1::ISupplicant default
     #   we will start as root and wpa_supplicant will switch to user wifi

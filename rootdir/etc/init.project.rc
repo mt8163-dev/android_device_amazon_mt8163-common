@@ -72,12 +72,6 @@ on post-fs-data
     chown gps gps /sys/class/gpsdrv/gps/pwrsave
     chown gps gps /sys/class/gpsdrv/gps/status
 
-# WiFi
-    mkdir /data/misc/wifi 0770 wifi wifi
-    mkdir /data/misc/wifi/sockets 0770 wifi wifi
-    mkdir /data/misc/wpa_supplicant 0770 wifi wifi
-    chown wifi wifi /data/misc/wifi
-
 #Define device for ATCID
     chmod 660 /dev/ttyGS0 
     chown system /dev/ttyGS0 
