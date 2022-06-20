@@ -113,7 +113,6 @@ ro.kernel.zio=38,108,105,16
 ro.boot.selinux=disable
 
 # Screen
-ro.sf.lcd_density=213
 ro.sf.hwrotation=0
 
 # Factory Reset WhiteList
@@ -123,7 +122,6 @@ ro.recovery.wl.maxstore=524288
 persist.wifi.rssi.thresholds=-92,-79,-70,-60
 
 # Bluetooth
-ro.bt.bdaddr_path=/data/vendor/bluedroid/macbt
 ro.btstack=bluedroid
 ro.mtk_bt_support=1
 
