@@ -115,6 +115,7 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     libwpa_client \
     lib_driver_cmd_mt66xx \
+    libwifi-hal-mt66xx \
     android.hardware.wifi@1.0-service.legacy
 
 PRODUCT_COPY_FILES += \
