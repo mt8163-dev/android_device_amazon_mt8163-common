@@ -143,6 +143,7 @@ ro.have_aacencode_feature=1
 ro.mtk_thumbnail_play_support=1
 ro.mtk_safemedia_support=1
 ro.mtk_slidevideo_support=1
+persist.media.treble_omx=false
 debug.stagefright.ccodec=0
 media.stagefright.thumbnail.prefer_hw_codecs=true
 
