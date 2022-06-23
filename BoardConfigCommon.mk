@@ -84,6 +84,9 @@ DEVICE_MATRIX_FILE := $(COMMON_PATH)/configs/vintf/compatibility_matrix.xml
 # Apexes
 TARGET_FLATTEN_APEX := true
 
+# Low memory killer
+TARGET_LMKD_STATS_LOG := true
+
 # Bluetooth
 BOARD_HAVE_BLUETOOTH := true
 BOARD_HAVE_BLUETOOTH_MTK := true

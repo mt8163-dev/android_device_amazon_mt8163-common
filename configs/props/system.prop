@@ -104,6 +104,14 @@ ro.mtk_mtkps_playback_support=1
 ro.zygote.preload.enable=0
 persist.device.config.runtime_native.uasp_pool_enabled=true
 
+# LMKD
+ro.lmk.critical_upgrade=true
+ro.lmk.downgrade_pressure=60
+ro.lmk.kill_heaviest_task=false
+ro.lmk.log_stats=true
+ro.lmk.upgrade_pressure=40
+ro.lmk.use_psi=false
+
 # Enable Nav Bar
 qemu.hw.mainkeys=0
 
