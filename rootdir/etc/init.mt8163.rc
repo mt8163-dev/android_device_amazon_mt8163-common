@@ -105,14 +105,6 @@ on post-fs
     chown system system /protect_s
     chmod 0770 /protect_s
 
-on post-fs-data
-    chown system system /persist
-    chmod 0771 /persist
-
-    # create basic filesystem structure
-    mkdir /data/nvram 2771 root system
-    mkdir /data/nvram/media 0770 media audio
-
     # Create the directories used by the Wireless subsystem
     mkdir /data/vendor/wifi 0770 wifi wifi
     mkdir /data/vendor/wifi/sockets 0770 wifi wifi
@@ -121,6 +113,16 @@ on post-fs-data
     chmod 0660 /data/vendor/wifi/p2p_supplicant.conf
 
     mkdir /data/vendor/bluedroid 0771 bluetooth bluetooth
+
+    start mac_idme
+
+on post-fs-data
+    chown system system /persist
+    chmod 0771 /persist
+
+    # create basic filesystem structure
+    mkdir /data/nvram 2771 root system
+    mkdir /data/nvram/media 0770 media audio
 
     #give system access to rfkill device node
     chmod 0660 /dev/rfkill
@@ -800,12 +802,6 @@ on boot
 # define device for EMCSMDLOGGER
     chmod 0660 /dev/ttyGS3
     chown system radio /dev/ttyGS3
-
-on data_ready
-    wait /data/vendor/wifi
-    wait /data/vendor/bluedroid
-
-    start mac_idme
 
 service mac_idme /vendor/bin/hw/mac_idme
     user root

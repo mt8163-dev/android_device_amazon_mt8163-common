@@ -12,8 +12,8 @@
 
 #include <unistd.h>
 
-#include <cutils/log.h>
-#include <cutils/properties.h>
+#include <android-base/logging.h>
+#include <android-base/properties.h>
 
 #define BT_MAC_PATH   "/proc/idme/bt_mac_addr"
 #define WLAN_MAC_PATH "/proc/idme/mac_addr"
@@ -37,7 +37,7 @@ std::string read_mac(std::string file) {
     std::ifstream idme(file);
 
     if (!idme.is_open()) {
-        ALOGE("Could not open %s!", file.c_str());
+        LOG(ERROR) << "Could not open " << file << "!";
         exit(1);
     }
 
@@ -54,11 +54,11 @@ void write_mac(std::string file, std::string mac) {
     std::ofstream mac_out(file);
 
     if(!mac_out.is_open()) {
-        ALOGE("Could not open %s", file.c_str());
+        LOG(ERROR) << "Could not open " << file << "!";
         exit(1);
     }
 
-    mac_out << mac << std::endl;
+    mac_out << mac.substr(0, mac.size() - 1) << std::endl;
     mac_out.close();
 }
 
@@ -66,20 +66,19 @@ int main() {
     std::string mac_bt   = read_mac(BT_MAC_PATH);
     std::string mac_wlan = read_mac(WLAN_MAC_PATH);
 
-    ALOGI("Wireless MAC  = %s:xx:xx:xx", mac_wlan.substr(0, 8).c_str());
-    ALOGI("Bluetooth MAC = %s:xx:xx:xx", mac_bt.substr(0, 8).c_str());
+    LOG(INFO) << "Wireless  MAC  = " << mac_wlan.substr(0, 8).c_str() << ":xx:xx:xx";
+    LOG(INFO) << "Bluetooth MAC  = " << mac_bt.substr(0, 8).c_str() << ":xx:xx:xx";
 
-    ALOGI("Writing wireless MAC to %s", WLAN_MAC_FILE);
+    LOG(INFO) << "Writing wireless MAC to " << WLAN_MAC_FILE;
     write_mac(WLAN_MAC_FILE, mac_wlan.c_str());
-    chmod(WLAN_MAC_FILE, 0644);
-    chown(WLAN_MAC_FILE, 1000, 1010);
-    ALOGI("Success!");
+    LOG(INFO) << "Success!";
 
-    ALOGI("Writing bluetooth MAC to %s", BT_MAC_FILE);
+    LOG(INFO) << "Writing bluetooth MAC to " << BT_MAC_FILE;
     write_mac(BT_MAC_FILE, mac_bt.c_str());
-    chmod(BT_MAC_FILE, 0644);
-    chown(BT_MAC_FILE, 1000, 1002);
-    ALOGI("Success!");
+    LOG(INFO) << "Success!";
+
+    if (android::base::GetProperty("ro.bt.bdaddr_path", "") != BT_MAC_FILE)
+        android::base::SetProperty("ro.bt.bdaddr_path", BT_MAC_FILE);
 
     return 0;
 }

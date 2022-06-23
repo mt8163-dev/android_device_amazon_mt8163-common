@@ -3,8 +3,7 @@ cc_binary {
     srcs: ["mac_idme.cpp"],
     relative_install_path: "hw",
     shared_libs: [
-	"libcutils",
-	"liblog",
+	"libbase"
     ],
     cflags: [
 	"-Wall",
