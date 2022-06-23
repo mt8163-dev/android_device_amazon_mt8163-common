@@ -39,14 +39,16 @@ wfd.dummy.enable=1
 dalvik.vm.heapgrowthlimit=128m
 dalvik.vm.heapsize=256m
 
-# OpenGLES (3.1)
+# Graphics
 ro.opengles.version=196609
+ro.hardware.gralloc=mt8163.mali
 debug.renderengine.backend=skiaglthreaded
 debug.hwui.renderer=skiagl
 debug.sf.enable_gl_backpressure=1
-
-# Gralloc
-ro.hardware.gralloc=mt8163.mali
+debug.hwui.use_buffer_age=false
+ro.mtk_miravision_support=1
+ro.mtk_aal_support=1
+ro.mtk_hotknot_support=1
 
 # Tethering
 wifi.tethering.interface=ap0
@@ -110,9 +112,6 @@ ro.kernel.zio=38,108,105,16
 # SELinux
 ro.boot.selinux=disable
 
-# Disable dirty region for Mali
-debug.hwui.use_partial_updates=false
-
 # Screen
 ro.sf.lcd_density=213
 ro.sf.hwrotation=0
@@ -146,17 +145,14 @@ ro.mediatek.platform=MT8163
 ro.mediatek.version.branch=alps-mp-l1.mp1.tc6sp
 ro.mediatek.version.sdk=4
 
-# Graphics
-ro.mtk_miravision_support=1
-ro.mtk_aal_support=1
-ro.mtk_perfservice_support=1
-ro.mtk_hotknot_support=1
-
 # Storage
 ro.mtk_emmc_support=1
 ro.mtk_shared_sdcard=1
 ro.mtk_owner_sdcard_support=1
 ro.mtk_multi_patition=1
+
+# Perf
+ro.mtk_perfservice_support=1
 
 # Camera
 ro.mtk_cam_mfb_support=3
@@ -195,6 +191,3 @@ ro.mtk_voice_extension_support=1
 ro.mtk_bg_power_saving_support=1
 ro.mtk_bg_power_saving_ui=1
 ro.sim_me_lock_mode=0
-
-# EGL
-debug.hwui.use_buffer_age=false
