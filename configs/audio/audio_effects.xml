@@ -57,11 +57,6 @@ libraries {
   loudness_enhancer {
     path /system/lib/soundfx/libldnhncr.so
   }
-#DOLBY_DAP
-  ds {
-    path /system/vendor/lib/soundfx/libswdap.so
-  }
-#DOLBY_END
 }
 
 # Default pre-processing library. Add to audio_effect.conf "libraries" section if
@@ -153,12 +148,6 @@ effects {
     library loudness_enhancer
     uuid fa415329-2034-4bea-b5dc-5b381c8d1e2c
   }
-#DOLBY_DAP
-  ds {
-    library ds
-    uuid 9d4921da-8225-4f29-aefa-39537a04bcaa
-  }
-#DOLBY_END
 }
 
 # Default pre-processing effects. Add to audio_effect.conf "effects" section if
