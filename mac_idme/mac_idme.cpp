@@ -7,6 +7,11 @@
 #include <fstream>
 #include <cstring>
 
+#include <sys/types.h>
+#include <sys/stat.h>
+
+#include <unistd.h>
+
 #include <cutils/log.h>
 #include <cutils/properties.h>
 
@@ -66,10 +71,14 @@ int main() {
 
     ALOGI("Writing wireless MAC to %s", WLAN_MAC_FILE);
     write_mac(WLAN_MAC_FILE, mac_wlan.c_str());
+    chmod(WLAN_MAC_FILE, 0644);
+    chown(WLAN_MAC_FILE, 1000, 1010);
     ALOGI("Success!");
 
     ALOGI("Writing bluetooth MAC to %s", BT_MAC_FILE);
     write_mac(BT_MAC_FILE, mac_bt.c_str());
+    chmod(BT_MAC_FILE, 0644);
+    chown(BT_MAC_FILE, 1000, 1002);
     ALOGI("Success!");
 
     return 0;
