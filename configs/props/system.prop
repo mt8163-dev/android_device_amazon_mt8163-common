@@ -100,8 +100,9 @@ ro.mtk_flv_playback_support=1
 ro.mtk_wmv_playback_support=1
 ro.mtk_mtkps_playback_support=1
 
-# Preload Zygote
+# Zygote
 ro.zygote.preload.enable=0
+persist.device.config.runtime_native.uasp_pool_enabled=true
 
 # Enable Nav Bar
 qemu.hw.mainkeys=0
