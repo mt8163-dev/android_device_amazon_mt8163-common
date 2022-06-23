@@ -13,8 +13,8 @@
 #define BT_MAC_PATH   "/proc/idme/bt_mac_addr"
 #define WLAN_MAC_PATH "/proc/idme/mac_addr"
 
-#define WLAN_MAC_FILE "/data/misc/wifi/macwifi"
-#define BT_MAC_FILE   "/data/misc/bluedroid/macbt"
+#define WLAN_MAC_FILE "/data/vendor/wifi/macwifi"
+#define BT_MAC_FILE   "/data/vendor/bluedroid/macbt"
 
 std::string hex_to_mac(std::string hex) {
     std::stringstream ss;

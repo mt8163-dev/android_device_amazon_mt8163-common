@@ -123,7 +123,7 @@ ro.recovery.wl.maxstore=524288
 persist.wifi.rssi.thresholds=-92,-79,-70,-60
 
 # Bluetooth
-ro.bt.bdaddr_path=/data/misc/bluedroid/macbt
+ro.bt.bdaddr_path=/data/vendor/bluedroid/macbt
 ro.btstack=bluedroid
 ro.mtk_bt_support=1
 

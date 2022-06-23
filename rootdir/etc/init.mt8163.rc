@@ -105,11 +105,6 @@ on post-fs
     chown system system /protect_s
     chmod 0770 /protect_s
 
-    mkdir /data/misc/bluedroid 0770 bluetooth bluetooth
-    mkdir /data/misc/wifi 0770 wifi wifi
-
-    start mac_idme
-
 on post-fs-data
     chown system system /persist
     chmod 0771 /persist
@@ -124,6 +119,8 @@ on post-fs-data
     mkdir /data/vendor/wifi/hostapd/ctrl 0770 wifi wifi
     mkdir /data/vendor/wifi/wpa_supplicant 0770 wifi wifi
     chmod 0660 /data/vendor/wifi/p2p_supplicant.conf
+
+    mkdir /data/vendor/bluedroid 0771 bluetooth bluetooth
 
     #give system access to rfkill device node
     chmod 0660 /dev/rfkill
@@ -803,6 +800,12 @@ on boot
 # define device for EMCSMDLOGGER
     chmod 0660 /dev/ttyGS3
     chown system radio /dev/ttyGS3
+
+on data_ready
+    wait /data/vendor/wifi
+    wait /data/vendor/bluedroid
+
+    start mac_idme
 
 service mac_idme /vendor/bin/hw/mac_idme
     user root
