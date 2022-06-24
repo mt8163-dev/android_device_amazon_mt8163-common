@@ -201,3 +201,4 @@ ro.mtk_voice_extension_support=1
 ro.mtk_bg_power_saving_support=1
 ro.mtk_bg_power_saving_ui=1
 ro.sim_me_lock_mode=0
+persist.debug.xlog.enable=1
