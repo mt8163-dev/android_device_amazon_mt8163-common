@@ -42,6 +42,7 @@ dalvik.vm.heapsize=256m
 # Graphics
 ro.opengles.version=196609
 ro.hardware.gralloc=mt8163.mali
+ro.hardware.egl=mali
 debug.renderengine.backend=skiaglthreaded
 debug.hwui.renderer=skiagl
 debug.sf.enable_gl_backpressure=1
