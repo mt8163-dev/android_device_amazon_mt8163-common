@@ -69,6 +69,7 @@ PRODUCT_COPY_FILES += \
 
 # Audio
 PRODUCT_PACKAGES += \
+    hp-daemon \
     audio.a2dp.default \
     audio.r_submix.default \
     audio.usb.default \
@@ -223,7 +224,8 @@ PRODUCT_PACKAGES += \
     libshim_icuuc \
     libshim_binder \
     libshim_ui \
-    libshim_atomic
+    libshim_atomic \
+    libshim_alsa
 
 # Proprietary
 $(call inherit-product-if-exists, vendor/amazon/mt8163-common/mt8163-common-vendor.mk)

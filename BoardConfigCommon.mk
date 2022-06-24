@@ -114,6 +114,11 @@ TARGET_HAS_LEGACY_CAMERA_HAL1 := true
 
 # Audio
 USE_XML_AUDIO_POLICY_CONF := 1
+TARGET_LD_SHIM_LIBS := \
+    /system/lib/libtinyalsa.so|libshim_alsa.so \
+    /system/lib64/libtinyalsa.so|libshim_alsa.so \
+    /system/lib/hw/audio.primary.mt8163.so|libshim_alsa.so \
+    /system/lib64/hw/audio.primary.mt8163.so|libshim_alsa.so
 
 # Display
 TARGET_SCREEN_DENSITY := 213
