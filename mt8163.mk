@@ -117,6 +117,7 @@ PRODUCT_COPY_FILES += \
 
 # Wi-Fi
 PRODUCT_PACKAGES += \
+    wpa_supplicant \
     libwpa_client \
     lib_driver_cmd_mt66xx \
     libwifi-hal-mt66xx \
