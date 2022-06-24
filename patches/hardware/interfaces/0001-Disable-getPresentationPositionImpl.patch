@@ -1,0 +1,27 @@
+From 4866272b9431b0c5611f1185135e3a4ad8eb2cb3 Mon Sep 17 00:00:00 2001
+From: Kai Jones <joneskai626@gmail.com>
+Date: Tue, 9 Jun 2020 13:54:19 -0700
+Subject: [PATCH] mt8163:audio:Add error message suppress option This chang is
+ different from the 16.0 patch since it has moved from
+ audio/2.0/default/StreamOut.cpp to
+ audio/core/all-versions/default/StreamOut.cpp
+
+Signed-off-by: Kai Jones <joneskai626@gmail.com>
+Change-Id: I170deea1eb2513b0834675d49502c383cd88cb1b
+---
+ audio/core/all-versions/default/StreamOut.cpp | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/audio/core/all-versions/default/StreamOut.cpp b/audio/core/all-versions/default/StreamOut.cpp
+index 82cc408e99..036974deff 100644
+--- a/audio/core/all-versions/default/StreamOut.cpp
++++ b/audio/core/all-versions/default/StreamOut.cpp
+@@ -504,6 +504,7 @@ Result StreamOut::getPresentationPositionImpl(audio_stream_out_t* stream, uint64
+     // continuously querying it, but the stream has been stopped.
+     static const std::vector<int> ignoredErrors{EINVAL, EAGAIN, ENODATA};
+     Result retval(Result::NOT_SUPPORTED);
++    if (true) return retval;
+     if (stream->get_presentation_position == NULL) return retval;
+     struct timespec halTimeStamp;
+     retval = Stream::analyzeStatus("get_presentation_position",
+
