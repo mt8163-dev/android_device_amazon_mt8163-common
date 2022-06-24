@@ -175,6 +175,7 @@ endif
 
 # Camera
 PRODUCT_PACKAGES += \
+    libcam.client \
     android.hardware.camera.provider@2.4-impl-legacy
 
 # USB

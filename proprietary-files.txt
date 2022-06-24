@@ -302,8 +302,8 @@ lib/libcam.campipe.so|41d7deed438bbf6bfe1e114a85d91b70c8873b56
 lib64/libcam.campipe.so|fc34b31b9ed3096d38791dc0e67367514c021e0c
 lib/libcam.camshot.so|11168eddd941e1a9715f103d621a861b27fdb6c3
 lib64/libcam.camshot.so|b102dfd8c43b70123cf22d9e1a0168f318a495a8
-lib/libcam.client.so|3140afafb7a5fb1eb7279f952b7bed69dba0b115
-lib64/libcam.client.so|e5aed9344b63be24338c10b04e465c5fb43b30d1
+-lib/libcam1client.so|3140afafb7a5fb1eb7279f952b7bed69dba0b115
+-lib64/libcam1client.so|e5aed9344b63be24338c10b04e465c5fb43b30d1
 lib/libcam.device1.so|1ca98960af01b1708f70c891f8becd12e8bd337d
 lib64/libcam.device1.so|5f218f7452e9828ce337b482bb6fcb50692f4469
 lib/libcam.device3.so|9a6507fdf005f009d50c7e9a06c65d7b7e9e2bd2
