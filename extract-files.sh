@@ -88,6 +88,9 @@ function blob_fixup() {
         lib/libbwc.so|lib64/libbwc.so)
             patchelf --add-needed "libshim_binder.so" "${2}"
             ;;
+        lib/libcam_utils.so|lib64/libcam_utils.so)
+            patchelf --add-needed "libutilscallstack.so" "${2}"
+            ;;
     esac
 }
 
