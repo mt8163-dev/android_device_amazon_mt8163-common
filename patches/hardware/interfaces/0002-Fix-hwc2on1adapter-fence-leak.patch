@@ -1,0 +1,32 @@
+From f030d2526a6ce14726e85a3fa0f0cd76110635d9 Mon Sep 17 00:00:00 2001
+From: Kai Jones <joneskai626@gmail.com>
+Date: Tue, 9 Jun 2020 13:52:40 -0700
+Subject: [PATCH] mt8163:hwc2on1adapter:fix fd leak
+
+-thanks to @ibilux
+* GL blobs hit this leak, that ultimately results in surfaceflinger to crash and SystemUI soft-resetting every so often when under any form of stressful loads.
+* Removes the fence dump from Layer::dump, since:
+  a) It was leaking (a dup() without a close())
+  b) It's not that useful anyway since it wasn't displaying the actual fence fd
+-rebased for Lineage-17.1
+
+Signed-off-by: Kai Jones <joneskai626@gmail.com>
+Change-Id: I3dea6fc7cf4e6056d39a4d0e77cb04f3ab86ce83
+---
+ graphics/composer/2.1/utils/hwc2on1adapter/HWC2On1Adapter.cpp | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/graphics/composer/2.1/utils/hwc2on1adapter/HWC2On1Adapter.cpp b/graphics/composer/2.1/utils/hwc2on1adapter/HWC2On1Adapter.cpp
+index 3d138f7308..834720837c 100644
+--- a/graphics/composer/2.1/utils/hwc2on1adapter/HWC2On1Adapter.cpp
++++ b/graphics/composer/2.1/utils/hwc2on1adapter/HWC2On1Adapter.cpp
+@@ -1294,7 +1294,8 @@ Error HWC2On1Adapter::Display::set(hwc_display_contents_1& hwcContents) {
+     auto& clientTargetLayer = hwcContents.hwLayers[numLayers - 1];
+     if (clientTargetLayer.compositionType == HWC_FRAMEBUFFER_TARGET) {
+         clientTargetLayer.handle = mClientTarget.getBuffer();
+-        clientTargetLayer.acquireFenceFd = mClientTarget.getFence();
++        close(mClientTarget.getFence());
++        clientTargetLayer.acquireFenceFd = -1;
+     } else {
+         ALOGE("[%" PRIu64 "] set: last HWC layer wasn't FRAMEBUFFER_TARGET",
+                 mId);
