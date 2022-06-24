@@ -90,6 +90,7 @@ function blob_fixup() {
             ;;
         lib/libcam_utils.so|lib64/libcam_utils.so)
             patchelf --add-needed "libutilscallstack.so" "${2}"
+            patchelf --add-needed "libshim_camera.so" "${2}"
             ;;
     esac
 }
