@@ -75,10 +75,6 @@ bin/devicetype_service
 bin/idme
 bin/wipe_fos_flags
 
-# Lights
-lib/hw/lights.mt8163.so
-lib64/hw/lights.mt8163.so
-
 # Amazon
 xbin/trapz
 lib/libamazon_remotes.so
