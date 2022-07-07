@@ -57,9 +57,8 @@ int readH2wState() {
 }
 
 int mixer_ctl_set_enum_by_string(struct mixer_ctl *ctl, const char *string) {
-	int (*orig_mixer_ctl_set_enum_by_string)(struct mixer_ctl *ctl, const char *string);
-	
-	orig_mixer_ctl_set_enum_by_string = dlsym(RTLD_NEXT, "mixer_ctl_set_enum_by_string");
+	typedef int (*MIXER_CTL_SET_ENUM_BY_STRING)(struct mixer_ctl *ctl, const char *string);
+	static MIXER_CTL_SET_ENUM_BY_STRING orig_mixer_ctl_set_enum_by_string = (MIXER_CTL_SET_ENUM_BY_STRING) dlsym(RTLD_NEXT, "mixer_ctl_set_enum_by_string");
 		
 	if( ctl->info->id.numid == EXT_SPEAKER_SWITCH_CTRL_ID) {
 		if(strcmp(string, "On") == 0) {
