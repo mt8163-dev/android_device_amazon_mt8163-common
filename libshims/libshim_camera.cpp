@@ -1,6 +1,14 @@
+#include <stdint.h>
 #include <string>
 
 #include <ui/GraphicBuffer.h>
+
+extern "C" void _ZN7android13GraphicBuffer4lockEjPPvPiS3_(uint32_t inUsage, void** vaddr,
+        int32_t* outBytesPerPixel, int32_t* outBytesPerStride);
+
+extern "C" void _ZN7android13GraphicBuffer4lockEjPPv(uint32_t inUsage, void** vaddr) {
+    _ZN7android13GraphicBuffer4lockEjPPvPiS3_(inUsage, vaddr, nullptr, nullptr);
+}
 
 extern "C" {
     void _ZN7android13GraphicBufferC1EjjijNSt3__112basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEE(
