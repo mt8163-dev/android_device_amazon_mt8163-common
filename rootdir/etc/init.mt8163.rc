@@ -105,17 +105,6 @@ on post-fs
     chown system system /protect_s
     chmod 0770 /protect_s
 
-    # Create the directories used by the Wireless subsystem
-    mkdir /data/vendor/wifi 0770 wifi wifi
-    mkdir /data/vendor/wifi/sockets 0770 wifi wifi
-    mkdir /data/vendor/wifi/hostapd/ctrl 0770 wifi wifi
-    mkdir /data/vendor/wifi/wpa_supplicant 0770 wifi wifi
-    chmod 0660 /data/vendor/wifi/p2p_supplicant.conf
-
-    mkdir /data/vendor/bluedroid 0771 bluetooth bluetooth
-
-    start mac_idme
-
 on post-fs-data
     chown system system /persist
     chmod 0771 /persist
@@ -789,26 +778,6 @@ on boot
     chown shell system /proc/driver/wmt_dbg
     chown shell system /proc/driver/wmt_aee
 
-#Define device for ATCID
-    chmod 0660 /dev/ttyGS0
-    chown system /dev/ttyGS0
-    chmod 0660 /dev/ttyGS1
-    chown system /dev/ttyGS1
-
-# BT relayer mode used VCOM
-    chmod 0660 /dev/ttyGS2
-    chown bluetooth radio /dev/ttyGS2
-
-# define device for EMCSMDLOGGER
-    chmod 0660 /dev/ttyGS3
-    chown system radio /dev/ttyGS3
-
-service mac_idme /vendor/bin/hw/mac_idme
-    user root
-    group bluetooth system wifi
-    oneshot
-    disabled
-
 on property:vold.decrypt=trigger_reset_main
     start stop_modem
 
@@ -1078,24 +1047,6 @@ service enableswap /system/bin/sh /enableswap.sh
     class core
     oneshot
     seclabel u:r:enableswap:s0
-
-service bluetoothd /system/bin/bluetoothd -n
-    class main
-    socket bluetooth stream 660 bluetooth bluetooth
-    socket dbus_bluetooth stream 660 bluetooth bluetooth
-    # init.rc does not yet support applying capabilities, so run as root and
-    # let bluetoothd drop uid to bluetooth with the right linux capabilities
-    group bluetooth net_bt_admin misc
-    disabled
-
-service mtkbt /system/bin/mtkbt
-    class late_start
-	socket bt.int.adp dgram 660 bluetooth net_bt
-	socket bt.a2dp.stream dgram 660 bluetooth net_bt
-	user bluetooth
-	group system vpn net_admin inet net_raw net_bt bluetooth net_bt_admin bluetooth sdcard_r
-	oneshot
-
 
 #service dpfd /system/bin/dpfd
 #	user root
@@ -1404,25 +1355,6 @@ service rpmb_svc /system/bin/rpmb_svc
     class main
     group system drmrpc
     disabled
-
-on property:wlan.driver.status=ok
-    write /dev/wmtWifi "1"
-
-on property:wlan.driver.status=unloaded
-    write /dev/wmtWifi "0"
-
-service wpa_supplicant /system/vendor/bin/hw/wpa_supplicant \
-    -O/data/vendor/wifi/wpa/sockets -g@android:wpa_wlan0
-    interface android.hardware.wifi.supplicant@1.0::ISupplicant default
-    interface android.hardware.wifi.supplicant@1.1::ISupplicant default
-    #   we will start as root and wpa_supplicant will switch to user wifi
-    #   after setting up the capabilities required for WEXT
-    #   user wifi
-    #   group wifi inet keystore
-    class main
-    socket wpa_wlan0 dgram 660 wifi wifi
-    disabled
-    oneshot
 
 service charger /system/bin/charger
     class charger
