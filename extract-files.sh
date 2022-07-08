@@ -82,7 +82,6 @@ function blob_fixup() {
             patchelf --add-needed "libshim_icuuc.so" "${2}"
             ;;
         lib/libasp.so|lib64/libasp.so|lib/libaspclient.so)
-            patchelf --add-needed "libshim_binder.so" "${2}"
             patchelf --add-needed "libcompiler_rt.so" "${2}"
             ;;
         lib/hw/hwcomposer.mt8163.so|lib64/hw/hwcomposer.mt8163.so)
@@ -94,12 +93,6 @@ function blob_fixup() {
             ;;
         lib/egl/libGLES_mali.so|lib64/egl/libGLES_mali.so)
             patchelf --add-needed "libutilscallstack.so" "${2}"
-            ;;
-        lib/hw/audio.primary.mt8163.so|lib64/hw/audio.primary.mt8163.so)
-            patchelf --add-needed "libshim_binder.so" "${2}"
-            ;;
-        lib/libbwc.so|lib64/libbwc.so)
-            patchelf --add-needed "libshim_binder.so" "${2}"
             ;;
         lib/libcam_utils.so|lib64/libcam_utils.so)
             patchelf --add-needed "libutilscallstack.so" "${2}"
@@ -130,8 +123,9 @@ if [ -z "${ONLY_COMMON}" ] && [ -s "${MY_DIR}/../${DEVICE}/proprietary-files.txt
 fi
 
 # Since we can't preload shims anymore, link the shim ONLY to the affected libraries
-general_fixup "__xlog_buf_printf"           "libshim_log.so"
-general_fixup "lab126_log_write"            "libshim_log.so"
-general_fixup "android_atomic_acquire_load" "libshim_atomic.so"
+general_fixup "__xlog_buf_printf"                  "libshim_log.so"
+general_fixup "lab126_log_write"                   "libshim_log.so"
+general_fixup "android_atomic_acquire_load"        "libshim_atomic.so"
+general_fixup "_ZN7android10IInterface8asBinderEv" "libshim_binder.so"
 
 "${MY_DIR}/setup-makefiles.sh"
