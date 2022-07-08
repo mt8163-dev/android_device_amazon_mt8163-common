@@ -349,3 +349,5 @@ lib/libvcodec_oal.so|2f88fec361dcd209930056439dab33bf6276c33f
 lib/libvcodec_utility.so|f4e038c57f5d68b48fba0d9e7c92e6be7c24a344
 lib64/libvcodec_cap.so|86656fb8db53181dd7860e6f69ab8852e54c2815
 lib64/libvcodec_utility.so|bd5930ab9b7ca059b0b57bb2a64d83033c8af13c
+lib/libskia.so|80215e6c9d4810836e2677f3bc6add88ad086e0d
+lib64/libskia.so|84f706eba5df11c73e4bf30fc210ba9bd40df6c3
