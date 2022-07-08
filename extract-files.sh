@@ -104,6 +104,9 @@ function blob_fixup() {
             patchelf --add-needed "libutilscallstack.so" "${2}"
             patchelf --add-needed "libshim_camera.so" "${2}"
             ;;
+        lib/libmtk_mmutils.so|lib64/libmtk_mmutils.so)
+            patchelf --add-needed "libshim_ui.so" "${2}"
+            ;;
     esac
 }
 
