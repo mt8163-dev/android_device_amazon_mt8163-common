@@ -1,0 +1,76 @@
+diff --git a/core/jni/android/graphics/Bitmap.cpp b/core/jni/android/graphics/Bitmap.cpp
+index a4e37093..cfac306a 100755
+--- a/core/jni/android/graphics/Bitmap.cpp
++++ b/core/jni/android/graphics/Bitmap.cpp
+@@ -416,13 +416,13 @@ static jobject Bitmap_copy(JNIEnv* env, jobject, jlong srcHandle,
+                            jint dstConfigHandle, jboolean isMutable) {
+     SkBitmap src;
+     reinterpret_cast<BitmapWrapper*>(srcHandle)->getSkBitmap(&src);
+-    if (dstConfigHandle == GraphicsJNI::hardwareLegacyBitmapConfig()) {
++    /*if (dstConfigHandle == GraphicsJNI::hardwareLegacyBitmapConfig()) {
+         sk_sp<Bitmap> bitmap(Bitmap::allocateHardwareBitmap(src));
+         if (!bitmap.get()) {
+             return NULL;
+         }
+         return createBitmap(env, bitmap.release(), getPremulBitmapCreateFlags(isMutable));
+-    }
++    }*/
+ 
+     SkColorType dstCT = GraphicsJNI::legacyBitmapConfigToColorType(dstConfigHandle);
+     SkBitmap result;
+diff --git a/core/jni/android/graphics/BitmapFactory.cpp b/core/jni/android/graphics/BitmapFactory.cpp
+index 3f05c3b5..c39d5dbc 100644
+--- a/core/jni/android/graphics/BitmapFactory.cpp
++++ b/core/jni/android/graphics/BitmapFactory.cpp
+@@ -322,6 +322,35 @@ static jobject doDecode(JNIEnv* env, std::unique_ptr<SkStreamRewindable> stream,
+         scaledHeight = static_cast<int>(scaledHeight * scale + 0.5f);
+     }
+ 
++    const int needsOffset = 32;
++    const int minScaleHandlesize = 16; // we do not handle smaller sizes needsOffset/2
++    if (isHardware && scaledWidth >= minScaleHandlesize && scaledHeight >= minScaleHandlesize) {
++        int rx = scaledWidth % needsOffset;
++        int ry = scaledHeight % needsOffset;
++        bool scaleX = false;
++
++        if (rx != 0) {
++            willScale = true;
++            if (rx >= (needsOffset / 2)){
++                scaleX = true; // upscale
++                rx = needsOffset - rx;
++                scaledWidth = scaledWidth + rx;
++            } else {
++                scaledWidth = scaledWidth - rx;
++            }
++        }
++        if (ry != 0) {
++            willScale = true;
++            if (ry >= (needsOffset / 2) || scaleX){
++                // upscale
++                ry = needsOffset - ry;
++                scaledHeight = scaledHeight + ry;
++            } else {
++                scaledHeight = scaledHeight - ry;
++            }
++        }
++    }
++
+     android::Bitmap* reuseBitmap = nullptr;
+     unsigned int existingBufferSize = 0;
+     if (javaBitmap != nullptr) {
+diff --git a/graphics/java/android/graphics/Bitmap.java b/graphics/java/android/graphics/Bitmap.java
+index 44710178..e52f451d 100644
+--- a/graphics/java/android/graphics/Bitmap.java
++++ b/graphics/java/android/graphics/Bitmap.java
+@@ -682,9 +682,9 @@ public final class Bitmap implements Parcelable {
+      */
+     public Bitmap copy(Config config, boolean isMutable) {
+         checkRecycled("Can't copy a recycled bitmap");
+-        if (config == Config.HARDWARE && isMutable) {
++        /*if (config == Config.HARDWARE && isMutable) {
+             throw new IllegalArgumentException("Hardware bitmaps are always immutable");
+-        }
++        }*/
+         noteHardwareBitmapSlowCall();
+         Bitmap b = nativeCopy(mNativePtr, config.nativeInt, isMutable);
+         if (b != null) {
