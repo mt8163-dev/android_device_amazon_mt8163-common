@@ -22,6 +22,9 @@ on fs
     swapon_all /vendor/etc/fstab.mt8163
 
 on init
+    # Shim libraries
+	export LD_PRELOAD "libshim_log.so:libshim_alsa.so:libshim_binder.so:libshim_atomic.so"
+
     # BATTERY proc
     chown shell system /proc/mtk_battery_cmd/current_cmd
     chown shell system /proc/mtk_battery_cmd/discharging_cmd

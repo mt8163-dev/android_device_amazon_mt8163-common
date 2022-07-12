@@ -62,17 +62,6 @@ if [ -z "${SRC}" ]; then
     SRC="adb"
 fi
 
-function general_fixup() {
-	for blob in $(find ${VENDOR_OUT}/proprietary | grep .so)
-	do
-		if grep -q "${1}" $blob; then
-			if ! grep -q "${2}" $blob; then
-				patchelf --add-needed "${2}" $blob
-			fi
-		fi
-	done
-}
-
 function blob_fixup() {
     case "${1}" in
         lib*/libaudiocomponentengine.so)
@@ -107,11 +96,5 @@ if [ -z "${ONLY_COMMON}" ] && [ -s "${MY_DIR}/../${DEVICE}/proprietary-files.txt
 
     extract "${MY_DIR}/../${DEVICE}/proprietary-files.txt" "${SRC}" "${KANG}" --section "${SECTION}"
 fi
-
-# Since we can't preload shims anymore, link the shim ONLY to the affected libraries
-general_fixup "__xlog_buf_printf"                  "libshim_log.so"
-general_fixup "lab126_log_write"                   "libshim_log.so"
-general_fixup "android_atomic_acquire_load"        "libshim_atomic.so"
-general_fixup "_ZN7android10IInterface8asBinderEv" "libshim_binder.so"
 
 "${MY_DIR}/setup-makefiles.sh"

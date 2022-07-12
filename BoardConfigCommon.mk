@@ -117,8 +117,6 @@ USE_XML_AUDIO_POLICY_CONF := 1
 
 # Shim libraries
 TARGET_LD_SHIM_LIBS := \
-    /system/lib/libtinyalsa.so|libshim_alsa.so \
-    /system/lib64/libtinyalsa.so|libshim_alsa.so \
     /system/lib/hw/audio.primary.mt8163.so|libshim_alsa.so \
     /system/lib64/hw/audio.primary.mt8163.so|libshim_alsa.so \
     /system/bin/amzn_dha_hmac|libshim_crypto.so \
