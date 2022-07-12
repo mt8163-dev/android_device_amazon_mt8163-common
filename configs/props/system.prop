@@ -36,8 +36,12 @@ ro.mtk_wfd_hdcp_tx_support=1
 wfd.dummy.enable=1
 
 # Dalkik Heap
-dalvik.vm.heapgrowthlimit=128m
+dalvik.vm.heapstartsize=2m
+dalvik.vm.heapgrowthlimit=20m
 dalvik.vm.heapsize=256m
+dalvik.vm.heaptargetutilization=0.85
+dalvik.vm.heapminfree=128k
+dalvik.vm.heapmaxfree=512k
 
 # Graphics
 ro.opengles.version=196609
