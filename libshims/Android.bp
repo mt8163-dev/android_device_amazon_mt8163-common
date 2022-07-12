@@ -94,3 +94,14 @@ cc_library_shared {
     ],
     proprietary: true,
 }
+
+cc_library_shared {
+    name: "libshim_zygote",
+    srcs: ["libshim_zygote.cpp"],
+    include_dirs: [
+        "frameworks/base/core/jni",
+        "system/core/base/include",
+    ],
+    shared_libs: ["liblog"],
+    proprietary: true,
+}
