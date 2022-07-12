@@ -114,11 +114,25 @@ TARGET_HAS_LEGACY_CAMERA_HAL1 := true
 
 # Audio
 USE_XML_AUDIO_POLICY_CONF := 1
+
+# Shim libraries
 TARGET_LD_SHIM_LIBS := \
     /system/lib/libtinyalsa.so|libshim_alsa.so \
     /system/lib64/libtinyalsa.so|libshim_alsa.so \
     /system/lib/hw/audio.primary.mt8163.so|libshim_alsa.so \
-    /system/lib64/hw/audio.primary.mt8163.so|libshim_alsa.so
+    /system/lib64/hw/audio.primary.mt8163.so|libshim_alsa.so \
+    /system/bin/amzn_dha_hmac|libshim_crypto.so \
+    /system/bin/amzn_dha_tool|libshim_crypto.so \
+    /system/lib/libdrmmtkutil.so|libshim_icuuc.so \
+    /system/lib64/libdrmmtkutil.so|libshim_icuuc.so \
+    /system/lib/hw/hwcomposer.mt8163.so|libshim_ui.so \
+    /system/lib64/hw/hwcomposer.mt8163.so|libshim_ui.so \
+    /system/lib/libcam_utils.so|libshim_camera.so \
+    /system/lib64/libcam_utils.so|libshim_camera.so \
+    /system/lib/libcam1client.so|libshim_camera.so \
+    /system/lib64/libcam1client.so|libshim_camera.so \
+    /system/lib/libmtk_mmutils.so|libshim_ui.so \
+    /system/lib64/libmtk_mmutils.so|libshim_ui.so
 
 # Display
 TARGET_SCREEN_DENSITY := 213

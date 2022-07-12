@@ -75,34 +75,20 @@ function general_fixup() {
 
 function blob_fixup() {
     case "${1}" in
-    	bin/amzn_dha_hmac|bin/amzn_dha_tool)
-            patchelf --add-needed "libshim_crypto.so" "${2}"
+        lib*/libaudiocomponentengine.so)
+            patchelf --add-needed "libutilscallstack.so" "${2}"
             ;;
-        lib/libdrmmtkutil.so|lib64/libdrmmtkutil.so)
-            patchelf --add-needed "libshim_icuuc.so" "${2}"
+        lib*/egl/libGLES_mali.so)
+            patchelf --add-needed "libutilscallstack.so" "${2}"
             ;;
-        lib/libasp.so|lib64/libasp.so|lib/libaspclient.so)
+        lib*/libcam_utils.so)
+            patchelf --add-needed "libutilscallstack.so" "${2}"
+            ;;
+        lib*/libasp.so|lib*/libaspclient.so)
             patchelf --add-needed "libcompiler_rt.so" "${2}"
             ;;
-        lib/hw/hwcomposer.mt8163.so|lib64/hw/hwcomposer.mt8163.so)
+        lib*/hw/hwcomposer.mt8163.so)
             sed -i 's|_ZN7android19GraphicBufferMapper4lockEPK13native_handleiRKNS_4RectEPPv|_ZN7android19GraphicBufferMapper4lockEPK13native_handlejRKNS_4RectEPPv|g' "${2}"
-            patchelf --add-needed "libshim_ui.so" "${2}"
-            ;;
-        lib/libaudiocomponentengine.so|lib64/libaudiocomponentengine.so)
-            patchelf --add-needed "libutilscallstack.so" "${2}"
-            ;;
-        lib/egl/libGLES_mali.so|lib64/egl/libGLES_mali.so)
-            patchelf --add-needed "libutilscallstack.so" "${2}"
-            ;;
-        lib/libcam_utils.so|lib64/libcam_utils.so)
-            patchelf --add-needed "libutilscallstack.so" "${2}"
-            patchelf --add-needed "libshim_camera.so" "${2}"
-            ;;
-        lib/libcam1client.so|lib64/libcam1client.so)
-            patchelf --add-needed "libshim_camera.so" "${2}"
-            ;;
-        lib/libmtk_mmutils.so|lib64/libmtk_mmutils.so)
-            patchelf --add-needed "libshim_ui.so" "${2}"
             ;;
     esac
 }
