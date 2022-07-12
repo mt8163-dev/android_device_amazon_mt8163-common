@@ -130,7 +130,15 @@ TARGET_LD_SHIM_LIBS := \
     /system/lib/libcam1client.so|libshim_camera.so \
     /system/lib64/libcam1client.so|libshim_camera.so \
     /system/lib/libmtk_mmutils.so|libshim_ui.so \
-    /system/lib64/libmtk_mmutils.so|libshim_ui.so
+    /system/lib64/libmtk_mmutils.so|libshim_ui.so \
+    /system/lib/liblog.so|libshim_log.so \
+    /system/lib64/liblog.so|libshim_log.so \
+    /system/lib/libcutils.so|libshim_atomic.so \
+    /system/lib64/libcutils.so|libshim_atomic.so \
+    /system/lib/libbinder.so|libshim_binder.so \
+    /system/lib64/libbinder.so|libshim_binder.so \
+    /system/lib/libtinyalsa.so|libshim_alsa.so \
+    /system/lib64/libtinyalsa.so|libshim_alsa.so
 
 # Display
 TARGET_SCREEN_DENSITY := 213

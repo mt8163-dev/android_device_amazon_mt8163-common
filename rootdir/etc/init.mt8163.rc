@@ -23,7 +23,7 @@ on fs
 
 on init
     # Shim libraries
-	export LD_PRELOAD "libshim_log.so:libshim_alsa.so:libshim_binder.so:libshim_atomic.so:libshim_zygote.so"
+	export LD_PRELOAD "libshim_zygote.so"
 
     # BATTERY proc
     chown shell system /proc/mtk_battery_cmd/current_cmd
