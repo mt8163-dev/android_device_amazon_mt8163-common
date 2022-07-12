@@ -138,7 +138,9 @@ TARGET_LD_SHIM_LIBS := \
     /system/lib/libbinder.so|libshim_binder.so \
     /system/lib64/libbinder.so|libshim_binder.so \
     /system/lib/libtinyalsa.so|libshim_alsa.so \
-    /system/lib64/libtinyalsa.so|libshim_alsa.so
+    /system/lib64/libtinyalsa.so|libshim_alsa.so \
+    /system/bin/app_process32|libshim_zygote.so \
+    /system/bin/app_process64|libshim_zygote.so
 
 # Display
 TARGET_SCREEN_DENSITY := 213
