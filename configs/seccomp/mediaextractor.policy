@@ -1,6 +1,0 @@
-gettimeofday: 1
-ioprio_set: 1
-unlinkat: 1
-setsockopt: 1
-clock_gettime: 1
-setrlimit: 1
