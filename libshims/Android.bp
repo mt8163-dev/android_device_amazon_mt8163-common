@@ -5,7 +5,6 @@ cc_library_shared {
         "liblog",
         "libbase",
     ],
-    proprietary: true,
 }
 
 cc_library_shared {
@@ -16,7 +15,6 @@ cc_library_shared {
     shared_libs: [
         "libcrypto",
     ],
-    proprietary: true,
 }
 
 cc_library_shared {
@@ -27,7 +25,6 @@ cc_library_shared {
     shared_libs: [
         "libandroidicu",
     ],
-    proprietary: true,
 }
 
 cc_library_shared {
@@ -39,7 +36,6 @@ cc_library_shared {
         "libbinder",
         "libutils",
     ],
-    proprietary: true,
 }
 
 cc_library_shared {
@@ -50,7 +46,6 @@ cc_library_shared {
     shared_libs: [
         "libui",
     ],
-    proprietary: true,
 }
 
 cc_library_shared {
@@ -63,7 +58,6 @@ cc_library_shared {
         "libcutils",
         "libbase"
     ],
-    proprietary: true,
 }
 
 cc_library_shared {
@@ -78,7 +72,6 @@ cc_library_shared {
         "liblog",
         "libtinyalsa",
     ],
-    proprietary: true,
 }
 
 cc_library_shared {
@@ -92,7 +85,6 @@ cc_library_shared {
         "libutils",
         "libcutils"
     ],
-    proprietary: true,
 }
 
 cc_library_shared {
@@ -103,5 +95,4 @@ cc_library_shared {
         "system/core/base/include",
     ],
     shared_libs: ["liblog"],
-    proprietary: true,
 }
