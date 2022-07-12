@@ -301,62 +301,35 @@ on property:sys.usb.config=ptp,mass_storage,adb,acm
 
 # duplicate of init.usb.rc
 
-#28. USB accessory configuration
-#on property:sys.usb.config=accessory
-#    write /sys/class/android_usb/android0/enable 0
-#    write /sys/class/android_usb/android0/idVendor 18d1
-#    write /sys/class/android_usb/android0/idProduct 2d00
-#    write /sys/class/android_usb/android0/functions ${sys.usb.config}
-#    write /sys/class/android_usb/android0/enable 1
-#    setprop sys.usb.state ${sys.usb.config}
+# USB accessory
+on property:sys.usb.config=accessory
+    write /sys/devices/platform/android_usb/usb_function_switch 8192
+    setprop sys.usb.state ${sys.usb.config}
 
-#39. USB accessory configuration, with adb
-#on property:sys.usb.config=accessory,adb
-#    write /sys/class/android_usb/android0/enable 0
-#    write /sys/class/android_usb/android0/idVendor 18d1
-#    write /sys/class/android_usb/android0/idProduct 2d01
-#    write /sys/class/android_usb/android0/functions ${sys.usb.config}
-#    write /sys/class/android_usb/android0/enable 1
-#    start adbd
-#    setprop sys.usb.state ${sys.usb.config}
+on property:sys.usb.config=accessory,adb
+    start adbd
+    write /sys/devices/platform/android_usb/usb_function_switch 8194
+    setprop sys.usb.state ${sys.usb.config}
 
-#30. audio accessory configuration
-#on property:sys.usb.config=audio_source
-#    write /sys/class/android_usb/android0/enable 0
-#    write /sys/class/android_usb/android0/idVendor 18d1
-#    write /sys/class/android_usb/android0/idProduct 2d02
-#    write /sys/class/android_usb/android0/functions ${sys.usb.config}
-#    write /sys/class/android_usb/android0/enable 1
-#    setprop sys.usb.state ${sys.usb.config}
+# audio accessory
+on property:sys.usb.config=audio_source
+    write /sys/devices/platform/android_usb/usb_function_switch 131072
+    setprop sys.usb.state ${sys.usb.config}
 
-#31. audio accessory configuration, with adb
-#on property:sys.usb.config=audio_source,adb
-#    write /sys/class/android_usb/android0/enable 0
-#    write /sys/class/android_usb/android0/idVendor 18d1
-#    write /sys/class/android_usb/android0/idProduct 2d03
-#    write /sys/class/android_usb/android0/functions ${sys.usb.config}
-#    write /sys/class/android_usb/android0/enable 1
-#    start adbd
-#    setprop sys.usb.state ${sys.usb.config}
+on property:sys.usb.config=audio_source,adb
+    start adbd
+    write /sys/devices/platform/android_usb/usb_function_switch 131074
+    setprop sys.usb.state ${sys.usb.config}
 
-#32. USB and audio accessory configuration
-#on property:sys.usb.config=accessory,audio_source
-#    write /sys/class/android_usb/android0/enable 0
-#    write /sys/class/android_usb/android0/idVendor 18d1
-#    write /sys/class/android_usb/android0/idProduct 2d04
-#    write /sys/class/android_usb/android0/functions ${sys.usb.config}
-#    write /sys/class/android_usb/android0/enable 1
-#    setprop sys.usb.state ${sys.usb.config}
+# USB and audio accessory
+on property:sys.usb.config=accessory,audio_source
+    write /sys/devices/platform/android_usb/usb_function_switch 139264
+    setprop sys.usb.state ${sys.usb.config}
 
-#33. USB and audio accessory configuration, with adb
-#on property:sys.usb.config=accessory,audio_source,adb
-#    write /sys/class/android_usb/android0/enable 0
-#    write /sys/class/android_usb/android0/idVendor 18d1
-#    write /sys/class/android_usb/android0/idProduct 2d05
-#    write /sys/class/android_usb/android0/functions ${sys.usb.config}
-#    write /sys/class/android_usb/android0/enable 1
-#    start adbd
-#    setprop sys.usb.state ${sys.usb.config}
+on property:sys.usb.config=accessory,audio_source,adb
+    start adbd
+    write /sys/devices/platform/android_usb/usb_function_switch 139266
+    setprop sys.usb.state ${sys.usb.config}
 
 #34.USB Charging Only configuration
 on property:sys.usb.config=charging
