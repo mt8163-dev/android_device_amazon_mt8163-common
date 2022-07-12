@@ -15,6 +15,11 @@
 #include <android-base/logging.h>
 #include <android-base/properties.h>
 
+#include <sys/types.h>
+#include <unistd.h>
+
+#include <sys/stat.h>
+
 #define BT_MAC_PATH   "/proc/idme/bt_mac_addr"
 #define WLAN_MAC_PATH "/proc/idme/mac_addr"
 
@@ -71,10 +76,14 @@ int main() {
 
     LOG(INFO) << "Writing wireless MAC to " << WLAN_MAC_FILE;
     write_mac(WLAN_MAC_FILE, mac_wlan.c_str());
+    chmod(WLAN_MAC_FILE, 0644);
+    chown(WLAN_MAC_FILE, 1000, 1010);
     LOG(INFO) << "Success!";
 
     LOG(INFO) << "Writing bluetooth MAC to " << BT_MAC_FILE;
     write_mac(BT_MAC_FILE, mac_bt.c_str());
+    chmod(BT_MAC_FILE, 0644);
+    chown(BT_MAC_FILE, 1000, 1002);
     LOG(INFO) << "Success!";
 
     if (android::base::GetProperty("ro.bt.bdaddr_path", "") != BT_MAC_FILE)
