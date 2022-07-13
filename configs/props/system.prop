@@ -42,6 +42,7 @@ dalvik.vm.heapsize=256m
 dalvik.vm.heaptargetutilization=0.85
 dalvik.vm.heapminfree=128k
 dalvik.vm.heapmaxfree=512k
+dalvik.vm.dex2oat64.enabled=true
 
 # Graphics
 ro.opengles.version=196609
