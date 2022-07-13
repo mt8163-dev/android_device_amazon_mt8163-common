@@ -125,10 +125,10 @@ TARGET_LD_SHIM_LIBS := \
     /system/lib64/libdrmmtkutil.so|libshim_icuuc.so \
     /system/lib/hw/hwcomposer.mt8163.so|libshim_ui.so \
     /system/lib64/hw/hwcomposer.mt8163.so|libshim_ui.so \
-    /system/lib/libcam_utils.so|libshim_camera.so \
-    /system/lib64/libcam_utils.so|libshim_camera.so \
-    /system/lib/libcam1client.so|libshim_camera.so \
-    /system/lib64/libcam1client.so|libshim_camera.so \
+    /system/lib/libcam_utils.so|libshim_ui.so \
+    /system/lib64/libcam_utils.so|libshim_ui.so \
+    /system/lib/libcam1client.so|libshim_ui.so \
+    /system/lib64/libcam1client.so|libshim_ui.so \
     /system/lib/libmtk_mmutils.so|libshim_ui.so \
     /system/lib64/libmtk_mmutils.so|libshim_ui.so \
     /system/lib/liblog.so|libshim_log.so \

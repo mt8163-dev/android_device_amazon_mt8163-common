@@ -45,6 +45,9 @@ cc_library_shared {
     ],
     shared_libs: [
         "libui",
+        "libgui",
+        "libutils",
+        "libcutils"
     ],
 }
 
@@ -71,19 +74,6 @@ cc_library_shared {
     shared_libs: [
         "liblog",
         "libtinyalsa",
-    ],
-}
-
-cc_library_shared {
-    name: "libshim_camera",
-    srcs: [
-        "libshim_camera.cpp",
-    ],
-    shared_libs: [
-        "libui",
-        "libgui",
-        "libutils",
-        "libcutils"
     ],
 }
 

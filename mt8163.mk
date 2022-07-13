@@ -227,7 +227,6 @@ PRODUCT_PACKAGES += \
     libshim_ui \
     libshim_atomic \
     libshim_alsa \
-    libshim_camera \
     libshim_zygote
 
 # Proprietary
