@@ -56,6 +56,14 @@ ro.mtk_miravision_support=1
 ro.mtk_aal_support=1
 ro.mtk_hotknot_support=1
 
+# SurfaceFlinger
+ro.surface_flinger.vsync_event_phase_offset_ns=-8000000
+ro.surface_flinger.vsync_sf_event_phase_offset_ns=-8000000
+ro.surface_flinger.present_time_offset_from_vsync_ns=0
+ro.surface_flinger.force_hwc_copy_for_virtual_displays=true
+ro.surface_flinger.running_without_sync_framework=true
+ro.surface_flinger.max_frame_buffer_acquired_buffers=3
+
 # Tethering
 wifi.tethering.interface=ap0
 ro.mtk_tetheringipv6_support=1
@@ -120,6 +128,10 @@ ro.lmk.use_psi=false
 
 # Enable Nav Bar
 qemu.hw.mainkeys=0
+
+# OMX
+debug.stagefright.omx_default_rank.sw-audio=1
+debug.stagefright.omx_default_rank=0
 
 # Kernel ZIO
 ro.kernel.zio=38,108,105,16
