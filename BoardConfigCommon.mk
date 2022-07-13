@@ -145,6 +145,9 @@ TARGET_LD_SHIM_LIBS := \
 # Display
 TARGET_SCREEN_DENSITY := 213
 
+# HWUI
+HWUI_COMPILE_FOR_PERF := true
+
 # Dexpreopt
 ifeq ($(HOST_OS),linux)
   ifneq ($(TARGET_BUILD_VARIANT),eng)
