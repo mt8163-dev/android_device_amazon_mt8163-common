@@ -589,6 +589,15 @@ struct audio_stream_in {
 };
 typedef struct audio_stream_in audio_stream_in_t;
 
+struct legacy_audio_stream_in {
+    struct audio_stream common;
+    int (*set_gain)(struct audio_stream_in *stream, float gain);
+    ssize_t (*read)(struct audio_stream_in *stream, void* buffer,
+                    size_t bytes);
+    uint32_t (*get_input_frames_lost)(struct audio_stream_in *stream);
+};
+typedef struct legacy_audio_stream_in legacy_audio_stream_in_t;
+
 /**
  * return the frame size (number of bytes per sample).
  *
