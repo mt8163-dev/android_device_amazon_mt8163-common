@@ -46,6 +46,7 @@ PRODUCT_COPY_FILES += \
 # Ramdisk
 PRODUCT_PACKAGES += \
     fstab.mt8163 \
+    fstab.mt8163_ramdisk \
     init.mt8163.rc \
     init.mt8163.usb.rc \
     init.project.rc \
