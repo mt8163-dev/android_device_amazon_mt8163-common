@@ -133,6 +133,8 @@ TARGET_LD_SHIM_LIBS := \
     /system/lib64/libmtk_mmutils.so|libshim_ui.so \
     /system/lib/libMtkOmxVdecEx.so|libshim_ui.so \
     /system/lib/libMtkOmxVenc.so|libshim_ui.so \
+    /system/lib/libc.so|libshim_pthread.so \
+    /system/lib64/libc.so|libshim_pthread.so \
     /system/lib/liblog.so|libshim_log.so \
     /system/lib64/liblog.so|libshim_log.so \
     /system/lib/libcutils.so|libshim_atomic.so \

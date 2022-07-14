@@ -86,3 +86,13 @@ cc_library_shared {
     ],
     shared_libs: ["liblog"],
 }
+
+cc_library_shared {
+    name: "libshim_pthread",
+    srcs: ["libshim_pthread.cpp"],
+    shared_libs: ["libc"],
+    stl: "none",
+    sanitize: {
+        never: true,
+    },
+}
