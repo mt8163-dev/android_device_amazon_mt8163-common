@@ -1,7 +1,7 @@
 #!/bin/bash
 
 C=$(pwd)
-D="frameworks/base hardware/libhardware hardware/interfaces system/bt bionic"
+D="frameworks/base hardware/interfaces system/bt bionic"
 
 clear_patches() { cd ${C}/${1}; git checkout -- . && git clean -df; cd ${C}; }
 
