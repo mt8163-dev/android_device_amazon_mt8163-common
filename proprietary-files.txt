@@ -195,9 +195,6 @@ etc/firmware/WMT_SOC.cfg
 # Audio
 lib/libcjson.so
 lib64/libcjson.so
-lib/libasp.so
-lib64/libasp.so
-lib/libaspclient.so
 lib/libspeech_enh_lib.so
 lib64/libspeech_enh_lib.so
 lib/libaudiocompensationfilter.so
@@ -225,12 +222,8 @@ lib64/libsmartvolume.so
 lib/soundfx/libaudiofx.so
 lib64/soundfx/libaudiofx.so
 vendor/lib/soundfx/libswdap.so
-lib/hw/audio.primary.mt8163.so
-lib64/hw/audio.primary.mt8163.so
-vendor/etc/audio-algorithms/AFE.cfg
-vendor/etc/audio-algorithms/EQ_2048.cfg
-vendor/etc/audio-algorithms/MBCL.cfg
-vendor/etc/audio-algorithms/coefs_FilterBank.cfg
+lib/hw/audio.primary.mt8163.so|04d4c371b4cf6ef727b4083b38f179c5ffc92cfd
+lib64/hw/audio.primary.mt8163.so|8cc81095c9ac72f5332cc1f0460a673f27308f2c
 vendor/etc/dolby/ds1-0031.xml
 
 # Camera
