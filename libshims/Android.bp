@@ -96,3 +96,15 @@ cc_library_shared {
         never: true,
     },
 }
+
+cc_library_shared {
+    name: "libshim_omx",
+    srcs: [
+        "libshim_omx.cpp",
+    ],
+    shared_libs: [
+        "libstagefright",
+        "libstagefright_omx",
+        "libbinder"
+    ],
+}
