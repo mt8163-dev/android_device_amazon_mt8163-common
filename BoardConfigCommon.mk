@@ -39,6 +39,9 @@ TARGET_2ND_CPU_VARIANT_RUNTIME := cortex-a53
 # Malloc
 MALLOC_SVELTE := true
 
+# Fonts
+SMALLER_FONT_FOOTPRINT := true
+
 # Headers
 TARGET_SPECIFIC_HEADER_PATH := $(COMMON_PATH)/include
 
