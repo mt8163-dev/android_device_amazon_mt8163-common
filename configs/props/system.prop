@@ -18,10 +18,6 @@ persist.mtk.wcn.combo.chipid=-1
 service.wcn.driver.ready=no
 mediatek.wlan.chip=CONSYS_MT8163
 mediatek.wlan.module.postfix=_consys_mt8163
-ro.mtk_wlan_support=1
-ro.mtk_dhcpv6c_wifi=1
-ro.mtk_wifi_mcc_support=1
-ro.mtk_passpoint_r1_support=1
 ro.wlan.mtk.wifi.5g=1
 
 # Wi-Fi Direct
@@ -29,10 +25,6 @@ wifi.direct.interface=p2p0
 
 # Wireless Display
 persist.debug.wfd.enable=1
-ro.mtk_wfd_support=1
-ro.mtk_wfd_sink_support=1
-ro.mtk_wfd_sink_uibc_support=1
-ro.mtk_wfd_hdcp_tx_support=1
 wfd.dummy.enable=1
 
 # Dalkik Heap
@@ -68,46 +60,21 @@ ro.mtk_tetheringipv6_support=1
 # IPO
 sys.ipo.pwrdncap=2
 sys.ipo.disable=1
-ro.mtk_ipo_support=1
-
-# USB
-ro.sys.usb.bicr=yes
-ro.sys.usb.mtp.whql.enable=0
-ro.usb.vid=1949
-persist.sys.usb.config=mtp,adb
-
-# Swapped Volume Keys
-ro.audio.monitorRotation=true
-
-# Headset MISC
-ro.audio.hw_vol_devices=0x0C
 
 # OTG
 persist.sys.isUsbOtgEnabled=1
 
 # DRM
 drm.service.enabled=true
-mtk_in_house_tee_support=true
-ro.mtk_oma_drm_support=1
-ro.mtk_cta_drm_support=1
-ro.mtk_cta_set=1
-ro.mtk_drm_key_mng_support=1
 
 # FM Radio
 fmradio.driver.enable=0
 ril.radiooff.poweroffMD=0
 
 # Audio
+ro.audio.hw_vol_devices=0x0C
+ro.audio.monitorRotation=true
 dolby.ds.settings.filename=ds1-0031.xml
-ro.mtk_audio_profiles=1
-ro.mtk_audenh_support=1
-ro.mtk_lossless_bt_audio=1
-ro.mtk_besloudness_support=1
-ro.mtk_bessurround_support=1
-ro.mtk_audio_ape_support=1
-ro.mtk_flv_playback_support=1
-ro.mtk_wmv_playback_support=1
-ro.mtk_mtkps_playback_support=1
 
 # Zygote
 ro.zygote.preload.enable=0
@@ -120,75 +87,66 @@ ro.lmk.log_stats=true
 ro.lmk.upgrade_pressure=40
 ro.lmk.use_psi=false
 
-# Enable Nav Bar
+# Screen
 qemu.hw.mainkeys=0
+ro.sf.hwrotation=0
+
+# Wi-Fi
+persist.wifi.rssi.thresholds=-92,-79,-70,-60
 
 # OMX
 debug.stagefright.omx_default_rank.sw-audio=1
 debug.stagefright.omx_default_rank=0
-
-# Kernel ZIO
-ro.kernel.zio=38,108,105,16
-
-# SELinux
-ro.boot.selinux=disable
-
-# Screen
-ro.sf.hwrotation=0
-
-# Factory Reset WhiteList
-ro.recovery.wl.maxstore=524288
-
-# RSSI
-persist.wifi.rssi.thresholds=-92,-79,-70,-60
-
-# Bluetooth
-ro.btstack=bluedroid
-ro.mtk_bt_support=1
-
-# Lockscreen
-curlockscreen=1
-
-# OMX
-ro.mtk_sec_video_path_support=1
 ro.have_aacencode_feature=1
-ro.mtk_thumbnail_play_support=1
-ro.mtk_safemedia_support=1
-ro.mtk_slidevideo_support=1
 persist.media.treble_omx=false
 debug.stagefright.ccodec=0
 media.stagefright.thumbnail.prefer_hw_codecs=true
 
-# CPU
+# Logging
+persist.debug.xlog.enable=1
+
+# MediaTek
+ro.mtk_wlan_support=1
+ro.mtk_dhcpv6c_wifi=1
+ro.mtk_wifi_mcc_support=1
+ro.mtk_passpoint_r1_support=1
+ro.mtk_ipo_support=1
+ro.mtk_in_house_tee_support=true
+ro.mtk_oma_drm_support=1
+ro.mtk_cta_drm_support=1
+ro.mtk_cta_set=1
+ro.mtk_drm_key_mng_support=1
+ro.mtk_audio_profiles=1
+ro.mtk_audenh_support=1
+ro.mtk_lossless_bt_audio=1
+ro.mtk_besloudness_support=1
+ro.mtk_bessurround_support=1
+ro.mtk_audio_ape_support=1
+ro.mtk_flv_playback_support=1
+ro.mtk_wmv_playback_support=1
+ro.mtk_mtkps_playback_support=1
+ro.mtk_bt_support=1
+ro.mtk_sec_video_path_support=1
+ro.mtk_thumbnail_play_support=1
+ro.mtk_safemedia_support=1
+ro.mtk_slidevideo_support=1
 ro.mediatek.chip_ver=S01
 ro.mediatek.version.release=ALPS.W10.24.p0
 ro.mediatek.platform=MT8163
 ro.mediatek.version.branch=alps-mp-l1.mp1.tc6sp
 ro.mediatek.version.sdk=4
-
-# Storage
+ro.mtk_perfservice_support=1
 ro.mtk_emmc_support=1
 ro.mtk_shared_sdcard=1
 ro.mtk_owner_sdcard_support=1
 ro.mtk_multi_patition=1
-
-# Perf
-ro.mtk_perfservice_support=1
-
-# Camera
 ro.mtk_cam_mfb_support=3
 ro.mtk_slow_motion_support=1
 ro.mtk_cam_mav_support=1
 ro.mtk_cam_vfb=1
 ro.mtk_live_photo_support=1
-
-# RPMB
 ro.mtk_antibricking_level=2
-
-# MIC
 ro.mtk_dual_mic_support=0
-
-# MISC
 ro.mtk_wappush_support=1
 ro.mtk_voice_ui_support=1
 ro.mtk_voice_unlock_support=1
@@ -212,4 +170,7 @@ ro.mtk_voice_extension_support=1
 ro.mtk_bg_power_saving_support=1
 ro.mtk_bg_power_saving_ui=1
 ro.sim_me_lock_mode=0
-persist.debug.xlog.enable=1
+ro.mtk_wfd_support=1
+ro.mtk_wfd_sink_support=1
+ro.mtk_wfd_sink_uibc_support=1
+ro.mtk_wfd_hdcp_tx_support=1
