@@ -98,8 +98,6 @@ fmradio.driver.enable=0
 ril.radiooff.poweroffMD=0
 
 # Audio
-ro.camera.sound.forced=0
-ro.audio.silent=0
 dolby.ds.settings.filename=ds1-0031.xml
 ro.mtk_audio_profiles=1
 ro.mtk_audenh_support=1
