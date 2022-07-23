@@ -192,6 +192,10 @@ PRODUCT_PACKAGES += \
     libcam.client \
     android.hardware.camera.provider@2.4-impl-legacy
 
+# Trust HAL
+PRODUCT_PACKAGES += \
+    vendor.lineage.trust@1.0-service
+
 # USB
 PRODUCT_PACKAGES += \
     android.hardware.usb@1.0-impl \
