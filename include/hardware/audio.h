@@ -767,25 +767,6 @@ struct audio_hw_device {
     void (*close_input_stream)(struct audio_hw_device *dev,
                                struct audio_stream_in *stream_in);
 
-    /**
-     * Called by the framework to read available microphones characteristics.
-     *
-     * \param[in] dev the hw_device object.
-     * \param[out] mic_array Pointer to first element on array with microphone info
-     * \param[out] mic_count When called, this holds the value of the max number of elements
-     *                       allowed in the mic_array. The actual number of elements written
-     *                       is returned here.
-     *                       if mic_count is passed as zero, mic_array will not be populated,
-     *                       and mic_count will return the actual number of microphones in the
-     *                       system.
-     *
-     * \return 0 if the microphone array is successfully filled.
-     *         -ENOSYS if there is an error filling the data
-     */
-    int (*get_microphones)(const struct audio_hw_device *dev,
-                           struct audio_microphone_characteristic_t *mic_array,
-                           size_t *mic_count);
-
     /** This method dumps the state of the audio hardware */
     int (*dump)(const struct audio_hw_device *dev, int fd);
 
@@ -835,6 +816,25 @@ struct audio_hw_device {
     int (*set_audio_port_config)(struct audio_hw_device *dev,
                          const struct audio_port_config *config);
 
+
+    /**
+     * Called by the framework to read available microphones characteristics.
+     *
+     * \param[in] dev the hw_device object.
+     * \param[out] mic_array Pointer to first element on array with microphone info
+     * \param[out] mic_count When called, this holds the value of the max number of elements
+     *                       allowed in the mic_array. The actual number of elements written
+     *                       is returned here.
+     *                       if mic_count is passed as zero, mic_array will not be populated,
+     *                       and mic_count will return the actual number of microphones in the
+     *                       system.
+     *
+     * \return 0 if the microphone array is successfully filled.
+     *         -ENOSYS if there is an error filling the data
+     */
+    int (*get_microphones)(const struct audio_hw_device *dev,
+                           struct audio_microphone_characteristic_t *mic_array,
+                           size_t *mic_count);
 };
 typedef struct audio_hw_device audio_hw_device_t;
 
