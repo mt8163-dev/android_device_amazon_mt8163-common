@@ -66,6 +66,7 @@ persist.sys.isUsbOtgEnabled=1
 
 # DRM
 drm.service.enabled=true
+ro.vendor.mtk_in_house_tee_support=true
 
 # FM Radio
 fmradio.driver.enable=0
@@ -111,7 +112,6 @@ ro.mtk_dhcpv6c_wifi=1
 ro.mtk_wifi_mcc_support=1
 ro.mtk_passpoint_r1_support=1
 ro.mtk_ipo_support=1
-ro.mtk_in_house_tee_support=true
 ro.mtk_oma_drm_support=1
 ro.mtk_cta_drm_support=1
 ro.mtk_cta_set=1

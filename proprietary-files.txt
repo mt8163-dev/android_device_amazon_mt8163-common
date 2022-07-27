@@ -64,7 +64,10 @@ vendor/lib/libdlbdapstorage.so
 vendor/lib/libstagefright_soft_ddpdec.so
 vendor/lib/libwvdrm_L1.so
 vendor/lib/drm/libdrmwvmplugin.so
-vendor/lib64/liboemcrypto.so
+vendor/lib/liboemcrypto.so|5fc6fcdf389fcad24351bd56fa022fe0f16da9aa
+vendor/bin/hw/android.hardware.drm@1.1-service.widevine|9bdbd1588800e0582276f88690cadbc0c62e3419
+vendor/etc/init/android.hardware.drm@1.1-service.widevine.rc|7540d503e394108e53f74fd42db3dc0b80a59e97
+vendor/lib/libwvhidl.so|8b681aa76e33f24fa4b906b2afea4c6ab5af9d20
 
 # Keystore
 lib/hw/keystore.mt8163.so
