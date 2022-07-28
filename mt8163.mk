@@ -50,7 +50,8 @@ PRODUCT_PACKAGES += \
     init.mt8163.rc \
     init.mt8163.usb.rc \
     init.project.rc \
-    ueventd.mt8163.rc
+    ueventd.mt8163.rc \
+    fix-symlinks.sh
 
 # Permissions
 PRODUCT_COPY_FILES += \

@@ -707,6 +707,8 @@ on post-fs-data
     start rpmb_svc
 
 on boot
+    # Amonet
+    exec u:r:su:s0 root root -- /vendor/bin/sh /vendor/bin/fix-symlinks.sh
 
     # xlog
     start xlogboot
