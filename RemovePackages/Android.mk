@@ -12,7 +12,13 @@ LOCAL_OVERRIDES_PACKAGES := \
     AudioFX \
     TelephonyProvider \
     TeleService \
-    Telecom
+    Telecom \
+    Backgrounds \
+    BasicDreams \
+    Email \
+    Exchange2 \
+    LiveWallpapersPicker \
+    PhotoTable
 
 LOCAL_SRC_FILES := /dev/null
 LOCAL_UNINSTALLABLE_MODULE := true
