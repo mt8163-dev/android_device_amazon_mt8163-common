@@ -74,6 +74,10 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.wifi.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.wifi.xml \
     frameworks/native/data/etc/android.software.midi.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.midi.xml
 
+# Remove useless packages
+PRODUCT_PACKAGES += \
+    RemovePackages
+
 # Audio
 PRODUCT_PACKAGES += \
     hp-daemon \
