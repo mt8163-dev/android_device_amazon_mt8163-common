@@ -252,4 +252,4 @@ PRODUCT_PACKAGES += \
     libshim_omx
 
 # Proprietary
-$(call inherit-product-if-exists, vendor/amazon/mt8163-common/mt8163-common-vendor.mk)
+$(call inherit-product, vendor/amazon/mt8163-common/mt8163-common-vendor.mk)
