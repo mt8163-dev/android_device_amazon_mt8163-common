@@ -69,6 +69,7 @@ function blob_fixup() {
             ;;
         lib*/egl/libGLES_mali.so)
             patchelf --add-needed "libutilscallstack.so" "${2}"
+            sed -i 's|EGL_KHR_surfaceless_context|EGL_HAX_surfaceless_context|g' "${2}"
             ;;
         lib*/libcam_utils.so)
             patchelf --add-needed "libutilscallstack.so" "${2}"
