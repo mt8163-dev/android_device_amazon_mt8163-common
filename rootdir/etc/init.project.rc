@@ -146,35 +146,10 @@ service wpa_supplicant /system/vendor/bin/hw/wpa_supplicant \
     disabled
     oneshot
 
-service bluetoothd /system/bin/bluetoothd -n
-    class main
-    socket bluetooth stream 660 bluetooth bluetooth
-    socket dbus_bluetooth stream 660 bluetooth bluetooth
-    # init.rc does not yet support applying capabilities, so run as root and
-    # let bluetoothd drop uid to bluetooth with the right linux capabilities
-    group bluetooth net_bt_admin misc
-    disabled
-
-service mtkbt /system/bin/mtkbt
-    class late_start
-	socket bt.int.adp dgram 660 bluetooth net_bt
-	socket bt.a2dp.stream dgram 660 bluetooth net_bt
-	user bluetooth
-	group system vpn net_admin inet net_raw net_bt bluetooth net_bt_admin bluetooth sdcard_r
-	oneshot
-
 service mac_idme /vendor/bin/hw/mac_idme
     class late_start
     user root
     group bluetooth system wifi
-    oneshot
-
-service audio-daemon /system/bin/audiocmdservice_atci
-    class main
-    socket atci-audio stream 660 media system
-    user media
-    group nvram media system sdcard_rw
-    disabled
     oneshot
 
 service wmtLoader /system/bin/wmt_loader
@@ -183,60 +158,10 @@ service wmtLoader /system/bin/wmt_loader
    class core
     oneshot
 
-
 service conn_launcher /system/bin/6620_launcher -p /system/etc/firmware/
     user system
     group system
     class core
-
-service thermal_log /system/bin/thermal_log.sh
-        class late_start
-        user system
-        group system
-        oneshot
-        disabled
-
-service thermal_qa /system/bin/ThermalBenchmarkAutomation.sh
-       class late_start
-       user root
-       group root
-       oneshot
-       disabled
-
-service battery_log /system/bin/battery_log.sh
-	class main
-	user root
-	group system
-	oneshot
-	disabled
-
-service temperature_log /system/bin/temperature_log.sh
-	class main
-	user root
-	group system
-	oneshot
-	disabled
-
-service dmesg_log /system/bin/dmesg_log.sh
-	class main
-	user root
-	group system
-	oneshot
-	disabled
-
-service gpu_mem_log /system/bin/gpu_mem_log.sh
-	class main
-	user root
-	group system
-	oneshot
-	disabled
-
-service logcat_log /system/bin/logcat_log.sh
-	class main
-	user root
-	group system
-	oneshot
-	disabled
 
 service amzn_drmprov /system/bin/amzn_drmprov_check
 	class main
@@ -252,46 +177,8 @@ service amzn_dha_hmac /system/bin/amzn_dha_hmac
 	oneshot
 	disabled
 
-service cabc_on_off /system/bin/cabc_start_stop.sh
-	class main
-	user root
-	group system
-	oneshot
-	disabled
-
-on property:debug.log.thermal_qa.enable=y
-    start thermal_qa
-
-on property:vold.decrypt=trigger_restart_framework
-    start dmesg_log
-
-on property:debug.log.battery.enable=y
-    start battery_log
-
-on property:debug.log.temperature.enable=y
-    start temperature_log
-
-on property:debug.log.dmesg.enable=y
-    start dmesg_log
-
-on property:debug.log.gpu_mem.enable=y
-    start gpu_mem_log
-
-on property:debug.log.logcat.enable=y
-    start logcat_log
-
-on property:sys.hwc.video_mode=1
-    start cabc_on_off
-
-on property:sys.hwc.video_mode=0
-    start cabc_on_off
-
 on property:sys.battery_charging_cv_level=1
     write /sys/devices/platform/battery/Custom_Charging_Mode 1
 
 on property:sys.battery_charging_cv_level=0
     write /sys/devices/platform/battery/Custom_Charging_Mode 0
-
-#
-# Connectivity related services (End)
-#
