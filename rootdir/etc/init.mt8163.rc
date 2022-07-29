@@ -21,6 +21,13 @@ on fs
     # Set up ZRAM
     swapon_all /vendor/etc/fstab.mt8163
 
+on late-fs
+    # Boot time fs tune
+    write /sys/block/mmcblk0/queue/iostats 0
+    write /sys/block/mmcblk0/queue/iosched/slice_idle 0
+    write /sys/block/mmcblk0/queue/read_ahead_kb 2048
+    write /sys/block/mmcblk0/queue/nr_requests 256
+
 on init
     # BATTERY proc
     chown shell system /proc/mtk_battery_cmd/current_cmd
@@ -782,6 +789,12 @@ on boot
 
 on property:vold.decrypt=trigger_reset_main
     start stop_modem
+
+on property:sys.boot_completed=1
+    # End boot time fs tune
+    write /sys/block/mmcblk0/queue/read_ahead_kb 128
+    write /sys/block/mmcblk0/queue/nr_requests 128
+    write /sys/block/mmcblk0/queue/iostats 1
 
 on property:vold.decrypt=trigger_restart_min_framework
     start start_modem
