@@ -40,14 +40,38 @@ cc_library_shared {
 
 cc_library_shared {
     name: "libshim_ui",
+
     srcs: [
-        "libshim_ui.cpp",
+        "ui/GraphicBuffer.cpp",
+        "ui/GraphicBufferAllocator.cpp",
+        "ui/GraphicBufferMapper.cpp",
+		"ui/Fence.cpp"
     ],
+
+    include_dirs: [
+        "system/core/libutils",
+        "system/core/libgrallocusage/include",
+        "frameworks/native/libs/vr/libdvr/include",
+    ],
+
+    local_include_dirs: ["include"],
+
     shared_libs: [
+        "android.frameworks.bufferhub@1.0",
+        "android.hardware.graphics.allocator@2.0",
+        "android.hardware.graphics.allocator@3.0",
+        "android.hardware.graphics.common@1.2",
+        "android.hardware.graphics.mapper@2.0",
+        "android.hardware.graphics.mapper@2.1",
+        "android.hardware.graphics.mapper@3.0",
+        "libbase",
+        "libcutils",
+        "libhardware",
+        "libhidlbase",
+        "libsync",
         "libui",
-        "libgui",
         "libutils",
-        "libcutils"
+        "liblog",
     ],
 }
 
