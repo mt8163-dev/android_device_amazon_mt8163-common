@@ -34,6 +34,9 @@ namespace android {
 // Buffer and implementation of ANativeWindowBuffer
 // ===========================================================================
 
+int32_t outBytesPerPixel = -1;
+int32_t outBytesPerStride = -1;
+
 static uint64_t getUniqueId() {
     static volatile int32_t nextId = 0;
     uint64_t id = static_cast<uint64_t>(getpid()) << 32;
@@ -275,6 +278,10 @@ status_t GraphicBuffer::lock(uint32_t inUsage, void** vaddr, int32_t* outBytesPe
     const Rect lockBounds(width, height);
     status_t res = lock(inUsage, lockBounds, vaddr, outBytesPerPixel, outBytesPerStride);
     return res;
+}
+
+status_t GraphicBuffer::lock(uint32_t inUsage, void** vaddr) {
+    return lock(inUsage, vaddr, &outBytesPerPixel, &outBytesPerStride);
 }
 
 status_t GraphicBuffer::lock(uint32_t inUsage, const Rect& rect, void** vaddr,

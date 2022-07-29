@@ -185,6 +185,7 @@ public:
 
     // For the following two lock functions, if bytesPerStride or bytesPerPixel
     // are unknown or variable, -1 will be returned
+    status_t lock(uint32_t inUsage, void** vaddr);
     status_t lock(uint32_t inUsage, void** vaddr, int32_t* outBytesPerPixel = nullptr,
                   int32_t* outBytesPerStride = nullptr);
     status_t lock(uint32_t inUsage, const Rect& rect, void** vaddr,
