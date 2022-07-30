@@ -75,7 +75,6 @@ ril.radiooff.poweroffMD=0
 # Audio
 ro.audio.hw_vol_devices=0x0C
 ro.audio.monitorRotation=true
-dolby.ds.settings.filename=ds1-0031.xml
 
 # Zygote
 ro.zygote.preload.enable=0

@@ -74,17 +74,11 @@ function blob_fixup() {
         lib*/libcam_utils.so)
             patchelf --add-needed "libutilscallstack.so" "${2}"
             ;;
-        lib*/libasp.so|lib*/libaspclient.so)
-            patchelf --add-needed "libcompiler_rt.so" "${2}"
-            ;;
         lib*/hw/hwcomposer.mt8163.so)
             sed -i 's|_ZN7android19GraphicBufferMapper4lockEPK13native_handleiRKNS_4RectEPPv|_ZN7android19GraphicBufferMapper4lockEPK13native_handlejRKNS_4RectEPPv|g' "${2}"
             ;;
         lib*/libmtk_mmutils.so)
             sed -i 's|_ZN7android19GraphicBufferMapper9lockYCbCrEPK13native_handleiRKNS_4RectEP13android_ycbcr|_ZN7android19GraphicBufferMapper9lockYCbCrEPK13native_handlejRKNS_4RectEP13android_ycbcr|g' "${2}"
-            ;;
-        vendor/lib/libstagefright_soft_ddpdec.so)
-            patchelf --add-needed "libstagefright_softomx.so" "${2}"
             ;;
     esac
 }
