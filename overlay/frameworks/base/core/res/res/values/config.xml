@@ -85,6 +85,9 @@
          in hardware. -->
     <bool name="config_setColorTransformAccelerated">true</bool>
 
+    <!-- Disable rounded corners on windows to improve graphics performance -->
+    <bool name="config_supportsRoundedCornersOnWindows">false</bool>
+
     <!-- Flag indicating whether the surface flinger has limited
          alpha compositing functionality in hardware.  If set, the window
          manager will disable alpha trasformation in animations where not
