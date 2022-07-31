@@ -250,7 +250,8 @@ PRODUCT_PACKAGES += \
     libshim_alsa \
     libshim_zygote \
     libshim_pthread \
-    libshim_omx
+    libshim_omx \
+    libshim_gui
 
 # Proprietary
 $(call inherit-product, vendor/amazon/mt8163-common/mt8163-common-vendor.mk)

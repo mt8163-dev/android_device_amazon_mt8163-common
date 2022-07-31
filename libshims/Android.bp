@@ -76,6 +76,32 @@ cc_library_shared {
 }
 
 cc_library_shared {
+    name: "libshim_gui",
+
+    srcs: [
+        "gui/ISensorServer.cpp",
+        "gui/SensorManager.cpp",
+    ],
+
+    local_include_dirs: ["include"],
+
+    shared_libs: [
+        "libbase",
+        "libbinder",
+        "libsensor",
+        "libcutils",
+        "libhardware",
+        "libhidlbase",
+        "libsync",
+        "libui",
+        "libnativeloader",
+        "libgui",
+        "libutils",
+        "liblog",
+    ],
+}
+
+cc_library_shared {
     name: "libshim_atomic",
     srcs: [
         "libshim_atomic.cpp",

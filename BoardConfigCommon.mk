@@ -138,6 +138,8 @@ TARGET_LD_SHIM_LIBS := \
     /system/lib64/libcam_utils.so|libshim_ui.so \
     /system/lib/libcam1client.so|libshim_ui.so \
     /system/lib64/libcam1client.so|libshim_ui.so \
+    /system/lib/libcam.utils.sensorlistener.so|libshim_gui.so \
+    /system/lib64/libcam.utils.sensorlistener.so|libshim_gui.so \
     /system/lib/libmtk_mmutils.so|libshim_ui.so \
     /system/lib64/libmtk_mmutils.so|libshim_ui.so \
     /system/lib/libMtkOmxVdecEx.so|libshim_ui.so \
