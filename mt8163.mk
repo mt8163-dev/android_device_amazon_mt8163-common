@@ -150,9 +150,7 @@ PRODUCT_COPY_FILES += \
 
 # Power
 PRODUCT_PACKAGES += \
-    power.mt8163 \
-    android.hardware.power@1.0-impl \
-    android.hardware.power@1.0-service
+    android.hardware.power@1.3-service.mt8163
 
 # Light
 PRODUCT_PACKAGES += \
