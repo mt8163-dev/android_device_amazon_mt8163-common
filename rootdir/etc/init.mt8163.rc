@@ -7,9 +7,6 @@ on early-init
     
     # Set permissions so radio can read cmdline
     chmod 0444 /proc/cmdline
-    
-    # Start ADB
-    start adbd
 
 on fs
     # Legacy partition path support

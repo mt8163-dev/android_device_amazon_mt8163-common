@@ -26,6 +26,18 @@ on fs
     setprop persist.adb.nonblocking_ffs 0
     setprop ro.adb.nonblocking_ffs 0
 
+on property:sys.usb.config=adb
+    stop adbd
+    write /sys/class/android_usb/android0/idVendor 0bb4
+    write /sys/class/android_usb/android0/idProduct 0c81
+    write /sys/class/android_usb/android0/functions ${sys.usb.config}
+    start adbd
+    write /sys/devices/platform/android_usb/usb_function_switch 2
+    setprop sys.usb.state ${sys.usb.config}
+
+on property:persist.sys.usb.config=adb
+    setprop sys.usb.config ${persist.sys.usb.config}
+
 #1.acm
 on property:sys.usb.config=acm
     write /sys/class/android_usb/android0/enable 0
