@@ -152,6 +152,10 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     android.hardware.power@1.3-service.mt8163
 
+# Iorapd
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.iorapd.enable=true
+
 # Light
 PRODUCT_PACKAGES += \
     lights.mt8163 \
