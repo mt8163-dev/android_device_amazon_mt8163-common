@@ -164,6 +164,9 @@ TARGET_SCREEN_DENSITY := 213
 # HWUI
 HWUI_COMPILE_FOR_PERF := true
 
+# Don't compile SystemUITests
+EXCLUDE_SYSTEMUI_TESTS := true
+
 # Dexpreopt
 ifeq ($(HOST_OS),linux)
   ifneq ($(TARGET_BUILD_VARIANT),eng)
