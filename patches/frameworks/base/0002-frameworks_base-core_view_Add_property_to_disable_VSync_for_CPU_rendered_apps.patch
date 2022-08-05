@@ -1,0 +1,76 @@
+diff --git a/core/java/android/view/Choreographer.java b/core/java/android/view/Choreographer.java
+index e95b5caa..27ce67ed 100644
+--- a/core/java/android/view/Choreographer.java
++++ b/core/java/android/view/Choreographer.java
+@@ -181,6 +181,7 @@ public final class Choreographer {
+     private long mFrameIntervalNanos;
+     private boolean mDebugPrintNextFrameTimeDelta;
+     private int mFPSDivisor = 1;
++    private boolean mSoftwareRendered;
+ 
+     /**
+      * Contains information about the current frame for jank-tracking,
+@@ -266,6 +267,7 @@ public final class Choreographer {
+         for (int i = 0; i <= CALLBACK_LAST; i++) {
+             mCallbackQueues[i] = new CallbackQueue();
+         }
++        mSoftwareRendered = false;
+         // b/68769804: For low FPS experiments.
+         setFPSDivisor(SystemProperties.getInt(ThreadedRenderer.DEBUG_FPS_DIVISOR, 1));
+     }
+@@ -400,6 +402,10 @@ public final class Choreographer {
+                 writer.println(TimeUtils.formatUptime(mLastFrameTimeNanos / 1000000));
+     }
+ 
++    void setSoftwareRendering(boolean softRendered) {
++        mSoftwareRendered = softRendered;
++    }
++
+     /**
+      * Posts a callback to run on the next frame.
+      * <p>
+@@ -621,7 +627,7 @@ public final class Choreographer {
+     private void scheduleFrameLocked(long now) {
+         if (!mFrameScheduled) {
+             mFrameScheduled = true;
+-            if (USE_VSYNC) {
++            if (USE_VSYNC && !mSoftwareRendered) {
+                 if (DEBUG_FRAMES) {
+                     Log.d(TAG, "Scheduling next frame on vsync.");
+                 }
+diff --git a/core/java/android/view/ViewRootImpl.java b/core/java/android/view/ViewRootImpl.java
+index afc4ff43..a0e9e00b 100644
+--- a/core/java/android/view/ViewRootImpl.java
++++ b/core/java/android/view/ViewRootImpl.java
+@@ -405,6 +405,7 @@ public final class ViewRootImpl implements ViewParent,
+     @UnsupportedAppUsage
+     FallbackEventHandler mFallbackEventHandler;
+     Choreographer mChoreographer;
++    boolean mDebugCpuRendVsync;
+ 
+     final Rect mTempRect; // used in the transaction to not thrash the heap.
+     final Rect mVisRect; // used to retrieve visible rect of focused view.
+@@ -645,6 +646,7 @@ public final class ViewRootImpl implements ViewParent,
+         mNoncompatDensity = context.getResources().getDisplayMetrics().noncompatDensityDpi;
+         mFallbackEventHandler = new PhoneFallbackEventHandler(context);
+         mChoreographer = Choreographer.getInstance();
++        mDebugCpuRendVsync = SystemProperties.getBoolean("debug.cpurend.vsync", true);
+         mDisplayManager = (DisplayManager)context.getSystemService(Context.DISPLAY_SERVICE);
+ 
+         String processorOverrideName = context.getResources().getString(
+@@ -843,6 +845,15 @@ public final class ViewRootImpl implements ViewParent,
+                     }
+                 }
+ 
++                if (!mDebugCpuRendVsync) {
++                    if(!mAttachInfo.mHardwareAccelerated ||
++                            mAttachInfo.mThreadedRenderer == null) {
++                        mChoreographer.setSoftwareRendering(true);
++                    } else {
++                        mChoreographer.setSoftwareRendering(false);
++                    }
++                }
++
+                 boolean restore = false;
+                 if (mTranslator != null) {
+                     mSurface.setCompatibilityTranslator(mTranslator);
