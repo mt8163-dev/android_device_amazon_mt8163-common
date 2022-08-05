@@ -27,7 +27,7 @@ wifi.direct.interface=p2p0
 persist.debug.wfd.enable=1
 wfd.dummy.enable=1
 
-# Dalkik Heap
+# Dalkik
 dalvik.vm.heapstartsize=8m
 dalvik.vm.heapgrowthlimit=20m
 dalvik.vm.heapsize=256m
@@ -35,6 +35,7 @@ dalvik.vm.heaptargetutilization=0.85
 dalvik.vm.heapminfree=128k
 dalvik.vm.heapmaxfree=512k
 dalvik.vm.dex2oat64.enabled=true
+dalvik.vm.madvise-random=true
 
 # Graphics
 ro.opengles.version=196609
