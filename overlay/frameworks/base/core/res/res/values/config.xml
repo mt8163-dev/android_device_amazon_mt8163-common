@@ -87,7 +87,11 @@
 
     <!-- Boolean indicating whether the HWC setColorTransform function can be performed efficiently
          in hardware. -->
-    <bool name="config_setColorTransformAccelerated">true</bool>
+    <bool name="config_setColorTransformAccelerated">false</bool>
+
+     <!-- Boolean indicating whether the HWC setColorTransform function can be performed efficiently
+          in hardware for individual layers. -->
+    <bool name="config_setColorTransformAcceleratedPerLayer">false</bool>
 
     <!-- Disable rounded corners on windows to improve graphics performance -->
     <bool name="config_supportsRoundedCornersOnWindows">false</bool>
