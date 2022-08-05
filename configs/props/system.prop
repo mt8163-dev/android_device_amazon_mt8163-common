@@ -27,6 +27,9 @@ wifi.direct.interface=p2p0
 persist.debug.wfd.enable=1
 wfd.dummy.enable=1
 
+# Battery
+ro.config.small_battery=true
+
 # Dalkik
 dalvik.vm.heapstartsize=8m
 dalvik.vm.heapgrowthlimit=20m
