@@ -13,7 +13,6 @@
 #include <unistd.h>
 
 #include <android-base/logging.h>
-#include <android-base/properties.h>
 
 #include <sys/types.h>
 #include <unistd.h>
@@ -85,9 +84,6 @@ int main() {
     chmod(BT_MAC_FILE, 0644);
     chown(BT_MAC_FILE, 1000, 1002);
     LOG(INFO) << "Success!";
-
-    if (android::base::GetProperty("ro.bt.bdaddr_path", "") != BT_MAC_FILE)
-        android::base::SetProperty("ro.bt.bdaddr_path", BT_MAC_FILE);
 
     return 0;
 }
