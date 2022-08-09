@@ -25,6 +25,9 @@ PRODUCT_SOONG_NAMESPACES += \
 # Enable DM file pre-opting to reduce first boot time
 PRODUCT_DEX_PREOPT_GENERATE_DM_FILES := true
 
+# Product characteristics
+PRODUCT_CHARACTERISTICS := tablet
+
 # Bootanimation
 TARGET_BOOTANIMATION_HALF_RES := true
 
