@@ -13,7 +13,7 @@ on fs
     symlink /dev/block/platform/soc/11230000.mmc /dev/block/platform/mtk-msdc.0
 
     # Mount all the partitions
-    mount_all /vendor/etc/fstab.mt8163
+    mount_all /vendor/etc/fstab.mt8163 --early
 
 on late-fs
     # Boot time fs tune
@@ -105,6 +105,15 @@ on post-fs
 
     chown system system /protect_s
     chmod 0770 /protect_s
+
+on late-fs
+    # Start services for Boot Animation
+    start servicemanager
+    start surfaceflinger
+    start bootanim
+
+    # Mount RW partitions which need run fsck
+    mount_all /vendor/etc/fstab.mt8163 --late
 
 on post-fs-data
     chown system system /persist
