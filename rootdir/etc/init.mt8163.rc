@@ -15,6 +15,9 @@ on fs
     # Mount all the partitions
     mount_all /vendor/etc/fstab.mt8163 --early
 
+    # Start HW service manager early
+    start hwservicemanager
+
 on late-fs
     # Boot time fs tune
     write /sys/block/mmcblk0/queue/iostats 0
@@ -108,10 +111,14 @@ on post-fs
 
 on late-fs
     # Start services for Boot Animation
-	start hwservicemanager
     start servicemanager
     start surfaceflinger
     start bootanim
+
+    # Make sure HW service manager started and start required HAL services
+    wait_for_prop hwservicemanager.ready true
+    start configstore-hal-1-0
+    start gralloc-2-0
 
     # Mount RW partitions which need run fsck
     mount_all /vendor/etc/fstab.mt8163 --late
