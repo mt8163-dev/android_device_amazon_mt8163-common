@@ -30,7 +30,6 @@ on init
     chown shell system /proc/mtk_battery_cmd/current_cmd
     chown shell system /proc/mtk_battery_cmd/discharging_cmd
 
-    export USBOTG_STORAGE /storage/usbotg
 # Temp Backward compatibility
     symlink /dev/block/platform/mtk-msdc.0/by-name/boot /dev/bootimg
     symlink /dev/block/platform/mtk-msdc.0/by-name/recovery /dev/recovery
