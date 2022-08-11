@@ -26,6 +26,9 @@ on late-fs
     write /sys/block/mmcblk0/queue/nr_requests 256
 
 on init
+    # ZRAM
+    write /proc/sys/vm/page-cluster 0
+
     # BATTERY proc
     chown shell system /proc/mtk_battery_cmd/current_cmd
     chown shell system /proc/mtk_battery_cmd/discharging_cmd
