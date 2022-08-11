@@ -158,6 +158,10 @@ TARGET_LD_SHIM_LIBS := \
     /system/bin/app_process64|libshim_zygote.so \
     /vendor/lib/libwvm.so|libshim_omx.so
 
+# Legacy blobs
+TARGET_PROCESS_SDK_VERSION_OVERRIDE := \
+    /system/bin/mediaserver=22
+
 # Display
 TARGET_SCREEN_DENSITY := 213
 
