@@ -116,12 +116,13 @@ cc_library_shared {
 cc_library_shared {
     name: "libshim_alsa",
     srcs: ["libshim_alsa.cpp"],
-    host_ldlibs: ["-ldl"],
+    local_include_dirs: [ "include" ],
     include_dirs: [
         "external/tinyalsa/include",
         "system/core/include/cutils",
     ],
     shared_libs: [
+        "libbase",
         "liblog",
         "libtinyalsa",
     ],
