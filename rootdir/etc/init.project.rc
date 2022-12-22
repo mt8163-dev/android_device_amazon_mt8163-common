@@ -146,12 +146,6 @@ service wpa_supplicant /system/vendor/bin/hw/wpa_supplicant \
     disabled
     oneshot
 
-service mac_idme /vendor/bin/hw/mac_idme
-    class late_start
-    user root
-    group bluetooth system wifi
-    oneshot
-
 service wmtLoader /system/bin/wmt_loader
     user root
     group root

@@ -180,7 +180,7 @@ PRODUCT_COPY_FILES += \
 
 # Bluetooth
 PRODUCT_PACKAGES += \
-    mac_idme \
+    btmac \
     libbluetooth_mtk \
     libbt-vendor \
     android.hardware.bluetooth@1.0-impl \
