@@ -161,9 +161,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # Light
 PRODUCT_PACKAGES += \
-    lights.mt8163 \
-    android.hardware.light@2.0-impl \
-    android.hardware.light@2.0-service
+    android.hardware.light@2.0-service.mt8163
 
 # Health
 PRODUCT_PACKAGES += \
