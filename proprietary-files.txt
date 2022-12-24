@@ -13,7 +13,7 @@ lib64/libcustom_nvram.so
 lib/libnvram_daemon_callback.so
 lib/libnvram_platform.so
 lib/libnvramagentclient.so
--lib64/libnvram.so
+-lib64/libnvram.so|493d76157d072f83a7d9272d2a40d9e78125dd9f
 lib64/libnvram_daemon_callback.so
 lib64/libnvram_platform.so
 lib64/libnvramagentclient.so
@@ -100,7 +100,7 @@ lib64/libgpu_aux.so
 lib/libstlport.so
 lib64/libstlport.so
 -lib/libged.so
--lib64/libged.so
+-lib64/libged.so|0ce2606338fb3d7d884b162ff13769fbefb71d50
 lib/libbwc.so
 lib64/libbwc.so
 lib/libm4u.so
@@ -242,7 +242,7 @@ lib64/libmmsdkservice.so|218dfc837fd173b760f71602ef2abea1def75293
 lib/libbwc.so|f7c47e35197caf7447fb3b867feba637d166b77a
 lib64/libbwc.so|0506ef1a13d46763b55b9afa7efce77c8783b959
 -lib/libion_mtk.so|51d642d809b0d398e460b0e9f28b0518b0c8bf74
--lib64/libion_mtk.so|74e1e1016301dc7eb22c80c800a0606e884aaff7
+-lib64/libion_mtk.so|c7f73b6df5c763f308bcb3c3f31eab21f61ca0bf
 lib/libimageio_FrmB.so|187f1e7af61940726a4ce6a21c7fe35a07b713fb
 lib64/libimageio_FrmB.so|4f6ad6be25cf7d75535b35a7d84d25d4cf03fb58
 lib/libimageio_plat_drv_FrmB.so|056811c86d46cea9b3adb55949e5954b7c13a528
@@ -272,7 +272,7 @@ lib64/libcam.campipe.so|fc34b31b9ed3096d38791dc0e67367514c021e0c
 lib/libcam.camshot.so|11168eddd941e1a9715f103d621a861b27fdb6c3
 lib64/libcam.camshot.so|b102dfd8c43b70123cf22d9e1a0168f318a495a8
 -lib/libcam1client.so|3140afafb7a5fb1eb7279f952b7bed69dba0b115
--lib64/libcam1client.so|e5aed9344b63be24338c10b04e465c5fb43b30d1
+-lib64/libcam1client.so|06012fa9b493c06c951d3eb8ef6e7a47da490a30
 lib/libcam.device1.so|1ca98960af01b1708f70c891f8becd12e8bd337d
 lib64/libcam.device1.so|5f218f7452e9828ce337b482bb6fcb50692f4469
 lib/libcam.device3.so|9a6507fdf005f009d50c7e9a06c65d7b7e9e2bd2
@@ -314,7 +314,7 @@ lib64/libcam.utils.sensorlistener.so|9de57a67a6aa0ce9405b074eec2b095a1903a81c
 lib/libcam.utils.so|f1b6a3fa85a23b9d27a8eb45cec4f8c000090a76
 lib64/libcam.utils.so|9b50bea43ee99aa1afcd218e7d57691bb21b0bfe
 -lib/libcam_utils.so|a6a82fd46d238d393fccbc09aeff1bfc5eabac80
--lib64/libcam_utils.so|e376ab6cd6fff96e391714b4f1f7c9f81bc1066a
+-lib64/libcam_utils.so|101dc16ccbc63fbedec5eba98aac16739402b603
 lib/libmtkcamera_client.so|9645c98ef7dcd8b4d017f909669fcdbdb282ae3a
 lib64/libmtkcamera_client.so|f8b2e6a13b8d6d958609553ceefe9b9181f1b746
 lib/libvcodec_cap.so|f1d4a78ee1549c2443b73803db0f659ee9422bce
