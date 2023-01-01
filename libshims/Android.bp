@@ -159,3 +159,9 @@ cc_library_shared {
         "libbinder"
     ],
 }
+
+cc_library {
+    name: "libshim_base",
+    srcs: ["libshim_base.cpp"],
+    shared_libs: ["libbase"],
+}

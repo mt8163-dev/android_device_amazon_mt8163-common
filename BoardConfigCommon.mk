@@ -157,7 +157,9 @@ TARGET_LD_SHIM_LIBS := \
     /system/lib64/libtinyalsa.so|libshim_alsa.so \
     /system/bin/app_process32|libshim_zygote.so \
     /system/bin/app_process64|libshim_zygote.so \
-    /vendor/lib/libwvm.so|libshim_omx.so
+    /vendor/lib/libwvm.so|libshim_omx.so \
+    /system/lib/libbase.so|libshim_base.so \
+    /system/lib64/libbase.so|libshim_base.so
 
 # Legacy blobs
 TARGET_PROCESS_SDK_VERSION_OVERRIDE := \
