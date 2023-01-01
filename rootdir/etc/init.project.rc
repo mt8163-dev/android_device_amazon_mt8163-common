@@ -171,6 +171,12 @@ service amzn_dha_hmac /system/bin/amzn_dha_hmac
 	oneshot
 	disabled
 
+service mac_idme /vendor/bin/mac_idme.sh
+    class late_start
+    user root
+    group bluetooth system wifi
+    oneshot
+
 on property:sys.battery_charging_cv_level=1
     write /sys/devices/platform/battery/Custom_Charging_Mode 1
 
