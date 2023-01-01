@@ -30,6 +30,9 @@ wfd.dummy.enable=1
 # Battery
 ro.config.small_battery=true
 
+# Recents
+ro.recents.grid=true
+
 # Dalkik
 dalvik.vm.heapstartsize=8m
 dalvik.vm.heapgrowthlimit=20m
