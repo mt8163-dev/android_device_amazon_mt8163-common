@@ -67,6 +67,9 @@ function blob_fixup() {
         lib*/libaudiocomponentengine.so)
             patchelf --add-needed "libutilscallstack.so" "${2}"
             ;;
+        lib*/hw/audio.primary.mt8163.so)
+            patchelf --add-needed "libcompiler_rt.so" "${2}"
+            ;;
         lib*/egl/libGLES_mali.so)
             patchelf --add-needed "libutilscallstack.so" "${2}"
             sed -i 's|EGL_KHR_surfaceless_context|EGL_HAX_surfaceless_context|g' "${2}"
