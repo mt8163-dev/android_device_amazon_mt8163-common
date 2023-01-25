@@ -2,6 +2,7 @@ import /vendor/etc/init/hw/init.mt8163.usb.rc
 import /vendor/etc/init/hw/init.project.rc
 
 on early-init
+    # DebugFS
     mount debugfs debugfs /sys/kernel/debug
     chmod 0755 /sys/kernel/debug
     
@@ -33,49 +34,41 @@ on init
     chown shell system /proc/mtk_battery_cmd/current_cmd
     chown shell system /proc/mtk_battery_cmd/discharging_cmd
 
-# Temp Backward compatibility
-    symlink /dev/block/platform/mtk-msdc.0/by-name/boot /dev/bootimg
+    # Backward compatibility
+    symlink /dev/block/platform/mtk-msdc.0/by-name/boot     /dev/bootimg
     symlink /dev/block/platform/mtk-msdc.0/by-name/recovery /dev/recovery
-    symlink /dev/block/platform/mtk-msdc.0/by-name/secro  /dev/sec_ro
-    symlink /dev/block/platform/mtk-msdc.0/by-name/kb /dev/kb
-    symlink /dev/block/platform/mtk-msdc.0/by-name/dkb /dev/dkb
-    symlink /dev/block/platform/mtk-msdc.0/by-name/seccfg /dev/seccfg
-    symlink /dev/block/platform/mtk-msdc.0/by-name/proinfo /dev/pro_info
-    symlink /dev/block/platform/mtk-msdc.0/by-name/nvram /dev/nvram
-    symlink /dev/block/platform/mtk-msdc.0/by-name/para /dev/misc
-    symlink /dev/block/platform/mtk-msdc.0/by-name/logo /dev/logo
-    symlink /dev/block/platform/mtk-msdc.0/by-name/misc2 /dev/misc2
+    symlink /dev/block/platform/mtk-msdc.0/by-name/KB       /dev/kb
+    symlink /dev/block/platform/mtk-msdc.0/by-name/DKB      /dev/dkb
+    symlink /dev/block/platform/mtk-msdc.0/by-name/MISC     /dev/misc
+    symlink /dev/block/mmcblk0boot0                         /dev/boot0
+	symlink /dev/block/mmcblk0boot1                         /dev/idme
 
+    # Root filesystem
     mkdir /protect_f 0771 system system
     mkdir /protect_s 0771 system system
-    #create mountpoint for persist partition
     mkdir /persist 0771 system system
-# Create CIP mount point
-    mkdir /custom
 
-    mkdir /mnt/cd-rom 0000 system system
-
-# Change ION driver permission
+    # ION
     chmod 0777 /dev/ion
     chmod 0777 /dev/nvram
 
-# change lk_env permission
+    # LK_ENV
     chown root system /proc/lk_env
     chmod 0660 /proc/lk_env
 
-# Change backlight_mode node owner
+    # Backlight
     chown media media /sys/devices/soc/soc:mtkfb@0/backlight_mode
 
-#usbotg
+    # OTG
     mkdir /mnt/media_rw/usbotg 0700 media_rw media_rw
     mkdir /storage/usbotg 0700 root root
-# mount different fs start
 
-# Memtrack alignment between FOS devices
+    # Memtrack
     chown system system /d/ion/heaps/ion_mm_heap
 	chmod 0666 /d/ion/heaps/ion_mm_heap
 
 on charger
+    # Mount everything
     mount_all /fstab.mt8163
 
     # Disable USB
@@ -85,29 +78,28 @@ on charger
     class_start charger    
 
 on post-fs
-    #change permissions for mediaserver
+    # Mediaserver
     chown root media /proc/clkmgr/mipi_test
 
-    #change permission for engineer mode
+    # Engineer mode
     chown radio system /proc/clkmgr/pll_test
     chown radio system /proc/clkmgr/pll_fsel
     chmod 0664 /proc/clkmgr/pll_test
     chmod 0664 /proc/clkmgr/pll_fsel
-    #change permission for engineer mode
     chown radio system /proc/freqhopping/dramc
     chown radio system /proc/freqhopping/dumpregs
     chown radio system /proc/freqhopping/freqhopping_debug
     chown radio system /proc/freqhopping/status
     chown radio system /proc/freqhopping/userdef
 
-# change owner
+    # CPU
     chown system system /proc/bootprof
     chown root system /proc/mtprof/cputime
     chown root system /proc/mtprof/reboot_pid
 
+    # Root filesystem
     chown system system /protect_f
     chmod 0770 /protect_f
-
     chown system system /protect_s
     chmod 0770 /protect_s
 
@@ -124,69 +116,64 @@ on late-fs
     mount_all /vendor/etc/fstab.mt8163 --late
 
 on post-fs-data
+    # Root filesystem
     chown system system /persist
     chmod 0771 /persist
 
-    # create basic filesystem structure
+    # NVRAM
     mkdir /data/nvram 2771 root system
     mkdir /data/nvram/media 0770 media audio
 
-    #give system access to rfkill device node
+    # Bluetooth
     chmod 0660 /dev/rfkill
 
-    # create for muxd pts device node , to operate without root
+    # MUXD
     mkdir /dev/radio 0770 radio radio
 
+    # DRM
     mkdir /data/drm/wv 0770 drm drm
-
     mkdir /data/playready 0770 drm drm
     mkdir /data/securestop 0770 drm drm
+
     # GPS
     mkdir /data/gps_mnl 0771 gps system
 
-    # NFC
-    mkdir /data/nfc_socket 0771 nfc radio
-
-# -----------------------
-# Add by MTK
-    # md32 boot
+    # MD32
     chown root system /dev/md32
     chmod 0440 /dev/md32
     chown root system /sys/class/misc/md32/md32_mobile_log
     chmod 0660 /sys/class/misc/md32/md32_mobile_log
     write /sys/class/misc/md32/md32_boot 1
 
-    # dhcp server
+    # DHCP
     mkdir /data/misc/dhcp 0770 dhcp wifi
     chown dhcp wifi /data/misc/dhcp
 
-    # dhcpv6 server
+    # DHCP(V6)
     mkdir /data/misc/wide-dhcpv6 0770 dhcp wifi
     chown dhcp wifi /data/misc/wide-dhcpv6
-    # change key_provisioning 
+
+    # DRM
     mkdir /data/key_provisioning
     chmod 0770 /data/key_provisioning
     chown system system /data/key_provisioning
-    
+
+    # Persist
     mkdir /persistbackup
     chmod 0771 /persistbackup
     chown system system /persistbackup
-    
+
+    # DRM
     start kisd
 
-    # radvd
+    # RADVD
     mkdir /data/misc/radvd 0770 system system
     chmod 444 /etc/radvd/radvd.conf
 
-    # Mali 3D GPU driver
-    #insmod /system/lib/modules/mali.ko
+    # GPU
     chmod 666 /dev/mali0
-    #chown system graphics /dev/mali
-
-
 
     # Touch Panel
-    # chmod 0664 /dev/touch
     chown root diag /sys/module/tpd_setting/parameters/tpd_calmat
     chown root diag /sys/module/tpd_setting/parameters/tpd_em_debounce_time
     chown root diag /sys/module/tpd_setting/parameters/tpd_mode
@@ -200,30 +187,27 @@ on post-fs-data
     chown root diag /sys/module/tpd_debug/parameters/tpd_em_log
     chown root diag /sys/module/tpd_debug/parameters/tpd_em_log_to_fs
 
+    # PMEM
     chmod 0666 /dev/pmem_multimedia
 
-    # watch dog kicker
+    # WDT
     write /proc/wdk "0 20 30"
 
-    # set ptmx group to non-root
+    # PTMX
     chown root radio /dev/ptmx
 
     # RTC
     mkdir /data/misc/rtc 0770 system system
 
     # M4U
-    #insmod /system/lib/modules/m4u.ko
     chmod 0444 /dev/m4u
-    #chown system media /dev/M4U_device
-
-    #set mlock limit to infinate (for m4u operation)
     setrlimit 8 -1 -1
 
     # CMDQ
     chmod 0640 /dev/mtk_cmdq
     chown system system /dev/mtk_cmdq
 
-    # Sensor
+    # Sensors
     chmod 0660 /dev/hwmsensor
     chmod 0660 /dev/msensor
     chmod 0660 /dev/gsensor
@@ -418,40 +402,9 @@ on post-fs-data
     chown system system /sys/class/misc/m_glg_misc/glgdelay
     chown system system /sys/class/misc/m_glg_misc/glgbatch
     chown system system /sys/class/misc/m_glg_misc/glgflush
- 
-    #sensorhub
-    chmod 0660 /dev/shf
-    chown system system /dev/shf
-       
-    #Accdet
-    chown root radio /sys/devices/platform/Accdet_Driver/driver/accdet_call_state
-
-    #VideoCodec
-    #insmod /system/lib/modules/vcodec_kernel_driver.ko
-    chmod 0666 /dev/Vcodec
-    chown media system /dev/Vcodec
-
-    #MJC
-    #insmod /system/lib/modules/mjc_kernel_driver.ko
-    chmod 0660 /dev/MJC
-    chown system media /dev/MJC
-
-    # Boot mode
-    chmod 0666 /sys/class/BOOT/BOOT/boot/boot_mode
-    chown system system /sys/class/BOOT/BOOT/boot/boot_mode
-
-    #kpd
-    chown radio radio /sys/devices/platform/mtk-kpd/driver/kpd_call_state
-
-    #Charging Battery
-    chown radio radio /sys/devices/platform/battery/Charging_CallState
-
-    # PMIC property
-    chown radio system /sys/devices/platform/mt-pmic/low_battery_protect_stop
-    chown radio system /sys/devices/platform/mt-pmic/low_battery_protect_ut
 
     mkdir /data/amit/ 0770 system system
-		mkdir /data/misc/sensor 0774 system system
+    mkdir /data/misc/sensor 0774 system system
     mkdir /data/misc/akmd 0770 system system
     mkdir /data/misc/s62x 0771 compass compass
     mkdir /data/acdapi/ 0770 system system
@@ -464,7 +417,37 @@ on post-fs-data
     chown system /sys/devices/platform/gsensor/driver/cpsopmode
     chown system /sys/devices/platform/gsensor/driver/cpsrange
     mkdir	/data/data/mcube 0664 system system
+ 
+    # SensorHub
+    chmod 0660 /dev/shf
+    chown system system /dev/shf
 
+    # Accdet
+    chown root radio /sys/devices/platform/Accdet_Driver/driver/accdet_call_state
+
+    # VideoCodec
+    chmod 0666 /dev/Vcodec
+    chown media system /dev/Vcodec
+
+    # MJC
+    chmod 0660 /dev/MJC
+    chown system media /dev/MJC
+
+    # Boot mode
+    chmod 0666 /sys/class/BOOT/BOOT/boot/boot_mode
+    chown system system /sys/class/BOOT/BOOT/boot/boot_mode
+
+    # KPD
+    chown radio radio /sys/devices/platform/mtk-kpd/driver/kpd_call_state
+
+    # Battery
+    chown radio radio /sys/devices/platform/battery/Charging_CallState
+
+    # PMIC
+    chown radio system /sys/devices/platform/mt-pmic/low_battery_protect_stop
+    chown radio system /sys/devices/platform/mt-pmic/low_battery_protect_ut
+
+    # Input
     chown system /sys/class/input/input1/enable
     chown system /sys/class/input/input1/delay
     chown system /sys/class/input/input1/wake
@@ -506,7 +489,7 @@ on post-fs-data
     chown system /sys/class/input/input10/wake
     chown system /sys/class/input/input10/offsets
 
-    #EM eint
+    # EM eint
     chown root diag /sys/bus/platform/drivers/eint/current_eint
 
     # Display
@@ -526,7 +509,7 @@ on post-fs-data
     chown root diag /system/bin/baseband_regdump
     chmod 4750 /system/bin/baseband_regdump
 
-    #pmu
+    # PMU
     chown root radio /sys/devices/platform/mt-pmic/pmic_access_bank0
     chown root radio /sys/devices/platform/mt-pmic/pmic_access_bank1
     chown root radio /sys/devices/platform/mt6311-user/mt6311_access
@@ -546,10 +529,10 @@ on post-fs-data
     chmod 0664 /proc/cpu_ss/cpu_ss_period
     chmod 0664 /proc/cpu_ss/cpu_ss_period_mode
 
-    #EM eint
+    # EM eint
     chown root diag /sys/bus/platform/drivers/eint/current_eint
 
-    # for ppp options file
+    # PPP
     mkdir /data/misc/ppp 0770 bluetooth net_bt
 
     # Android SEC related device nodes
@@ -560,44 +543,38 @@ on post-fs-data
     chmod 0660 /dev/fm
     chown system media /dev/fm
 
-    # device apc settings
-
-    # device info /proc interface
+    # Device info /proc interface
     chmod 0444 /dev/devmap
     chown root media /dev/devmap
 
-    # bluetooth
+    # Bluetooth
     mkdir /data/@btmtk 0770 bluetooth net_bt
     chown bluetooth bluetooth /dev/hid-keyboard
     chmod 0660 /dev/hid-keyboard
-    #Use uinput's default permission
     chown system net_bt_admin /dev/uinput
 
     # UIBC
     chown system media /dev/uibc
     chmod 0660 /dev/uibc
 
-    #TV-out
+    # TV-out
     chmod 0664 /dev/TV-out
 
-    #HDMI
+    # HDMI
     chown media system /dev/hdmitx
     chmod 0660 /dev/hdmitx
 
-    # JPEG
-    #chmod 0444 /dev/mtk_jpeg
-
-    # almk
+    # ALMK
     chmod 0440 /dev/mtk_almk
 
     # DISP
     chmod 0444 /dev/mtk_disp
 
-    #VOW
+    # VOW
     chmod 0640 /dev/vow
     chown media media /dev/vow
 
-    #Camera
+    # Camera
     chmod 0660 /dev/camera-sysram
     chmod 0660 /dev/camera-isp
     chmod 0660 /dev/camera-fdvt
@@ -622,11 +599,11 @@ on post-fs-data
     chown system camera /dev/DW9718AF
     chown system camera /dev/CAM_CAL_DRV
 
-    #MATV
+    # MATV
     chmod 0660 /dev/MATV
     chown system media /dev/MATV
 
-    # otg_test
+    # OTG
     chown root radio /dev/mt_otg_test
     chmod 0660 /dev/mt_otg_test
 
@@ -642,53 +619,27 @@ on post-fs-data
     chmod 0666 /dev/MTK_SMI
     chown media media /dev/MTK_SMI
 
-    #for eng mode
+    # For eng mode
     chmod 0664 /dev/misc-sd
 
-   #change partition permission
-
-    chmod 0640 /mtd@sec_ro
-    chown root system /mtd@sec_ro
-
-    chmod 0640 /mtd@preloader
-    chown root system /mtd@preloader
-
-    chmod 0660 /mtd@pro_info
-    chown root system /mtd@pro_info
-
-    chmod 0640 /mtd@bootimg
-    chown root system /mtd@bootimg
-
-    chmod 0640 /mtd@recovery
-    chown root system /mtd@recovery
-
-    chmod 0660 /mtd@nvram
-    chown root system /mtd@nvram
-
-    chmod 0660 /mtd@seccfg
-    chown root system /mtd@seccfg
-
-    chmod 0660 /mtd@misc
-    chown root system /mtd@misc
-
+    # Concurrency scenario
     chmod 0666 /sys/bus/platform/drivers/mem_bw_ctrl/concurrency_scenario
     chown media system /sys/bus/platform/drivers/mem_bw_ctrl/concurrency_scenario
 
-    #mtk_sched
+    # Sched
     chmod 0660 /dev/mtk_sched
     chown system media /dev/mtk_sched
 
-    #BT SCO CVSD, for MT6572 and MT6582 CVSD codec on AP
+    # Bluetooth
     chmod 0660 /dev/ebc
     chown system audio /dev/ebc
-
     chmod 0666 /dev/uio0
 
-    #otp
+    # OTP
     chmod 0660 /proc/driver/otp
     chown root system /proc/driver/otp
 
-    #autok
+    # AUTOK
     chown root system /sys/autok/debug
     chown root system /sys/autok/param_count
     chown root system /sys/autok/ready
@@ -700,26 +651,24 @@ on post-fs-data
     chown root system /sys/autok/stage1/3/LOG
     chown root system /sys/autok/stage2/3
 
-    #sn
+    # SN
     chmod 0664 /sys/class/android_usb/android0/iSerial
     chown root system /sys/class/android_usb/android0/iSerial
     chmod 0664 /sys/devices/platform/mt_usb/cmode
     chown root system /sys/devices/platform/mt_usb/cmode
 
-    #usb
+    # USB
     chown system system /sys/class/android_usb/android0/f_acm/port_index
     chmod 0660 /sys/class/android_usb/android0/f_acm/port_index
 
-    # secure memory
+    # Secure memory
     chown system system /proc/secmem0
 
     # AGPS
     mkdir /data/agps_supl 0771 gps system
-#Thermal
-    mkdir /data/.tp/ 0775 system system
 
-# End of adding by MTK drivers
-# -----------------------
+    # Thermal
+    mkdir /data/.tp/ 0775 system system
 
     # RPMB service
     start rpmb_svc
@@ -728,19 +677,14 @@ on boot
     # Amonet
     exec u:r:su:s0 root root -- /vendor/bin/sh /vendor/bin/fix-symlinks.sh
 
+    # VM
     write /proc/sys/vm/dirty_writeback_centisecs 300
+
+    # Power
     chmod 0660 /sys/power/autosleep
 
+    # Lights
     chmod 0664 /sys/class/leds/lcd-backlight/brightness
-
-    chown system system /sys/devices/system/cpu/cpufreq/hotplug/cpu_num_base
-    chmod 0660 /sys/devices/system/cpu/cpufreq/hotplug/cpu_num_base
-    chown root   system /sys/kernel/debug/binder/transaction_log_enable
-    chown root   system /sys/kernel/debug/binder/perf_evalue
-
-    chown system /sys/module/mlog/parameters/do_mlog
-    chown system /sys/module/mlog/parameters/timer_intval
-
     chown root   radio  /sys/class/leds/lcd-backlight/duty
     chown root   radio  /sys/class/leds/lcd-backlight/div
     chown system system /sys/class/leds/lcd-backlight/trigger
@@ -751,28 +695,37 @@ on boot
     chown system system /sys/class/leds/green/trigger
     chown system system /sys/class/leds/blue/trigger
 
+    # CPU
+    chown system system /sys/devices/system/cpu/cpufreq/hotplug/cpu_num_base
+    chmod 0660 /sys/devices/system/cpu/cpufreq/hotplug/cpu_num_base
+    chown system system /proc/cpufreq/cpufreq_limited_by_hevc
+    chmod 0660 /proc/cpufreq/cpufreq_limited_by_hevc
+    chown system system /proc/cpufreq/cpufreq_limited_max_freq_by_user
+    chmod 0660 /proc/cpufreq/cpufreq_limited_max_freq_by_user
+
+    # Binder
+    chown root   system /sys/kernel/debug/binder/transaction_log_enable
+    chown root   system /sys/kernel/debug/binder/perf_evalue
+
+    # Mlog
+    chown system /sys/module/mlog/parameters/do_mlog
+    chown system /sys/module/mlog/parameters/timer_intval
+
     # Permission for hibernation
     chown radio system /sys/power/tuxonice
     chown radio system /sys/power/tuxonice/do_hibernate
     chmod 0770 /sys/power/tuxonice
     chmod 0220 /sys/power/tuxonice/do_hibernate
 
-# Smartbook Handler Framework
+    # Smartbook Handler Framework
     chown system system /sys/power/sb_state
     chmod 0660 /sys/power/sb_state
 
-# HMP CPU hotplug strategy
+    # HMP CPU hotplug strategy
     chown system system /proc/hps/num_base_perf_serv
     chmod 0660 /proc/hps/num_base_perf_serv
 
-# CPU freq
-    chown system system /proc/cpufreq/cpufreq_limited_by_hevc
-    chmod 0660 /proc/cpufreq/cpufreq_limited_by_hevc
-    chown system system /proc/cpufreq/cpufreq_limited_max_freq_by_user
-    chmod 0660 /proc/cpufreq/cpufreq_limited_max_freq_by_user
-
-##Netlog tool
-   #change permissions about terminal
+    # NET
     chown root radio /proc/net/vlan/config
     chmod 0640 /proc/net/vlan/config
     chown root radio /proc/net/ip6_tables_matches
@@ -791,7 +744,7 @@ on boot
     chown root radio /proc/net/netfilter/nfnetlink_log
     chown root radio /proc/net/netfilter/nfnetlink_queue
 
-# WMT proc
+    # WMT
     chown shell system /proc/driver/wmt_dbg
     chown shell system /proc/driver/wmt_aee
 
@@ -811,7 +764,7 @@ service kisd /system/bin/kisd
 	user root
 	group system
 
-## mtk printk uart controller
+# UART
 on property:persist.uartconsole.enable=1
     write /proc/mtprintk 1
 
@@ -836,7 +789,7 @@ service thermald /system/bin/thermald
     user system
     group system
 
-# GuiExt Server init
+# GUI
 service guiext-server /system/bin/guiext-server
     class main
     user system

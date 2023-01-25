@@ -1,9 +1,10 @@
-# SYSFS
+# DRM
 /dev/trustzone            0660   root         drmrpc
 /dev/kb                   0660   root       system
 /dev/dkb                  0660   root       system
-/dev/block/platform/mtk-msdc.0/by-name/kb  0660   root       drmrpc
-/dev/block/platform/mtk-msdc.0/by-name/dkb  0660   root       drmrpc
+
+/dev/block/platform/mtk-msdc.0/by-name/KB   0660   root       drmrpc
+/dev/block/platform/mtk-msdc.0/by-name/DKB  0660   root       drmrpc
 /dev/block/platform/mtk-msdc.0/by-name/frp  0660   root       system
 
 # Connectivity
@@ -26,11 +27,7 @@
 # FMRadio
 /dev/fm                   0660   media     media
 
-# NFC
-/dev/msr3110              0666   root       root
-/dev/mt6605               0660   nfc        radio
-
-# MTK BTIF driver
+# BTIF
 /dev/btif                 0600   system     system
 /dev/block/mmcblk0p13     0660   root       system
 /dev/block/mmcblk0p17     0660   root       system
