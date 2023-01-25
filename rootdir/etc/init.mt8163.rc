@@ -533,7 +533,7 @@ on post-fs-data
     chown root diag /sys/bus/platform/drivers/eint/current_eint
 
     # PPP
-    mkdir /data/misc/ppp 0770 bluetooth net_bt
+    mkdir /data/misc/ppp 0770 bluetooth bluetooth
 
     # Android SEC related device nodes
     chmod 0660 /dev/sec
@@ -548,10 +548,10 @@ on post-fs-data
     chown root media /dev/devmap
 
     # Bluetooth
-    mkdir /data/@btmtk 0770 bluetooth net_bt
+    mkdir /data/@btmtk 0770 bluetooth bluetooth
     chown bluetooth bluetooth /dev/hid-keyboard
     chmod 0660 /dev/hid-keyboard
-    chown system net_bt_admin /dev/uinput
+    chown system bluetooth /dev/uinput
 
     # UIBC
     chown system media /dev/uibc
