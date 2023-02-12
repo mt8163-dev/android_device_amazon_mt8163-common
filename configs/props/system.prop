@@ -49,6 +49,7 @@ ro.hardware.gralloc=mt8163.mali
 ro.hardware.egl=mali
 debug.hwui.renderer=opengl
 debug.sf.disable_backpressure=1
+debug.sf.latch_unsignaled=0
 debug.hwui.use_buffer_age=false
 debug.sf.enable_hwc_vds=1
 ro.mtk_miravision_support=1
