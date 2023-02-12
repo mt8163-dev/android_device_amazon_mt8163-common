@@ -143,11 +143,18 @@ PRODUCT_COPY_FILES += \
 
 # Wi-Fi
 PRODUCT_PACKAGES += \
+    android.hardware.wifi@1.0 \
+    android.hardware.wifi@1.1 \
+    android.hardware.wifi@1.2 \
+    android.hardware.wifi.supplicant@1.0 \
+    android.hardware.wifi.supplicant@1.1 \
+    android.hardware.wifi.supplicant@1.2 \
+    libnl \
     wpa_supplicant \
     libwpa_client \
     lib_driver_cmd_mt66xx \
     libwifi-hal-mt66xx \
-    android.hardware.wifi@1.0-service.legacy
+    libwifi-system-iface
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/wifi/p2p_supplicant_overlay.conf:$(TARGET_COPY_OUT_SYSTEM)/etc/wifi/p2p_supplicant_overlay.conf \

@@ -3,7 +3,12 @@ bin/6620_launcher
 bin/6620_wmt_concurrency
 bin/6620_wmt_lpbk
 bin/wmt_loader
-lib64/libwifi-hal.so|217a449787e1561527330febc8e6b37de378f337
+lib/libwifi-hal.so|1c3e419dd2843c0a8f91c98f12c6c1d5d70b30d3
+vendor/lib/fireos.hardware.connectivity@1.0.so|1902b2a6f5602d99cee6be1b742decd32a8cae54
+vendor/bin/hw/wpa_supplicant|3829b7505e80660d83fd34ad358a80326fec2af5
+vendor/bin/hw/hostapd|671f73586f52f84c2fb81e650b59e4c1e4acf48d
+vendor/bin/hw/android.hardware.wifi@1.0-service-mediatek|aa95829ef76ec0f1563d0d67ec509aa45216e74f
+vendor/etc/init/android.hardware.wifi@1.0-service-mediatek.rc|814db5fbf9efa1e3d3ec608b31e4b1109cae5135
 
 # Nvram
 bin/nvram_daemon
