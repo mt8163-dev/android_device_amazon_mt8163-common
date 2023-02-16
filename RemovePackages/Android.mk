@@ -18,7 +18,12 @@ LOCAL_OVERRIDES_PACKAGES := \
     Email \
     Exchange2 \
     LiveWallpapersPicker \
-    PhotoTable
+    PhotoTable \
+    MmsService \
+    WAPPushManager \
+    SimAppDialog \
+    PrintRecommendationService \
+    PrintSpooler
 
 LOCAL_SRC_FILES := /dev/null
 LOCAL_UNINSTALLABLE_MODULE := true
