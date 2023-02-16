@@ -85,12 +85,6 @@ bin/wipe_fos_flags
 lib/hw/memtrack.mt8163.so
 lib64/hw/memtrack.mt8163.so
 
-# Perfboost
-lib/hw/perfboost.default.so
-lib/hw/perfboost.mt8163.so
-lib64/hw/perfboost.default.so
-lib64/hw/perfboost.mt8163.so
-
 # Graphics
 bin/guiext-server
 lib/egl/egl.cfg
