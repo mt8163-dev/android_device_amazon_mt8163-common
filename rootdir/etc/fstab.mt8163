@@ -7,8 +7,8 @@
 /dev/block/platform/soc/11230000.mmc/by-name/boot         /boot       emmc	defaults                                        defaults
 /dev/block/platform/soc/11230000.mmc/by-name/recovery     /recovery   emmc	defaults                                        defaults
 /dev/block/platform/soc/11230000.mmc/by-name/MISC         /misc       emmc    defaults                                        defaults
-/dev/block/platform/soc/11230000.mmc/by-name/userdata     /data       ext4	noatime,nosuid,nodev,noauto_da_alloc    wait,check,encryptable=/dev/block/platform/mtk-msdc.0/by-name/metadata,latemount
-/dev/block/platform/soc/11230000.mmc/by-name/cache        /cache      ext4	noatime,nosuid,nodev,noauto_da_alloc	        wait,check
+/dev/block/platform/soc/11230000.mmc/by-name/userdata     /data       ext4	noatime,nosuid,nodev,noauto_da_alloc,journal_async_commit               wait,check,encryptable=/dev/block/platform/mtk-msdc.0/by-name/metadata,latemount
+/dev/block/platform/soc/11230000.mmc/by-name/cache        /cache      ext4	noatime,nosuid,nodev,noauto_da_alloc,journal_async_commit	        wait,check
 
 /devices/soc/11240000.mmc*		auto		auto		defaults		voldmanaged=sdcard1:auto,encryptable=userdata
 /devices/platform/mt_usb*               auto            auto            defaults                voldmanaged=usbotg:auto
