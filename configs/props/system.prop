@@ -42,6 +42,8 @@ dalvik.vm.heapminfree=128k
 dalvik.vm.heapmaxfree=512k
 dalvik.vm.dex2oat64.enabled=true
 dalvik.vm.madvise-random=true
+dalvik.vm.minidebuginfo=false
+dalvik.vm.dex2oat-minidebuginfo=false
 
 # Graphics
 ro.opengles.version=196609
