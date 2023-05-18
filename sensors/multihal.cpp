@@ -653,6 +653,11 @@ static int module__get_sensors_list(__unused struct sensors_module_t* module,
     return global_sensors_count;
 }
 
+static int module__set_operation_mode(unsigned int mode)
+{
+	return mode;
+}
+
 static struct hw_module_methods_t sensors_module_methods = {
     .open = open_sensors
 };
@@ -669,7 +674,8 @@ struct sensors_module_t HAL_MODULE_INFO_SYM = {
         .dso = NULL,
         .reserved = {0},
     },
-    .get_sensors_list = module__get_sensors_list
+    .get_sensors_list = module__get_sensors_list,
+    .set_operation_mode = module__set_operation_mode
 };
 
 struct sensors_module_t *get_multi_hal_module_info() {
