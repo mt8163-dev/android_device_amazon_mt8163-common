@@ -57,6 +57,7 @@ debug.sf.enable_hwc_vds=1
 ro.mtk_miravision_support=1
 ro.mtk_aal_support=1
 ro.mtk_hotknot_support=1
+debug.sf.enable_gl_backpressure=1
 
 # SurfaceFlinger
 ro.surface_flinger.running_without_sync_framework=true
