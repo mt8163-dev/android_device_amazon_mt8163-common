@@ -16,14 +16,6 @@
 
 COMMON_PATH := device/amazon/mt8163-common
 
-# Broken rules
-BUILD_BROKEN_DUP_RULES := true
-
-# Platform
-BOARD_VENDOR := amazon
-TARGET_BOARD_PLATFORM := mt8163
-TARGET_NO_BOOTLOADER := true
-
 # Architecture
 TARGET_ARCH := arm64
 TARGET_ARCH_VARIANT := armv8-a
@@ -39,18 +31,20 @@ TARGET_2ND_CPU_ABI2 := armeabi
 TARGET_2ND_CPU_VARIANT := generic
 TARGET_2ND_CPU_VARIANT_RUNTIME := cortex-a53
 
-# Malloc
-MALLOC_SVELTE := true
+# Apexes
+TARGET_FLATTEN_APEX := true
 
-# Fonts
-EXCLUDE_SERIF_FONTS := true
-SMALLER_FONT_FOOTPRINT := true
-USE_REDUCED_CJK_FONT_WEIGHTS := true
+# Audio
+USE_XML_AUDIO_POLICY_CONF := 1
 
-# Headers
-TARGET_SPECIFIC_HEADER_PATH := $(COMMON_PATH)/include
+# Bluetooth
+BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := $(COMMON_PATH)/bluetooth
 
-# Boot
+# Bootloader
+TARGET_BOARD_PLATFORM := mt8163
+TARGET_NO_BOOTLOADER := true
+
+# Boot Image
 BOARD_KERNEL_BASE := 0x40078000
 BOARD_KERNEL_OFFSET := 0x00008000
 BOARD_KERNEL_TAGS_OFFSET := 0x07f88000
@@ -71,35 +65,116 @@ BOARD_KERNEL_CMDLINE += loop.max_part=7
 BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
 BOARD_KERNEL_CMDLINE += androidboot.init_fatal_reboot_target=recovery
 
+# Build System
+BUILD_BROKEN_DUP_RULES := true
+
+# Camera
+TARGET_HAS_LEGACY_CAMERA_HAL1 := true
+
+# Dexpreopt
+ifeq ($(HOST_OS),linux)
+  ifneq ($(TARGET_BUILD_VARIANT),eng)
+    ifeq ($(WITH_DEXPREOPT),)
+      WITH_DEXPREOPT := true
+      WITH_DEXPREOPT_BOOT_IMG_AND_SYSTEM_SERVER_ONLY := true
+    endif
+  endif
+endif
+
+# Display
+TARGET_SCREEN_DENSITY := 213
+
+# Fonts
+EXCLUDE_SERIF_FONTS := true
+SMALLER_FONT_FOOTPRINT := true
+USE_REDUCED_CJK_FONT_WEIGHTS := true
+
+# HIDL
+DEVICE_MANIFEST_FILE := $(COMMON_PATH)/configs/vintf/manifest.xml
+DEVICE_MATRIX_FILE   := $(COMMON_PATH)/configs/vintf/compatibility_matrix.xml
+
+# HWUI
+HWUI_COMPILE_FOR_PERF := true
+
 # Kernel
 TARGET_KERNEL_ARCH := arm64
 TARGET_KERNEL_HEADER_ARCH := arm64
 TARGET_KERNEL_SOURCE := kernel/amazon/mt8163
 BOARD_KERNEL_IMAGE_NAME := Image.gz-dtb
-
 TARGET_KERNEL_CLANG_COMPILE := false
 TARGET_KERNEL_CROSS_COMPILE_PREFIX := aarch64-linux-android-
 KERNEL_TOOLCHAIN := $(shell pwd)/prebuilts/gcc/$(HOST_OS)-x86/aarch64/aarch64-linux-android-4.9/bin
 TARGET_LINUX_KERNEL_VERSION := 3.18
 
+# Kernel Headers
+TARGET_SPECIFIC_HEADER_PATH := $(COMMON_PATH)/include
+
+# Legacy blobs
+TARGET_PROCESS_SDK_VERSION_OVERRIDE := \
+    /system/bin/mediaserver=22
+
+# LMKD
+TARGET_LMKD_STATS_LOG := true
+
+# Malloc
+MALLOC_SVELTE := true
+
+# Partitions
+BOARD_USES_METADATA_PARTITION := true
+BOARD_CACHEIMAGE_FILE_SYSTEM_TYPE  := ext4
+BOARD_SYSTEMIMAGE_FILE_SYSTEM_TYPE := ext4
+TARGET_USERIMAGES_USE_EXT4 := true
+TARGET_USERIMAGES_SPARSE_EXT_DISABLED := false
+
 # Properties
 TARGET_SYSTEM_PROP += $(COMMON_PATH)/configs/props/system.prop
 
-# Vintf
-DEVICE_MANIFEST_FILE := $(COMMON_PATH)/configs/vintf/manifest.xml
-DEVICE_MATRIX_FILE := $(COMMON_PATH)/configs/vintf/compatibility_matrix.xml
+# Recovery
+TARGET_RECOVERY_PIXEL_FORMAT := "RGBA_8888"
+TARGET_RECOVERY_FSTAB := $(COMMON_PATH)/recovery/root/fstab.mt8163
+LZMA_RAMDISK_TARGETS := recovery
 
-# Apexes
-TARGET_FLATTEN_APEX := true
+# SELinux
+SELINUX_IGNORE_NEVERALLOWS := true
 
-# Low memory killer
-TARGET_LMKD_STATS_LOG := true
+# Shim libraries
+TARGET_LD_SHIM_LIBS := \
+    /system/bin/amzn_dha_hmac|libshim_crypto.so \
+    /system/bin/amzn_dha_tool|libshim_crypto.so \
+    /system/bin/app_process32|libshim_zygote.so \
+    /system/bin/app_process64|libshim_zygote.so \
+    /system/lib/hw/audio.primary.mt8163.so|libshim_alsa.so \
+    /system/lib64/hw/audio.primary.mt8163.so|libshim_alsa.so \
+    /system/lib/hw/hwcomposer.mt8163.so|libshim_ui.so \
+    /system/lib64/hw/hwcomposer.mt8163.so|libshim_ui.so \
+    /system/lib/libMtkOmxVdecEx.so|libshim_ui.so \
+    /system/lib/libMtkOmxVenc.so|libshim_ui.so \
+    /system/lib/libbase.so|libshim_base.so \
+    /system/lib64/libbase.so|libshim_base.so \
+    /system/lib/libbinder.so|libshim_binder.so \
+    /system/lib64/libbinder.so|libshim_binder.so \
+    /system/lib/libcam.utils.sensorlistener.so|libshim_gui.so \
+    /system/lib64/libcam.utils.sensorlistener.so|libshim_gui.so \
+    /system/lib/libcam1client.so|libshim_ui.so \
+    /system/lib64/libcam1client.so|libshim_ui.so \
+    /system/lib/libcam_utils.so|libshim_ui.so \
+    /system/lib64/libcam_utils.so|libshim_ui.so \
+    /system/lib/libc.so|libshim_pthread.so \
+    /system/lib64/libc.so|libshim_pthread.so \
+    /system/lib/libcutils.so|libshim_atomic.so \
+    /system/lib64/libcutils.so|libshim_atomic.so \
+    /system/lib/libdrmmtkutil.so|libshim_icuuc.so \
+    /system/lib64/libdrmmtkutil.so|libshim_icuuc.so \
+    /system/lib/liblog.so|libshim_log.so \
+    /system/lib64/liblog.so|libshim_log.so \
+    /system/lib/libmtk_mmutils.so|libshim_ui.so \
+    /system/lib64/libmtk_mmutils.so|libshim_ui.so \
+    /system/lib/libtinyalsa.so|libshim_alsa.so \
+    /system/lib64/libtinyalsa.so|libshim_alsa.so \
+    /vendor/lib/libwvm.so|libshim_omx.so
 
-# Bluetooth
-BOARD_HAVE_BLUETOOTH := true
-BOARD_HAVE_BLUETOOTH_MTK := true
-BOARD_BLUETOOTH_DOES_NOT_USE_RFKILL := true
-BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := $(COMMON_PATH)/bluetooth
+# SPL
+VENDOR_SECURITY_PATCH := 2019-07-01
 
 # Wi-Fi
 BOARD_WLAN_DEVICE                := MediaTek
@@ -116,89 +191,3 @@ WIFI_DRIVER_FW_PATH_P2P          := P2P
 WIFI_DRIVER_STATE_CTRL_PARAM	 := "/dev/wmtWifi"
 WIFI_DRIVER_STATE_ON		 := 1
 WIFI_DRIVER_STATE_OFF		 := 0
-
-WIFI_HIDL_FEATURE_AP_MAC_RANDOMIZATION := false
-WIFI_HIDL_FEATURE_DISABLE_AP_MAC_RANDOMIZATION := true
-
-# Camera
-TARGET_HAS_LEGACY_CAMERA_HAL1 := true
-
-# Audio
-USE_XML_AUDIO_POLICY_CONF := 1
-
-# Shim libraries
-TARGET_LD_SHIM_LIBS := \
-    /system/lib/hw/audio.primary.mt8163.so|libshim_alsa.so \
-    /system/lib64/hw/audio.primary.mt8163.so|libshim_alsa.so \
-    /system/bin/amzn_dha_hmac|libshim_crypto.so \
-    /system/bin/amzn_dha_tool|libshim_crypto.so \
-    /system/lib/libdrmmtkutil.so|libshim_icuuc.so \
-    /system/lib64/libdrmmtkutil.so|libshim_icuuc.so \
-    /system/lib/hw/hwcomposer.mt8163.so|libshim_ui.so \
-    /system/lib64/hw/hwcomposer.mt8163.so|libshim_ui.so \
-    /system/lib/libcam_utils.so|libshim_ui.so \
-    /system/lib64/libcam_utils.so|libshim_ui.so \
-    /system/lib/libcam1client.so|libshim_ui.so \
-    /system/lib64/libcam1client.so|libshim_ui.so \
-    /system/lib/libcam.utils.sensorlistener.so|libshim_gui.so \
-    /system/lib64/libcam.utils.sensorlistener.so|libshim_gui.so \
-    /system/lib/libmtk_mmutils.so|libshim_ui.so \
-    /system/lib64/libmtk_mmutils.so|libshim_ui.so \
-    /system/lib/libMtkOmxVdecEx.so|libshim_ui.so \
-    /system/lib/libMtkOmxVenc.so|libshim_ui.so \
-    /system/lib/libc.so|libshim_pthread.so \
-    /system/lib64/libc.so|libshim_pthread.so \
-    /system/lib/liblog.so|libshim_log.so \
-    /system/lib64/liblog.so|libshim_log.so \
-    /system/lib/libcutils.so|libshim_atomic.so \
-    /system/lib64/libcutils.so|libshim_atomic.so \
-    /system/lib/libbinder.so|libshim_binder.so \
-    /system/lib64/libbinder.so|libshim_binder.so \
-    /system/lib/libtinyalsa.so|libshim_alsa.so \
-    /system/lib64/libtinyalsa.so|libshim_alsa.so \
-    /system/bin/app_process32|libshim_zygote.so \
-    /system/bin/app_process64|libshim_zygote.so \
-    /vendor/lib/libwvm.so|libshim_omx.so \
-    /system/lib/libbase.so|libshim_base.so \
-    /system/lib64/libbase.so|libshim_base.so
-
-# Legacy blobs
-TARGET_PROCESS_SDK_VERSION_OVERRIDE := \
-    /system/bin/mediaserver=22
-
-# Display
-TARGET_SCREEN_DENSITY := 213
-
-# HWUI
-HWUI_COMPILE_FOR_PERF := true
-
-# Don't compile SystemUITests
-EXCLUDE_SYSTEMUI_TESTS := true
-
-# Dexpreopt
-ifeq ($(HOST_OS),linux)
-  ifneq ($(TARGET_BUILD_VARIANT),eng)
-    ifeq ($(WITH_DEXPREOPT),)
-      WITH_DEXPREOPT := true
-      WITH_DEXPREOPT_BOOT_IMG_AND_SYSTEM_SERVER_ONLY := true
-    endif
-  endif
-endif
-
-# Filesystems
-TARGET_USERIMAGES_USE_EXT4 := true
-TARGET_USERIMAGES_SPARSE_EXT_DISABLED := false
-BOARD_SYSTEMIMAGE_FILE_SYSTEM_TYPE := ext4
-BOARD_CACHEIMAGE_FILE_SYSTEM_TYPE := ext4
-BOARD_USES_METADATA_PARTITION := true
-
-# Recovery
-TARGET_RECOVERY_PIXEL_FORMAT := "RGBA_8888"
-TARGET_RECOVERY_FSTAB := $(COMMON_PATH)/recovery/root/fstab.mt8163
-LZMA_RAMDISK_TARGETS := recovery
-
-# SPL
-VENDOR_SECURITY_PATCH := 2019-07-01
-
-# SELinux
-SELINUX_IGNORE_NEVERALLOWS := true
