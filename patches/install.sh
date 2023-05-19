@@ -2,7 +2,7 @@
 
 C=$(pwd)
 S="amazon/mt8163-common"
-D="frameworks/base hardware/interfaces system/bt bionic"
+D="frameworks/base hardware/interfaces system/bt system/core bionic"
 
 apply_patches() { cd ${C}/${1}; git apply --ignore-whitespace ${C}/device/${S}/patches/$1/*.patch; cd ${C}; }
 
