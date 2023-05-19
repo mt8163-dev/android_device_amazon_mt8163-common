@@ -3,12 +3,18 @@ bin/6620_launcher
 bin/6620_wmt_concurrency
 bin/6620_wmt_lpbk
 bin/wmt_loader
-lib/libwifi-hal.so|1c3e419dd2843c0a8f91c98f12c6c1d5d70b30d3
-vendor/lib/fireos.hardware.connectivity@1.0.so|1902b2a6f5602d99cee6be1b742decd32a8cae54
-vendor/bin/hw/wpa_supplicant|3829b7505e80660d83fd34ad358a80326fec2af5
-vendor/bin/hw/hostapd|671f73586f52f84c2fb81e650b59e4c1e4acf48d
-vendor/bin/hw/android.hardware.wifi@1.0-service-mediatek|aa95829ef76ec0f1563d0d67ec509aa45216e74f
-vendor/etc/init/android.hardware.wifi@1.0-service-mediatek.rc|814db5fbf9efa1e3d3ec608b31e4b1109cae5135
+
+# Wi-Fi (Service/Impl) - from full_px556_kw-user 10 QP1A.190711.020 1585833944 release-keys
+vendor/bin/hostapd_cli|2d267f7e8c00ef0d7ee6c683aa400cb176fcb25c
+vendor/bin/hw/android.hardware.wifi@1.0-service-lazy-mediatek|11de651333ef53a2d426fce3bb6d6d95544c27eb
+vendor/bin/hw/hostapd|ef3ae9d442f36473155730e0e48e6ff0470d3a71
+vendor/bin/hw/wpa_supplicant|59605c46d90f34a304f84298962a00a504de5003
+vendor/etc/init/android.hardware.wifi@1.0-service-lazy-mediatek.rc|bd3726847a0068d4e252b2d4f5c168b38b982074
+vendor/etc/init/hostapd.android.rc|0f8128bb83c4cbe80760f1a040960cfe439d2d6f
+vendor/lib64/libwapi.so|f2b823612ebbc045c90a44a4806165247fbbfad8
+vendor/lib64/libwifi-hal.so|bdc95a83b30b68a04ed1bce171f77586e6bc7262
+vendor/lib64/vendor.mediatek.hardware.wifi.supplicant@2.0.so|b71d1cac0a17c37a628dbfc806c47fec3addcca1
+vendor/lib64/vendor.mediatek.hardware.wifi.supplicant@2.1.so|4af9d9e28dac45043c140e7db8ab15a68e6a95c7
 
 # Nvram
 bin/nvram_daemon
