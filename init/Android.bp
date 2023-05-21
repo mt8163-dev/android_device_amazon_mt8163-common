@@ -1,0 +1,10 @@
+cc_library_static {
+    name: "libinit_amazon_mt8163",
+    shared_libs: ["libbase"],
+    recovery_available: true,
+    srcs: ["init_amazon_mt8163.cpp"],
+    include_dirs: [
+        "system/core/base/include",
+        "system/core/init"
+    ]
+}

@@ -96,6 +96,9 @@ DEVICE_MATRIX_FILE   := $(COMMON_PATH)/configs/vintf/compatibility_matrix.xml
 # HWUI
 HWUI_COMPILE_FOR_PERF := true
 
+# Init
+TARGET_INIT_VENDOR_LIB := //$(COMMON_PATH):libinit_amazon_mt8163
+
 # Kernel
 TARGET_KERNEL_ARCH := arm64
 TARGET_KERNEL_HEADER_ARCH := arm64
