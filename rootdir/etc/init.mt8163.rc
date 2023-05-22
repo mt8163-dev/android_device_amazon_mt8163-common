@@ -79,14 +79,8 @@ on charger
     write /sys/class/leds/lcd-backlight/brightness "1000"
     write /sys/class/leds/lcd-backlight/trigger "backlight"
 
-    # Mount everything
-    mount_all /fstab.mt8163
-
     # Disable USB
     write /sys/devices/platform/mt_usb/cmode 0
-    
-    # Start Charger
-    class_start charger    
 
 on post-fs
     # Mediaserver
@@ -808,11 +802,10 @@ service rpmb_svc /system/bin/rpmb_svc
     group system drmrpc
     disabled
 
-service charger /system/bin/charger
+service charger /bin/chargeonlymode
     class charger
-    user system
-    group system graphics input
-	capabilities SYS_BOOT
+    critical
+    group system graphics
     seclabel u:r:charger:s0
 
 on property:apexd.status=ready

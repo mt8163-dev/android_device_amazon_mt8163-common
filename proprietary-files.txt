@@ -331,3 +331,6 @@ lib/libmmprofile.so|fbd19ce36b5b84475742f3151f80e97e5b247caa
 lib64/libmmprofile.so|53be91c9fd57e735aad5cfe0408e24124eda3fc4
 lib/libskia.so|b58cd71e99e08865bc0532bfc349e3e2259a1535
 lib64/libskia.so|45840bf66c8cc9228cc2f82da4b03e122513b178
+
+# Charger | From merlin V12.0.9.0.QJOEUXM
+bin/charger:bin/chargeonlymode|55bd10395bd1de56b08948be52ed93de3d0da521
