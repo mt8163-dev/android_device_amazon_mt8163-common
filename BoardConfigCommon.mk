@@ -71,6 +71,9 @@ BUILD_BROKEN_DUP_RULES := true
 # Camera
 TARGET_HAS_LEGACY_CAMERA_HAL1 := true
 
+# Charger
+BACKLIGHT_PATH := /sys/class/leds/lcd-backlight/brightness
+
 # Dexpreopt
 ifeq ($(HOST_OS),linux)
   ifneq ($(TARGET_BUILD_VARIANT),eng)
