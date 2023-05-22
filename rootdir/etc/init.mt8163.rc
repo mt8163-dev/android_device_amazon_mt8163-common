@@ -75,12 +75,10 @@ on init
 	chmod 0666 /d/ion/heaps/ion_mm_heap
 
 on charger
-    # Turn backlight on and switch to backlight trigger
-    write /sys/class/leds/lcd-backlight/brightness "1000"
-    write /sys/class/leds/lcd-backlight/trigger "backlight"
-
     # Disable USB
     write /sys/devices/platform/mt_usb/cmode 0
+
+    start light-hal-2-0
 
 on post-fs
     # Mediaserver
