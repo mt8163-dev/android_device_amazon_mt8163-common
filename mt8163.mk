@@ -84,6 +84,10 @@ PRODUCT_PACKAGES += \
 # Characteristics
 PRODUCT_CHARACTERISTICS := tablet
 
+# Charger
+PRODUCT_PACKAGES += \
+    lineage_charger_animation
+
 # DRM
 PRODUCT_PACKAGES += \
     move_widevine_data.sh
